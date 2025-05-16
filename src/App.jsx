@@ -3,7 +3,6 @@ import { BrowserRouter } from "react-router-dom"
 import AppRoutes from "./Routes/AppRoutes"
 
 function App() {
-
   return (
     <BrowserRouter>
       <AppRoutes />
@@ -11,4 +10,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
