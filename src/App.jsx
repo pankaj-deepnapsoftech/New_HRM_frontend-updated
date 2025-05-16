@@ -1,9 +1,10 @@
+import MainDashboardPage from "./Components/Dashboard/MainDashboardPage"
 
 function App() {
 
   return (
     <div>
-      <h1>hello</h1>
+      <MainDashboardPage/>
     </div>
   )
 }
