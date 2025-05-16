@@ -1,11 +1,13 @@
-import MainDashboardPage from "./Components/Dashboard/MainDashboardPage"
+
+import { BrowserRouter } from "react-router-dom"
+import AppRoutes from "./Routes/AppRoutes"
 
 function App() {
 
   return (
-    <div>
-      <MainDashboardPage/>
-    </div>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }
 
