@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useSignInMutation } from "@/service/SignIn.services";
 import { SignInSchema } from "@/Validation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { browserName, deviceType } from "react-device-detect";
+import { toast } from "react-toastify";
 
 
 const Login = () => {
@@ -27,10 +29,11 @@ const Login = () => {
             const totalData = { ...values, device: deviceType, browser: browserName }
             try {
                 const res = await SignIn(totalData).unwrap()
-                console.log(totalData)
+              toast.success("Login Successfully")
                 resetForm();
             } catch (error) {
                 console.log(error)
+               toast.error("Login Faild ")
             }
         }
     });
@@ -41,7 +44,7 @@ const Login = () => {
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Sign In</h2>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div>
-                        <label className="text-gray-700 block mb-1" htmlFor="username">Username & Address</label>
+                        <label className="text-gray-700 block mb-1" htmlFor="username">Username & Email</label>
                         <input
                             id="username"
                             type="text"
