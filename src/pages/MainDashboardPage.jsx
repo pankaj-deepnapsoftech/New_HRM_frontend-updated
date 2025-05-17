@@ -1,5 +1,8 @@
+import Header from "@/Components/Header";
 import Sidebar from "@/Components/shared/Sidebar";
 import React from "react";
+import { FaMicrophone } from "react-icons/fa";
+import { IoSearchSharp } from "react-icons/io5";
 
 const MainDashboardPage = () => {
   const today = new Date().toLocaleDateString(undefined, {
@@ -10,11 +13,11 @@ const MainDashboardPage = () => {
   });
 
   return (
-
-
-    <main className="flex-1 p-10">
+    <main className="flex-1 ">
+      <Header/>
       {/* Search & Greeting */}
-      <div className="flex justify-between items-center mb-10">
+      <section className="p-6">
+      <div className="flex justify-between items-center mb-6 ">
         <div>
           <p className="text-sm text-gray-500 mb-1">{today}</p>
           <h1 className="text-3xl font-bold text-gray-900">
@@ -24,13 +27,18 @@ const MainDashboardPage = () => {
             Here’s what’s happening today in your portal.
           </p>
         </div>
-        <input
-          type="search"
-          placeholder="Search anything..."
-          className="border border-gray-300 rounded-full py-2 px-5 w-72 focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-      </div>
+        
+        <div className="relative w-72">
+          <IoSearchSharp className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800" />
+          <input
+            type="search"
+            placeholder="Type to search..."
+            className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-purple-500"
 
+          /><FaMicrophone className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800"/>
+        </div>
+      </div>
+      
       {/* Info Banner */}
       <section className="flex justify-between items-center bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-3xl px-10 py-8 mb-10 shadow-lg">
         <div>
@@ -155,7 +163,12 @@ const MainDashboardPage = () => {
           </div>
         </aside>
       </div>
+      </section>
+      <section className="bg-black w-full h-auto">
+        
+      </section>
     </main>
+
   );
 };
 

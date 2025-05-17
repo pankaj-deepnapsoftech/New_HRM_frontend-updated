@@ -162,27 +162,27 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 text-gray-300 flex flex-col px-6 py-8 shadow-lg bg-gradient-to-b from-purple-900 to-purple-800">
-      <div className="flex items-center gap-3 mb-8">
+    <aside className="w-64 text-gray-200 flex flex-col px-4 py-2 shadow-lg bg-gradient-to-b from-purple-900 to-purple-700">
+      <div className="flex items-center mb-5 relative right-4">
         <img
-          src="/d logo.jpeg"
+          src="/d logo.png"
           alt="Deepnap Softech Logo"
-          className="w-10 h-10 object-contain"
+          className="w-24 h-24 object-contain invert brightness-0 "
         />
-        <h2 className="text-2xl font-bold tracking-wide">Deepnap Softech</h2>
+        <h2 className="text-lg font-bold tracking-wide">Deepnap Softech</h2>
       </div>
-      <nav className="flex flex-col space-y-4 font-medium text-xl">
+      <nav className="flex flex-col space-y-3 font-medium text-xl">
         {menuItems.map((item, index) => (
           <div key={index}>
             <div
               onClick={item.onClick || (() => {})}
-              className="flex items-center gap-3 px-1 py-2 rounded-sm transition duration-300 hover:bg-purple-700 cursor-pointer"
+              className="flex items-center gap-3 px-3 py-2 rounded-xl transition duration-300 hover:bg-gradient-to-r from-purple-600 to-purple-400 cursor-pointer"
             >
               {item.icon}
               {item.text}
             </div>
             {item.subMenu && (
-              <div className="ml-6 mt-2 space-y-2">
+              <div className="ml-6 mt-1 space-y-2">
                 {item.subMenu.map((subItem, subIndex) => (
                   <div
                     key={subIndex}
