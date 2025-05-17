@@ -1,11 +1,11 @@
-import MainDashboardPage from "./Components/Dashboard/MainDashboardPage";
-import Register from "@pages/Register";
+import MainDashboardPage from "./pages/MainDashboardPage";
+
 
 function App() {
   return (
     <div>
       <MainDashboardPage />
-      <Register />
+
     </div>
   );
 }
