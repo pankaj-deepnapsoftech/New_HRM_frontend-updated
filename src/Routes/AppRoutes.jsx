@@ -1,19 +1,29 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import AuthLayout from './Layouts/AuthLayout'
-import { AuthRoutes } from '@/Routes/Routing/AuthRoutes'
-import Login from '@/pages/Login'
-import Signup from '@/pages/Signup'
+import AuthLayout from '@/Routes/Layouts/AuthLayout'
+import { AuthRoute } from '@/Routes/Routing/AuthRoutes'
+import RootLayout from '@/Routes/Layouts/RootLayout'
+import { MainRoutes } from '@/Routes/Routing/MainRoutes'
 
 const AppRoutes = () => {
+    console.log(AuthRoute)
     return (
         <Routes>
+            {/* Auth Routing */}
             <Route element={<AuthLayout />}>
-                {/* {AuthRoutes.map((item)=>{ */}
-                <Route path="/" element={<Login />} />
-                <Route path="/singup" element={<Signup />} />
-                {/* })} */}
+                {
+                    AuthRoute.map((item, index) =>
+                        <Route key={index} path={item.path} element={item.element} />
+                    )
+                }
             </Route>
+
+            {/* main routing */}
+
+            <Route element={<RootLayout />}>
+                {MainRoutes.map((item,index) => <Route key={index} path={item.path} element={item.element} />)}
+            </Route>
+
         </Routes>
     )
 }
