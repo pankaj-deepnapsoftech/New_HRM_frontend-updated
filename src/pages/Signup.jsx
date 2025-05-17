@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [SignUp,{isLoading}] = useSignUpMutation()
+    const [SignUp, { isLoading }] = useSignUpMutation()
 
     const { handleBlur, handleSubmit, handleChange, resetForm, touched, errors, values } = useFormik({
         initialValues: {
@@ -18,9 +18,15 @@ const Signup = () => {
             user_name: "",
             employee_id: ""
         },
-        validationSchema: SignUpSchema ,
-        onSubmit: (values) => {
-            SignUp(values)
+        validationSchema: SignUpSchema,
+        onSubmit: async (values) => {
+            try{
+                const res = await SignUp(values).unwrap();
+                console.log(res);
+            }catch (error) {
+                console.log(error);
+            }
+            
             resetForm()
         }
 
@@ -121,8 +127,8 @@ const Signup = () => {
                             {touched.user_name && errors.user_name && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.user_name}</p>
                             )}
-                        </div>  
-                          <div>
+                        </div>
+                        <div>
                             <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="employee_id">Employee Id </label>
                             <input
                                 onChange={handleChange}
