@@ -31,7 +31,7 @@ const Signup = () => {
         }
 
     })
-
+ //
     return (
         <div className="min-h-screen w-1/2 flex bg-gray-100">
             <div className="w-full bg-white flex items-center justify-center p-10">
