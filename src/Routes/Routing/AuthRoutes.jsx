@@ -1,5 +1,6 @@
-import Login from "@/pages/Login";
-import Signup from "@/pages/Signup";
+import ForgotPassword from "@/pages/ForgotPassword";
+import Login from "@/pages/SignIn";
+import Signup from "@/pages/SignUp";
 
 export const AuthRoute = [
     {
@@ -9,6 +10,10 @@ export const AuthRoute = [
     {
         path: "/sign-up",
         element: <Signup />
+    },
+    {
+        path:"/forgot-password",
+        element:<ForgotPassword/>
     },
 
 ]
