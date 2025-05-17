@@ -1,37 +1,52 @@
 /* eslint-disable no-unused-vars */
+
 import { useSignUpMutation } from "@/service/Auth.services";
 import { SignUpSchema } from "@/Validation/SignUpValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import {
+    isMobile,
+    browserName,
+} from 'react-device-detect';
+
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [SignUp, { isLoading }] = useSignUpMutation()
+    const [SignUp, { isLoading }] = useSignUpMutation();
 
-    const { handleBlur, handleSubmit, handleChange, resetForm, touched, errors, values } = useFormik({
+    const {
+        handleBlur,
+        handleSubmit,
+        handleChange,
+        resetForm,
+        touched,
+        errors,
+        values
+    } = useFormik({
         initialValues: {
-            full_name: "",
+            fullName: "",
             email: "",
             password: "",
-            phone_no: "",
-            user_name: "",
-            employee_id: ""
+            phone: "",
+            username: "",
+            employeeId: "",
         },
         validationSchema: SignUpSchema,
-        onSubmit: async (values) => {
-            try{
-                const res = await SignUp(values).unwrap();
-                console.log(res);
-            }catch (error) {
-                console.log(error);
-            }
-            
-            resetForm()
-        }
 
-    })
- //
+        onSubmit: async (values) => {
+
+            const totalData = { ...values, isMobile, browser: browserName };
+            try {
+                const res = await SignUp(totalData).unwrap();
+               
+                resetForm();
+            } catch (error) {
+                console.error("Signup error:", error);
+            }
+        }
+    });
+
     return (
         <div className="min-h-screen w-1/2 flex bg-gray-100">
             <div className="w-full bg-white flex items-center justify-center p-10">
@@ -39,32 +54,34 @@ const Signup = () => {
                     <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
 
                     <form className="space-y-5" onSubmit={handleSubmit}>
+
                         <div>
-                            <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="name">Full Name</label>
+                            <label htmlFor="fullName" className="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
                             <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                value={values.fullName}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                type="text"
-                                id="full_name"
-                                value={values.full_name}
-                                name="full_name"
                                 placeholder="Enter your name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
-                            {touched.full_name && errors.full_name && (
-                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.full_name}</p>
+                            {touched.fullName && errors.fullName && (
+                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.fullName}</p>
                             )}
                         </div>
 
+
                         <div>
-                            <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="email">Email </label>
+                            <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700">Email</label>
                             <input
-                                onChange={handleChange}
-                                onBlur={handleBlur}
                                 type="email"
                                 id="email"
                                 name="email"
                                 value={values.email}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
                                 placeholder="you@example.com"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
@@ -73,16 +90,17 @@ const Signup = () => {
                             )}
                         </div>
 
+
                         <div className="relative">
-                            <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="password">Password</label>
+                            <label htmlFor="password" className="block mb-1 text-sm font-medium text-gray-700">Password</label>
                             <input
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                type={`${showPassword ? "text" : "password"}`}
+                                type={showPassword ? "text" : "password"}
                                 id="password"
-                                placeholder="* * * * * * *"
                                 name="password"
                                 value={values.password}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                placeholder="* * * * * * *"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
                             {touched.password && errors.password && (
@@ -91,73 +109,86 @@ const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-9  text-sm text-blue-600 cursor-pointer"
+                                className="absolute right-3 top-9 text-sm text-blue-600 cursor-pointer"
                             >
                                 {showPassword ? "HIDE" : "SHOW"}
                             </button>
                         </div>
+
+
                         <div>
-                            <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="phone_no">Phone No. </label>
+                            <label htmlFor="phone" className="block mb-1 text-sm font-medium text-gray-700">Phone No.</label>
                             <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                value={values.phone}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                type="phone_no"
-                                id="phone_no"
-                                value={values.phone_no}
-                                name="phone_no"
                                 placeholder="Enter your number"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
-                            {touched.phone_no && errors.phone_no && (
-                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.phone_no}</p>
+                            {touched.phone && errors.phone && (
+                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.phone}</p>
                             )}
                         </div>
+
+
                         <div>
-                            <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="user_name">User Name </label>
+                            <label htmlFor="username" className="block mb-1 text-sm font-medium text-gray-700">User Name</label>
                             <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={values.username}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                type="text"
-                                id="user_name"
-                                value={values.user_name}
-                                name="user_name"
                                 placeholder="Enter your user name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
-                            {touched.user_name && errors.user_name && (
-                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.user_name}</p>
+                            {touched.username && errors.username && (
+                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.username}</p>
                             )}
                         </div>
+
+
                         <div>
-                            <label className="block mb-1 text-sm font-medium text-gray-700" htmlFor="employee_id">Employee Id </label>
+                            <label htmlFor="employeeId" className="block mb-1 text-sm font-medium text-gray-700">Employee ID</label>
                             <input
+                                type="text"
+                                id="employeeId"
+                                name="employeeId"
+                                value={values.employeeId}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                type="text"
-                                id="employee_id"
-                                value={values.employee_id}
-                                placeholder="Enter your employee id"
+                                placeholder="Enter your employee ID"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
-                            {touched.employee_id && errors.employee_id && (
-                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.employee_id}</p>
+                            {touched.employeeId && errors.employeeId && (
+                                <p className="text-red-500 text-sm mt-1 ml-2">{errors.employeeId}</p>
                             )}
                         </div>
+
+
                         <div className="flex items-center text-sm text-gray-600">
                             <input
-                                onChange={handleChange}
-                                onBlur={handleBlur} type="checkbox" id="terms" className="mr-2" />
+                                type="checkbox"
+                                id="terms"
+                                name="terms"
+                                className="mr-2"
+                            />
                             <label htmlFor="terms">
                                 I agree to the <a href="#" className="text-blue-600 underline">Terms & Conditions</a>
                             </label>
                         </div>
+
 
                         <button
                             type="submit"
                             disabled={isLoading}
                             className="w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
                         >
-                            Sign Up
+                            {isLoading ? "Signing Up..." : "Sign Up"}
                         </button>
 
                         <div className="flex items-center justify-center my-6">
@@ -165,6 +196,7 @@ const Signup = () => {
                             <span className="px-3 text-sm text-gray-500">Or</span>
                             <div className="h-px bg-gray-300 w-full"></div>
                         </div>
+
 
                         {/* <button
                             type="button"
@@ -176,7 +208,7 @@ const Signup = () => {
                     </form>
 
                     <p className="text-sm text-gray-600 text-center mt-6">
-                        Already have an account? <NavLink to="/" className="text-blue-600 hover:underline">Sign In</NavLink >
+                        Already have an account? <NavLink to="/" className="text-blue-600 hover:underline">Sign In</NavLink>
                     </p>
                 </div>
             </div>

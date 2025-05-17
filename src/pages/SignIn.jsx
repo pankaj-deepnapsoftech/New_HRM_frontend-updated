@@ -1,21 +1,14 @@
+import { useSignInMutation } from "@/service/SignIn.services";
 import { SignInSchema } from "@/Validation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-    isMobile,
-    isTablet,
-    isBrowser,
-    deviceType,
-    browserName,
-    osName,
-    osVersion,
-    getUA
-} from 'react-device-detect';
+import { browserName, deviceType } from "react-device-detect";
+
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-
+    const [SignIn, { isLoading }] = useSignInMutation()
     const {
         handleBlur,
         handleChange,
@@ -26,24 +19,19 @@ const Login = () => {
         values
     } = useFormik({
         initialValues: {
-            userName_address: "",
+            username: "",
             password: ""
         },
         validationSchema: SignInSchema,
-        onSubmit: (values) => {
-           
-            console.log("Form Values:", values);
-            console.log("Device Info:", { 
-                deviceType,
-                browser: browserName,
-                OS: `${osName} ${osVersion}`,
-                isMobile,
-                isTablet,
-                isBrowser,
-                userAgent: getUA
-            }); 
-
-            resetForm();
+        onSubmit: async (values) => {
+            const totalData = { ...values, device: deviceType, browser: browserName }
+            try {
+                const res = await SignIn(totalData).unwrap()
+                console.log(totalData)
+                resetForm();
+            } catch (error) {
+                console.log(error)
+            }
         }
     });
 
@@ -52,22 +40,22 @@ const Login = () => {
             <div className="w-full max-w-md ">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Sign In</h2>
                 <form className="space-y-5" onSubmit={handleSubmit}>
-                        <div>
-                            <label className="text-gray-700 block mb-1" htmlFor="username">Username & Address</label>
-                            <input
-                                id="username"
-                                type="text"
-                                value={values.userName_address}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                name="userName_address"
-                                placeholder="Enter your username"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-                            />
-                            {touched.userName_address && errors.userName_address && (
-                                <p className="text-red-500 text-sm mt-1">{errors.userName_address}</p>
-                            )}
-                        </div>
+                    <div>
+                        <label className="text-gray-700 block mb-1" htmlFor="username">Username & Address</label>
+                        <input
+                            id="username"
+                            type="text"
+                            value={values.username}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name="username"
+                            placeholder="Enter your username"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+                        />
+                        {touched.username && errors.username && (
+                            <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+                        )}
+                    </div>
 
                     <div>
                         <label className="text-gray-700 block mb-1" htmlFor="password">Password</label>
@@ -104,6 +92,7 @@ const Login = () => {
 
                     <button
                         type="submit"
+                        disabled={isLoading}
                         className="cursor-pointer w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
                     >
                         Sign in

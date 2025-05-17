@@ -17,6 +17,13 @@ const ForgotPassword = () => {
                         />
                        
                     </div>
+                    <button
+                        type="submit"
+                      
+                        className="mt-4 w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
+                    >
+                        Submit
+                    </button>
                 </form>
             </div>
         </div>
