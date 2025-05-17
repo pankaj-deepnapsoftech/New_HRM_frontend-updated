@@ -6,7 +6,7 @@ import RootLayout from '@/Routes/Layouts/RootLayout'
 import { MainRoutes } from '@/Routes/Routing/MainRoutes'
 
 const AppRoutes = () => {
-    console.log(AuthRoute)
+
     return (
         <Routes>
             {/* Auth Routing */}

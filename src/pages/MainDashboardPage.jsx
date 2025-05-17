@@ -13,7 +13,7 @@ const MainDashboardPage = () => {
 
 
     <main className="flex-1 p-10">
-      {/* Search & Greeting */}
+  
       <div className="flex justify-between items-center mb-10">
         <div>
           <p className="text-sm text-gray-500 mb-1">{today}</p>
@@ -31,7 +31,7 @@ const MainDashboardPage = () => {
         />
       </div>
 
-      {/* Info Banner */}
+   
       <section className="flex justify-between items-center bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-3xl px-10 py-8 mb-10 shadow-lg">
         <div>
           <p className="opacity-80 text-sm mb-1">Important Notice</p>
