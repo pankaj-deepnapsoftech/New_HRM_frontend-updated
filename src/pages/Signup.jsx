@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useSignUpMutation } from "@/service/Auth.services";
 import { SignUpSchema } from "@/Validation/SignUpValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
@@ -6,6 +7,7 @@ import { NavLink } from "react-router-dom";
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [SignUp,{isLoading}] = useSignUpMutation()
 
     const { handleBlur, handleSubmit, handleChange, resetForm, touched, errors, values } = useFormik({
         initialValues: {
@@ -18,7 +20,7 @@ const Signup = () => {
         },
         validationSchema: SignUpSchema ,
         onSubmit: (values) => {
-            console.log(values)
+            SignUp(values)
             resetForm()
         }
 
@@ -146,6 +148,7 @@ const Signup = () => {
 
                         <button
                             type="submit"
+                            disabled={isLoading}
                             className="w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
                         >
                             Sign Up
