@@ -13,11 +13,8 @@
     "@tailwindcss/vite": "^4.1.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-<<<<<<< HEAD
     "react-router-dom": "^6.30.0",
-=======
     "react-icons": "^5.5.0",
->>>>>>> 3f60f0ac9049631c7c9a89f5deb17640eec69a5e
     "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
