@@ -24,10 +24,13 @@ import {
   GiTakeMyMoney,
 } from "react-icons/gi";
 import { FiAlertTriangle } from "react-icons/fi";
+import EmployeeTable from "@/pages/Employees";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
   const [payrollOpen, setPayrollOpen] = useState(false);
+  const navigator  = useNavigate()
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef(null);
 
@@ -67,32 +70,33 @@ const Sidebar = () => {
     {
       text: <span className="text-[1rem] font-semibold">Employees</span>,
       icon: <BsPersonCircle className="text-2xl " />,
-      path: "/employee-details",
+      path: "/employees",
+      element: <EmployeeTable/>
     },
    
     {
       text: <span className="text-[1rem] font-semibold">Projects</span>,
       icon: <HiOutlineDocumentReport className="text-1xl " />,
-      path: "/projects",
+     
     },
     {
       text: <span className="text-[1rem] font-semibold">Reports</span>,
       icon: <RiListSettingsLine className="text-2xl " />,
-      path: "/reports",
+     
     },
     {
       text: (
         <span className="text-[1rem] font-semibold">Update Leave Balance</span>
       ),
       icon: <MdPerson className="text-2xl " />,
-      path: "/employee/leave/changes",
+      
     },
     {
       text: (
         <span className="text-[1rem] font-semibold">Salary Management</span>
       ),
       icon: <RiMoneyRupeeCircleFill className="text-2xl " />,
-      path: "/employee/salary/management",
+      
     },
     {
       text: <span className="text-[1rem] font-semibold">Attendence</span>,

@@ -12,7 +12,7 @@ const MainDashboardPage = () => {
 
   return (
     <main className="flex-1 ">
-      <Header />
+   
       {/* Search & Greeting */}
       <section className="p-8">
         {/* <div className="flex justify-between items-center mb-6 "> 

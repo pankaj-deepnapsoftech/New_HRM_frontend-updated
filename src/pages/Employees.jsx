@@ -38,7 +38,7 @@ const employees = [
 
 const EmployeeTable = () => {
   return (
-    <div className="p-4">
+    <div className="p-4 w-full">
       <div className="flex gap-4 mb-4">
         <button className="bg-blue-600 text-white px-4 py-2 rounded">Register Employee</button>
         <button className="bg-blue-600 text-white px-4 py-2 rounded">Background Verification</button>
