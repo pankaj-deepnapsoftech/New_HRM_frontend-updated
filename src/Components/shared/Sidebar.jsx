@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaHome, FaFingerprint, FaBars } from "react-icons/fa";
 import { BsPersonCircle } from "react-icons/bs";
+
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import {
   RiListSettingsLine,
@@ -188,11 +189,11 @@ const Sidebar = () => {
         <button onClick={toggleSidebar}>
           <FaBars className="text-2xl text-black" />
         </button>
-      </div>  
+      </div>
 
       <aside
         ref={sidebarRef}
-        className={`fixed top-0 left-0 bottom-0  h-fit md:h-auto  w-40 md:w-64 bg-gradient-to-b from-purple-900 to-purple-700 text-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out
+        className={` fixed top-0 left-0 bottom-0  h-fit md:h-auto  w-40 md:w-64 bg-gradient-to-b from-purple-900 to-purple-700 text-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out
         ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:block`}
@@ -207,7 +208,7 @@ const Sidebar = () => {
             Deepnap Softech
           </h2>
         </div>
-        <nav className="flex flex-col space-y-3 md:px-4 font-medium text-xl">
+        <nav className=" relative flex flex-col space-y-3 md:px-4 font-medium text-xl">
           {menuItems.map((item, index) => (
             <div key={index}>
               <div
@@ -226,6 +227,7 @@ const Sidebar = () => {
                     >
                       {subItem.icon}
                       {subItem.text}
+
                     </div>
                   ))}
                 </div>
@@ -233,6 +235,15 @@ const Sidebar = () => {
             </div>
           ))}
         </nav>
+         <div className="w-full px-8 py-6">
+  <button
+    className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-tl from-purple-400 to-purple-300  text-white font-semibold rounded-lg transition duration-300"
+  >
+    
+    Logout
+  </button>
+</div> 
+       
       </aside>
     </>
   );

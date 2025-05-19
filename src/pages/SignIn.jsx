@@ -117,7 +117,6 @@ const Login = () => {
 
                     {/* Google Sign-in (commented) */}
                 </form>
-
                 <p className="text-sm text-gray-600 text-center mt-6">
                     Don’t have an account? <NavLink to="/sign-up" className="text-blue-600 hover:underline ">Sign Up</NavLink>
                 </p>
