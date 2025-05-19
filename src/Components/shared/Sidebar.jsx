@@ -23,10 +23,13 @@ import {
   GiTakeMyMoney,
 } from "react-icons/gi";
 import { FiAlertTriangle } from "react-icons/fi";
+import EmployeeTable from "@/pages/Employees";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
   const [payrollOpen, setPayrollOpen] = useState(false);
+  const navigate  = useNavigate()
 
   const handleAttendanceToggle = () => setAttendanceOpen(!attendanceOpen);
   const handlePayrollToggle = () => setPayrollOpen(!payrollOpen);
@@ -35,36 +38,37 @@ const Sidebar = () => {
     {
       text: <span className="text-[1rem]  font-semibold">Dashboard</span>,
       icon: <FaHome className="text-2xl " />,
-      path: "/home",
+      path: "/",
     },
     {
       text: <span className="text-[1rem] font-semibold">Employees</span>,
       icon: <BsPersonCircle className="text-2xl " />,
-      path: "/employee-details",
+      path: "/employees",
+      element: <EmployeeTable/>
     },
     {
       text: <span className="text-[1rem] font-semibold">Projects</span>,
       icon: <HiOutlineDocumentReport className="text-1xl " />,
-      path: "/projects",
+     
     },
     {
       text: <span className="text-[1rem] font-semibold">Reports</span>,
       icon: <RiListSettingsLine className="text-2xl " />,
-      path: "/reports",
+     
     },
     {
       text: (
         <span className="text-[1rem] font-semibold">Update Leave Balance</span>
       ),
       icon: <MdPerson className="text-2xl " />,
-      path: "/employee/leave/changes",
+      
     },
     {
       text: (
         <span className="text-[1rem] font-semibold">Salary Management</span>
       ),
       icon: <RiMoneyRupeeCircleFill className="text-2xl " />,
-      path: "/employee/salary/management",
+      
     },
     {
       text: <span className="text-[1rem] font-semibold">Attendence</span>,
@@ -162,7 +166,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 text-gray-200 flex flex-col px-4 py-2 shadow-lg bg-gradient-to-b from-purple-900 to-purple-700">
+    <aside className=" h-screen text-gray-200 flex flex-col px-4 py-2 shadow-lg bg-gradient-to-b from-purple-900 to-purple-700">
       <div className="flex items-center mb-5 relative right-4">
         <img
           src="/d logo.png"
@@ -173,13 +177,15 @@ const Sidebar = () => {
       </div>
       <nav className="flex flex-col space-y-3 font-medium text-xl">
         {menuItems.map((item, index) => (
-          <div key={index}>
+          <div key={index} onClick={()=>navigate(item.path)}>
             <div
               onClick={item.onClick || (() => {})}
               className="flex items-center gap-3 px-3 py-2 rounded-xl transition duration-300 hover:bg-gradient-to-r from-purple-600 to-purple-400 cursor-pointer"
             >
               {item.icon}
               {item.text}
+        
+              
             </div>
             {item.subMenu && (
               <div className="ml-6 mt-1 space-y-2">
