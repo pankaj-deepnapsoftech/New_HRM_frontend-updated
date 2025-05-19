@@ -57,13 +57,19 @@ const Sidebar = () => {
     {
       text: <span className="text-[1rem]  font-semibold">Dashboard</span>,
       icon: <FaHome className="text-2xl " />,
-      path: "/home",
+      path: "/",
+    },
+      {
+      text: <span className="text-[1rem] font-semibold">Emp Dashboard</span>,
+      icon: <BsPersonCircle className="text-2xl " />,
+      path: "/empdashboard",
     },
     {
       text: <span className="text-[1rem] font-semibold">Employees</span>,
       icon: <BsPersonCircle className="text-2xl " />,
       path: "/employee-details",
     },
+   
     {
       text: <span className="text-[1rem] font-semibold">Projects</span>,
       icon: <HiOutlineDocumentReport className="text-1xl " />,
@@ -210,7 +216,7 @@ const Sidebar = () => {
         </div>
         <nav className=" relative flex flex-col space-y-3 md:px-4 font-medium text-xl">
           {menuItems.map((item, index) => (
-            <div key={index}>
+            <div key={index}  onClick={() => navigator(item.path)}>
               <div
                 onClick={item.onClick || (() => {})}
                 className="flex items-center gap-3 px-3 py-2 rounded-xl transition duration-300 hover:bg-gradient-to-r from-purple-600 to-purple-400 cursor-pointer"
@@ -222,7 +228,8 @@ const Sidebar = () => {
                 <div className="ml-6 mt-1 space-y-2">
                   {item.subMenu.map((subItem, subIndex) => (
                     <div
-                      key={subIndex}
+                      key={subIndex} 
+                     
                       className="flex items-center gap-3 px-4 py-2 rounded-sm transition duration-300 hover:bg-purple-700 cursor-pointer"
                     >
                       {subItem.icon}
