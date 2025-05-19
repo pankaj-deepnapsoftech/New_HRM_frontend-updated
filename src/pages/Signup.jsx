@@ -9,6 +9,7 @@ import {
     isMobile,
     browserName,
 } from 'react-device-detect';
+import { toast } from "react-toastify";
 
 
 const Signup = () => {
@@ -39,10 +40,11 @@ const Signup = () => {
             const totalData = { ...values, isMobile, browser: browserName };
             try {
                 const res = await SignUp(totalData).unwrap();
-               
+               toast.success("Registration Successfully")
                 resetForm();
             } catch (error) {
                 console.error("Signup error:", error);
+                toast.error("Try again ")
             }
         }
     });

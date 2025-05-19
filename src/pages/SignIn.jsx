@@ -3,7 +3,7 @@ import { useSignInMutation } from "@/service/SignIn.services";
 import { SignInSchema } from "@/Validation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { browserName, deviceType } from "react-device-detect";
 import { toast } from "react-toastify";
 
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [SignIn, { isLoading }] = useSignInMutation()
+    const navigate = useNavigate()
     const {
         handleBlur,
         handleChange,
@@ -30,6 +31,7 @@ const Login = () => {
             try {
                 const res = await SignIn(totalData).unwrap()
               toast.success("Login Successfully")
+              navigate('/dashboard')
                 resetForm();
             } catch (error) {
                 console.log(error)
