@@ -1,8 +1,9 @@
-import Sidebar from '@/Components/shared/Sidebar'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import Sidebar from '@/Components/shared/Sidebar';
+import { Outlet } from 'react-router-dom';
 
 const RootLayout = () => {
+
+
     return (
         <main className="flex min-h-screen font-sans bg-gray-50 text-gray-800">
             <Sidebar />

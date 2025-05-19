@@ -9,6 +9,9 @@ import {
     isMobile,
     browserName,
 } from 'react-device-detect';
+import { toast } from "react-toastify";
+import { MdRemoveRedEye } from "react-icons/md";
+import { LuEyeClosed } from "react-icons/lu";
 
 
 const Signup = () => {
@@ -39,10 +42,11 @@ const Signup = () => {
             const totalData = { ...values, isMobile, browser: browserName };
             try {
                 const res = await SignUp(totalData).unwrap();
-               
+               toast.success(res.message)
                 resetForm();
             } catch (error) {
                 console.error("Signup error:", error);
+                toast.error( error.data.message || "Try again " );
             }
         }
     });
@@ -109,9 +113,9 @@ const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-9 text-sm text-blue-600 cursor-pointer"
+                                className="absolute right-3 top-9 text-md text-blue-600 cursor-pointer"
                             >
-                                {showPassword ? "HIDE" : "SHOW"}
+                                {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                             </button>
                         </div>
 

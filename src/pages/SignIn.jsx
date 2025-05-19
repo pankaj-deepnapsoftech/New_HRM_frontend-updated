@@ -1,16 +1,22 @@
-/* eslint-disable no-unused-vars */
-import { useSignInMutation } from "@/service/SignIn.services";
 import { SignInSchema } from "@/Validation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { browserName, deviceType } from "react-device-detect";
 import { toast } from "react-toastify";
+import { useSignInMutation } from "@/service/Auth.services";
+import { useDispatch } from "react-redux";
+import { setLoginState } from "@/store/slice/AuthSlice";
+import { LuEyeClosed } from "react-icons/lu";
+import { MdRemoveRedEye } from "react-icons/md";
 
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [SignIn, { isLoading }] = useSignInMutation()
+    const [SignIn, { isLoading }] = useSignInMutation();
+    const navigate = useNavigate();
+    const dispatch=useDispatch()
+
     const {
         handleBlur,
         handleChange,
@@ -28,14 +34,14 @@ const Login = () => {
         onSubmit: async (values) => {
             const totalData = { ...values, device: deviceType, browser: browserName }
             try {
-                const res = await SignIn(totalData).unwrap()
-              toast.success("Login Successfully")
+                const res = await SignIn(totalData).unwrap();
+                toast.success(res.message);
+                navigate('/');
                 resetForm();
-                console.log(res);
-                
+                dispatch(setLoginState())
             } catch (error) {
                 console.log(error)
-               toast.error("Login Faild ")
+                toast.error(error.data.message)
             }
         }
     });
@@ -54,7 +60,7 @@ const Login = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name="username"
-                            placeholder="Enter your username"
+                            placeholder="Enter your username & email"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
                         />
                         {touched.username && errors.username && (
@@ -81,9 +87,9 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-3 text-sm text-blue-600 hover:underline"
+                                className="absolute right-3 top-3 text-md text-blue-600 hover:underline cursor-pointer"
                             >
-                                {showPassword ? "HIDE" : "SHOW"}
+                                {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                             </button>
                         </div>
                     </div>
