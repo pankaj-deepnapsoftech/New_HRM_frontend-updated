@@ -1,5 +1,4 @@
 import Header from "@/Components/Header";
-import Sidebar from "@/Components/shared/Sidebar";
 import React from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";

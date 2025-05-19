@@ -40,11 +40,11 @@ const Signup = () => {
             const totalData = { ...values, isMobile, browser: browserName };
             try {
                 const res = await SignUp(totalData).unwrap();
-               toast.success("Registration Successfully")
+               toast.success(res.message)
                 resetForm();
             } catch (error) {
                 console.error("Signup error:", error);
-                toast.error("Try again ")
+                toast.error( error.data.message || "Try again " );
             }
         }
     });

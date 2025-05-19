@@ -1,17 +1,20 @@
-/* eslint-disable no-unused-vars */
-import { useSignInMutation } from "@/service/SignIn.services";
 import { SignInSchema } from "@/Validation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { browserName, deviceType } from "react-device-detect";
 import { toast } from "react-toastify";
+import { useSignInMutation } from "@/service/Auth.services";
+import { useDispatch } from "react-redux";
+import { setLoginState } from "@/store/slice/AuthSlice";
 
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [SignIn, { isLoading }] = useSignInMutation()
-    const navigate = useNavigate()
+    const [SignIn, { isLoading }] = useSignInMutation();
+    const navigate = useNavigate();
+    const dispatch=useDispatch()
+
     const {
         handleBlur,
         handleChange,
@@ -29,13 +32,14 @@ const Login = () => {
         onSubmit: async (values) => {
             const totalData = { ...values, device: deviceType, browser: browserName }
             try {
-                const res = await SignIn(totalData).unwrap()
-              toast.success("Login Successfully")
-              navigate('/dashboard')
+                const res = await SignIn(totalData).unwrap();
+                toast.success(res.message);
+                navigate('/');
                 resetForm();
+                dispatch(setLoginState())
             } catch (error) {
                 console.log(error)
-               toast.error("Login Faild ")
+                toast.error(error.data.message)
             }
         }
     });
