@@ -10,6 +10,8 @@ import {
     browserName,
 } from 'react-device-detect';
 import { toast } from "react-toastify";
+import { MdRemoveRedEye } from "react-icons/md";
+import { LuEyeClosed } from "react-icons/lu";
 
 
 const Signup = () => {
@@ -111,9 +113,9 @@ const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-9 text-sm text-blue-600 cursor-pointer"
+                                className="absolute right-3 top-9 text-md text-blue-600 cursor-pointer"
                             >
-                                {showPassword ? "HIDE" : "SHOW"}
+                                {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                             </button>
                         </div>
 
