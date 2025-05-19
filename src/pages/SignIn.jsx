@@ -31,6 +31,8 @@ const Login = () => {
                 const res = await SignIn(totalData).unwrap()
               toast.success("Login Successfully")
                 resetForm();
+                console.log(res);
+                
             } catch (error) {
                 console.log(error)
                toast.error("Login Faild ")
