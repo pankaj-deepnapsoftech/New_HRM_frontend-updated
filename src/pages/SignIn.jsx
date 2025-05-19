@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { useSignInMutation } from "@/service/Auth.services";
 import { useDispatch } from "react-redux";
 import { setLoginState } from "@/store/slice/AuthSlice";
+import { LuEyeClosed } from "react-icons/lu";
+import { MdRemoveRedEye } from "react-icons/md";
 
 
 const Login = () => {
@@ -58,7 +60,7 @@ const Login = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name="username"
-                            placeholder="Enter your username"
+                            placeholder="Enter your username & email"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
                         />
                         {touched.username && errors.username && (
@@ -85,9 +87,9 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-3 text-sm text-blue-600 hover:underline"
+                                className="absolute right-3 top-3 text-md text-blue-600 hover:underline cursor-pointer"
                             >
-                                {showPassword ? "HIDE" : "SHOW"}
+                                {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                             </button>
                         </div>
                     </div>
