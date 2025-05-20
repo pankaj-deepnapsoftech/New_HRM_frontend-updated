@@ -14,6 +14,8 @@ const AppRoutes = () => {
     const dispatch = useDispatch();
     const {Auth} = useSelector((state) => state);
 
+    console.log(Auth)
+
     useEffect(() => {
         if (data?.data) {
             dispatch(addData(data.data));
@@ -21,12 +23,14 @@ const AppRoutes = () => {
     }, [data, dispatch]);
 
     useEffect(() => {
-          if (Auth.isLogin) {
+        if (Auth.isLogin || !Auth.isLogin) {
+            console.log("this is call again")
             refetch(); 
         };
     },[Auth.isLogin,refetch])
 
     if(isLoading){
+        
         return <p>loading...</p>
     }
 

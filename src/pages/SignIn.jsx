@@ -61,7 +61,7 @@ const Login = () => {
                             onBlur={handleBlur}
                             name="username"
                             placeholder="Enter your username & email"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300"
                         />
                         {touched.username && errors.username && (
                             <p className="text-red-500 text-sm mt-1">{errors.username}</p>
@@ -79,7 +79,7 @@ const Login = () => {
                                 name="password"
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter your password"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.password && errors.password && (
                                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
@@ -87,7 +87,7 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-3 text-md text-blue-600 hover:underline cursor-pointer"
+                                className="absolute right-3 top-3 text-md text-sky-600 hover:underline cursor-pointer"
                             >
                                 {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                             </button>
@@ -98,13 +98,13 @@ const Login = () => {
                         <label className="flex items-center text-gray-700">
                             <input type="checkbox" className="mr-2" /> Remember me
                         </label>
-                        <NavLink to="/forgot-password" className="text-blue-600 hover:underline">Forgot Password?</NavLink>
+                        <NavLink to="/forgot-password" className="text-sky-600 hover:underline">Forgot Password?</NavLink>
                     </div>
 
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="cursor-pointer w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
+                        className="cursor-pointer w-full py-2 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-lg hover:opacity-90 transition"
                     >
                         Sign in
                     </button>
@@ -118,7 +118,7 @@ const Login = () => {
                     {/* Google Sign-in (commented) */}
                 </form>
                 <p className="text-sm text-gray-600 text-center mt-6">
-                    Don’t have an account? <NavLink to="/sign-up" className="text-blue-600 hover:underline ">Sign Up</NavLink>
+                    Don’t have an account? <NavLink to="/sign-up" className="text-sky-600 hover:underline ">Sign Up</NavLink>
                 </p>
             </div>
         </div>

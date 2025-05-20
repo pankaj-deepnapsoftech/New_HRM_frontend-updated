@@ -40,12 +40,12 @@ const EmployeeTable = () => {
   return (
     <div className="p-4 w-full">
       <div className="flex gap-4 mb-4">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Register Employee</button>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Background Verification</button>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Bank Account</button>
+        <button className="bg-sky-600 text-white px-4 py-2 rounded">Register Employee</button>
+        <button className="bg-sky-600 text-white px-4 py-2 rounded">Background Verification</button>
+        <button className="bg-sky-600 text-white px-4 py-2 rounded">Bank Account</button>
       </div>
 
-      <div className="bg-blue-600 text-white text-center py-2 rounded-t">
+      <div className="bg-sky-600 text-white text-center py-2 rounded-t">
         <h2 className="text-xl font-bold">Employee Details</h2>
       </div>
 
@@ -66,12 +66,12 @@ const EmployeeTable = () => {
             <tr key={idx} className="border-t border-gray-200">
               <td className="p-2">{emp.name}</td>
               <td className="p-2">{emp.email}</td>
-              <td className="p-2 text-blue-600 cursor-pointer">View<br />Location</td>
+              <td className="p-2 text-sky-600 cursor-pointer">View<br />Location</td>
               <td className="p-2">{emp.department}</td>
               <td className="p-2">{emp.designation}</td>
               <td className="p-2">{emp.empCode}</td>
               <td className="p-2 flex gap-2">
-                <FaEye className="text-blue-500 cursor-pointer" />
+                <FaEye className="text-sky-500 cursor-pointer" />
                 <FaEdit className="text-green-500 cursor-pointer" />
                 <FaTrash className="text-red-500 cursor-pointer" />
               </td>

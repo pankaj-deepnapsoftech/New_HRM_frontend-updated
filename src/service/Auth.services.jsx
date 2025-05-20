@@ -25,10 +25,45 @@ const AuthApi = Api.injectEndpoints({
             providesTags: ["Auth"]
         }),
 
-        LogedInuser:build.query({
-           query:()=>"/user/loged-in-user",
-           invalidatesTags:["Auth"]
-        })
+        LogedInuser: build.query({
+            query: () => "/user/loged-in-user",
+            invalidatesTags: ["Auth"]
+        }),
+        
+        LogoutUser: build.mutation({
+            query() {
+                return {
+                    url: "/user/logout",
+                    method: "GET"
+                }
+            },
+            providesTags: ["Auth"]
+        }),
+
+        ForgotPassword: build.mutation({
+            query(body) {
+                return {
+                    url: "/user/forget-password",
+                    method: "POST",
+                    body,
+                };
+            },
+            providesTags: ["Auth"],
+        }),
+        
+        ChangePassword: build.mutation({
+            query(body) {
+                return {
+                    url: "/user/change-password",
+                    method: "PUT",
+                    body
+                };
+            },
+            providesTags: ["Auth"]
+        }),
+          
+        
+
     })
 })
 
@@ -36,5 +71,8 @@ const AuthApi = Api.injectEndpoints({
 export const {
     useSignUpMutation,
     useSignInMutation,
-    useLogedInuserQuery
+    useLogedInuserQuery,
+    useLogoutUserMutation,
+    useForgotPasswordMutation,
+    useChangePasswordMutation,
 } = AuthApi;

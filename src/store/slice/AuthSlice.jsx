@@ -18,8 +18,10 @@ export const AuthSlice = createSlice({
             state.fullName = action.payload.fullName;
             state.phone = action.payload.phone;
             state.username = action.payload.username;
+            state.isLogin = true;
         },
         removeData:(state)=>{
+            console.log("this is only for testing")
             state.email = "";
             state.fullName = "";
             state.phone = "";

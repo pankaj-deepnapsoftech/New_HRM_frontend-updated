@@ -25,7 +25,15 @@ import {
 } from "react-icons/gi";
 import { FiAlertTriangle } from "react-icons/fi";
 import EmployeeTable from "@/pages/Employees";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useLogoutUserMutation } from "@/service/Auth.services";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { removeData } from "@/store/slice/AuthSlice";
+import EmployeesReports from "@/pages/EmployeesReports";
+import DailyAttendance from "@/pages/DailyAttendance";
+import AllAttendence from "@/pages/AllAttendence";
+
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -33,10 +41,23 @@ const Sidebar = () => {
   const navigate  = useNavigate()
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef(null);
-
   const handleAttendanceToggle = () => setAttendanceOpen(!attendanceOpen);
   const handlePayrollToggle = () => setPayrollOpen(!payrollOpen);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
+  const [LogoutUser,{isLoading}] = useLogoutUserMutation();
+  const dispatch = useDispatch();
+  const location = useLocation()
+  const currPath = location.pathname ;
+const handleLogout = async()=>{
+  try {
+    const res = await LogoutUser().unwrap();
+    dispatch(removeData());
+    window.location.href = "/"
+    toast.success(res.message);
+  } catch (error) {
+    toast.error(error.data.message);
+  }
+}
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -76,14 +97,15 @@ const Sidebar = () => {
     {
       text: <span className="text-[1rem] font-semibold">Reports</span>,
       icon: <RiListSettingsLine className="text-2xl " />,
-     
+      path:"/employees-reports",
+      element:<EmployeesReports/>
     },
     {
       text: (
         <span className="text-[1rem] font-semibold">Update Leave Balance</span>
       ),
       icon: <MdPerson className="text-2xl " />,
-      
+ 
     },
     {
       text: (
@@ -102,14 +124,16 @@ const Sidebar = () => {
             <span className="text-[1rem] font-semibold">Daily Attendence</span>
           ),
           icon: <MdCoPresent className="text-xl mr-2" />,
-          path: "/employee/daily/attendance",
+          path: "/empyloyees-attendence",
+          element:<DailyAttendance/>
         },
         {
           text: (
             <span className="text-[1rem] font-semibold">All Attendance</span>
           ),
           icon: <FaFingerprint className="text-2xl mr-2" />,
-          path: "/employee/all/attendence",
+          path: "/all-attendence",
+          element:<AllAttendence/>
         },
         {
           text: <span className="text-[1rem] font-semibold">All Leave</span>,
@@ -196,8 +220,8 @@ const Sidebar = () => {
       </div>
 
       <aside
-        ref={sidebarRef}
-        className={` fixed top-0 left-0 bottom-0  h-fit md:h-auto  w-40 md:w-64 bg-gradient-to-b from-purple-900 to-purple-700 text-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out
+        ref={sidebarRef} 
+        className={` fixed top-0 left-0 bottom-0  h-full md:h-screen  w-40 md:w-64 bg-gradient-to-r from-[#683294c2] to-[#55287ac2] text-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out
         ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:block`}
@@ -213,37 +237,58 @@ const Sidebar = () => {
           </h2>
         </div>
         <nav className=" relative flex flex-col space-y-3 md:px-4 font-medium text-xl">
-          {menuItems.map((item, index) => (
-            <div key={index} onClick={() => navigate(item.path)}>
-              <div
-                onClick={item.onClick || (() => {})}
-                className="flex items-center gap-3 px-3 py-2 rounded-xl transition duration-300 hover:bg-gradient-to-r from-purple-600 to-purple-400 cursor-pointer"
-              >
-                {item.icon}
-                {item.text}
-              </div>
-              {item.subMenu && (
-                <div className="ml-6 mt-1 space-y-2">
-                  {item.subMenu.map((subItem, subIndex) => (
-                    <div
-                      key={subIndex}
-                      className="flex items-center gap-3 px-4 py-2 rounded-sm transition duration-300 hover:bg-purple-700 cursor-pointer"
-                    >
-                      {subItem.icon}
-                      {subItem.text}
+          {menuItems.map((item, index) => {
+            const isActive = item.path && currPath === item.path;
 
-                    </div>
-                  ))}
+            return (
+              <div key={index}>
+                <div
+                  onClick={() => {
+                    if (item.path) navigate(item.path);
+                    if (item.onClick) item.onClick();
+                  }}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-xl transition duration-300 cursor-pointer ${isActive
+                      ? "bg-[#ffffff3f] font-bold shadow-md"
+                    : "hover:bg-gradient-to-r from-[#35353554]  to-[#29292954]"
+                    }`}
+                >
+                  {item.icon}
+                  {item.text}
                 </div>
-              )}
-            </div>
-          ))}
+
+                {/* Submenu rendering */}
+                {item.subMenu && (
+                  <div className="ml-6 mt-1 space-y-2">
+                    {item.subMenu.map((subItem, subIndex) => {
+                      const isSubActive = currPath === subItem.path;
+                      return (
+                        <div
+                          key={subIndex}
+                          onClick={() => navigate(subItem.path)}
+                          className={`flex items-center gap-3 px-4 py-2 rounded-sm transition duration-300 cursor-pointer ${isSubActive
+                            ? "bg-[#ffffff54] font-semibold"
+                            : "hover:bg-[#ffffff54]"
+                            }`}
+                        >
+                          {subItem.icon}
+                          {subItem.text}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
         </nav>
          <div className="w-full px-8 py-6">
   <button
-    className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-tl from-purple-400 to-purple-300  text-white font-semibold rounded-lg transition duration-300"
+            className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-tl from-[#ffffff54] to-[#ebebeb81]  text-white font-semibold rounded-lg transition duration-300"
+            onClick={handleLogout}
+            disabled={isLoading}
   >
-    
+      
     Logout
   </button>
 </div> 

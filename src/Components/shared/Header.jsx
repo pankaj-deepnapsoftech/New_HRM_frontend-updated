@@ -21,12 +21,12 @@ const Header = ({ toggleSidebar }) => {
           <input
             type="search"
             placeholder="Type to search..."
-            className="w-full pl-10 pr-10 py-2  border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full pl-10 pr-10 py-2  border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
-          {/* <div className="bg-purple-500 ">
+          {/* <div className="bg-sky-500 ">
             <IoSearchSharp className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800 " />
           </div> */}
-          <div className="px-3 flex items-center justify-center border border-purple-400">
+          <div className="px-3 flex items-center justify-center border border-gray-400">
             <IoSearchSharp className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800 " />
           </div>
         </div>
@@ -35,13 +35,13 @@ const Header = ({ toggleSidebar }) => {
       {/* Right Section: Notification & User */}
       <div className="flex items-center gap-4 ml-auto">
         <div className="bg-[#d5bbf083] w-10 h-10 flex items-center justify-center rounded-full">
-          <FaRegBell className="text-purple-900 text-xl" />
+          <FaRegBell className="text-sky-900 text-xl" />
         </div>
 
         <div className="relative">
           <div
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="bg-[#d5bbf083] text-purple-900 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+            className="bg-[#d5bbf083] text-sky-900 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
           >
             DK
           </div>

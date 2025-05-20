@@ -21,20 +21,20 @@ const MainDashboardPage = () => {
           <input
             type="search"
             placeholder="Type to search..."
-            className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-sky-500"
 
           /><FaMicrophone className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800"/>
         </div>
       </div> */}
 
         {/* Info Banner */}
-        <section className="flex justify-between items-center bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-3xl px-12 py-8 mb-10 shadow-lg">
+        <section className="flex justify-between items-center bg-gradient-to-r from-[#592d7ec2] to-[#8540bdc2] text-white rounded-3xl px-12 py-8 mb-10 shadow-lg">
           <div>
-            <p className="text-sm text-gray-200 mb-3">{today}</p>
-            <h1 className="text-3xl font-bold text-gray-300 mb-2">
-              Welcome back, <span className="text-purple-200">John</span> 👋
+            <p className="text-sm text-white mb-3">{today}</p>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              Welcome back, <span className="text-white">John</span> 👋
             </h1>
-            <p className="text-gray-300 mt-1">
+            <p className="text-white mt-1">
               Here’s what’s happening today in your portal.
             </p>
           </div>
@@ -54,20 +54,20 @@ const MainDashboardPage = () => {
                 {
                   label: "Total Enrollments",
                   value: "4",
-                  bg: "bg-purple-100",
+                  bg: "bg-[#592d7ea1]",
 
                 },
                 {
                   label: "Total Projects",
                   value: "1",
-                  bg: "bg-purple-100",
+                  bg: "bg-[#592d7ea1]",
                 },
-                { label: "Present", value: "0", bg: "bg-purple-100" },
-                { label: "Absent", value: "0", bg: "bg-purple-100" },
+                { label: "Present", value: "0", bg: "bg-[#592d7ea1]" },
+                { label: "Absent", value: "0", bg: "bg-[#592d7ea1]" },
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`rounded-3xl w-[180px]  text-center  font-semibold p-6 ${item.bg} hover:bg-purple-50   hover:shadow-lg text-purple-900 shadow hover:border-purple-900 hover:border-2  transition-all duration-300`}
+                  className={`rounded-3xl w-[180px]  text-center  font-semibold p-6 ${item.bg} hover:scale-110   hover:shadow-lg text-white shadow-2xl   transition-all duration-300`}
                 >
                   <p>{item.label}</p>
                   <p className="text-3xl mt-3">{item.value}</p>
@@ -76,14 +76,14 @@ const MainDashboardPage = () => {
             </div>
            <div className="p-4 ">
   {/* Title */}
-  {/* <div className="bg-purple-500 text-white text-xl font-semibold px-6 py-4 rounded-t-lg shadow-md text-center">
+  {/* <div className="bg-sky-500 text-white text-xl font-semibold px-6 py-4 rounded-t-lg shadow-md text-center">
     Employee Dashboard
   </div> */}
 
   {/* Table */}
   {/* <div className="overflow-x-auto shadow-lg rounded-b-lg">
     <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-purple-300 text-gray-700 text-sm font-semibold uppercase">
+      <thead className="bg-sky-300 text-gray-700 text-sm font-semibold uppercase">
         <tr>
           <th className="px-6 py-3 text-left">Full Name</th>
           <th className="px-6 py-3 text-left">Department</th>
@@ -102,7 +102,7 @@ const MainDashboardPage = () => {
           <td className="px-6 py-4">5,000</td>
           <td className="px-6 py-4">2/26/2025</td>
         </tr>
-        <tr className="bg-purple-100">
+        <tr className="bg-sky-100">
           <td className="px-6 py-4">abhi pjpt</td>
           <td className="px-6 py-4">IT</td>
           <td className="px-6 py-4">Manager</td>
@@ -118,7 +118,7 @@ const MainDashboardPage = () => {
           <td className="px-6 py-4">10,000</td>
           <td className="px-6 py-4">3/1/2025</td>
         </tr>
-        <tr className="bg-purple-100">
+        <tr className="bg-sky-100">
           <td className="px-6 py-4">Deepak Sharma</td>
           <td className="px-6 py-4">Sales</td>
           <td className="px-6 py-4">Boss</td>

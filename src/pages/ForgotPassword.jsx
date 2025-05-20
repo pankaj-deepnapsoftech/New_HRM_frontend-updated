@@ -1,16 +1,25 @@
+import { useForgotPasswordMutation } from '@/service/Auth.services'
 import { ForgotPasswordSchema } from '@/Validation/ForgotPasswordValidation'
 import { useFormik } from 'formik'
 import React from 'react'
 
 const ForgotPassword = () => {
+
+    const [ForgotPassword, {isLoading} ] = useForgotPasswordMutation()
+    
     const { handleSubmit, handleBlur, handleChange, resetForm, touched, errors, values } = useFormik({
         initialValues: {
             email: ""
         },
         validationSchema: ForgotPasswordSchema,
-        onSubmit: (values) => {
-            console.log(values)
-            resetForm()
+        onSubmit: async(values) => {
+          try {
+              const res = await ForgotPassword(values).unwrap()
+              console.log(res)
+              resetForm()
+          } catch (error) {
+            console.log(error)
+          }
         }
     })
     return (
@@ -33,7 +42,7 @@ const ForgotPassword = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             placeholder="you@example.com"
-                            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+                            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent transition"
                         />
                         {touched.email && errors.email && (
                             <p className="mt-2 text-sm text-red-600">{errors.email}</p>
@@ -42,7 +51,8 @@ const ForgotPassword = () => {
 
                     <button
                         type="submit"
-                        className="cursor-pointer w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
+                        disabled={isLoading}
+                        className="cursor-pointer w-full py-2 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-lg hover:opacity-90 transition"
                     >
                         Send
                     </button>

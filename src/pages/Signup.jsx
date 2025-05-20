@@ -4,7 +4,7 @@ import { useSignUpMutation } from "@/service/Auth.services";
 import { SignUpSchema } from "@/Validation/SignUpValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
     isMobile,
     browserName,
@@ -12,11 +12,15 @@ import {
 import { toast } from "react-toastify";
 import { MdRemoveRedEye } from "react-icons/md";
 import { LuEyeClosed } from "react-icons/lu";
+import { setLoginState } from "@/store/slice/AuthSlice";
+import { useDispatch } from "react-redux";
 
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [SignUp, { isLoading }] = useSignUpMutation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         handleBlur,
@@ -25,7 +29,7 @@ const Signup = () => {
         resetForm,
         touched,
         errors,
-        values
+        values 
     } = useFormik({
         initialValues: {
             fullName: "",
@@ -34,6 +38,7 @@ const Signup = () => {
             phone: "",
             username: "",
             employeeId: "",
+            role:"User"
         },
         validationSchema: SignUpSchema,
 
@@ -44,6 +49,8 @@ const Signup = () => {
                 const res = await SignUp(totalData).unwrap();
                toast.success(res.message)
                 resetForm();
+                dispatch(setLoginState())
+                navigate("/")
             } catch (error) {
                 console.error("Signup error:", error);
                 toast.error( error.data.message || "Try again " );
@@ -55,10 +62,8 @@ const Signup = () => {
         <div className="min-h-screen w-1/2 flex bg-gray-100">
             <div className="w-full bg-white flex items-center justify-center p-10">
                 <div className="w-full max-w-md">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
-
+                    <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2> 
                     <form className="space-y-5" onSubmit={handleSubmit}>
-
                         <div>
                             <label htmlFor="fullName" className="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
                             <input
@@ -69,14 +74,12 @@ const Signup = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="Enter your name"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.fullName && errors.fullName && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.fullName}</p>
                             )}
                         </div>
-
-
                         <div>
                             <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700">Email</label>
                             <input
@@ -87,7 +90,7 @@ const Signup = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="you@example.com"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.email && errors.email && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.email}</p>
@@ -105,7 +108,7 @@ const Signup = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="* * * * * * *"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.password && errors.password && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.password}</p>
@@ -113,13 +116,11 @@ const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-9 text-md text-blue-600 cursor-pointer"
+                                className="absolute right-3 top-9 text-md text-sky-600 cursor-pointer"
                             >
                                 {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                             </button>
                         </div>
-
-
                         <div>
                             <label htmlFor="phone" className="block mb-1 text-sm font-medium text-gray-700">Phone No.</label>
                             <input
@@ -130,7 +131,7 @@ const Signup = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="Enter your number"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.phone && errors.phone && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.phone}</p>
@@ -139,7 +140,7 @@ const Signup = () => {
 
 
                         <div>
-                            <label htmlFor="username" className="block mb-1 text-sm font-medium text-gray-700">User Name</label>
+                            <label htmlFor="username" className="block mb-1 text-sm font-medium text-gray-700">Username</label>
                             <input
                                 type="text"
                                 id="username"
@@ -148,13 +149,12 @@ const Signup = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="Enter your user name"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.username && errors.username && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.username}</p>
                             )}
                         </div>
-
 
                         <div>
                             <label htmlFor="employeeId" className="block mb-1 text-sm font-medium text-gray-700">Employee ID</label>
@@ -166,7 +166,7 @@ const Signup = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="Enter your employee ID"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-300"
                             />
                             {touched.employeeId && errors.employeeId && (
                                 <p className="text-red-500 text-sm mt-1 ml-2">{errors.employeeId}</p>
@@ -182,7 +182,7 @@ const Signup = () => {
                                 className="mr-2"
                             />
                             <label htmlFor="terms">
-                                I agree to the <a href="#" className="text-blue-600 underline">Terms & Conditions</a>
+                                I agree to the <a href="#" className="text-sky-600 underline">Terms & Conditions</a>
                             </label>
                         </div>
 
@@ -190,7 +190,7 @@ const Signup = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition"
+                            className="w-full py-2 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-lg hover:opacity-90 transition"
                         >
                             {isLoading ? "Signing Up..." : "Sign Up"}
                         </button>
@@ -202,17 +202,10 @@ const Signup = () => {
                         </div>
 
 
-                        {/* <button
-                            type="button"
-                            className="w-full py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition flex items-center justify-center gap-2"
-                        >
-                            <img className="w-5 h-5" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="Google logo" />
-                            Sign up with Google
-                        </button> */}
                     </form>
 
                     <p className="text-sm text-gray-600 text-center mt-6">
-                        Already have an account? <NavLink to="/" className="text-blue-600 hover:underline">Sign In</NavLink>
+                        Already have an account? <NavLink to="/" className="text-sky-600 hover:underline">Sign In</NavLink>
                     </p>
                 </div>
             </div>
