@@ -9,7 +9,9 @@ const Header = ({ toggleSidebar }) => {
 
   return (
     <div className="w-full h-16 border-b border-gray-400 shadow-md shadow-neutral-400 bg-white px-4 sm:px-6 md:px-10 flex items-center justify-between">
+    
       <div className="flex items-center gap-4">
+        
         <div className="md:hidden">
           <button onClick={toggleSidebar}>
             <FaBars className="text-2xl text-black" />
@@ -17,19 +19,18 @@ const Header = ({ toggleSidebar }) => {
         </div>
 
         {/* Search Bar */}
-        <div className="relative w-52 sm:w-64 md:w-72">
-          <input
-            type="search"
-            placeholder="Type to search..."
-            className="w-full pl-10 pr-10 py-2  border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-sky-500"
-          />
-          {/* <div className="bg-sky-500 ">
-            <IoSearchSharp className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800 " />
-          </div> */}
-          <div className="px-3 flex items-center justify-center border border-gray-400">
-            <IoSearchSharp className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800 " />
-          </div>
-        </div>
+       <div className="relative w-52 sm:w-64 md:w-72 right-4">
+  <input
+    type="search"
+    placeholder="Type to Search..."
+    className="w-full pl-4 pr-12 py-1.5 border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-md"
+  />
+  
+  <div className="absolute right-0 top-0 bottom-0 bg-[#9197ff] px-3 flex items-center justify-center rounded-tr rounded-br cursor-pointer">
+    <IoSearchSharp className="text-white text-lg" />
+  </div>
+</div>
+
       </div>
 
       {/* Right Section: Notification & User */}

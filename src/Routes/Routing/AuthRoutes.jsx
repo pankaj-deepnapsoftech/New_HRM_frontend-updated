@@ -1,6 +1,6 @@
-import ForgotPassword from "@/pages/ForgotPassword";
-import Login from "@/pages/SignIn";
-import Signup from "@/pages/SignUp";
+import ForgotPassword from "@/pages/Auth/ForgotPassword";
+import Login from "@/pages/Auth/SignIn";
+import Signup from "@/pages/Auth/Signup";
 
 export const AuthRoute = [
     {
