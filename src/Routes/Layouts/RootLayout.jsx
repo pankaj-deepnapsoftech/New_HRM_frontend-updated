@@ -1,4 +1,4 @@
-import Header from '@/Components/Header';
+import Header from '@/Components/shared/Header';
 import Sidebar from '@/Components/shared/Sidebar';
 import { Outlet } from 'react-router-dom';
 

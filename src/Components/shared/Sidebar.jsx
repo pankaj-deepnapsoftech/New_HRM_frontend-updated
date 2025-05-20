@@ -26,7 +26,14 @@ import {
 import { FiAlertTriangle } from "react-icons/fi";
 import EmployeeTable from "@/pages/Employees";
 import { useNavigate } from "react-router-dom";
-
+import Projects from "@/pages/Projects";
+import EmpLeaveBalance from "@/pages/EmpLeaveBalance";
+import SalaryManagement from "@/pages/SalaryManagement";
+import EmpLocation from "@/pages/EmpLocation";
+import AssignAssets from "@/pages/Assets";
+import TerminatedEmp from "@/pages/TerminatedEmp";
+import GatepassApprovals from "@/pages/GatepassAproval";
+import ShowCauseNotices from "@/pages/ShowCauseNotices";
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
   const [payrollOpen, setPayrollOpen] = useState(false);
@@ -77,6 +84,8 @@ const Sidebar = () => {
     {
       text: <span className="text-[1rem] font-semibold">Projects</span>,
       icon: <HiOutlineDocumentReport className="text-1xl " />,
+      path: "/projects",
+      element: <Projects/>
      
     },
     {
@@ -89,7 +98,8 @@ const Sidebar = () => {
         <span className="text-[1rem] font-semibold">Update Leave Balance</span>
       ),
       icon: <MdPerson className="text-2xl " />,
-      
+      path:"/empleaves",
+      element:<EmpLeaveBalance/>
     },
     {
       text: (
@@ -97,6 +107,9 @@ const Sidebar = () => {
       ),
       icon: <RiMoneyRupeeCircleFill className="text-2xl " />,
       
+        path:"/salarymanagement",
+        element:<SalaryManagement/>
+    
     },
     {
       text: <span className="text-[1rem] font-semibold">Attendence</span>,
@@ -128,16 +141,19 @@ const Sidebar = () => {
       text: <span className="text-[1rem] font-semibold">Emp Location</span>,
       icon: <IoLocationOutline className="text-2xl " />,
       path: "/employee/location",
+        element:<EmpLocation/>
     },
     {
       text: <span className="text-[1rem] font-semibold">Assets</span>,
       icon: <GiLaptop className="text-2xl " />,
       path: "/company/assets",
+       element:<AssignAssets/>
     },
     {
       text: <span className="text-[1rem] font-semibold">Terminated Emp</span>,
       icon: <MdOutlineBlock className="text-2xl " />,
-      path: "/employee/termination",
+      path:'/employee/terminated',
+      element:<TerminatedEmp/>
     },
     {
       text: (
@@ -145,13 +161,15 @@ const Sidebar = () => {
       ),
       icon: <GiSecurityGate className="text-2xl " />,
       path: "/gatepass/approval",
+      element:<GatepassApprovals/>
     },
     {
       text: (
         <span className="text-[1rem] font-semibold">Show Cause Notice</span>
       ),
       icon: <FiAlertTriangle className="text-2xl " />,
-      path: "/view/employee/show/cause/notice",
+      path: "/view/employee/show-cause/notice",
+      element:<ShowCauseNotices/>
     },
     {
       text: <span className="text-[1rem] font-semibold">Payroll</span>,
@@ -203,7 +221,7 @@ const Sidebar = () => {
 
       <aside
         ref={sidebarRef}
-        className={` fixed top-0 left-0 bottom-0  h-fit md:h-auto  w-40 md:w-64 bg-gradient-to-b from-purple-900 to-purple-700 text-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out
+        className={` fixed top-0 left-0 bottom-0  h-fit md:h-auto  w-40 md:w-64 bg-gradient-to-b from-white to-purple-300 text-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out
         ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:block`}
@@ -212,9 +230,9 @@ const Sidebar = () => {
           <img
             src="/d logo.png"
             alt="Deepnap Softech Logo"
-            className=" w-20 md:w-24 h-24 object-contain invert brightness-0"
+            className=" w-20 md:w-24 h-24 "
           />
-          <h2 className=" text-[15px] md:text-lg font-bold tracking-wide relative right-2">
+          <h2 className=" text-[15px] md:text-lg text-gray-600 font-bold tracking-wide relative right-2">
             Deepnap Softech
           </h2>
         </div>
@@ -223,13 +241,13 @@ const Sidebar = () => {
             <div key={index}  onClick={() => navigator(item.path)}>
               <div
                 onClick={item.onClick || (() => {})}
-                className="flex items-center gap-3 px-3 py-2 rounded-xl transition duration-300 hover:bg-gradient-to-r from-purple-600 to-purple-400 cursor-pointer"
+                className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 transition duration-300 hover:bg-gradient-to-r from-purple-600 to-purple-400 cursor-pointer"
               >
                 {item.icon}
                 {item.text}
               </div>
               {item.subMenu && (
-                <div className="ml-6 mt-1 space-y-2">
+                <div className="ml-6 mt-1 space-y-2 text-gray-600">
                   {item.subMenu.map((subItem, subIndex) => (
                     <div
                       key={subIndex} 
@@ -248,7 +266,7 @@ const Sidebar = () => {
         </nav>
          <div className="w-full px-8 py-6">
   <button
-    className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-tl from-purple-400 to-purple-300  text-white font-semibold rounded-lg transition duration-300"
+    className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-tl from-purple-600 to-purple-400  text-white font-semibold rounded-lg transition duration- hover:bg-gradient-to-br  "
   >
     
     Logout

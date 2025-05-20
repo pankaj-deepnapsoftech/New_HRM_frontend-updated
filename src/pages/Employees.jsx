@@ -38,19 +38,19 @@ const employees = [
 
 const EmployeeTable = () => {
   return (
-    <div className="p-4 w-full">
-      <div className="flex gap-4 mb-4">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Register Employee</button>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Background Verification</button>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Bank Account</button>
+    <div className="p-6 w-full">
+      <div className="flex gap-4  mb-6">
+        <button className="bg-gradient-to-l from-[#764ba2] to-[#667eea] hover:bg-gradient-to-r text-white px-4 py-2 rounded">Register Employee</button>
+        <button className="bg-gradient-to-l from-[#764ba2] to-[#667eea] hover:bg-gradient-to-r text-white px-4 py-2 rounded">Background Verification</button>
+        <button className="bg-gradient-to-l from-[#764ba2] to-[#667eea] hover:bg-gradient-to-r text-white px-4 py-2 rounded">Bank Account</button>
       </div>
 
-      <div className="bg-blue-600 text-white text-center py-2 rounded-t">
+      <div className="bg-purple-500 text-white text-center py-3 rounded-t">
         <h2 className="text-xl font-bold">Employee Details</h2>
       </div>
 
-      <table className="min-w-full border border-gray-200 text-sm">
-        <thead className="bg-gray-100 text-gray-700">
+      <table className="min-w-full shadow-lg border border-gray-200 text-sm">
+        <thead className="bg-purple-300 text-gray-700">
           <tr>
             <th className="p-2 text-left">Full Name</th>
             <th className="p-2 text-left">Email</th>
@@ -63,8 +63,9 @@ const EmployeeTable = () => {
         </thead>
         <tbody>
           {employees.map((emp, idx) => (
-            <tr key={idx} className="border-t border-gray-200">
-              <td className="p-2">{emp.name}</td>
+            
+            <tr key={idx} className={`border-t border-gray-200 ${idx%2==0? "bg-white":'bg-purple-100'}`}>
+              <td className="p-3 px-6">{emp.name}</td>
               <td className="p-2">{emp.email}</td>
               <td className="p-2 text-blue-600 cursor-pointer">View<br />Location</td>
               <td className="p-2">{emp.department}</td>
