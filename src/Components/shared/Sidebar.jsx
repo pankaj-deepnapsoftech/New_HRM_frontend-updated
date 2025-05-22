@@ -44,6 +44,11 @@ import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
 import { FaChalkboardUser, FaUsersRectangle } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import PayrollSummary from "@/pages/PayrollSummary";
+import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
+import Incentives from "@/pages/Incentives";
+import Reimbursements from "@/pages/Reimbursements";
+import EmpPayslip from "@/pages/EmpPayslip";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
