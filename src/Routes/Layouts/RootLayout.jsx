@@ -10,7 +10,7 @@ const RootLayout = () => {
                 <Sidebar />
             </aside>
           
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 bg-[#ffffff]">
                 <Header />
                 <div className="pt-2">
                     <Outlet />
