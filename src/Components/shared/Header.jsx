@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import { FaRegBell, FaBars } from "react-icons/fa";
-import { FaMicrophone } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
 import UserProfile from "@/pages/UserProfile";
 
-const Header = ({ toggleSidebar }) => {
+const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
     <div className="w-full h-16 border-b border-gray-400 shadow-md shadow-neutral-400 bg-white px-4 sm:px-6 md:px-10 flex items-center justify-between">
     
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-10">
         
-        <div className="md:hidden">
-          <button onClick={toggleSidebar}>
-            <FaBars className="text-2xl text-black" />
-          </button>
-        </div>
-
+        
         {/* Search Bar */}
-       <div className="relative w-52 sm:w-64 md:w-72 right-4">
+       <div className="relative w-48 ml-12 md:ml-1  md:w-72 right-4">
   <input
     type="search"
     placeholder="Type to Search..."
@@ -27,7 +21,7 @@ const Header = ({ toggleSidebar }) => {
   />
   
   <div className="absolute right-0 top-0 bottom-0 bg-[#818185c7] px-3 flex items-center justify-center rounded-tr rounded-br cursor-pointer">
-    <IoSearchSharp className="text-white text-lg" />
+    <IoSearchSharp className="text-white text-lg"/>
   </div>
 </div>
 

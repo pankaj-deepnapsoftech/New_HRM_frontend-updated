@@ -14,7 +14,7 @@ const MainDashboardPage = () => {
         {/* Header Welcome Card */}
         <section className="flex justify-between items-center bg-gradient-to-r from-[#545a68b4] to-[#6a7282c0] text-white rounded-3xl px-12 py-8 mb-10 shadow-lg">
           <div>
-            <p className="text-sm mb-3">{today}</p>
+            <p className="text-sm  mb-3">{today}</p>
             <h1 className="text-3xl font-bold mb-2">
               Welcome back, <span>John</span> 👋
             </h1>
@@ -35,15 +35,15 @@ const MainDashboardPage = () => {
                 {
                   label: "Total Enrollments",
                   value: "4",
-                  bg: "bg-[#6a7282c0]",
+                  bg: "bg-[#6a7282a4]",
                 },
                 {
                   label: "Total Projects",
                   value: "1",
-                  bg: "bg-[#6a7282c0]",
+                  bg: "bg-[#6a7282a4]",
                 },
-                { label: "Present", value: "0", bg: "bg-[#6a7282c0]" },
-                { label: "Absent", value: "0", bg: "bg-[#6a7282c0]" },
+                { label: "Present", value: "0", bg: "bg-[#6a7282a4]" },
+                { label: "Absent", value: "0", bg: "bg-[#6a7282a4]" },
               ].map((item, i) => (
                 <div
                   key={i}

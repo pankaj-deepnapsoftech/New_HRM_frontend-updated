@@ -61,7 +61,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
           <img
             src="/image.jpg"
             alt="Profile"
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+            className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md"
           />
         </div>
 
