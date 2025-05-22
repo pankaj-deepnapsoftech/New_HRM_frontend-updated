@@ -38,12 +38,12 @@ const EmpLocation = () => {
     <div className="p-6 w-full">
         
    
-         <div className="bg-purple-500 text-white text-center py-3 rounded-t-xl">
+         <div className="bg-gray-500 text-white text-center py-3 rounded-t-xl">
            <h2 className="text-xl font-bold">Employee Location</h2>
          </div>
    
          <table className="min-w-full shadow-lg border border-gray-200 text-sm">
-           <thead className="bg-purple-300 text-gray-700">
+           <thead className="bg-gray-300 text-gray-700">
              <tr>
                <th className="p-4  text-left">Full Name</th>
                <th className="p-2 text-left">Email</th>
@@ -56,7 +56,7 @@ const EmpLocation = () => {
            <tbody>
              {employees.map((emp, idx) => (
                
-               <tr key={idx} className={`border-t border-gray-200 ${idx%2==0? "bg-white":'bg-purple-100'}`}>
+               <tr key={idx} className={`border-t border-gray-200 ${idx%2==0? "bg-white":'bg-gray-100'}`}>
                  <td className="p-2 px-6">{emp.name}</td>
                  <td className="p-2">{emp.email}</td>
                  <td className="p-2 text-blue-700 cursor-pointer">View<br />Location</td>

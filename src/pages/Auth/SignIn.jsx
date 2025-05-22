@@ -1,4 +1,4 @@
-import { SignInSchema } from "@/Validation/SignInValidation";
+import { SignInSchema } from "@/Validation/AuthValidation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";

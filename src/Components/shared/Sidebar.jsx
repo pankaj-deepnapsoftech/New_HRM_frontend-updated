@@ -42,6 +42,7 @@ import AssignAssets from "@/pages/Assets";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
+import { FaChalkboardUser, FaUsersRectangle } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -92,7 +93,7 @@ const Sidebar = () => {
     },
     {
       text: <span className="text-[1rem] font-semibold">Emp Dashboard</span>,
-      icon: <BsPersonCircle className="text-2xl" />,
+      icon: <FaChalkboardUser className="text-2xl" />,
       path: "/empdashboard",
     },
     {
@@ -229,21 +230,25 @@ const Sidebar = () => {
 
       <aside
         ref={sidebarRef}
-        className={`fixed top-0 left-0 bottom-0 h-fit md:h-auto w-40 md:w-64 bg-gradient-to-b from-purple-700 via-purple-600 to-indigo-800 text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${showSidebar ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 md:static md:block`}
+        className={`fixed top-0 left-0 bottom-0 h-full w-40 md:w-64 bg-gradient-to-r from-[#5072A7] to-[#5072A7]  text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
+    ${showSidebar ? "translate-x-0" : "-translate-x-full"} 
+    md:translate-x-0 md:static md:block`}
       >
-        <div className="flex items-center mb-5 px-3 pt-4">
+
+        <div className="flex items-center py-2 w-full border-b border-white/20 px-4">
           <img
             src="/d logo.png"
             alt="Deepnap Softech Logo"
-            className="w-20 md:w-24 h-24"
+            className="brightness-0 invert h-[100px]"
           />
-          <h2 className="text-[15px] md:text-lg font-bold tracking-wide ml-2">
+          <h2 className="text-lg md:text-xl font-bold tracking-wide">
             Deepnap Softech
           </h2>
         </div>
 
-        <nav className="flex flex-col space-y-3 md:px-4 text-sm">
+
+        {/* Navigation */}
+        <nav className="flex flex-col space-y-1 mt-6 px-4 text-sm">
           {menuItems.map((item, index) => {
             const isActive = item.path && currPath === item.path;
             return (
@@ -253,30 +258,33 @@ const Sidebar = () => {
                     if (item.path) navigator(item.path);
                     if (item.onClick) item.onClick();
                   }}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition duration-300 ${isActive
-                      ? "bg-white bg-opacity-20 font-bold shadow-md"
-                      : "hover:bg-white hover:bg-opacity-10"
+                  className={`flex items-center gap-3 px-3 py-3 rounded-xl cursor-pointer transition duration-300 
+              ${isActive
+                    ? "bg-[#92929285] font-bold shadow-md"
+                      : "hover:bg-white/10"
                     }`}
                 >
                   {item.icon}
-                  {item.text}
+                  <span>{item.text}</span>
                 </div>
 
+                {/* Submenu */}
                 {item.subMenu && (
-                  <div className="ml-6 mt-1 space-y-2">
+                  <div className="ml-6 mt-1 space-y-1">
                     {item.subMenu.map((subItem, subIndex) => {
                       const isSubActive = currPath === subItem.path;
                       return (
                         <div
                           key={subIndex}
                           onClick={() => navigator(subItem.path)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-sm cursor-pointer transition duration-300 ${isSubActive
-                              ? "bg-white bg-opacity-20 font-semibold"
-                              : "hover:bg-white hover:bg-opacity-10"
+                          className={`flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer transition duration-300 
+                      ${isSubActive
+                            ? "bg-[#92929285]/30 font-semibold"
+                              : "hover:bg-white/10"
                             }`}
                         >
                           {subItem.icon}
-                          {subItem.text}
+                          <span>{subItem.text}</span>
                         </div>
                       );
                     })}
@@ -287,15 +295,17 @@ const Sidebar = () => {
           })}
         </nav>
 
-        <div className="w-full px-8 py-6">
+        {/* Logout */}
+        <div className="mt-auto w-full px-6 py-4">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-pink-600 to-purple-500 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110"
+            className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-white/30 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110"
           >
             Logout
           </button>
         </div>
       </aside>
+
     </>
   );
 };

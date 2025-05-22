@@ -1,5 +1,5 @@
 import { useChangePasswordMutation } from "@/service/Auth.services";
-import { ChangePassSchema } from "@/Validation/ChangePassValidation";
+import { ChangePassSchema } from "@/Validation/AuthValidation/ChangePassValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { IoIosClose } from "react-icons/io";
@@ -45,7 +45,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
     >
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden relative">
 
-        <div className="h-24 bg-gradient-to-r from-sky-600 to-sky-400 p-5 text-white flex items-start justify-between">
+        <div className="h-24 bg-gradient-to-r from-gray-600 to-gray-400 p-5 text-white flex items-start justify-between">
           <h1 className="text-xl font-semibold">User Profile</h1>
           <button
             className="text-white hover:text-gray-300"
@@ -76,15 +76,15 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-medium">Age</span>
-              <span className="bg-sky-100 text-gray-700 px-3 py-1 rounded-full font-semibold">21</span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">21</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-medium">Education</span>
-              <span className="bg-sky-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Graduated</span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Graduated</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-medium">Location</span>
-              <span className="bg-sky-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Faridabad</span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Faridabad</span>
             </div>
           </div>
 
@@ -92,7 +92,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
           <div className="mt-6 text-center">
             <button
               onClick={() => setshowChangePassPage(!showChangePassPage)}
-              className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md transition duration-200"
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition duration-200"
             >
               Change Password
             </button>
@@ -122,12 +122,12 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
                     name="oldPassword"
                     type={showOldPassword ? 'text' : 'password'}
                     value={values.oldPassword}
-                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-sky-300"
+                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
                   />
                   <button
                     type="button"
                     onClick={() => setShowOldPassword(!showOldPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-sky-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
                   >
                     {showOldPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                   </button>
@@ -149,12 +149,12 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
                     type={showNewPassword ? 'text' : 'password'}
                     name="newPassword"
                     value={values.newPassword}
-                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-sky-300"
+                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
                   />
                   <button
                     type="button"
                     onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-sky-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
                   >
                     {showNewPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                   </button>
@@ -176,12 +176,12 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="confirmPassword"
                     value={values.confirmPassword}
-                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-sky-300"
+                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-sky-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
                   >
                     {showConfirmPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
                   </button>
@@ -194,7 +194,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white py-2 rounded-md transition duration-200"
+                className="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md transition duration-200"
               >
                 Update Password
               </button>

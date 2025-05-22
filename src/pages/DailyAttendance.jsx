@@ -34,18 +34,18 @@ const attendanceData = [
 const DailyAttendance = () => {
   return (
     <section className="max-w-6xl mx-auto p-6 font-sans">
-      <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Daily Attendance Report</h2>
+      <h2 className="text-2xl font-[600] text-center mb-8 text-gray-600">Daily Attendance Report</h2>
       <div className="overflow-x-auto rounded-xl shadow">
         <table className="min-w-full bg-white border border-gray-200 rounded-2xl overflow-hidden">
           <thead>
-            <tr className="bg-gradient-to-r from-sky-400 to-sky-400 text-left text-white uppercase text-sm leading-normal">
-              <th className="py-3 px-6">Name</th>
-              <th className="py-3 px-6">Email</th>
-              <th className="py-3 px-6">Status</th>
-              <th className="py-3 px-6">Login Time</th>
+            <tr className="bg-gray-500 text-left text-white uppercase text-sm leading-normal">
+              <th className="py-3  font-[500] px-6">Name</th>
+              <th className="py-3 font-[500]  px-6">Email</th>
+              <th className="py-3 font-[500]  px-6">Status</th>
+              <th className="py-3  font-[500] px-6">Login Time</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700 text-sm">
+          <tbody className="text-gray-700 text-md">
             {attendanceData.map((user, index) => (
               <tr key={index} className="hover:bg-gray-50 transition">
                 <td className="py-3 px-6">

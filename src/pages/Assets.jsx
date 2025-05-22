@@ -54,12 +54,12 @@ const AssignAssets = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-10 bg-white shadow-md rounded-lg overflow-hidden">
-      <div className="bg-purple-600 text-white text-lg font-semibold text-center py-3">
+      <div className="bg-gray-600 text-white text-lg font-semibold text-center py-3">
         Assign Assets
       </div>
       <div className="overflow-x-auto">
         <table className="w-full table-auto border-t border-gray-500 text-sm">
-          <thead className="bg-purple-300 text-gray-700 uppercase">
+          <thead className="bg-gray-300 text-gray-700 uppercase">
             <tr>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Department</th>

@@ -19,11 +19,11 @@ const employees=[
 const Projects = () => {
   return (
     <div className="p-5">
-    <div className="bg-purple-500 text-white text-2xl font-semibold px-6 py-4 rounded-t-lg shadow-md text-center ">Projects</div>
+    <div className="bg-gray-500 text-white text-xl font-[600] px-6 py-3 rounded-t-lg shadow-md text-center ">Projects</div>
 
     <div className="overflow-x-auto shadow-lg rounded-b-lg">
    <table className="min-w-full divide-y divide-gray-200">
-         <thead className='bg-purple-300 text-gray-700 text-sm font-semibold uppercase'>
+         <thead className='bg-gray-300 text-gray-700 text-sm font-[600] uppercase'>
             <tr>
                 <th className="px-6 py-3 text-left">Project Name</th>
                 <th className="px-6 py-3 text-left">Member</th>
@@ -37,7 +37,7 @@ const Projects = () => {
                 return( <tr
                 key={idx}
                 className={`border-t border-gray-200 ${
-                  idx % 2 == 0 ? "bg-white" : "bg-purple-100"
+                  idx % 2 == 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
                 <td className="p-3 px-6">{emp.projectName}</td>

@@ -40,13 +40,13 @@ const employees = [
 const EmpDashboard = () => {
   return (
     <div className="p-5">
-      <div className="bg-purple-500 text-white text-xl font-semibold px-6 py-4 rounded-t-lg shadow-md text-center">
+      <div className="bg-gray-500 text-white text-xl font-semibold px-6 py-3 rounded-t-lg shadow-md text-center">
         Employee Dashboard
       </div>
 
       <div className="overflow-x-auto shadow-lg rounded-b-lg">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-purple-300 text-gray-700 text-sm font-semibold uppercase">
+          <thead className="bg-gray-200 text-gray-700 text-sm font-semibold uppercase">
             <tr>
               <th className="px-6 py-3 text-left">Full Name</th>
               <th className="px-6 py-3 text-left">Department</th>
@@ -61,7 +61,7 @@ const EmpDashboard = () => {
                 return( <tr
                 key={idx}
                 className={`border-t border-gray-200 ${
-                  idx % 2 == 0 ? "bg-white" : "bg-purple-100"
+                  idx % 2 == 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
                 <td className="p-3 px-6">{emp.fname}</td>

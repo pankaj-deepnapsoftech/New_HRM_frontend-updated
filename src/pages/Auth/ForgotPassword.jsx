@@ -1,5 +1,5 @@
 import { useForgotPasswordMutation } from '@/service/Auth.services'
-import { ForgotPasswordSchema } from '@/Validation/ForgotPasswordValidation'
+import { ForgotPasswordSchema } from '@/Validation/AuthValidation/ForgotPasswordValidation'
 import { useFormik } from 'formik'
 import React from 'react'
 

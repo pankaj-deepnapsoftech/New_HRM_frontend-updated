@@ -12,7 +12,7 @@ const RootLayout = () => {
           
             <div className="flex flex-col flex-1">
                 <Header />
-                <div className="p-4">
+                <div className="pt-2">
                     <Outlet />
                 </div>
             </div>

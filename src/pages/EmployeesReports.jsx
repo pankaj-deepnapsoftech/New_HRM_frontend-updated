@@ -54,16 +54,16 @@ const EmployeesReports = () => {
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead>
-                        <tr className="bg-sky-600 text-white text-left">
-                            <th className="py-3 px-4">Name</th>
-                            <th className="py-3 px-4">Location</th>
-                            <th className="py-3 px-4">Department</th>
-                            <th className="py-3 px-4">Designation</th>
-                            <th className="py-3 px-4">Salary</th>
-                            <th className="py-3 px-4">Assets</th>
-                            <th className="py-3 px-4">Present Days</th>
-                            <th className="py-3 px-4">Gate Pass</th>
-                            <th className="py-3 px-4">Status</th>
+                        <tr className="bg-gray-500 text-white">
+                            <th className=" font-[600] py-4 ">Name</th>
+                            <th className=" font-[600] py-4 ">Location</th>
+                            <th className=" font-[600] py-4 ">Department</th>
+                            <th className=" font-[600] py-4 ">Designation</th>
+                            <th className=" font-[600] py-4 ">Salary</th>
+                            <th className=" font-[600] py-4 ">Assets</th>
+                            <th className=" font-[600] py-4 ">Present Days</th>
+                            <th className=" font-[600] py-4 ">Gate Pass</th>
+                            <th className=" font-[600] py-4 ">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +73,7 @@ const EmployeesReports = () => {
                                 className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
                             >
                                 <td className="py-3 px-4">{emp.name}</td>
-                                <td className="py-3 px-4 text-sky-500 hover:underline cursor-pointer">{emp.location}</td>
+                                <td className="py-3 px-4 text-gray-500 hover:underline cursor-pointer">{emp.location}</td>
                                 <td className="py-3 px-4 capitalize">{emp.department}</td>
                                 <td className="py-3 px-4 capitalize">{emp.designation}</td>
                                 <td className="py-3 px-4">${emp.salary.toLocaleString()}</td>
