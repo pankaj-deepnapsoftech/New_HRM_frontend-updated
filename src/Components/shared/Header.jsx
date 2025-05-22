@@ -29,14 +29,14 @@ const Header = () => {
 
       {/* Right Section: Notification & User */}
       <div className="flex items-center gap-4 ml-auto">
-        <div className="bg-[#818185c7] w-10 h-10 flex items-center justify-center rounded-full">
-          <FaRegBell className="text-gray-100 text-xl" />
+        <div className=" w-10 h-10 flex items-center justify-center rounded-full">
+          <FaRegBell className="text-gray-500 text-2xl" />
         </div>
 
         <div className="relative">
           <div
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="bg-[#818185c7] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+            className="bg-[#1b1b1b5d] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
           >
             DK
           </div>

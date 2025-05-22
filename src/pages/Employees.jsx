@@ -1,3 +1,4 @@
+import BackroundVerification from '@/Drawer/EmployeeDetails/BackroundVerification';
 import EmployeeForm from '@/Drawer/EmployeeDetails/EmployeeRegistration';
 import React, { useState } from 'react';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
@@ -40,12 +41,13 @@ const employees = [
 const EmployeeTable = () => {
 
 const [showForm, setShowFrom] = useState(false)
+const [VerificationForm, setVerificationForm] = useState(false)
 
   return (
     <div className="p-6 w-full">
       <div className="flex gap-4  mb-6">
         <button onClick={()=> setShowFrom(!showForm)}  className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Register Employee</button>
-        <button className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Background Verification</button>
+        <button onClick={() => setVerificationForm(!VerificationForm)} className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Background Verification</button>
         <button className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Bank Account</button>
       </div>
 
@@ -85,6 +87,7 @@ const [showForm, setShowFrom] = useState(false)
         </tbody>
       </table>
       <EmployeeForm setShowFrom={setShowFrom} showForm={showForm}/>
+      <BackroundVerification VerificationForm={VerificationForm} setVerificationForm={setVerificationForm} />
     </div>
   );
 };

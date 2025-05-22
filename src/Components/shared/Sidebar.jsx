@@ -43,12 +43,7 @@ import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
 import { FaChalkboardUser, FaUsersRectangle } from "react-icons/fa6";
-import AllAttendance from "@/pages/AllAttendence";
-import PayrollSummary from "@/pages/PayrollSummary";
-import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
-import Incentives from "@/pages/Incentives";
-import Reimbursements from "@/pages/Reimbursements";
-import EmpPayslip from "@/pages/EmpPayslip";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -60,8 +55,9 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const currPath = location.pathname;
-
-  const handleLogout = async () => {
+  const [isOpen, setIsopen] = useState(false)
+  const [payroolOpenArrow, setPayrollarrow] = useState(false)
+  const handleLogout = async () => { 
     try {
       const res = await LogoutUser().unwrap();
       dispatch(removeData());
@@ -139,7 +135,13 @@ const Sidebar = () => {
       element: <SalaryManagement />,
     },
     {
-      text: <span className="text-[1rem] font-semibold">Attendance</span>,
+      text: <div
+        className="flex items-center gap-3 cursor-pointer"
+        onClick={() => setIsopen(!isOpen)}
+      >
+        <span className="text-[1rem] font-semibold">Attendance</span>
+        {isOpen ? <IoIosArrowUp size={17} /> : <IoIosArrowDown size={17} />}
+      </div>,
       icon: <MdCoPresent className="text-2xl" />,
       onClick: () => setAttendanceOpen(!attendanceOpen),
       subMenu: attendanceOpen && [
@@ -152,7 +154,8 @@ const Sidebar = () => {
           element: <DailyAttendance />,
         },
         {
-          text: <span className="text-[1rem] font-semibold">All Attendance</span>,
+          text: <span className="text-[1rem] font-semibold">All Attendance
+          </span>,
           icon: <FaFingerprint className="text-2xl mr-2" />,
           path: "/all-attendence",
           element: <AllAttendance />,
@@ -195,7 +198,13 @@ const Sidebar = () => {
       element: <ShowCauseNotices />,
     },
     {
-      text: <span className="text-[1rem] font-semibold">Payroll</span>,
+      text: <div
+        className="flex items-center gap-3 cursor-pointer"
+        onClick={() => setPayrollarrow(!payroolOpenArrow)}
+      >
+        <span className="text-[1rem] font-semibold">Payroll</span>
+        {payroolOpenArrow ? <IoIosArrowUp size={17} /> : <IoIosArrowDown size={17} />}
+      </div>,
       icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
       onClick: () => setPayrollOpen(!payrollOpen),
       subMenu: payrollOpen && [
@@ -250,18 +259,18 @@ const Sidebar = () => {
   )}
       <aside
         ref={sidebarRef}
-        className={`fixed top-0 left-0 bottom-0 h-full w-50 md:w-64 bg-gradient-to-r from-[#5072A7] to-[#5072A7]  text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
+        className={`fixed top-0 left-0 bottom-0 h-full w-40 md:w-64 bg-gradient-to-t from-[#281c30] to-[#806097] text-white  shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
     ${showSidebar ? "translate-x-0" : "-translate-x-full"} 
     md:translate-x-0 md:static md:block`}
       >
 
-        <div className="flex items-center  md:py-2  w-full border-b border-white/20 md:px-4">
+        <div className="flex items-center py-2 w-full border-b border-white/40 px-3 ">
           <img
             src="/d logo.png"
             alt="Deepnap Softech Logo"
             className="brightness-0 invert h-[100px]"
           />
-          <h2 className="text-lg md:text-xl font-bold tracking-wide">
+          <h2 className="text-lg md:text-xl relative right-4 font-bold tracking-wide">
             Deepnap Softech
           </h2>
         </div>
@@ -278,9 +287,9 @@ const Sidebar = () => {
                     if (item.path) navigator(item.path);
                     if (item.onClick) item.onClick();
                   }}
-                  className={`flex items-center gap-3 px-3 py-3 rounded-xl cursor-pointer transition duration-300 
+                  className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
               ${isActive
-                    ? "bg-[#92929285] font-bold shadow-md"
+                      ? "bg-[#ffffff] text-purple-500 font-bold shadow-md"
                       : "hover:bg-white/10"
                     }`}
                 >
@@ -297,11 +306,12 @@ const Sidebar = () => {
                         <div
                           key={subIndex}
                           onClick={() => navigator(subItem.path)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer transition duration-300 
+                          className={`flex items-center gap-3 px-4 py-2 rounded-md cursor-pointer transition duration-300 
                       ${isSubActive
-                            ? "bg-[#92929285]/30 font-semibold"
+                              ? "bg-[#ffffff] text-purple-500 font-bold shadow-md"
                               : "hover:bg-white/10"
                             }`}
+
                         >
                           {subItem.icon}
                           <span>{subItem.text}</span>
