@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { FaRegBell, FaBars, FaRegUser } from "react-icons/fa";
-import { FaMicrophone } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
-import UserProfile from "@/pages/UserProfile";
 import UserMenuBar from "@/Drawer/UserDetails/UserMenuBar";
 
-const Header = ({ toggleSidebar }) => {
+const Header = () => {
   const [showUserMenuBar, setShowUserMenuBar] = useState(false);
 
   return (
