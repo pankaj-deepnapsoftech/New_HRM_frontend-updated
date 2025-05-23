@@ -1,51 +1,23 @@
-import { useChangePasswordMutation } from "@/service/Auth.services";
-import { ChangePassSchema } from "@/Validation/AuthValidation/ChangePassValidation";
-import { useFormik } from "formik";
-import React, { useState } from "react";
-import { IoIosClose } from "react-icons/io";
-import { LuEyeClosed } from "react-icons/lu";
-import { MdRemoveRedEye } from "react-icons/md";
+
+import React from "react";
+import { IoIosClose } from "react-icons/io"
 
 const UserProfile = ({ showUserMenu, setShowMenu }) => {
-  const [showChangePassPage, setshowChangePassPage] = useState(false)
-  const [ChangePassword, { isLoading }] = useChangePasswordMutation()
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const {
-    handleBlur,
-    handleSubmit,
-    resetForm,
-    handleChange,
-    touched,
-    errors,
-    values
-  } = useFormik({
-    initialValues: {
-      oldPassword: "",
-      newPassword: "",
-      confirmPassword: ""
-    },
-    validationSchema: ChangePassSchema,
-    onSubmit: async (values) => {
-      try {
-        const res = await ChangePassword(values).unwrap()
-        console.log(res)
-        resetForm()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  });
+
+
 
   return (
     <div
-      className={`${showUserMenu ? "flex" : "hidden"
-        } fixed inset-0 z-50 bg-black/50 p-4 items-center justify-center`}
+
+      className={`fixed top-0 left-0 w-full h-screen inset-0 z-50 bg-black/40 p-4 flex items-center justify-center transition-opacity duration-300 ease-in-out
+      ${showUserMenu ? 'opacity-100 visible' : 'opacity-0 invisible'}
+    `}
+
+
     >
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden relative">
 
-        <div className="h-24 bg-gradient-to-r from-gray-600 to-gray-400 p-5 text-white flex items-start justify-between">
+        <div className="h-24 bg-gradient-to-r from-[#533F60] to-[#372a41] p-5 text-white flex items-start justify-between">
           <h1 className="text-xl font-semibold">User Profile</h1>
           <button
             className="text-white hover:text-gray-300"
@@ -59,9 +31,9 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
 
         <div className="flex justify-center -mt-12">
           <img
-            src="/image.jpg"
+            src="https://i.pravatar.cc/100?img=12"
             alt="Profile"
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+            className="w-24 h-24  rounded-full object-cover border-4 border-white shadow-md"
           />
         </div>
 
@@ -89,120 +61,10 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
           </div>
 
 
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => setshowChangePassPage(!showChangePassPage)}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition duration-200"
-            >
-              Change Password
-            </button>
-          </div>
+
         </div>
       </div>
-      {showChangePassPage && (
-        <div className="fixed inset-0 z-60 bg-black/40 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm relative">
-            <button
-              onClick={() => setshowChangePassPage(false)}
-              className="absolute top-2 right-2 text-gray-600 hover:text-red-600"
-            >
-              <IoIosClose size={24} />
-            </button>
-            <h2 className="text-xl font-semibold mb-4 text-center">Change Password</h2>
-            <form className="space-y-4" onSubmit={handleSubmit}>
-         
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Password
-                </label>
-                <div className="relative">
-                  <input
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    name="oldPassword"
-                    type={showOldPassword ? 'text' : 'password'}
-                    value={values.oldPassword}
-                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowOldPassword(!showOldPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
-                  >
-                    {showOldPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
-                  </button>
-                </div>
-                {touched.oldPassword && errors.oldPassword && (
-                  <p className="text-sm text-red-500">{errors.oldPassword}</p>
-                )}
-              </div>
 
-              {/* New Password */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  New Password
-                </label>
-                <div className="relative">
-                  <input
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    type={showNewPassword ? 'text' : 'password'}
-                    name="newPassword"
-                    value={values.newPassword}
-                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
-                  >
-                    {showNewPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
-                  </button>
-                </div>
-                {touched.newPassword && errors.newPassword && (
-                  <p className="text-sm text-red-500">{errors.newPassword}</p>
-                )}
-              </div>
-
-             
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Confirm New Password
-                </label>
-                <div className="relative">
-                  <input
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={values.confirmPassword}
-                    className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
-                  >
-                    {showConfirmPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
-                  </button>
-                </div>
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <p className="text-sm text-red-500">{errors.confirmPassword}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md transition duration-200"
-              >
-                Update Password
-              </button>
-            </form>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );

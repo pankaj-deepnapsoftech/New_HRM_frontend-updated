@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FaRegBell, FaBars } from "react-icons/fa";
+import { FaRegBell, FaBars, FaRegUser } from "react-icons/fa";
 import { FaMicrophone } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
 import UserProfile from "@/pages/UserProfile";
+import UserMenuBar from "@/Drawer/UserDetails/UserMenuBar";
 
 const Header = ({ toggleSidebar }) => {
-  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showUserMenuBar, setShowUserMenuBar] = useState(false);
 
   return (
     <div className="w-full h-16 border-b border-gray-400 shadow-md shadow-neutral-400 bg- px-4 sm:px-6 md:px-10 flex items-center justify-between">
@@ -38,18 +39,17 @@ const Header = ({ toggleSidebar }) => {
         </div>
 
         <div className="relative">
-          <div
-            onClick={() => setShowUserMenu(!showUserMenu)}
-            className="bg-[#1b1b1b5d] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+          <div 
+
+            onClick={() => setShowUserMenuBar(!showUserMenuBar)}
+            className="bg-[#906eb1fd] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
           >
-            DK
+            <FaRegUser />
           </div>
         </div>
 
-        <UserProfile
-          showUserMenu={showUserMenu}
-          setShowMenu={setShowUserMenu}
-        />
+       
+        <UserMenuBar setShowUserMenuBar={setShowUserMenuBar} showUserMenuBar={showUserMenuBar}  />
       </div>
     </div>
   );
