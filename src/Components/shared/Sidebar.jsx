@@ -49,6 +49,7 @@ import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
 import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
+import AllAttendance from "@/pages/AllAttendence";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -203,13 +204,13 @@ const Sidebar = () => {
       element: <ShowCauseNotices />,
     },
     {
-      text: <div
+      text: <button
         className="flex items-center gap-3 cursor-pointer"
         onClick={() => setPayrollarrow(!payroolOpenArrow)}
       >
         <span className="text-[1rem] font-semibold">Payroll</span>
         {payroolOpenArrow ? <IoIosArrowUp size={17} /> : <IoIosArrowDown size={17} />}
-      </div>,
+      </button>,
       icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
       onClick: () => setPayrollOpen(!payrollOpen),
       subMenu: payrollOpen && [
