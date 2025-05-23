@@ -1,4 +1,4 @@
-import { Button } from "antd";
+
 import React from "react";
 
 
@@ -47,9 +47,9 @@ const AllAttendance = () => {
                             <th className="px-4 py-2 font-[500]">Present Days</th>
                             <th className="px-4 py-2 font-[500]">Absent Days</th>
                             <th className="px-4 py-2 font-[500] text-right">
-                                <Button className="bg-gray-500 hover:bg-gray-600 text-white">
+                                <button className="bg-gray-500 hover:bg-gray-600 text-white">
                                     Export
-                                </Button>
+                                </button>
                             </th>
                         </tr>
                     </thead>

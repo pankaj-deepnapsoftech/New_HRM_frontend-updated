@@ -15,7 +15,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [SignIn, { isLoading }] = useSignInMutation();
     const navigate = useNavigate();
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     const {
         handleBlur,
@@ -33,6 +33,7 @@ const Login = () => {
         validationSchema: SignInSchema,
         onSubmit: async (values) => {
             const totalData = { ...values, device: deviceType, browser: browserName }
+         
             try {
                 const res = await SignIn(totalData).unwrap();
                 toast.success(res.message);

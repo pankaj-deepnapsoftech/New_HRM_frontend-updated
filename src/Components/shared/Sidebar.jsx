@@ -44,6 +44,12 @@ import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
 import { FaChalkboardUser, FaUsersRectangle } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import PayrollSummary from "@/pages/PayrollSummary";
+import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
+import Incentives from "@/pages/Incentives";
+import Reimbursements from "@/pages/Reimbursements";
+import EmpPayslip from "@/pages/EmpPayslip";
+import AllAttendance from "@/pages/AllAttendence";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -69,23 +75,25 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target) &&
-        window.innerWidth < 768
-      ) {
-        setShowSidebar(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
+  const handleClickOutside = (event) => {
+    if (
+      sidebarRef.current &&
+      !sidebarRef.current.contains(event.target) &&
+      window.innerWidth < 768
+    ) {
+      setShowSidebar(false);
+    }
+  };
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
-    };
-  }, []);
+  document.addEventListener("mousedown", handleClickOutside);
+  document.addEventListener("touchstart", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+    document.removeEventListener("touchstart", handleClickOutside);
+  };
+}, []);
+
 
   const menuItems = [
     {
@@ -156,7 +164,7 @@ const Sidebar = () => {
           </span>,
           icon: <FaFingerprint className="text-2xl mr-2" />,
           path: "/all-attendence",
-          element: <AllAttendence />,
+          element: <AllAttendance />,
         },
         {
           text: <span className="text-[1rem] font-semibold">All Leave</span>,
@@ -210,26 +218,31 @@ const Sidebar = () => {
           text: <span className="text-[1rem] font-semibold">Payroll Summary</span>,
           icon: <MdOutlineStickyNote2 className="text-2xl mr-2" />,
           path: "/employee/payrollSummary",
+          element:<PayrollSummary/>
         },
         {
           text: <span className="text-[1rem] font-semibold">Advanced Money</span>,
           icon: <TbReportMoney className="text-2xl mr-2" />,
           path: "/employee/advance/money/request",
+          element:<EmpMoneyRequest/>
         },
         {
           text: <span className="text-[1rem] font-semibold">Incentives</span>,
           icon: <GiMoneyStack className="text-2xl mr-2" />,
           path: "/employee/incentives",
+          element:<Incentives/>
         },
         {
           text: <span className="text-[1rem] font-semibold">Reimbursements</span>,
           icon: <GiTakeMyMoney className="text-2xl mr-2" />,
           path: "/employee/reimbursements",
+          element:<Reimbursements/>
         },
         {
           text: <span className="text-[1rem] font-semibold">Emp Payslip</span>,
           icon: <RiSecurePaymentLine className="text-2xl mr-2" />,
           path: "/generate/employee/payslip",
+          element:<EmpPayslip/>
         },
       ],
     },
@@ -237,12 +250,19 @@ const Sidebar = () => {
 
   return (
     <>
+    <div className="flex items-center gap-10">
       <div className="md:hidden absolute z-50 top-4 left-3">
         <button onClick={() => setShowSidebar(!showSidebar)}>
           <FaBars className="text-2xl text-black" />
         </button>
       </div>
-
+      </div>
+{showSidebar && (
+    <div
+      className="fixed inset-0 z-40 bg-black opacity-30 md:hidden"
+      onClick={() => setShowSidebar(false)}
+    />
+  )}
       <aside
         ref={sidebarRef}
         className={`fixed top-0 left-0 bottom-0 h-full w-40 md:w-64 bg-gradient-to-t from-[#281c30] to-[#806097] text-white  shadow-xl z-50 transform transition-transform duration-300 ease-in-out 

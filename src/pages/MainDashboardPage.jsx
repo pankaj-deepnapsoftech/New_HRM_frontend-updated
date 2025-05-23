@@ -30,7 +30,7 @@ const MainDashboardPage = () => {
       label: "Content Created",
       value: "245",
       sub: "1st among creators",
-      badge: "18.3%",
+    
       badgeColor: "border-purple-400",
     },
     {
@@ -42,7 +42,7 @@ const MainDashboardPage = () => {
     {
       label: "Total Subscribers",
       value: "7,869",
-      sub: "-1.2%",
+    
       subColor: "text-red-500",
     },
     {
@@ -60,8 +60,8 @@ const MainDashboardPage = () => {
   ];
 
   const attendanceCards = [
-    { label: "Total Enrollments", value: "4", bg: "from-cyan-300 to-blue-400" },
-    { label: "Total Projects", value: "1", bg: "from-pink-400 to-purple-400" },
+    { label: "Total Enrollments", value: "4", bg: "from-cyan-300 to-blue-400", image: "/bubble.png" },
+    { label: "Total Projects", value: "1", bg: "from-pink-400 to-purple-400", image: "/bubble.png" },
     { label: "Present", value: "0", bg: "from-indigo-300 to-violet-400" },
     { label: "Absent", value: "0", bg: "from-rose-400 to-red-400" },
   ];
@@ -69,13 +69,15 @@ const MainDashboardPage = () => {
   return (
     <main className="flex-1 font-sans">
       <section className="p-8">
-
-      
         <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
           <div>
             <p className="text-sm mb-2 opacity-80">{today}</p>
-            <h1 className="text-4xl font-extrabold mb-1">Welcome back, <span className="text-white">John</span> 👋</h1>
-            <p className="text-sm text-white/80">Here’s what’s happening today in your portal.</p>
+            <h1 className="text-4xl font-extrabold mb-1">
+              Welcome back, <span className="text-white">John</span> 👋
+            </h1>
+            <p className="text-sm text-white/80">
+              Here’s what’s happening today in your portal.
+            </p>
           </div>
           <img
             src="/Hand coding-amico.png"
@@ -84,32 +86,54 @@ const MainDashboardPage = () => {
           />
         </section>
 
-      
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {statsCards.map((card, i) => (
-            <div key={i} className="bg-[#9677b9a4] rounded-2xl p-5 shadow-md hover:shadow-lg transition">
-              <p className="text-sm text-white font-[500] mb-1">{card.label}</p>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-2xl font-bold ${card.color || "text-white"}`}>{card.value}</p>
-                  {card.sub && <p className={`text-xs ${card.subColor || "text-white"}`}>{card.sub}</p>}
-                </div>
-                {card.badge && (
-                  <div
-                    className={`w-14 h-14 rounded-full border-[6px] ${card.badgeColor} flex items-center justify-center text-sm text-gray-600 font-semibold`}
-                  >
-                    {card.badge}
+            <div
+              key={i}
+              className="relative rounded-xl p-5 shadow-lg overflow-hidden text-white
+      bg-[url('/bubbles.png')] bg-cover bg-no-repeat opacity-70  hover:scale-105 hover:shadow-xl transition-all duration-300"
+            >
+              {/* Optional: Add a gradient or overlay for readability */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#7f61b6]/80 to-[#5f40a1]/80 z-0"></div>
+
+              {/* Content */}
+              <div className="relative z-10">
+                <p className="text-sm font-medium mb-1">{card.label}</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p
+                      className={`text-2xl font-bold ${
+                        card.color || "text-white"
+                      }`}
+                    >
+                      {card.value}
+                    </p>
+                    {card.sub && (
+                      <p
+                        className={`text-xs ${
+                          card.subColor || "text-white/80"
+                        }`}
+                      >
+                        {card.sub}
+                      </p>
+                    )}
                   </div>
+                  {card.badge && (
+                    <div
+                      className={`w-14 h-14 rounded-full border-[6px] ${card.badgeColor} flex items-center justify-center text-sm text-gray-800 font-semibold bg-white`}
+                    >
+                      {card.badge}
+                    </div>
+                  )}
+                </div>
+                {card.label === "New Subscribers" && (
+                  <div className="mt-3 h-2 rounded bg-purple-200 w-full"></div>
                 )}
               </div>
-              {card.label === "New Subscribers" && (
-                <div className="mt-3 h-2 rounded bg-purple-100 w-full"></div>
-              )}
             </div>
           ))}
         </div>
 
-     
         <div className="flex flex-wrap gap-6 ">
           {attendanceCards.map((item, i) => (
             <div
