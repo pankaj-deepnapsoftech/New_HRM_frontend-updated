@@ -13,21 +13,21 @@ const GatepassApprovals = () => {
       </div>
 
       {/* Filter Buttons */}
-      <div className="flex gap-8 bg-white py-8 px-64 w-full max-w-4xl shadow-sm rounded-b-xl">
-        <button className="bg-gray-100 hover:bg-gray-200 px-8 py-2 rounded shadow text-sm">
+      <div className="flex gap-8 bg-gray-50 py-8 px-64 w-full max-w-4xl shadow-sm rounded-b-xl">
+        <button className="bg-gray-200 hover:bg-gray-200  font-semibold px-8 py-2 rounded shadow-sm shadow-gray-400  hover:shadow-black text-sm">
           All
         </button>
-        <button className="bg-gray-100 hover:bg-gray-200 px-4 py-1 rounded shadow text-sm">
+        <button className="bg-gray-200 hover:bg-gray-200 font-semibold px-4 py-1 rounded shadow-sm shadow-gray-400 hover:shadow-black text-sm">
           This Week
         </button>
-        <button className="bg-gray-100 hover:bg-gray-200 px-4 py-1 rounded shadow text-sm">
+        <button className="bg-gray-200 hover:bg-gray-200 font-semibold px-4 py-1 rounded shadow-sm shadow-gray-400 hover:shadow-black text-sm">
           This Month
         </button>
       </div>
 
       {/* Request Card */}
       <div className="bg-white mt-6 p-6 rounded-xl shadow-md w-full max-w-4xl">
-        <p className="text-lg font-semibold mb-3">
+        <p className="text-lg font-semibold mb-3 ">
           Employee Name:{" "}
           <span className="text-blue-600 font-medium">
             Nitish (NIT51130226)
@@ -36,7 +36,7 @@ const GatepassApprovals = () => {
 
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-300 relative">
           <div className="absolute top-4 right-4">
-            <span className="bg-green-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+            <span className="bg-green-600 text-white text-sm font-medium px-3 py-2 rounded-full">
               Approved
             </span>
           </div>
@@ -91,7 +91,7 @@ const GatepassApprovals = () => {
 
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-300 relative">
           <div className="absolute top-4 right-4">
-            <span className="bg-green-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+            <span className="bg-green-600 text-white text-sm font-medium px-3 py-2 rounded-full shadow-md ">
               Approved
             </span>
           </div>

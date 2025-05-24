@@ -1,6 +1,21 @@
-import Header from "@/Components/shared/Header";
-import Sidebar from "@/Components/shared/Sidebar";
 import React from "react";
+import { Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Title,
+} from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
+
+// Optional: Uncomment if using AOS animations
+// import AOS from "aos";
+// import "aos/dist/aos.css";
+
+// Optional: Uncomment if using Heroicons
+// import { UserGroupIcon, EyeIcon, ChartBarIcon } from "@heroicons/react/24/solid";
 
 const MainDashboardPage = () => {
   const today = new Date().toLocaleDateString(undefined, {
@@ -10,74 +25,148 @@ const MainDashboardPage = () => {
     year: "numeric",
   });
 
+  // Optional: Animation on Scroll
+  // useEffect(() => {
+  //   AOS.init({ duration: 1000 });
+  // }, []);
+
+ const statsCards = [
+  {
+    label: "Total Employees",
+    value: "1.2K",
+    iconBg: "bg-red-200",
+    iconColor: "text-red-500",
+    icon: "👤",
+    change: "+147%",
+    changeColor: "text-green-500",
+  },
+  {
+    label: "Total Enrollments",
+    value: "1.52K",
+    iconBg: "bg-green-200",
+    iconColor: "text-green-500",
+    icon: "⭐",
+    change: "+53%",
+    changeColor: "text-green-500",
+  },
+  {
+    label: "Absent",
+    value: "4.53%",
+    iconBg: "bg-blue-200",
+    iconColor: "text-blue-500",
+    icon: "🔥",
+    change: "-10.7%",
+    changeColor: "text-red-500",
+  },
+  {
+    label: "Present",
+    value: "5.47%",
+    iconBg: "bg-yellow-200",
+    iconColor: "text-yellow-500",
+    icon: "🕒",
+    change: "+29%",
+    changeColor: "text-green-500",
+  },
+];
+
+  // const attendanceCards = [
+  //   { label: "Total Enrollments", value: "4", bg: "from-cyan-300 to-blue-400" },
+  //   { label: "Total Projects", value: "1", bg: "from-pink-400 to-purple-400"  },
+  //   { label: "Present", value: "0", bg: "from-indigo-300 to-violet-400" },
+  //   { label: "Absent", value: "0", bg: "from-rose-400 to-red-400" },
+  // ];
+  const data = {
+    labels: ['Employees', 'On Leave', 'Contractors', 'Interns'],
+    datasets: [
+      {
+        label: 'HRM Distribution',
+        data: [120, 15, 30, 10],
+        backgroundColor: [
+          '#34d399', 
+          '#f87171', 
+          '#fbbf24', 
+          '#a78bfa', 
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#374151', 
+        },
+      },
+      title: {
+        display: true,
+        text: 'HRM Dashboard',
+        color: '#111827', 
+        font: {
+          size: 18,
+        },
+        
+      },
+    },
+  };
+
   return (
-    <main className="flex-1 ">
-   
-      {/* Search & Greeting */}
-      <section className="p-8">
-        {/* <div className="flex justify-between items-center mb-6 "> 
-        <div className="relative w-72">
-          <IoSearchSharp className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800" />
-          <input
-            type="search"
-            placeholder="Type to search..."
-            className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-300 shadow-[0_4px_6px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-sky-500"
+    <main className="flex-1 font-sans">
+      <section className="p-10">
+  <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
+    <div>
+      <p className="text-sm mb-2 opacity-80">{today}</p>
+      <h1 className="text-4xl font-extrabold mb-1">
+        Welcome back, <span className="text-white">John</span> 👋
+      </h1>
+      <p className="text-sm text-white/80">
+        Here’s what’s happening today in your portal.
+      </p>
+    </div>
+    <img
+      src="/Hand coding-amico.png"
+      alt="Welcome Illustration"
+      className="w-[200px] mt-6 sm:mt-0"
+    />
+  </section>
 
-          /><FaMicrophone className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800"/>
-        </div>
-      </div> */}
-
-        {/* Info Banner */}
-        <section className="flex justify-between items-center bg-gradient-to-r from-[#592d7ec2] to-[#8540bdc2] text-white rounded-3xl px-12 py-8 mb-10 shadow-lg">
+  {/* Cards and Chart in Single Row */}
+  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2 pt-10 pb-10 items-start">
+    <div className="flex  flex-wrap  gap-6 ml-10">
+    {statsCards.map((card, i) => (
+      <div
+        key={i}
+        className="bg-white rounded-sm shadow-md w-64 h-40 p-6 flex flex-col gap-4 text-gray-800"
+      >
+        <div className="flex justify-between items-start ">
           <div>
-            <p className="text-sm text-white mb-3">{today}</p>
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Welcome back, <span className="text-white">John</span> 👋
-            </h1>
-            <p className="text-white mt-1">
-              Here’s what’s happening today in your portal.
-            </p>
+            <p className="text-md text-gray-800 font-semibold">{card.label}</p>
+            <p className="text-xl font-bold">{card.value}</p>
           </div>
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/022/952/927/small/male-brand-designer-with-idea-3d-character-illustration-png.png"
-            alt="Welcome Illustration"
-            className="w-[180px]"
-          />
-        </section>
-
-        <div className="flex flex-wrap gap-8 ">
-          {/* Left Section */}
-          <section className="flex-1 min-w-[60%] flex flex-col gap-6">
-            {/* Finance Summary */}
-            <div className=" flex gap-8 justify-center">
-              {[
-                {
-                  label: "Total Enrollments",
-                  value: "4",
-                  bg: "bg-[#592d7ea1]",
-
-                },
-                {
-                  label: "Total Projects",
-                  value: "1",
-                  bg: "bg-[#592d7ea1]",
-                },
-                { label: "Present", value: "0", bg: "bg-[#592d7ea1]" },
-                { label: "Absent", value: "0", bg: "bg-[#592d7ea1]" },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className={`rounded-3xl w-[180px]  text-center  font-semibold p-6 ${item.bg} hover:scale-110   hover:shadow-lg text-white shadow-2xl   transition-all duration-300`}
-                >
-                  <p>{item.label}</p>
-                  <p className="text-3xl mt-3">{item.value}</p>
-                </div>
-              ))}
-            </div>
-
-          </section>
+          <div
+            className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}
+          >
+            <span className={`text-lg ${card.iconColor}`}>{card.icon}</span>
+          </div>
         </div>
-      </section>
+        <p className={`text-sm ${card.changeColor}`}>
+          {card.change} <span className="text-gray-400">vs prev. 28 days</span>
+        </p>
+      </div>
+    ))}
+    </div>
+
+    {/* Pie Chart Side by Side */}
+    <div className="flex-1 max-w-md  bg-white p-5 mr-15 rounded-sm shadow-md">
+      <Pie data={data} options={options} />
+    </div>
+  </div>
+</section>
+
+    
     </main>
   );
 };

@@ -18,12 +18,14 @@ const employees=[
 ]
 const Projects = () => {
   return (
-    <div className="p-5">
-    <div className="bg-purple-500 text-white text-2xl font-semibold px-6 py-4 rounded-t-lg shadow-md text-center ">Projects</div>
+    <div className="p-7 bg-gray-50 rounded shadow-md max-w-4xl mx-auto mt-10">
+   <div className="bg-gray-300 text text-center py-4 my-8 rounded-md shadow-md shadow-gray-400">
+        <h2 className="text-xl font-[500]">Projects</h2>
+      </div>
 
-    <div className="overflow-x-auto shadow-lg rounded-b-lg">
+    <div className="overflow-x-auto shadow-lg rounded-t-lg">
    <table className="min-w-full divide-y divide-gray-200">
-         <thead className='bg-purple-300 text-gray-700 text-sm font-semibold uppercase'>
+         <thead className='bg-gray-200 text-gray-700 text-sm font-[600] uppercase'>
             <tr>
                 <th className="px-6 py-3 text-left">Project Name</th>
                 <th className="px-6 py-3 text-left">Member</th>
@@ -36,8 +38,8 @@ const Projects = () => {
             {employees.map((emp, idx) => {
                 return( <tr
                 key={idx}
-                className={`border-t border-gray-200 ${
-                  idx % 2 == 0 ? "bg-white" : "bg-purple-100"
+                 className={`border-b border-gray-200  ${
+                  idx % 2 == 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
                 <td className="p-3 px-6">{emp.projectName}</td>

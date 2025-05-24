@@ -1,33 +1,28 @@
 import React, { useState } from "react";
-import { FaRegBell, FaBars } from "react-icons/fa";
-import { FaMicrophone } from "react-icons/fa6";
+import { FaRegBell, FaBars, FaRegUser } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
-import UserProfile from "@/pages/UserProfile";
+import UserMenuBar from "@/Drawer/UserDetails/UserMenuBar";
 
-const Header = ({ toggleSidebar }) => {
-  const [showUserMenu, setShowUserMenu] = useState(false);
+const Header = () => {
+  const [showUserMenuBar, setShowUserMenuBar] = useState(false);
 
   return (
-    <div className="w-full h-16 border-b border-gray-400 shadow-md shadow-neutral-400 bg-white px-4 sm:px-6 md:px-10 flex items-center justify-between">
-    
-      <div className="flex items-center gap-4">
-        
-        <div className="md:hidden">
-          <button onClick={toggleSidebar}>
-            <FaBars className="text-2xl text-black" />
-          </button>
-        </div>
+    <div className="w-full h-16 border-b border-gray-200 shadow-md bg-white px-4 sm:px-6 md:px-10 flex items-center justify-between">
 
+    
+      <div className="flex items-center gap-10">
+        
+        
         {/* Search Bar */}
-       <div className="relative w-52 sm:w-64 md:w-72 right-4">
+       <div className="relative w-48 ml-12 md:ml-1 md:w-72 right-4">
   <input
     type="search"
     placeholder="Type to Search..."
-    className="w-full pl-4 pr-12 py-1.5 border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-md"
+    className="w-full pl-4 pr-12 py-1.5 border border-gray-200 bg-slate-50  focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-full"
   />
   
-  <div className="absolute right-0 top-0 bottom-0 bg-[#9197ff] px-3 flex items-center justify-center rounded-tr rounded-br cursor-pointer">
-    <IoSearchSharp className="text-white text-lg" />
+  <div className="absolute right-0 top-0 bottom-0  px-3 flex items-center justify-center rounded-tr rounded-br cursor-pointer">
+    <IoSearchSharp className="text-gray-500 text-lg hover:scale-110"/>
   </div>
 </div>
 
@@ -35,23 +30,22 @@ const Header = ({ toggleSidebar }) => {
 
       {/* Right Section: Notification & User */}
       <div className="flex items-center gap-4 ml-auto">
-        <div className="bg-[#d5bbf083] w-10 h-10 flex items-center justify-center rounded-full">
-          <FaRegBell className="text-sky-900 text-xl" />
+        <div className=" w-10 h-10 flex items-center justify-center rounded-full">
+          <FaRegBell className="text-gray-500 text-2xl"/>
         </div>
 
         <div className="relative">
-          <div
-            onClick={() => setShowUserMenu(!showUserMenu)}
-            className="bg-[#d5bbf083] text-sky-900 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+          <div 
+
+            onClick={() => setShowUserMenuBar(!showUserMenuBar)}
+            className="bg-[#906eb1fd] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
           >
-            DK
+            <FaRegUser />
           </div>
         </div>
 
-        <UserProfile
-          showUserMenu={showUserMenu}
-          setShowMenu={setShowUserMenu}
-        />
+       
+        <UserMenuBar setShowUserMenuBar={setShowUserMenuBar} showUserMenuBar={showUserMenuBar} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { useSignUpMutation } from "@/service/Auth.services";
-import { SignUpSchema } from "@/Validation/SignUpValidation";
+import { SignUpSchema } from "@/Validation/AuthValidation/SignUpValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";

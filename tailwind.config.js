@@ -5,6 +5,12 @@
 //     backgroundImage: {
 //       "gradient-image": "url('/bg-signup.png')",
 //     },
+    
 //   },
+  // eslint-disable-next-line no-undef
+  
+//   plugins: [require('tailwind-scrollbar')],
 // };
 // export const plugins = [];
+
+

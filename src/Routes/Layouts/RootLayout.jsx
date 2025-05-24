@@ -1,23 +1,21 @@
-import Header from '@/Components/shared/Header';
-import Sidebar from '@/Components/shared/Sidebar';
-import { Outlet } from 'react-router-dom';
+import Header from "@/Components/shared/Header";
+import Sidebar from "@/Components/shared/Sidebar";
+import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
-    return (
-        <main className="flex min-h-screen font-sans bg-gray-50 text-gray-800">
-            
-            <aside className="w-64 bg-white shadow-md">
-                <Sidebar />
-            </aside>
-          
-            <div className="flex flex-col flex-1">
-                <Header />
-                <div className="p-4">
-                    <Outlet />
-                </div>
-            </div>
-        </main>
-    );
+  return (
+    <div className="flex  h-screen font-sans bg-gray-50 text-gray-800 overflow-hidden">
+      <Sidebar />
+
+      <div className="flex flex-col flex-1 overflow-hidden ">
+        <Header />
+
+        <div className="flex-1 outlet-scroll overflow-y-auto p-2 bg-white">
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default RootLayout; 
+export default RootLayout;
