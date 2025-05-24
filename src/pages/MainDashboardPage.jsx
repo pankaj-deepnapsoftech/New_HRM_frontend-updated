@@ -135,11 +135,11 @@ const MainDashboardPage = () => {
 
   {/* Cards and Chart in Single Row */}
   <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2 pt-10 pb-10 items-start">
-    <div className="flex  flex-wrap  gap-6 ml-10">
+    <div className="flex  flex-wrap  gap-6 ml-5 ">
     {statsCards.map((card, i) => (
       <div
         key={i}
-        className="bg-white rounded-sm shadow-md w-64 h-40 p-6 flex flex-col gap-4 text-gray-800"
+        className="bg-white rounded-sm shadow-md w-64 h-40 p-6 flex flex-col gap-5 text-gray-800"
       >
         <div className="flex justify-between items-start ">
           <div>

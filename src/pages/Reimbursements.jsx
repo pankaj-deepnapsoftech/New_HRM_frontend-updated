@@ -44,10 +44,13 @@ const[open,setOpen]=useState(false)
                   )}
                 </td>
                 <td className="px-6 py-4">
-                 
+                 {emp.hasIncentive ? (
                   <button className="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition" onClick={() => setOpen(true)}>
                     ADD
                   </button>
+                    ) : (
+                    <span></span>
+                  )}
                    {open && <ReimbursementModal onClose={() => setOpen(false)} />}
                 </td>
               </tr>
