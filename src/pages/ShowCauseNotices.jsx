@@ -21,16 +21,16 @@ const showCauseData = [
 
 const ShowCauseNotices = () => {
   return (
-    <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
+    <div className="p-4 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       {/* Header */}
-      <div className="bg-gray-300 text-gray-600 text-xl font-semibold py-4 px-4 rounded-t-xl shadow-md w-full max-w-6xl text-center">
+      <div className="bg-gray-300 text-gray-600 text-xl font-semibold py-4 px-4 rounded-xl shadow-md shadow-gray-400  w-full max-w-6xl text-center">
         Employee Show Cause Notices
       </div>
 
       {/* Table */}
-      <div className="w-full max-w-6xl overflow-x-auto bg-white shadow rounded-b-xl">
-        <table className="min-w-full divide-y divide-gray-200 text-sm text-left">
-          <thead className="bg-gray-100 text-gray-700 font-semibold">
+      <div className="w-full max-w-6xl overflow-x-auto bg-white shadow rounded-xl mt-10 ">
+        <table className="min-w-full divide-y divide-gray-200 text-sm text-left py-">
+          <thead className="bg-gray-200 text-gray-700 font-semibold">
             <tr>
               <th className="px-4 py-3">Complaint By</th>
               <th className="px-4 py-3">Department</th>
@@ -43,7 +43,7 @@ const ShowCauseNotices = () => {
           </thead>
           <tbody>
             {showCauseData.map((entry, index) => (
-              <tr key={index} className="border-t text-gray-800">
+              <tr key={index} className="border-b border-gray-300 text-gray-600">
                 <td className="px-4 py-3">{entry.complaintBy}</td>
                 <td className="px-4 py-3">{entry.department}</td>
                 <td className="px-4 py-3">{entry.reason}</td>
@@ -51,7 +51,7 @@ const ShowCauseNotices = () => {
                 <td className="px-4 py-3">{entry.complaintTo}</td>
                 <td className="px-4 py-3">{entry.status}</td>
                 <td className="px-4 py-3">
-                  <button className="bg-blue-400 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded shadow">
+                  <button className="bg-gradient-to-br from-blue-400 to-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded shadow">
                     Mark as Reviewed
                   </button>
                 </td>

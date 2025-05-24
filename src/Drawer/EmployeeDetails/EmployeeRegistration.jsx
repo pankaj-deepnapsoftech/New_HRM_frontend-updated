@@ -33,8 +33,8 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
     });
 
     return (
-        <section className={`${showForm ? "block" : "hidden"} fixed inset-0 backdrop-blur-sm flex items-start justify-center pt-10 z-50`}>
-            <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100">
+        <section className={`${showForm ? "block" : "hidden"} fixed inset-0 backdrop-blur-sm flex items-start justify-center pt-5 z-50`}>
+            <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100">
 
                 <button
                     className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition"

@@ -41,12 +41,12 @@ const employees = [
 
 const TerminatedEmp = () => {
   return (
-    <div className="p-6">
-      <div className=" border-1 border-gray-300  text-center text-xl font-semibold py-4 rounded-t-xl shadow-md">
+    <div className="p-4 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+      <div className="bg-gray-300 text-center text-xl font-semibold py-4 rounded-xl shadow-md shadow-gray-400 mb-10 ">
         Terminated Employee
       </div>
 
-      <div className="overflow-x-auto shadow-md rounded-b-xl">
+      <div className="overflow-x-auto shadow-md rounded-xl">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-200 text-gray-700 text-sm font-semibold uppercase">
             <tr>
@@ -85,17 +85,21 @@ const TerminatedEmp = () => {
                 </td>
                 <td className="py-3 px-4">
                   {emp.status === "Terminated" ? (
-                    <span className="text-red-500 font-semibold">
+                    <span className="text-red-500 bg-red-100 rounded-full  py-1 px-2 font-semibold text-sm">
                       Terminated
                     </span>
                   ) : (
-                     <span className="text-green-500 font-semibold">Active</span>
+                     <span className="text-green-500 bg-green-100 rounded-full py-1 px-2 font-semibold text-sm">Active</span>
                   )}
                 </td>
                 <td className="py-3 px-4">
-                  <button className="bg-red-400 hover:bg-red-700 text-white px-4 py-1 rounded-md shadow">
-                    Terminate   
+                  {emp.status === "Active" ? (
+                  <button className="bg-gradient-to-br from-red-400 to-red-700 hover:scale-105 tansition transform  text-white px-2 py-1 rounded-sm shadow-md">
+                    Terminate 
                   </button>
+                  ):(
+                    <span></span>
+                  )}
                 </td>
               </tr>
             ))}

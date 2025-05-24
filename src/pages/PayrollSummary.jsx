@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdRemoveRedEye } from "react-icons/md";
-import EarningDetails from "@/Drawer/EarningDetails"; 
+import EarningDetails from "@/Drawer/PayrollSummary/EarningDetails"; 
 
 const employees = [
   {
@@ -45,19 +45,19 @@ const PayrollSummary = () => {
     };
 
   return (
-    <div className="p-5">
-      <div className="bg-gray-500 text-white text-xl font-semibold px-6 py-3 rounded-t-lg shadow-md text-center">
+    <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+      <div className="bg-gray-300 text-gray-700 text-xl font-semibold px-6 py-3 rounded-lg shadow-md shadow-gray-400  text-center mx-10">
         Payroll Summary
       </div>
 
-      <div className="shadow-lg rounded-b-lg">
+      <div className="shadow-lg rounded-b-lg m-10  ">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-200 text-gray-700 text-sm font-semibold uppercase">
             <tr>
-              <th className="px-6 py-3 text-left">Name</th>
-              <th className="px-6 py-3 text-left">Department</th>
-              <th className="px-6 py-3 text-left">Designation</th>
-              <th className="px-6 py-3 text-left">Summary</th>
+              <th className="px-7 py-3 text-left">Name</th>
+              <th className="px-7 py-3 text-left">Department</th>
+              <th className="px-7 py-3 text-left">Designation</th>
+              <th className="px-7 py-3 text-left">Summary</th>
             </tr>
           </thead>
           <tbody>
@@ -68,10 +68,10 @@ const PayrollSummary = () => {
                   idx % 2 === 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
-                <td className="p-3 px-6">{emp.fname}</td>
-                <td className="p-3 px-6">{emp.department}</td>
-                <td className="p-3 px-6">{emp.design}</td>
-                <td className="p-3 px-6">
+                <td className="p-3 px-7">{emp.fname}</td>
+                <td className="p-3 px-7">{emp.department}</td>
+                <td className="p-3 px-7">{emp.design}</td>
+                <td className="p-3 px-7">
                   <button
                     className="text-blue-600 hover:underline flex items-center gap-1"
                     onClick={() => handleViewClick(emp)}
