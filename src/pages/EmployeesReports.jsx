@@ -49,18 +49,13 @@ const employees_report = [
 
 const EmployeesReports = () => {
   return (
-    <div className="p-4 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
-      <div className="bg-gray-300 text text-center mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
+    <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+      <div className="bg-gray-300 text text-center  mx-4 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees Report</h2>
       </div>
-      <div className="flex justify-end mx-10 mb-5">
-        <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
-          EXPORT
-        </button>
-      </div>
 
-      <div className="overflow-hidden rounded-t-xl shadow-md mx-10 mb-8">
-        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md mx-4 md:mx-10 mb-8">
+        <table className=" min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-left">
               <th className=" font-[600] py-4 px-4 ">Name</th>
@@ -72,6 +67,9 @@ const EmployeesReports = () => {
               <th className=" font-[600] py-4 px-2">Present Days</th>
               <th className=" font-[600] py-4 px-4">Gate Pass</th>
               <th className=" font-[600] py-4 px-4">Status</th>
+              <th className="flex justify-end mx-3 mt-5"><button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+          EXPORT
+        </button></th>
             </tr>
           </thead>
           <tbody>

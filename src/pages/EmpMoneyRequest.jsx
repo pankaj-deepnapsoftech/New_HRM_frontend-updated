@@ -49,8 +49,8 @@ const EmpMoneyRequest = () => {
         </button>
       </div>
       </div>
-     <div className="overflow-hidden rounded-t-xl shadow-md">
-      <table className="w-full table-auto border-b border-gray-200 ">
+     <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md">
+      <table className=" w-3xl md:w-full table-auto border-b border-gray-200 ">
         <thead className="bg-gray-200 text-gray-600">
           <tr>
             <th className="px-4 py-4 text-left">Employee Name</th>

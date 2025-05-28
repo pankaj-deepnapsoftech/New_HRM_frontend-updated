@@ -46,8 +46,8 @@ const TerminatedEmp = () => {
         Terminated Employee
       </div>
 
-      <div className="overflow-x-auto shadow-md rounded-xl">
-        <table className="min-w-full bg-white">
+      <div className="overflow-x-auto scrollbar-visible shadow-md rounded-sm md:rounded-xl">
+        <table className=" w-5xl md:min-w-full bg-white">
           <thead className="bg-gray-200 text-gray-700 text-sm font-semibold uppercase">
             <tr>
               <th className="py-3 px-4 text-left">Full Name</th>

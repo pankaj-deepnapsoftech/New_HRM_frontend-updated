@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const EarningDetails = ({ onClose, earningDetails }) => {
+  const modalRef = useRef(null);
+
+  // Close when clicking outside the modal
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onClose]);
+
   if (!earningDetails) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg w-[400px] p-6 shadow-lg animate-fade-in">
-        <h2 className="text-lg font-semibold text-center mb-4">Earning Details</h2>
-        <div className="space-y-2 text-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div
+        ref={modalRef}
+        className="relative bg-white rounded-lg w-[400px] p-6 shadow-lg animate-fade-in"
+      >
+        {/* Close (X) Button */}
+        <button
+          className="absolute top-2 right-5 text-gray-500 hover:text-red-600 text-xl"
+          onClick={onClose}
+        >
+          ×
+        </button>
+
+        <h2 className="text-xl font-semibold text-center mb-10">Earning Details</h2>
+        <div className="space-y-6 text-sm">
           <div className="flex justify-between">
             <span>Basic Salary</span><span>₹ {earningDetails.basic.toFixed(2)}</span>
           </div>
@@ -27,14 +51,8 @@ const EarningDetails = ({ onClose, earningDetails }) => {
             <span>Total Earning</span><span>₹ {earningDetails.total.toFixed(2)}</span>
           </div>
         </div>
-        <div className="text-center mt-4">
-          <button
-            className="text-blue-600 hover:underline"
-            onClick={onClose}
-          >
-            Close
-          </button>
-        </div>
+
+      
       </div>
     </div>
   );

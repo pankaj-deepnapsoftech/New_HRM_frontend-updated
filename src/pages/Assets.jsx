@@ -45,7 +45,7 @@ const customStyles = {
     borderColor: state.isFocused ? "#8B5CF6" : "#D1D5DB",
     boxShadow: state.isFocused ? "0 0 0 2px rgba(139, 92, 246, 0.5)" : "none",
     fontSize: "0.875rem",
-    '&:hover': {
+    "&:hover": {
       borderColor: "#8B5CF6",
     },
   }),
@@ -85,25 +85,28 @@ const AssignAssets = () => {
       <div className="bg-gray-300 text-gray-600 text-xl font-semibold text-center rounded-md py-3 shadow-md shadow-gray-400">
         Assets
       </div>
-      <div className="overflow-x-auto mt-10 rounded-t-md shadow-md">
-        <table className="w-full table-auto border-gray-500 text-sm">
+      <div className="overflow-x-auto scrollbar-visible mt-10 rounded-t-md shadow-md">
+        <table className="w-2xl md:w-full border-gray-500 text-sm">
           <thead className="bg-gray-200 text-gray-700 uppercase">
             <tr>
-              <th className="p-3 text-left">Name</th>
-              <th className="p-3 text-left">Department</th>
-              <th className="p-3 text-left">Designation</th>
-              <th className="p-3 text-left">Added Assets</th>
-              <th className="p-3 text-left">Assets</th>
-              <th className="p-3 text-left">Add</th>
+              <th className="p-2 py-3 text-left">Name</th>
+              <th className="p-2 py-3 text-left">Department</th>
+              <th className="p-2 py-3 text-left">Designation</th>
+              <th className="p-2 py-3 text-left">Added Assets</th>
+              <th className="p-2 py-3 text-left">Assets</th>
+              <th className="p-2 py-3 text-left">Add</th>
             </tr>
           </thead>
           <tbody>
             {employees.map((emp, index) => (
-              <tr key={index} className="border-b border-gray-300 hover:bg-gray-50">
-                <td className="p-3">{emp.name}</td>
-                <td className="p-3">{emp.dept}</td>
-                <td className="p-3">{emp.designation}</td>
-                <td className="p-3 space-x-2">
+              <tr
+                key={index}
+                className="border-b border-gray-300 hover:bg-gray-50"
+              >
+                <td className="p-2">{emp.name}</td>
+                <td className="p-2">{emp.dept}</td>
+                <td className="p-2">{emp.designation}</td>
+                <td className="p-2 space-x-2">
                   {emp.assets.map((asset, i) => (
                     <span
                       key={i}
@@ -123,7 +126,12 @@ const AssignAssets = () => {
                     }
                     onChange={(selected) => handleAssetChange(index, selected)}
                     placeholder="Assign or add assets"
-                    styles={customStyles}
+                    styles={{
+                      ...customStyles,
+                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                    }}
+                    menuPortalTarget={document.body}
+                    menuPosition="absolute"
                     isClearable
                   />
                 </td>

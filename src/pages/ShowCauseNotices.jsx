@@ -12,7 +12,7 @@ const showCauseData = [
   {
     complaintBy: "komal singh",
     department: "IT",
-    reason: "absent ",
+    reason: "absent without Inform",
     issuedAt: "3/3/2025",
     complaintTo: "Nitish (NIT51130226)",
     status: "Reviewed",
@@ -28,8 +28,8 @@ const ShowCauseNotices = () => {
       </div>
 
       {/* Table */}
-      <div className="w-full max-w-6xl overflow-x-auto bg-white shadow rounded-xl mt-10 ">
-        <table className="min-w-full divide-y divide-gray-200 text-sm text-left py-">
+      <div className="w-full max-w-6xl overflow-x-auto scrollbar-visible bg-white shadow rounded-xl mt-10 ">
+        <table className="w-4xl md:min-w-full divide-y divide-gray-200 text-sm text-left py-">
           <thead className="bg-gray-200 text-gray-700 font-semibold">
             <tr>
               <th className="px-4 py-3">Complaint By</th>
@@ -51,7 +51,7 @@ const ShowCauseNotices = () => {
                 <td className="px-4 py-3">{entry.complaintTo}</td>
                 <td className="px-4 py-3">{entry.status}</td>
                 <td className="px-4 py-3">
-                  <button className="bg-gradient-to-br from-blue-400 to-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded shadow">
+                  <button className="bg-gradient-to-br from-blue-400 to-blue-500 hover:bg-blue-600 text-white text-sm px-1 md:px-3 py-1 md:py-2 rounded shadow">
                     Mark as Reviewed
                   </button>
                 </td>

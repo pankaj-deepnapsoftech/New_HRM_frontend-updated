@@ -44,16 +44,16 @@ const EmpDashboard = () => {
         Employee Dashboard
       </div>
 
-        <div className="overflow-hidden rounded-t-xl shadow-md">
-        <table className="min-w-full divide-y divide-gray-200">
+        <div className="  rounded-t-sm md:rounded-t-xl shadow-md overflow-x-auto w-full scrollbar-visible">
+        <table className=" w-3xl md:min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-200 text-gray-700 text-sm font-semibold uppercase">
             <tr>
-              <th className="px-6 py-4 text-left">Full Name</th>
-              <th className="px-6 py-4 text-left">Department</th>
-              <th className="px-6 py-4 text-left">Designation</th>
-              <th className="px-6 py-4 text-left">Emp-Code</th>
-              <th className="px-6 py-4 text-left">Salary</th>
-              <th className="px-6 py-4 text-left">Joining Date</th>
+              <th className=" px-4 md:px-6 py-4 text-left">Full Name</th>
+              <th className="px-4 md:px-6 py-4 text-left">Department</th>
+              <th className="px-4 md:px-6 py-4 text-left">Designation</th>
+              <th className="px-4 md:px-6 py-4 text-left">Emp-Code</th>
+              <th className="px-4 md:px-6 py-4 text-left">Salary</th>
+              <th className="px-4 md:px-6 py-4 text-left">Joining Date</th>
             </tr>
           </thead>
           <tbody>
@@ -64,12 +64,12 @@ const EmpDashboard = () => {
                   idx % 2 == 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
-                <td className="py-4 px-6 text-[14px]">{emp.fname}</td>
-                <td className="py-4 px-6 text-[14px]">{emp.department}</td>
-                <td className="py-4 px-6 text-[14px]">{emp.designation}</td>
-                <td className="py-4 px-6 text-[14px]">{emp.empCode}</td>
-                <td className="py-4 px-6 text-[14px]">{emp.salary}</td>
-                <td className="py-4 px-6 text-[14px]">{emp.date}</td>
+                <td className="py-4 px-4 md:px-6 text-[14px]">{emp.fname}</td>
+                <td className="py-4 px-4 md:px-6 text-[14px]">{emp.department}</td>
+                <td className="py-4 px-4 md:px-6 text-[14px]">{emp.designation}</td>
+                <td className="py-4 px-4 md:px-6 text-[14px]">{emp.empCode}</td>
+                <td className="py-4 px-4 md:px-6 text-[14px]">{emp.salary}</td>
+                <td className="py-4 px-4 md:px-6 text-[14px]">{emp.date}</td>
               </tr>)
              
             })}

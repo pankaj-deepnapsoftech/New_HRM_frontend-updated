@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdRemoveRedEye } from "react-icons/md";
-import EarningDetails from "@/Drawer/PayrollSummary/EarningDetails"; 
+import EarningDetails from "@/Drawer/PayrollSummary/EarningDetails";
 
 const employees = [
   {
@@ -9,7 +9,7 @@ const employees = [
     design: "Developer",
   },
   {
-    fname: "komal",
+    fname: "Komal",
     department: "Sales",
     design: "Manager",
   },
@@ -35,22 +35,21 @@ const earningDetails = {
 };
 
 const PayrollSummary = () => {
-    
-     const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const handleViewClick = (emp) => {
     setSelectedEmployee(emp);
     setShowModal(true);
-    };
+  };
 
   return (
-    <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
-      <div className="bg-gray-300 text-gray-700 text-xl font-semibold px-6 py-3 rounded-lg shadow-md shadow-gray-400  text-center mx-10">
+    <div className="p-4 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+      <div className="bg-gray-300 text-gray-700 text-xl font-semibold px-6 py-3 rounded-lg shadow-md shadow-gray-400 text-center mx-2 md:mx-10">
         Payroll Summary
       </div>
 
-      <div className="shadow-lg rounded-b-lg m-10  ">
+      <div className="shadow-lg rounded-b-lg overflow-x-scroll scrollbar-visible m-2 mt-8 md:m-10">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-200 text-gray-700 text-sm font-semibold uppercase">
             <tr>
@@ -84,14 +83,18 @@ const PayrollSummary = () => {
             ))}
           </tbody>
         </table>
-
-        {showModal && selectedEmployee (
-          <EarningDetails
-            onClose={() => setShowModal(false)}
-            earningDetails={earningDetails}
-          />
-        )}
       </div>
+
+      {showModal && selectedEmployee && (
+        <EarningDetails
+          onClose={() => {
+            setShowModal(false);
+            setSelectedEmployee(null);
+          }}
+          earningDetails={earningDetails}
+          employee={selectedEmployee} // Optional: in case modal shows employee info too
+        />
+      )}
     </div>
   );
 };

@@ -3,8 +3,8 @@ import { X } from "lucide-react";
 
 const ReimbursementModal = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 bg-bl bg-opacity-100 flex items-center justify-center z-50">
-      <div className="bg-white rounded shadow-lg w-[420px] relative px-6 py-6">
+    <div className="fixed inset-0 bg-black/20  flex items-center justify-center z-50">
+      <div className="bg-white rounded-sm shadow-lg w-[350px] md:w-[420px] relative px-6 py-6">
         {/* Close Icon */}
         <button
           className="absolute top-3 right-3 text-gray-500 hover:text-red-500"
@@ -14,7 +14,7 @@ const ReimbursementModal = ({ onClose }) => {
         </button>
 
         {/* Title */}
-        <h2 className="text-lg font-semibold text-center mb-6">
+        <h2 className="text-lg font-semibold text-center  mb-6">
           Add Employee Reimbursements
         </h2>
 
@@ -41,9 +41,9 @@ const ReimbursementModal = ({ onClose }) => {
         </div>
 
         {/* Button */}
-        <div className="mt-6 flex justify-end space-x-4">
+        <div className="mt-6 flex justify-around space-x-4">
           <button
-            className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 text-sm"
+            className="bg-blue-600 text-white px-5 py-2 rounded shadow bg-gradient-to-br from-slate-500 to-slate-600 text-sm hover:bg-gradient-to-tl"
           >
             ADD REIMBURSEMENTS
           </button>

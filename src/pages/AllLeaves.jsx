@@ -46,13 +46,13 @@ const employees = [
 const AllLeaves = () => {
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10 ">
-      <div className="bg-gray-300 text-gray-600 font-semibold text-xl py-4 px-6 mx-6 text-center  rounded-lg shadow-md shadow-gray-400">
+      <div className="bg-gray-300 text-gray-600 font-semibold text-xl py-4 px-6 mx-4 md:mx-6 text-center  rounded-lg shadow-md shadow-gray-400">
         Employee All Leave
       </div>
       
-      <div className="overflow-hidden rounded-t-xl shadow-md mx-6 mb-8 mt-8">
+      <div className="overflow-x-scroll scrollbar-visible rounded-t-xl shadow-md mx-4 md:mx-6 mb-8 mt-8">
 
-        <table className="min-w-full table-auto bg-white">
+        <table className=" w-5xl md:min-w-full table-auto bg-white">
           <thead className="bg-gray-200 text-gray-700 text-sm uppercase">
             <tr>
               <th className="px-3 py-3 text-left">Name</th>
@@ -69,7 +69,7 @@ const AllLeaves = () => {
             {employees.map((emp, index) => (
               <tr
                  key={index}
-                className={`border-b border-gray-200  ${
+                className={`border-t border-gray-200  ${
                   index % 2 == 0 ? "bg-white" : "bg-gray-50"
                 }`}
               >
