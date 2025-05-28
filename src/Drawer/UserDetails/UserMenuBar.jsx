@@ -10,6 +10,7 @@ import { ChangePassSchema } from "@/Validation/AuthValidation/ChangePassValidati
 import { useFormik } from "formik";
 import { MdRemoveRedEye } from "react-icons/md";
 import { LuEyeClosed } from "react-icons/lu";
+import { browserName, isMobile } from "react-device-detect";
 
 const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   const sidebarRef = useRef(null);
@@ -21,9 +22,10 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [LogoutUser] = useLogoutUserMutation()
   const dispatch = useDispatch()
+  
   const handleLogout = async () => {
     try {
-      const res = await LogoutUser().unwrap();
+      const res = await LogoutUser({isMobile,browser:browserName}).unwrap();
       dispatch(removeData());
       window.location.href = "/";
       toast.success(res.message);

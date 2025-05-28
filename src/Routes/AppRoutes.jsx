@@ -14,7 +14,6 @@ const AppRoutes = () => {
     const dispatch = useDispatch();
     const {Auth} = useSelector((state) => state);
 
-    console.log(Auth)
 
     useEffect(() => {
         if (data?.data) {
@@ -24,7 +23,6 @@ const AppRoutes = () => {
 
     useEffect(() => {
         if (Auth.isLogin || !Auth.isLogin) {
-            console.log("this is call again")
             refetch(); 
         };
     },[Auth.isLogin,refetch])

@@ -31,10 +31,11 @@ const AuthApi = Api.injectEndpoints({
         }),
         
         LogoutUser: build.mutation({
-            query() {
+            query(body) {
                 return {
                     url: "/user/logout",
-                    method: "GET"
+                    method: "POST",
+                    body
                 }
             },
             providesTags: ["Auth"]
