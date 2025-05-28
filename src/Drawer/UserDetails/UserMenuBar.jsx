@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { FiUser, FiLock, FiSettings, FiLogOut } from "react-icons/fi";
 import UserProfile from "@/pages/UserProfile";
@@ -12,6 +12,7 @@ import { MdRemoveRedEye } from "react-icons/md";
 import { LuEyeClosed } from "react-icons/lu";
 
 const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
+  const sidebarRef = useRef(null);
   const [ChangePassword, { isLoading }] = useChangePasswordMutation()
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -56,12 +57,31 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
       }
     }
   });
+
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+  setShowUserMenuBar(false);
+}
+
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
 
       <section
+        ref={sidebarRef} 
         className={`${showUserMenuBar ? "translate-x-0" : "translate-x-full"
-          } fixed top-0 right-0 z-50 h-screen w-[85vw] sm:w-[60vw] md:w-[40vw] lg:w-[25vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-transform duration-500 ease-in-out`}
+          } fixed top-0 right-0 z-50 h-screen w-[60vw] md:w-[22vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-transform duration-500 ease-in-out`}
         role="dialog"
         aria-modal="true"
       >

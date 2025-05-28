@@ -115,7 +115,7 @@ const MainDashboardPage = () => {
 
   return (
     <main className="flex-1 font-sans">
-      <section className="p-10">
+      <section className="p-6 md:p-10">
   <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
     <div>
       <p className="text-sm mb-2 opacity-80">{today}</p>
@@ -129,17 +129,17 @@ const MainDashboardPage = () => {
     <img
       src="/Hand coding-amico.png"
       alt="Welcome Illustration"
-      className="w-[200px] mt-6 sm:mt-0"
+      className=" w-[150px] md:w-[200px] mt-6 sm:mt-0"
     />
   </section>
 
   {/* Cards and Chart in Single Row */}
-  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2 pt-10 pb-10 items-start">
-    <div className="flex  flex-wrap  gap-6 ml-10">
+  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-5 md:pt-10  md:pb-10 items-start">
+    <div className="flex  flex-wrap  gap-6 ml-5 ">
     {statsCards.map((card, i) => (
       <div
         key={i}
-        className="bg-white rounded-sm shadow-md w-64 h-40 p-6 flex flex-col gap-4 text-gray-800"
+        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-64 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
       >
         <div className="flex justify-between items-start ">
           <div>
@@ -160,7 +160,7 @@ const MainDashboardPage = () => {
     </div>
 
     {/* Pie Chart Side by Side */}
-    <div className="flex-1 max-w-md  bg-white p-5 mr-15 rounded-sm shadow-md">
+    <div className="flex-1 max-w-md  bg-white p-8 mr-5 rounded-sm shadow-md">
       <Pie data={data} options={options} />
     </div>
   </div>

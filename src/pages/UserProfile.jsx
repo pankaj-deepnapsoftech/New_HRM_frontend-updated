@@ -4,18 +4,26 @@ import { IoIosClose } from "react-icons/io"
 
 const UserProfile = ({ showUserMenu, setShowMenu }) => {
 
+const handleBackgroundClick = () => {
+    setShowMenu(false);
+  };
 
+  // Prevent closing when clicking inside the modal
+  const handleContentClick = (e) => {
+    e.stopPropagation();
+  };
 
   return (
     <div
-
+  onClick={handleBackgroundClick}
       className={`fixed top-0 left-0 w-full h-screen inset-0 z-50 bg-black/40 p-4 flex items-center justify-center transition-opacity duration-300 ease-in-out
       ${showUserMenu ? 'opacity-100 visible' : 'opacity-0 invisible'}
     `}
 
 
     >
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden relative">
+     
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden relative"  onClick={ handleContentClick}>
 
         <div className="h-24 bg-gradient-to-r from-[#533F60] to-[#372a41] p-5 text-white flex items-start justify-between">
           <h1 className="text-xl font-semibold">User Profile</h1>

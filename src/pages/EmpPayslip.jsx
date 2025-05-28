@@ -37,13 +37,13 @@ const EmpPayslip = () => {
     (salary - salary * 0.12) * (days / 3);
 
   return (
-    <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
-      <div className="bg-gray-400 text-white text-center py-4 rounded-t-2xl shadow-lg">
-        <h2 className="text-xl sm:text-2xl font-bold">Generate Employee Payslip</h2>
+    <div className=" p-5 md:p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+      <div className="bg-gray-300 text-gray-600 text-center py-4 rounded-xl shadow-md shadow-gray-400 ">
+        <h2 className="text-lg sm:text-2xl font-semibold">Generate Employee Payslip</h2>
       </div>
 
-      <div className="overflow-x-auto bg-white shadow-lg rounded-b-2xl">
-        <table className="min-w-full divide-y divide-gray-200 text-sm sm:text-base">
+      <div className="overflow-x-auto scrollbar-visible bg-white shadow-lg rounded-t-xl mt-10">
+        <table className="w-6xl md:w-full divide-y divide-gray-200 text-sm sm:text-base">
           <thead className="bg-gray-200 text-gray-700 uppercase text-xs sm:text-sm">
             <tr>
               <th className="px-6 py-3 text-left">Full Name</th>

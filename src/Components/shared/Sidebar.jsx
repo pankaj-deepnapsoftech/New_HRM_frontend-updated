@@ -22,7 +22,7 @@ import {
   GiMoneyStack,
   GiTakeMyMoney,
 } from "react-icons/gi";
-import { FiAlertTriangle } from "react-icons/fi";
+import { FiAlertTriangle, FiLogOut } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogoutUserMutation } from "@/service/Auth.services";
 import { useDispatch } from "react-redux";
@@ -285,17 +285,17 @@ const Sidebar = () => {
       )}
       <aside
         ref={sidebarRef}
-        className={`sidebar-scroll overflow-y-auto fixed top-0 left-0 bottom-0 h-screen w-48 md:w-64 bg-gradient-to-t from-[#281c30] to-[#806097] text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
+        className={`sidebar-scroll overflow-y-auto fixed top-0 left-0 bottom-0 h-screen w-64 md:w-72 bg-gradient-to-t from-[#281c30] to-[#806097] text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
   ${showSidebar ? "translate-x-0" : "-translate-x-full"} 
   md:translate-x-0 md:static md:block`}
       >
-        <div className="flex items-center py-2 w-full border-b border-white/40 md:px-3 ">
+        <div className="flex items-center py-1 w-full border-b border-white/40   ">
           <img
             src="/d logo.png"
             alt="Deepnap Softech Logo"
-            className="brightness-0 invert h-[100px]"
+            className="brightness-0 invert h-[120px] "
           />
-          <h2 className="text-lg md:text-xl relative right-4 font-bold tracking-wide">
+          <h2 className="text-xl relative right-4 font-bold tracking-wide">
             Deepnap Softech
           </h2>
         </div>
@@ -314,7 +314,7 @@ const Sidebar = () => {
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
               ${
                 isActive
-                  ? "bg-[#ffffff] text-purple-500 font-bold shadow-md"
+                  ? "bg-white/80 text-purple-500 font-bold shadow-md"
                   : "hover:bg-white/10"
               }`}
                 >
@@ -331,11 +331,11 @@ const Sidebar = () => {
                         <div
                           key={subIndex}
                           onClick={() => navigator(subItem.path)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-md cursor-pointer transition duration-300 
+                          className={`flex items-center gap-1 px-1 py-3 rounded-md cursor-pointer transition duration-300 
                       ${
                         isSubActive
-                          ? "bg-[#ffffff] text-purple-500 font-bold shadow-md "
-                          : "hover:bg-white/10"
+                          ? "bg-white/80 text-purple-500 font-bold shadow-md"
+                  : "hover:bg-white/10"
                       }`}
                         >
                           {subItem.icon}
@@ -354,9 +354,9 @@ const Sidebar = () => {
         <div className="mt-auto w-full px-6 py-4">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-white/30 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110"
-          >
-            Logout
+            className=" w-40 md:w-48 flex items-center justify-center py-2 mt-8  ml-7 mb-5 p-3 bg-white/50 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110 hover:scale-105"
+          > <FiLogOut size={15} className="shrink-0  " />
+           <span className="ml-2">Logout</span>
           </button>
         </div>
       </aside>

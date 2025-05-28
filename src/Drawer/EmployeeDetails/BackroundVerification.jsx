@@ -6,7 +6,7 @@ const BackroundVerification = ({ VerificationForm, setVerificationForm }) => {
 
 
     return (
-        <section className={`${VerificationForm ? "flex" : "hidden"} h-screen w-full fixed top-0 left-0 bg-[#0000005b] backdrop-blur-sm justify-center items-center `}>
+        <section className={`${VerificationForm ? "flex" : "hidden"} h-screen w-full fixed top-0 left-0 bg-black/40 justify-center items-center `}>
             <div>
                 <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl">
 
