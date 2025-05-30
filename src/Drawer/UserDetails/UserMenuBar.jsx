@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { FiUser, FiLock, FiSettings, FiLogOut } from "react-icons/fi";
 import UserProfile from "@/pages/UserProfile";
@@ -10,8 +10,10 @@ import { ChangePassSchema } from "@/Validation/AuthValidation/ChangePassValidati
 import { useFormik } from "formik";
 import { MdRemoveRedEye } from "react-icons/md";
 import { LuEyeClosed } from "react-icons/lu";
+import { browserName, isMobile } from "react-device-detect";
 
 const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
+  const sidebarRef = useRef(null);
   const [ChangePassword, { isLoading }] = useChangePasswordMutation()
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -20,9 +22,10 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [LogoutUser] = useLogoutUserMutation()
   const dispatch = useDispatch()
+  
   const handleLogout = async () => {
     try {
-      const res = await LogoutUser().unwrap();
+      const res = await LogoutUser({isMobile,browser:browserName}).unwrap();
       dispatch(removeData());
       window.location.href = "/";
       toast.success(res.message);
@@ -56,12 +59,31 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
       }
     }
   });
+
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+  setShowUserMenuBar(false);
+}
+
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
 
       <section
+        ref={sidebarRef} 
         className={`${showUserMenuBar ? "translate-x-0" : "translate-x-full"
-          } fixed top-0 right-0 z-50 h-screen w-[85vw] sm:w-[60vw] md:w-[40vw] lg:w-[25vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-transform duration-500 ease-in-out`}
+          } fixed top-0 right-0 z-50 h-screen w-[60vw] md:w-[22vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-transform duration-500 ease-in-out`}
         role="dialog"
         aria-modal="true"
       >

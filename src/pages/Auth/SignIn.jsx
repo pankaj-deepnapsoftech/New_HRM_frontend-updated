@@ -2,7 +2,7 @@ import { SignInSchema } from "@/Validation/AuthValidation/SignInValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { browserName, deviceType } from "react-device-detect";
+import { browserName, isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import { useSignInMutation } from "@/service/Auth.services";
 import { useDispatch } from "react-redux";
@@ -32,7 +32,7 @@ const Login = () => {
         },
         validationSchema: SignInSchema,
         onSubmit: async (values) => {
-            const totalData = { ...values, device: deviceType, browser: browserName }
+            const totalData = { ...values, isMobile, browser: browserName }
          
             try {
                 const res = await SignIn(totalData).unwrap();

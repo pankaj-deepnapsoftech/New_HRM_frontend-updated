@@ -10,7 +10,7 @@ const BackroundVerification = ({ VerificationForm, setVerificationForm }) => {
             <div>
                 <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl">
 
-                    <div className="mb-6 text-end">
+                    <div className="mb-10 text-end">
                         <button
                             className=" text-gray-800 cursor-pointer hover:text-red-500 transition"
                             onClick={() => setVerificationForm(false)}
@@ -88,7 +88,7 @@ const BackroundVerification = ({ VerificationForm, setVerificationForm }) => {
                         <div className="flex justify-start mt-4">
                             <button
                                 type="submit"
-                                className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+                                className="relative left-36 bg-slate-600 text-white px-8 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
                             >
                                 Submit
                             </button>

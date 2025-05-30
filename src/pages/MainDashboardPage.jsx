@@ -1,4 +1,15 @@
 import React from "react";
+import { Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Title,
+} from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
+
 // Optional: Uncomment if using AOS animations
 // import AOS from "aos";
 // import "aos/dist/aos.css";
@@ -19,133 +30,143 @@ const MainDashboardPage = () => {
   //   AOS.init({ duration: 1000 });
   // }, []);
 
-  const statsCards = [
-    {
-      label: "Your Overall Rank",
-      value: "1st",
-      sub: "among creators",
-      color: "text-purple-500",
-    },
-    {
-      label: "Content Created",
-      value: "245",
-      sub: "1st among creators",
-    
-      badgeColor: "border-purple-400",
-    },
-    {
-      label: "New Subscribers",
-      value: "137",
-      sub: "+2.1%",
-      subColor: "text-green-600",
-    },
-    {
-      label: "Total Subscribers",
-      value: "7,869",
-    
-      subColor: "text-red-500",
-    },
-    {
-      label: "Content Views",
-      value: "842,302",
-      sub: "+2.1%",
-      subColor: "text-green-600",
-    },
-    {
-      label: "Time on Site",
-      value: "1,253h",
-      sub: "+3.4%",
-      subColor: "text-green-600",
-    },
-  ];
+ const statsCards = [
+  {
+    label: "Total Employees",
+    value: "1.2K",
+    iconBg: "bg-red-200",
+    iconColor: "text-red-500",
+    icon: "👤",
+    change: "+147%",
+    changeColor: "text-green-500",
+  },
+  {
+    label: "Total Enrollments",
+    value: "1.52K",
+    iconBg: "bg-green-200",
+    iconColor: "text-green-500",
+    icon: "⭐",
+    change: "+53%",
+    changeColor: "text-green-500",
+  },
+  {
+    label: "Absent",
+    value: "4.53%",
+    iconBg: "bg-blue-200",
+    iconColor: "text-blue-500",
+    icon: "🔥",
+    change: "-10.7%",
+    changeColor: "text-red-500",
+  },
+  {
+    label: "Present",
+    value: "5.47%",
+    iconBg: "bg-yellow-200",
+    iconColor: "text-yellow-500",
+    icon: "🕒",
+    change: "+29%",
+    changeColor: "text-green-500",
+  },
+];
 
-  const attendanceCards = [
-    { label: "Total Enrollments", value: "4", bg: "from-cyan-300 to-blue-400", image: "/bubble.png" },
-    { label: "Total Projects", value: "1", bg: "from-pink-400 to-purple-400", image: "/bubble.png" },
-    { label: "Present", value: "0", bg: "from-indigo-300 to-violet-400" },
-    { label: "Absent", value: "0", bg: "from-rose-400 to-red-400" },
-  ];
+  // const attendanceCards = [
+  //   { label: "Total Enrollments", value: "4", bg: "from-cyan-300 to-blue-400" },
+  //   { label: "Total Projects", value: "1", bg: "from-pink-400 to-purple-400"  },
+  //   { label: "Present", value: "0", bg: "from-indigo-300 to-violet-400" },
+  //   { label: "Absent", value: "0", bg: "from-rose-400 to-red-400" },
+  // ];
+  const data = {
+    labels: ['Employees', 'On Leave', 'Contractors', 'Interns'],
+    datasets: [
+      {
+        label: 'HRM Distribution',
+        data: [120, 15, 30, 10],
+        backgroundColor: [
+          '#34d399', 
+          '#f87171', 
+          '#fbbf24', 
+          '#a78bfa', 
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#374151', 
+        },
+      },
+      title: {
+        display: true,
+        text: 'HRM Dashboard',
+        color: '#111827', 
+        font: {
+          size: 18,
+        },
+        
+      },
+    },
+  };
 
   return (
     <main className="flex-1 font-sans">
-      <section className="p-8">
-        <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
+      <section className="p-6 md:p-10">
+  <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
+    <div>
+      <p className="text-sm mb-2 opacity-80">{today}</p>
+      <h1 className="text-4xl font-extrabold mb-1">
+        Welcome back, <span className="text-white">John</span> 👋
+      </h1>
+      <p className="text-sm text-white/80">
+        Here’s what’s happening today in your portal.
+      </p>
+    </div>
+    <img
+      src="/Hand coding-amico.png"
+      alt="Welcome Illustration"
+      className=" w-[150px] md:w-[200px] mt-6 sm:mt-0"
+    />
+  </section>
+
+  {/* Cards and Chart in Single Row */}
+  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-5 md:pt-10  md:pb-10 items-start">
+    <div className="flex  flex-wrap  gap-6 ml-5 ">
+    {statsCards.map((card, i) => (
+      <div
+        key={i}
+        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-64 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
+      >
+        <div className="flex justify-between items-start ">
           <div>
-            <p className="text-sm mb-2 opacity-80">{today}</p>
-            <h1 className="text-4xl font-extrabold mb-1">
-              Welcome back, <span className="text-white">John</span> 👋
-            </h1>
-            <p className="text-sm text-white/80">
-              Here’s what’s happening today in your portal.
-            </p>
+            <p className="text-md text-gray-800 font-semibold">{card.label}</p>
+            <p className="text-xl font-bold">{card.value}</p>
           </div>
-          <img
-            src="/Hand coding-amico.png"
-            alt="Welcome Illustration"
-            className="w-[200px] mt-6 sm:mt-0"
-          />
-        </section>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {statsCards.map((card, i) => (
-            <div
-              key={i}
-              className="relative rounded-xl p-5 shadow-lg overflow-hidden text-white
-      bg-[url('/bubbles.png')] bg-cover bg-no-repeat opacity-70  hover:scale-105 hover:shadow-xl transition-all duration-300"
-            >
-              {/* Optional: Add a gradient or overlay for readability */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#7f61b6]/80 to-[#5f40a1]/80 z-0"></div>
-
-              {/* Content */}
-              <div className="relative z-10">
-                <p className="text-sm font-medium mb-1">{card.label}</p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p
-                      className={`text-2xl font-bold ${
-                        card.color || "text-white"
-                      }`}
-                    >
-                      {card.value}
-                    </p>
-                    {card.sub && (
-                      <p
-                        className={`text-xs ${
-                          card.subColor || "text-white/80"
-                        }`}
-                      >
-                        {card.sub}
-                      </p>
-                    )}
-                  </div>
-                  {card.badge && (
-                    <div
-                      className={`w-14 h-14 rounded-full border-[6px] ${card.badgeColor} flex items-center justify-center text-sm text-gray-800 font-semibold bg-white`}
-                    >
-                      {card.badge}
-                    </div>
-                  )}
-                </div>
-                {card.label === "New Subscribers" && (
-                  <div className="mt-3 h-2 rounded bg-purple-200 w-full"></div>
-                )}
-              </div>
-            </div>
-          ))}
+          <div
+            className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}
+          >
+            <span className={`text-lg ${card.iconColor}`}>{card.icon}</span>
+          </div>
         </div>
+        <p className={`text-sm ${card.changeColor}`}>
+          {card.change} <span className="text-gray-400">vs prev. 28 days</span>
+        </p>
+      </div>
+    ))}
+    </div>
 
-        <div className="flex flex-wrap gap-6 ">
-          {attendanceCards.map((item, i) => (
-            <div
-              key={i}
-              className={`relative rounded-2xl w-[298px] h-[100px] flex  justify-between flex-wrap font-semibold p-4 bg-gradient-to-br ${item.bg} text-white overflow-hidden shadow-md hover:scale-105 hover:shadow-xl transition-all duration-300`}
-            >
-              <p className="text-sm">{item.label}</p>
-              <p className="text-4xl ">{item.value}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+    {/* Pie Chart Side by Side */}
+    <div className="flex-1 max-w-md  bg-white p-8 mr-5 rounded-sm shadow-md">
+      <Pie data={data} options={options} />
+    </div>
+  </div>
+</section>
+
+    
     </main>
   );
 };
