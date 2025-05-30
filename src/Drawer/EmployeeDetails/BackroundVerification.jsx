@@ -6,13 +6,13 @@ const BackroundVerification = ({ VerificationForm, setVerificationForm }) => {
 
 
     return (
-        <section className={`${VerificationForm ? "flex" : "hidden"} h-screen w-full fixed top-0 left-0 bg-[#0000005b] backdrop-blur-sm justify-center items-center `}>
+        <section className={`${VerificationForm ? "opacity-100 visible" : "opacity-0 invisible"} h-screen w-full fixed top-0 left-0 bg-black/40 flex  justify-center items-center transition-opacity duration-500 ease-in-out `}>
             <div>
                 <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl">
 
                     <div className="mb-6 text-end">
                         <button
-                            className=" text-gray-800 hover:text-red-500 transition"
+                            className=" text-gray-800 cursor-pointer hover:text-red-500 transition"
                             onClick={() => setVerificationForm(false)}
                             aria-label="Close"
                         >

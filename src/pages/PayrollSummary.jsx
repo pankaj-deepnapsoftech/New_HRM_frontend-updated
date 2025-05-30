@@ -1,6 +1,6 @@
+import EarningDetails from "@/Drawer/Payroll/EarningDetails";
 import React, { useState } from "react";
 import { MdRemoveRedEye } from "react-icons/md";
-import EarningDetails from "@/Drawer/EarningDetails"; 
 
 const employees = [
   {
@@ -25,24 +25,17 @@ const employees = [
   },
 ];
 
-const earningDetails = {
-  basic: 12000,
-  fund: 1440,
-  incentives: 500,
-  reimbursement: 0,
-  advance: 0,
-  total: 11060,
-};
+
 
 const PayrollSummary = () => {
-    
-     const [showModal, setShowModal] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  const handleViewClick = (emp) => {
-    setSelectedEmployee(emp);
-    setShowModal(true);
-    };
+  //  const [showModal, setShowModal] = useState(false);
+  const [showEarningDetails, setshowEarningDetails] = useState(false);
+
+  // const handleViewClick = (emp) => {
+  //   setSelectedEmployee(emp);
+  //   setShowModal(true);
+  //   };
 
   return (
     <div className="p-5">
@@ -64,9 +57,8 @@ const PayrollSummary = () => {
             {employees.map((emp, idx) => (
               <tr
                 key={idx}
-                className={`border-b border-gray-300 ${
-                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                }`}
+                className={`border-b border-gray-300 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                  }`}
               >
                 <td className="p-3 px-6">{emp.fname}</td>
                 <td className="p-3 px-6">{emp.department}</td>
@@ -74,7 +66,7 @@ const PayrollSummary = () => {
                 <td className="p-3 px-6">
                   <button
                     className="text-blue-600 hover:underline flex items-center gap-1"
-                    onClick={() => handleViewClick(emp)}
+                    onClick={() => setshowEarningDetails(!showEarningDetails)}
                   >
                     <MdRemoveRedEye />
                     View
@@ -84,14 +76,8 @@ const PayrollSummary = () => {
             ))}
           </tbody>
         </table>
-
-        {showModal && selectedEmployee (
-          <EarningDetails
-            onClose={() => setShowModal(false)}
-            earningDetails={earningDetails}
-          />
-        )}
       </div>
+      <EarningDetails showEarningDetails={showEarningDetails} setshowEarningDetails={setshowEarningDetails} />
     </div>
   );
 };

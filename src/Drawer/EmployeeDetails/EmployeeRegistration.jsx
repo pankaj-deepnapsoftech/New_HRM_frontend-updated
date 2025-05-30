@@ -33,11 +33,11 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
     });
 
     return (
-        <section className={`${showForm ? "block" : "hidden"} fixed inset-0 backdrop-blur-sm flex items-start justify-center pt-10 z-50`}>
+        <section className={`${showForm ? "opacity-100 visible" : "opacity-0 invisible"} fixed inset-0 bg-black/40 flex items-start justify-center pt-10 transition-opacity duration-500 ease-in-out z-50`}>
             <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100">
 
                 <button
-                    className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition"
+                    className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
                     onClick={() => setShowFrom(false)}
                     aria-label="Close"
                 >

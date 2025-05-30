@@ -209,7 +209,7 @@ const Sidebar = () => {
         onClick={() => setPayrollarrow(!payroolOpenArrow)}
       >
         <span className="text-[1rem] font-semibold">Payroll</span>
-        {payroolOpenArrow ? <IoIosArrowUp size={17} /> : <IoIosArrowDown size={17} />}
+        { payroolOpenArrow ? <IoIosArrowUp size={17} /> : <IoIosArrowDown size={17} />}
       </button>,
       icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
       onClick: () => setPayrollOpen(!payrollOpen),
@@ -222,7 +222,7 @@ const Sidebar = () => {
         },
         {
           text: <span className="text-[1rem] font-semibold">Advanced Money</span>,
-          icon: <TbReportMoney className="text-2xl mr-2" />,
+          icon: <TbReportMoney className="text-2xl mr-1" />,
           path: "/employee/advance/money/request",
           element:<EmpMoneyRequest/>
         },

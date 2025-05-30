@@ -1,4 +1,5 @@
 import BackroundVerification from '@/Drawer/EmployeeDetails/BackroundVerification';
+import BankAccountDetails from '@/Drawer/EmployeeDetails/BankAccountDetails';
 import EmployeeForm from '@/Drawer/EmployeeDetails/EmployeeRegistration';
 import React, { useState } from 'react';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
@@ -42,13 +43,13 @@ const EmployeeTable = () => {
 
 const [showForm, setShowFrom] = useState(false)
 const [VerificationForm, setVerificationForm] = useState(false)
-
+const [BankVerifyPage, setBankVerifyPage] = useState(false)
   return (
     <div className="p-6 w-full">
       <div className="flex gap-4  mb-6">
-        <button onClick={()=> setShowFrom(!showForm)}  className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Register Employee</button>
-        <button onClick={() => setVerificationForm(!VerificationForm)} className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Background Verification</button>
-        <button className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded">Bank Account</button>
+        <button onClick={() => setShowFrom(!showForm)} className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded cursor-pointer">Register Employee</button>
+        <button onClick={() => setVerificationForm(!VerificationForm)} className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded cursor-pointer">Background Verification</button>
+        <button onClick={() => setBankVerifyPage(!BankVerifyPage)} className="bg-gray-500 hover:bg-gradient-to-r text-white px-4 py-2 rounded cursor-pointer">Bank Account</button>
       </div>
 
       <div className="bg-gray-500 text-white text-center py-3 rounded-t-md">
@@ -88,6 +89,7 @@ const [VerificationForm, setVerificationForm] = useState(false)
       </table>
       <EmployeeForm setShowFrom={setShowFrom} showForm={showForm}/>
       <BackroundVerification VerificationForm={VerificationForm} setVerificationForm={setVerificationForm} />
+      <BankAccountDetails BankVerifyPage={BankVerifyPage} setBankVerifyPage={setBankVerifyPage}/> 
     </div>
   );
 };

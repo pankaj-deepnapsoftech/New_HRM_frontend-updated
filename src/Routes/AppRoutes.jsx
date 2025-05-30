@@ -14,8 +14,6 @@ const AppRoutes = () => {
     const dispatch = useDispatch();
     const {Auth} = useSelector((state) => state);
 
-    console.log(Auth)
-
     useEffect(() => {
         if (data?.data) {
             dispatch(addData(data.data));
@@ -28,15 +26,14 @@ const AppRoutes = () => {
             refetch(); 
         };
     },[Auth.isLogin,refetch])
-
+    
     if(isLoading){
-        
         return <p>loading...</p>
     }
 
     return (
         <Routes>
-            {/* Auth Routing */}
+          
             {!data?.data && <Route element={<AuthLayout />}>
                 {
                     AuthRoute.map((item, index) =>
@@ -45,8 +42,7 @@ const AppRoutes = () => {
                 }
             </Route>}
 
-            {/* main routing */}
-
+        
             {data?.data && <Route element={<RootLayout />}>
                 {MainRoutes.map((item, index) => <Route key={index} path={item.path} element={item.element} />)}
             </Route>}
