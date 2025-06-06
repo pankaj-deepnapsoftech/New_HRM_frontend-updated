@@ -68,7 +68,7 @@ html {
 
 /* For WebKit (Chrome, Edge, Safari) */
 .scrollbar-visible::-webkit-scrollbar {
-  height: 4px;
+  height: 7px;
 }
 
 .scrollbar-visible::-webkit-scrollbar-thumb {

@@ -13,10 +13,43 @@ const EmpApi = Api.injectEndpoints({
             },
             providesTags: ["Employee"]
         }),
+        EpmGetData: build.query({
+            query() {
+                return {
+                    url: "/employee/employees",
+                    method: "GET"
+                };
+            },
+            providesTags: ["Employee"]
+        }),
+
+        EpmDeleteData: build.mutation({
+            query(_id) {
+                return {
+                    url: `/employee/employee/${_id}`,
+                    method: "DELETE"
+                };
+            },
+            providesTags: ["Employee"]
+        }),
+        EpmUpdateData: build.mutation({
+            query(values) {
+                return {
+                    url: `/employee/employee/${values._id}`,
+                    method: "PUT",
+                    body:values,
+                };
+            },
+            providesTags: ["Employee"]
+        }),
+        
     })
 })
 
 
 export const {
     useEmpAllMutation,
+    useEpmGetDataQuery,
+    useEpmDeleteDataMutation,
+    useEpmUpdateDataMutation
 } = EmpApi;

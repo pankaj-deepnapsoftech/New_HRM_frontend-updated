@@ -1,77 +1,94 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { IoMdClose } from 'react-icons/io';
 
-const ViewModal = ({ isOpen, onClose, employee }) => {
-  const modalRef = useRef();
+const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
+  if (!employee) return null;
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+  // List keys in desired order (optional)
+  const fieldsOrder = [
+    "Emp_id",
+    "Address",
+    "Back_Name",
+    "Bank_Account",
+    "Bank_Proof",
+    "Department",
+    "Designation",
+    "Driving_Licance",
+    "IFSC_Code",
+    "UAN_number",
+    "aadhaar",
+    "pancard",
+    "photo",
+    "salary",
+  ];
 
-  if (!isOpen || !employee) return null;
+  // Convert key string like 'Back_Name' to 'Back Name'
+  const formatKey = (key) =>
+    key
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+
+  // Check if value is a URL (file link)
+  const isFileLink = (value) =>
+    typeof value === "string" && value.startsWith("http");
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center">
-      <div ref={modalRef} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-        {/* Close icon */}
+    <div
+      className={`fixed inset-0 z-50 bg-black/40 flex justify-center items-center transition-all duration-500 ${showDetailModal ? "visible" : "invisible"
+        }`}
+    >
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+        {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={() => setShowDetailModal(false)}
           className="absolute top-3 right-3 text-gray-500 hover:text-black"
         >
           <IoMdClose size={22} />
         </button>
 
-        {/* Profile Section */}
+        {/* Photo & Name */}
         <div className="text-center mb-6">
-          <img
-            src={employee.image || '/image.jpg'}
-            alt="Profile"
-            className="w-20 h-20 mx-auto rounded-full border border-gray-200"
-          />
-          <h3 className="text-lg font-semibold mt-2">{employee.name}</h3>
-          <p className="text-gray-500 text-sm">{employee.designation}</p>
+          {employee.photo && (
+            <img
+              src={employee.photo}
+              alt="Employee"
+              className="w-24 h-24 rounded-full object-cover mx-auto shadow-md"
+            />
+          )}
+          <h3 className="text-lg font-semibold mt-3">{employee.Designation || "No Designation"}</h3>
         </div>
 
-        {/* Details Table */}
-        <div className="bg-gray-100 rounded-lg p-6 text-sm">
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Email:</span>
-            <span>{employee.email}</span>
-          </div>
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Department:</span>
-            <span>{employee.department}</span>
-          </div>
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Designation:</span>
-            <span>{employee.designation}</span>
-          </div>
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Phone Number:</span>
-            <span>{employee.phone || '-'}</span>
-          </div>
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Emp-Code:</span>
-            <span>{employee.empCode}</span>
-          </div>
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Joining Date:</span>
-            <span>{employee.joiningDate || '-'}</span>
-          </div>
-        </div>
+        {/* Info Grid */}
+        <div className="bg-gray-100 rounded-lg p-4 text-sm space-y-2">
+          {fieldsOrder.map((key) => {
+            // skip photo here since displayed above
+            if (key === "photo") return null;
 
-        
-        
+            const value = employee[key];
+            return (
+              <div
+                key={key}
+                className="flex justify-between border-b py-2 text-gray-700"
+              >
+                <span className="font-medium">{formatKey(key)}:</span>
+                <span className="text-right text-gray-800 break-words max-w-[60%]">
+                  {isFileLink(value) ? (
+                    <a
+                      href={value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      View
+                    </a>
+                  ) : (
+                    value || "-"
+                  )}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

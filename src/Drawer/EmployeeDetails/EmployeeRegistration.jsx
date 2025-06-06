@@ -1,21 +1,29 @@
-import { useEmpAllMutation } from '@/service/Employee.services';
+/* eslint-disable no-unused-vars */
+import { useEmpAllMutation, useEpmUpdateDataMutation } from '@/service/Employee.services';
 import EmpDetailsSchema from '@/Validation/EmployeeValidation/EmployeeDetailsValidations';
 import { useFormik } from 'formik';
+import { useRef } from 'react';
 import { IoIosClose } from 'react-icons/io';
+import { toast } from 'react-toastify';
 
-const EmployeeForm = ({ showForm, setShowFrom }) => {
+const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
+    const fileRefs = useRef({});
+
     const [EmpAllData, { isLoading }] = useEmpAllMutation();
+    const [EpmUpdateData] = useEpmUpdateDataMutation()
+
 
     const {
         handleBlur, handleSubmit, handleChange, resetForm,
         touched, errors, values, setFieldValue
     } = useFormik({
-        initialValues: {
-             Designation: '', Department: '', Address: '', salary: '',
+        initialValues: editTable || {
+            Designation: '', Department: '', Address: '', salary: '',
             photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
             UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
         },
         validationSchema: EmpDetailsSchema,
+        enableReinitialize: true,
         onSubmit: async (values) => {
             try {
                 const formData = new FormData();
@@ -23,9 +31,21 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
                     formData.append(key, value);
                 });
 
-                const res = await EmpAllData(formData).unwrap();
-                console.log(res);
+                if (editTable) {
+                   
+                    await EpmUpdateData(values).unwrap();
+                    toast.success("Employee updated successfully");
+                } else {
+                    const res = await EmpAllData(formData).unwrap();
+                    toast.success(res?.message || "Employee registered successfully");
+                }
+                setShowFrom(false)
                 resetForm();
+                Object.keys(fileRefs.current).forEach((key) => {
+                    if (fileRefs.current[key]) {
+                        fileRefs.current[key].value = "";
+                    }
+                });
             } catch (error) {
                 console.log(error);
             }
@@ -47,10 +67,10 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
                 <h2 className="text-4xl font-bold text-center text-gray-700 mb-10">Employee Information Form</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
-                  
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
-                          
+
                             { label: 'Designation', name: 'Designation' },
                             { label: 'Department', name: 'Department' },
                             { label: 'Salary', name: 'salary', type: 'number' }
@@ -84,19 +104,22 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
                         />
                     </div>
 
-                
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
                             { label: 'Photo', name: 'photo' },
                             { label: 'Bank Proof (Cheque/Passbook)', name: 'Bank_Proof' },
                             { label: 'Aadhaar Number', name: 'aadhaar' },
                             { label: 'PAN Card', name: 'pancard' },
+                            { label: 'Driving Licence', name: 'Driving_Licance' },
+                            { label: 'Voter ID', name: 'Voter_Id' }
                         ].map(({ label, name }) => (
                             <div key={name}>
                                 <label className="block mb-1 font-medium text-gray-700">{label}</label>
                                 <input
                                     type="file"
                                     name={name}
+                                    ref={(el) => (fileRefs.current[name] = el)}
                                     onChange={(event) => {
                                         setFieldValue(name, event.currentTarget.files[0]);
                                     }}
@@ -110,27 +133,6 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
                         ))}
                     </div>
 
-                   
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {[
-                            { label: 'Driving Licence', name: 'Driving_Licance' },
-                            { label: 'Voter ID', name: 'Voter_Id' }
-                        ].map(({ label, name }) => (
-                            <div key={name}>
-                                <label className="block mb-1 font-medium text-gray-700">{label}</label>
-                                <input
-                                    type="text"
-                                    name={name}
-                                    value={values[name]}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className="w-full border border-gray-300 p-3 rounded-md focus:ring-2 focus:ring-indigo-400 shadow-sm"
-                                />
-                            </div>
-                        ))}
-                    </div>
-
-                  
                     <div>
                         <label className="block mb-1 font-medium text-gray-700">UAN Number</label>
                         <input
@@ -146,7 +148,7 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
                         )}
                     </div>
 
-                  
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
                             { label: 'Bank Name', name: 'Back_Name' },
@@ -170,7 +172,7 @@ const EmployeeForm = ({ showForm, setShowFrom }) => {
                         ))}
                     </div>
 
-         
+
                     <div className="text-center pt-6">
                         <button
                             type="submit"

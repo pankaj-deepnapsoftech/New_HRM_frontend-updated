@@ -1,75 +1,46 @@
 import LocationModal from "@/Drawer/Employees/LocationModal";
-import BackroundVerification from "@/Drawer/EmployeeDetails/BackroundVerification";
 import EmployeeForm from "@/Drawer/EmployeeDetails/EmployeeRegistration";
-import React, { useState } from "react";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaEye, FaEdit, FaTrash, FaImage } from "react-icons/fa";
 import ViewModal from "@/Drawer/Employees/ViewModal";
-import EditModal from "@/Drawer/Employees/EditModal";
-import BankDetails from "@/Drawer/EmployeeDetails/BankDetails";
+import { useEpmDeleteDataMutation, useEpmGetDataQuery } from "@/service/Employee.services";
+import { FaEnvelope } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-const employees = [
-  {
-    name: "Nitish Prajapati",
-    email: "nitishprajapati987@gmail.com",
-    location: "Location",
-    department: "IT",
-    designation: "Developer",
-    empCode: "NIT51130226",
-  },
-  {
-    name: "abhi pjpt",
-    email: "abhi123@gmail.com",
-    location: "Location",
-    department: "IT",
-    designation: "Manager",
-    empCode: "ABH74130227",
-  },
-  {
-    name: "komal singh",
-    email: "komal@gmail.com",
-    location: "Location",
-    department: "sale",
-    designation: "manager",
-    empCode: "KOM98740307",
-  },
-  {
-    name: "Deepak Sharma",
-    email: "dsharma1010@gmail.com",
-    location: "Location",
-    department: "Sales",
-    designation: "Boss",
-    empCode: "DEE23890101",
-  },
-];
+
+
 
 const EmployeeTable = () => {
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const { data, refetch } = useEpmGetDataQuery()
+  const [EmpDeleteData] = useEpmDeleteDataMutation()
+
+
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [editModalOpen, setEditModalOpen] = useState(false);
-  const [employeeToEdit, setEmployeeToEdit] = useState(null);
-
- 
-  const handleEdit = (emp) => {
-    setEmployeeToEdit(emp);
-    setEditModalOpen(true);
-  };
-
-  const handleUpdate = (updatedEmp) => {
-    // Update your employee list logic here
-    console.log("Updated employee:", updatedEmp);
-  };
-  const handleFormSubmit = (data) => {
-  console.log("Bank Details Submitted:", data);
-};
-
-
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
-const [isBankModalOpen, setIsBankModalOpen] = useState(false);
-
-  const location =
-    "Mathura Road Flyover, Sant Nagar, 121002, Sector 20A, Faridabad, Haryana, India";
   const [showForm, setShowFrom] = useState(false);
-  const [VerificationForm, setVerificationForm] = useState(false);
+  const [editTable, setEdittable] = useState(null)
+  const employee = data?.data;
+
+  const hanldedelete = async (_id) => {
+    try {
+      if (window.confirm("are you sure you want to delete this element ?")) {
+        const res = await EmpDeleteData(_id).unwrap()
+        toast.success(res?.message)
+        refetch()
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error?.data?.message || error.message || "Failed to delete employee");
+    }
+  }
+
+
+  useEffect(() => {
+    if (!showForm) {
+      refetch()
+    }
+
+  }, [refetch, showForm])
 
   return (
     <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
@@ -78,101 +49,102 @@ const [isBankModalOpen, setIsBankModalOpen] = useState(false);
       </div>
       <div className="flex gap-4  mb-10  mx-5 md:mx-10">
         <button
-          onClick={() => setShowFrom(!showForm)}
+          onClick={() => { setShowFrom(!showForm); setEdittable(null) }}
           className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
         >
           Register Employee
         </button>
-        <button
-          onClick={() => setVerificationForm(!VerificationForm)}
-          className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
-        >
-          Background Verification
-        </button>
-        <button onClick={() => setIsBankModalOpen(true)} className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md">
-          Bank Account
-        </button>
-      </div>
 
-      <div className="overflow-x-scroll rounded-t-sm md:rounded-t-xl shadow-md  mx-5 md:mx-10 mb-8 scrollbar-visible">
-        <table className=" w-5xl md:min-w-full shadow-lg border border-gray-200 ">
-          <thead className=" text-gray-700 bg-gray-200  ">
+      </div>
+      <div className="overflow-x-auto rounded-t-sm md:rounded-t-xl shadow-md mx-5 md:mx-10 mb-8 scrollbar-visible">
+        <table className="min-w-full shadow-lg border border-gray-200 text-sm">
+          <thead className="bg-gray-200 text-[16px] text-gray-700 font-semibold">
             <tr>
-              <th className="p-4 text-left font-[700] ">Full Name</th>
-              <th className="p-4 text-left font-[700] ">Email</th>
-              <th className="p-4 text-left font-[700] ">Location</th>
-              <th className="p-4 text-left font-[700] ">Department</th>
-              <th className="p-4 text-left font-[700] ">Designation</th>
-              <th className="p-4 text-left font-[700] ">Emp-Code</th>
-              <th className="p-4 text-left font-[700] ">Action</th>
+              <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
+              <th className="p-4 text-left whitespace-nowrap">Address</th>
+              <th className="p-4 text-left whitespace-nowrap">Department</th>
+              <th className="p-4 text-left whitespace-nowrap">Designation</th>
+              <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
+              <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
+              <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
+              <th className="p-4 text-left whitespace-nowrap">UAN Number</th>
+              <th className="p-4 text-left whitespace-nowrap">Aadhaar</th>
+              <th className="p-4 text-left whitespace-nowrap">PAN Card</th>
+              <th className="p-4 text-left whitespace-nowrap">Voter ID</th>
+              <th className="p-4 text-left whitespace-nowrap">Driving License</th>
+              <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
+              <th className="p-4 text-left whitespace-nowrap">Salary</th>
+              <th className="p-4 text-left whitespace-nowrap">Photo</th>
+              <th className="p-4 text-left whitespace-nowrap">Actions</th>
             </tr>
           </thead>
+
           <tbody>
-            {employees.map((emp, idx) => (
+            {employee?.map((emp) => (
               <tr
-                key={idx}
-                className={`  border-t border-gray-200 ${
-                  idx % 2 == 0 ? "bg-white" : "bg-gray-100"
-                }`}
+                key={emp._id}
+                className={`border-t border-gray-200 ${emp._id % 2 === 0 ? "bg-gray-200" : "bg-white"} text-[16px] `}
               >
-                <td className="p-3 text-left font-[400]">{emp.name}</td>
-                <td className="p-3 text-left font-[400]">{emp.email}</td>
-                <td
-                  className="p-3 font-[400] text-blue-600 cursor-pointer"
-                  onClick={() =>  setIsLocationModalOpen(true)}
-                >
-                  View
-                  <br />
-                  Location
-                </td>{" "}
-                <LocationModal
-                  isOpen={isLocationModalOpen}
-                  onClose={() => setIsLocationModalOpen(false)}
-                  location={location}
-                />
-                <td className="p-3 text-left font-[400]">{emp.department}</td>
-                <td className="p-3 text-left font-[400]">{emp.designation}</td>
-                <td className="p-3 text-left font-[400]">{emp.empCode}</td>
-                <td className="p-3 text-left my-4 flex gap-5">
-                  <FaEye
-                    className="text-blue-500 cursor-pointer"
-                    onClick={() => {
-                      setSelectedEmployee(emp);
-                      setShowDetailModal(true);
-                    }}
-                  />
-                  <FaEdit
-                    className="text-green-400 cursor-pointer"
-                    onClick={() => handleEdit(emp)}
-                  />
-                  <FaTrash className="text-red-400 cursor-pointer" />
+                <td className="pl-4 py-3">{emp.Emp_id}</td>
+                <td className="pl-4 py-3">{emp.Address}</td>
+                <td className="pl-4 py-3">{emp.Department}</td>
+                <td className="pl-4 py-3">{emp.Designation}</td>
+                <td className="pl-4 py-3">{emp.Back_Name}</td>
+                <td className="pl-4 py-3">{emp.Bank_Account}</td>
+                <td className="pl-4 py-3">{emp.IFSC_Code}</td>
+                <td className="pl-4 py-3">{emp.UAN_number}</td>
+                <td className="pl-4 py-3">
+                  <a href={emp.aadhaar} target="_blank" rel="noopener noreferrer" title="View Aadhaar">
+                    Aadhaar
+                  </a>
+                </td>
+                <td className="pl-4 py-3">
+                  <a href={emp.pancard} target="_blank" rel="noopener noreferrer" title="View PAN">
+                    Pancard
+                  </a>
+                </td>
+                <td className="pl-4 py-3">
+                  <a href={emp.Voter_Id} target="_blank" rel="noopener noreferrer" title="View Voter ID">
+                    Voter Id
+                  </a>
+                </td>
+                <td className="pl-4 py-3">
+                  <a href={emp.Driving_Licance} target="_blank" rel="noopener noreferrer" title="View Driving License">
+                    Driving Licance
+                  </a>
+                </td>
+                <td className="pl-4 py-3">
+                  <a href={emp.Bank_Proof} target="_blank" rel="noopener noreferrer" title="View Bank Proof">
+                    Bank Proof
+                  </a>
+                </td>
+                <td className="pl-4 py-3">{emp.salary}</td>
+
+                <td className="pl-4 py-3">
+                  <a href={emp.photo} target="_blank" rel="noopener noreferrer" title="View Bank Proof">
+                    Photo
+                  </a>
+                </td>
+
+
+                <td className="pl-4 py-3 flex gap-2 text-lg">
+                  <FaEye onClick={() => setShowDetailModal(true)} className="text-blue-500 cursor-pointer hover:scale-110 transition-transform" title="View" />
+                  <FaEdit onClick={()=> { setShowFrom(true); setEdittable(emp)}} className="text-green-500 cursor-pointer hover:scale-110 transition-transform" title="Edit" />
+                  <FaTrash onClick={() => hanldedelete(emp._id)} className="text-red-500 cursor-pointer hover:scale-110 transition-transform" title="Delete" />
                 </td>
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
+
       <ViewModal
-        isOpen={showDetailModal}
-        onClose={() => setShowDetailModal(false)}
-        employee={selectedEmployee}
+        showDetailModal={showDetailModal}
+        setShowDetailModal={setShowDetailModal}
+        employee={employee}
       />
-      <EditModal
-        isOpen={editModalOpen}
-        onClose={() => setEditModalOpen(false)}
-        employee={employeeToEdit}
-        onUpdate={handleUpdate}
-      />
-<BankDetails
-  isOpen={isBankModalOpen}
-  onClose={() => setIsBankModalOpen(false)}
-  onSubmit={handleFormSubmit}
-/>
-      <EmployeeForm setShowFrom={setShowFrom} showForm={showForm} />
-      <BackroundVerification
-        VerificationForm={VerificationForm}
-        setVerificationForm={setVerificationForm}
-      />
+      <EmployeeForm setShowFrom={setShowFrom} showForm={showForm} editTable={editTable} />
     </div>
   );
 };
