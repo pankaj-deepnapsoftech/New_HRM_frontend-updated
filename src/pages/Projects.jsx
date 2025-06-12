@@ -1,11 +1,7 @@
-import React, { useState } from "react";
-import Select from "react-select";
-import {
-  useGetAllProjectsQuery,
-  useAddProjectMutation,
-} from "@/service/Projects.Service";
-import { useGetAllUsersQuery } from "@/service/User.services";
-import { IoIosClose } from "react-icons/io";
+import React, { useState } from 'react';
+import Select from 'react-select';
+import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Projects.Service';
+import { useGetAllUsersQuery } from '@/service/User.services';
 
 const Projects = () => {
   const { data, refetch, isLoading } = useGetAllProjectsQuery();
@@ -83,6 +79,7 @@ const Projects = () => {
 });
 
   if (isLoading) return <p className="text-center py-10">Loading projects…</p>;
+
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-4xl mx-auto mt-10">
@@ -259,15 +256,9 @@ const Projects = () => {
                         .join(", ")
                     : "N/A"}
                 </td>
-                <td className="p-3 px-2">
-                  {project.manager?.fullName || "N/A"}
-                </td>
-                <td className="p-3 px-2">
-                  {new Date(project.startDate).toLocaleDateString()}
-                </td>
-                <td className="p-3 px-2">
-                  {new Date(project.endDate).toLocaleDateString()}
-                </td>
+                <td className="p-3 px-2">{project.manager?.fullName || "N/A"}</td>
+                <td className="p-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
+                <td className="p-3 px-2">{new Date(project.endDate).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

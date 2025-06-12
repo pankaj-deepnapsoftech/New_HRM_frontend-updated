@@ -22,15 +22,16 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
             photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
             UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
         },
-        validationSchema: EmpDetailsSchema,
+        // validationSchema: EmpDetailsSchema,
         enableReinitialize: true,
         onSubmit: async (values) => {
             try {
+                
                 const formData = new FormData();
                 Object.entries(values).forEach(([key, value]) => {
                     formData.append(key, value);
                 });
-
+                
                 if (editTable) {
                    
                     await EpmUpdateData(values).unwrap();
@@ -47,7 +48,9 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                     }
                 });
             } catch (error) {
+                
                 console.log(error);
+
             }
         }
     });
