@@ -63,14 +63,20 @@ const Header = () => {
           )}
         </div>
 
-        <div className="relative">
-          <div
-            onClick={() => setShowUserMenuBar(!showUserMenuBar)}
-            className="bg-[#906eb1fd] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
-          >
-            {userInitials}
-          </div>
-        </div>
+      <div className="relative w-12 h-12">
+  {/* Custom Pulse Ring */}
+  <span className="absolute inset-0 rounded-full border-4 border-purple-300 animate-customPulse z-0"></span>
+
+  {/* Avatar */}
+  <div
+    onClick={() => setShowUserMenuBar(!showUserMenuBar)}
+    className="relative z-10 bg-[#906eb1fd] text-white font-semibold text-xl w-12 h-12 rounded-full flex items-center justify-center cursor-pointer"
+  >
+    {userInitials}
+  </div>
+</div>
+
+
       </div>
 
       <UserMenuBar

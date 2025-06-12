@@ -70,7 +70,6 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
-
                             { label: 'Designation', name: 'Designation' },
                             { label: 'Department', name: 'Department' },
                             { label: 'Salary', name: 'salary', type: 'number' }

@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import Select from 'react-select';
-import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Projects.Service';
-import { useGetAllUsersQuery } from '@/service/User.services';
+import React, { useState } from "react";
+import Select from "react-select";
+import {
+  useGetAllProjectsQuery,
+  useAddProjectMutation,
+} from "@/service/Projects.Service";
+import { useGetAllUsersQuery } from "@/service/User.services";
+import { IoIosClose } from "react-icons/io";
 
 const Projects = () => {
   const { data, refetch, isLoading } = useGetAllProjectsQuery();
@@ -9,8 +13,8 @@ const Projects = () => {
   const { data: userData } = useGetAllUsersQuery();
   const users = userData || [];
 
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -48,7 +52,14 @@ const Projects = () => {
 
     try {
       await addProject(payload).unwrap();
-      setFormData({ name: "", manager: "", members: [], startDate: "", endDate: "", description: "" });
+      setFormData({
+        name: "",
+        manager: "",
+        members: [],
+        startDate: "",
+        endDate: "",
+        description: "",
+      });
       setShowModal(false);
       refetch();
     } catch (error) {
@@ -57,6 +68,20 @@ const Projects = () => {
   };
 
   const projects = data?.data?.projectDetails || [];
+ const filteredProjects = projects.filter((project) => {
+  if (!startDate && !endDate) return true;
+
+  const projectStart = new Date(project.startDate);
+  const projectEnd = new Date(project.endDate);
+  const filterStart = startDate ? new Date(startDate) : null;
+  const filterEnd = endDate ? new Date(endDate) : null;
+
+  if (filterStart && projectEnd < filterStart) return false;
+  if (filterEnd && projectStart > filterEnd) return false;
+
+  return true;
+});
+
   if (isLoading) return <p className="text-center py-10">Loading projects…</p>;
 
   return (
@@ -100,6 +125,13 @@ const Projects = () => {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 bg-opacity-40">
           <div className="bg-white p-6 rounded-md w-[90%] max-w-xl shadow-md relative">
+            <button
+              className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
+              onClick={() => setShowModal(false)}
+              aria-label="Close"
+            >
+              <IoIosClose size={32} />
+            </button>
             <h3 className="text-lg font-bold mb-4">Add New Project</h3>
             <form onSubmit={handleSubmit} className="space-y-3">
               {/* Project Name */}
@@ -121,7 +153,10 @@ const Projects = () => {
                 <Select
                   name="manager"
                   options={userOptions}
-                  value={userOptions.find(opt => opt.value === formData.manager) || null}
+                  value={
+                    userOptions.find((opt) => opt.value === formData.manager) ||
+                    null
+                  }
                   onChange={(selected) =>
                     setFormData((prev) => ({
                       ...prev,
@@ -182,17 +217,11 @@ const Projects = () => {
               />
 
               {/* Action Buttons */}
-              <div className="flex justify-end space-x-2">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded"
-                >
-                  Cancel
-                </button>
+
+              <div className="text-center">
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+                  className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
                 >
                   Submit
                 </button>
@@ -215,20 +244,30 @@ const Projects = () => {
             </tr>
           </thead>
           <tbody>
-            {projects.map((project, idx) => (
+            {filteredProjects.map((project, idx) => (
               <tr
                 key={project._id}
-                className={`border-b border-gray-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`}
+                className={`border-b border-gray-200 ${
+                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                }`}
               >
                 <td className="p-3 px-2">{project.name}</td>
                 <td className="p-3 px-2">
                   {project.members?.length > 0
-                    ? project.members.map((m) => m.fullName || "Unknown").join(", ")
+                    ? project.members
+                        .map((m) => m.fullName || "Unknown")
+                        .join(", ")
                     : "N/A"}
                 </td>
-                <td className="p-3 px-2">{project.manager?.fullName || "N/A"}</td>
-                <td className="p-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
-                <td className="p-3 px-2">{new Date(project.endDate).toLocaleDateString()}</td>
+                <td className="p-3 px-2">
+                  {project.manager?.fullName || "N/A"}
+                </td>
+                <td className="p-3 px-2">
+                  {new Date(project.startDate).toLocaleDateString()}
+                </td>
+                <td className="p-3 px-2">
+                  {new Date(project.endDate).toLocaleDateString()}
+                </td>
               </tr>
             ))}
           </tbody>
