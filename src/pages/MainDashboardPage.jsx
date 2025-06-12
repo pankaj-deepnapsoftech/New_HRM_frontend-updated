@@ -115,8 +115,8 @@ const MainDashboardPage = () => {
   };
 
   return (
-    <main className="flex-1 font-sans">
-      <section className="p-6 md:p-10">
+    <main className="flex-1 font-sans p-10">
+     
   <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
     <div>
       <p className="text-sm mb-2 opacity-80">{today}</p>
@@ -132,7 +132,8 @@ const MainDashboardPage = () => {
       alt="Welcome Illustration"
       className=" w-[150px] md:w-[200px] mt-6 sm:mt-0"
     />
-  </section>
+</section>
+
 
   {/* Cards and Chart in Single Row */}
   <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-3 md:pt-10  md:pb-6 items-start">
@@ -142,14 +143,12 @@ const MainDashboardPage = () => {
         key={i}
         className="bg-white rounded-sm shadow-md w-80 h-48 md:w-60 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
       >
-        <div className="flex justify-between items-start ">
+        <div className="flex justify-between items-start">
           <div>
             <p className="text-lg md:text-md text-gray-700 font-semibold">{card.label}</p>
             <p className="text-xl pt-5 md:pt-1 font-bold">{card.value}</p>
           </div>
-          <div
-            className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}
-          >
+          <div className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}>
             <span className={`text-lg ${card.iconColor}`}>{card.icon}</span>
           </div>
         </div>
@@ -158,16 +157,15 @@ const MainDashboardPage = () => {
         </p>
       </div>
     ))}
-    </div>
+  </div>
 
-    {/* Pie Chart Side by Side */}
-    <div className="flex-1 max-w-md  bg-white p-6 md:p-4 md:mr-5 rounded-sm shadow-md">
+  {/* Pie Chart Container */}
+  <div className="w-2xl md:w-full lg:w-auto lg:mr-4 mt-4 lg:mt-0">
+    <div className="flex max-w-sm bg-white p-6 md:p-2 rounded-sm shadow-md">
       <Pie data={data} options={options} />
     </div>
   </div>
-</section>
-
-    
+</div>
     </main>
   );
 };
