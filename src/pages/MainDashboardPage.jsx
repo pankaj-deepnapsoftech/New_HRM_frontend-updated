@@ -136,13 +136,12 @@ const MainDashboardPage = () => {
 
 
   {/* Cards and Chart in Single Row */}
- <div className="bg-gray-100 flex flex-col lg:flex-row gap-2 pt-2 md:pt-10 md:pb-6 items-start">
-  {/* Cards Container */}
-  <div className="flex flex-wrap gap-2 md:gap-2 ml-2 md:ml-2 lg:flex-1">
+  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-3 md:pt-10  md:pb-6 items-start">
+    <div className="flex  flex-wrap  gap-2 md:gap-4 ml-3 md:ml-5 ">
     {statsCards.map((card, i) => (
       <div
         key={i}
-        className="bg-white rounded-sm shadow-md w-full sm:w-80 md:w-60 h-48 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
+        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-60 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
       >
         <div className="flex justify-between items-start">
           <div>
@@ -154,7 +153,7 @@ const MainDashboardPage = () => {
           </div>
         </div>
         <p className={`text-sm ${card.changeColor}`}>
-          {card.change} <span className="text-gray-400">vs prev. 28 days</span>
+          {card.change} <span className=" text-gray-400">vs prev. 28 days</span>
         </p>
       </div>
     ))}
