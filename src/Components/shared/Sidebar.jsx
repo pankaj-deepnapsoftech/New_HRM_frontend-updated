@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaHome, FaFingerprint, FaBars } from "react-icons/fa";
 import { BsPersonCircle } from "react-icons/bs";
 import { HiOutlineDocumentReport } from "react-icons/hi";
+import { browserName, isMobile } from "react-device-detect";
 import {
   RiListSettingsLine,
   RiMoneyRupeeCircleFill,
@@ -52,29 +53,34 @@ import EmpPayslip from "@/pages/EmpPayslip";
 import AllAttendance from "@/pages/AllAttendence";
 import AllLeaves from "@/pages/AllLeaves";
 
+
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
   const [payrollOpen, setPayrollOpen] = useState(false);
   const navigator = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef(null);
-  const [LogoutUser] = useLogoutUserMutation();
+ 
   const dispatch = useDispatch();
   const location = useLocation();
   const currPath = location.pathname;
   const [isOpen, setIsopen] = useState(false);
   const [payroolOpenArrow, setPayrollarrow] = useState(false);
-  const handleLogout = async () => {
-    try {
-      const res = await LogoutUser().unwrap();
-      dispatch(removeData());
-      window.location.href = "/";
-      toast.success(res.message);
-    } catch (error) {
-      toast.error(error.data.message);
-    }
-  };
 
+ const [LogoutUser] = useLogoutUserMutation();
+
+ const handleLogout = async () => {
+  try {
+    const res = await LogoutUser({isMobile, browser: browserName}).unwrap();
+    dispatch(removeData());
+    toast.success(res.message || "Logged out successfully");
+    console.log(res)
+    window.location.href = "/";
+  } catch (error) {
+    console.log(error)
+    toast.error(error?.data?.message || "Logout failed");
+  }
+};
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -310,6 +316,7 @@ const Sidebar = () => {
                   onClick={() => {
                     if (item.path) navigator(item.path);
                     if (item.onClick) item.onClick();
+                    if (window.innerWidth < 768) setShowSidebar(false);
                   }}
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
               ${
@@ -330,12 +337,15 @@ const Sidebar = () => {
                       return (
                         <div
                           key={subIndex}
-                          onClick={() => navigator(subItem.path)}
+                          onClick={() => {
+                            navigator(subItem.path);
+                            if (window.innerWidth < 768) setShowSidebar(false);
+                          }}
                           className={`flex items-center gap-1 px-1 py-3 rounded-md cursor-pointer transition duration-300 
                       ${
                         isSubActive
                           ? "bg-white/80 text-purple-500 font-bold shadow-md"
-                  : "hover:bg-white/10"
+                          : "hover:bg-white/10"
                       }`}
                         >
                           {subItem.icon}
@@ -353,10 +363,13 @@ const Sidebar = () => {
         {/* Logout */}
         <div className="mt-auto w-full px-6 py-4">
           <button
+            type="submit"
             onClick={handleLogout}
             className=" w-40 md:w-48 flex items-center justify-center py-2 mt-8  ml-7 mb-5 p-3 bg-white/50 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110 hover:scale-105"
-          > <FiLogOut size={15} className="shrink-0  " />
-           <span className="ml-2">Logout</span>
+          >
+            {" "}
+            <FiLogOut size={15} className="shrink-0  " />
+            <span className="ml-2">Logout</span>
           </button>
         </div>
       </aside>

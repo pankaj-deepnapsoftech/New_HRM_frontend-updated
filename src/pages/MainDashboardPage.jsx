@@ -8,6 +8,7 @@ import {
   Title,
 } from 'chart.js';
 
+
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 // Optional: Uncomment if using AOS animations
@@ -34,7 +35,7 @@ const MainDashboardPage = () => {
   {
     label: "Total Employees",
     value: "1.2K",
-    iconBg: "bg-red-200",
+    iconBg: "bg-blue-200",
     iconColor: "text-red-500",
     icon: "👤",
     change: "+147%",
@@ -52,9 +53,9 @@ const MainDashboardPage = () => {
   {
     label: "Absent",
     value: "4.53%",
-    iconBg: "bg-blue-200",
-    iconColor: "text-blue-500",
-    icon: "🔥",
+    iconBg: "bg-red-200",
+    iconColor: "text-black-500",
+    icon: "🚫",
     change: "-10.7%",
     changeColor: "text-red-500",
   },
@@ -134,17 +135,17 @@ const MainDashboardPage = () => {
   </section>
 
   {/* Cards and Chart in Single Row */}
-  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-5 md:pt-10  md:pb-10 items-start">
-    <div className="flex  flex-wrap  gap-6 ml-5 ">
+  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-3 md:pt-10  md:pb-6 items-start">
+    <div className="flex  flex-wrap  gap-2 md:gap-4 ml-3 md:ml-5 ">
     {statsCards.map((card, i) => (
       <div
         key={i}
-        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-64 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
+        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-60 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
       >
         <div className="flex justify-between items-start ">
           <div>
-            <p className="text-md text-gray-800 font-semibold">{card.label}</p>
-            <p className="text-xl font-bold">{card.value}</p>
+            <p className="text-lg md:text-md text-gray-700 font-semibold">{card.label}</p>
+            <p className="text-xl pt-5 md:pt-1 font-bold">{card.value}</p>
           </div>
           <div
             className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}
@@ -153,14 +154,14 @@ const MainDashboardPage = () => {
           </div>
         </div>
         <p className={`text-sm ${card.changeColor}`}>
-          {card.change} <span className="text-gray-400">vs prev. 28 days</span>
+          {card.change} <span className=" text-gray-400">vs prev. 28 days</span>
         </p>
       </div>
     ))}
     </div>
 
     {/* Pie Chart Side by Side */}
-    <div className="flex-1 max-w-md  bg-white p-8 mr-5 rounded-sm shadow-md">
+    <div className="flex-1 max-w-md  bg-white p-6 md:p-8 md:mr-5 rounded-sm shadow-md">
       <Pie data={data} options={options} />
     </div>
   </div>

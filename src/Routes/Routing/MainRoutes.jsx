@@ -41,7 +41,7 @@ export const MainRoutes = [
     path: "/all-attendence",
     element: <AllAttendence/>,
   },
-   {
+  {
     path: "/all-leaves",
     element: <AllLeaves/>,
   },
@@ -63,7 +63,7 @@ export const MainRoutes = [
   },
   {
     path: "/employee/location",
-    element: <EmpLocation />,
+    element: <EmpLocation/>,
   },
   {
     path: "/company/assets",
@@ -101,4 +101,5 @@ export const MainRoutes = [
     path: "/generate/employee/payslip",
     element: <EmpPayslip/>,
   },
+  
 ];

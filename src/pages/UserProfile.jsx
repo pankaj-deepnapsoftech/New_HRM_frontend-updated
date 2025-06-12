@@ -3,7 +3,6 @@ import React from "react";
 import { IoIosClose } from "react-icons/io"
 
 const UserProfile = ({ showUserMenu, setShowMenu }) => {
-
 const handleBackgroundClick = () => {
     setShowMenu(false);
   };

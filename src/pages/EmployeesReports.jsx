@@ -54,7 +54,7 @@ const EmployeesReports = () => {
         <h2 className="text-xl font-[500]">Employees Report</h2>
       </div>
 
-      <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md mx-4 md:mx-10 mb-8">
+      <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md mx-4 md:mx-6 mb-8">
         <table className=" min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-200 text-gray-700 text-left">
@@ -67,7 +67,7 @@ const EmployeesReports = () => {
               <th className=" font-[600] py-4 px-2">Present Days</th>
               <th className=" font-[600] py-4 px-4">Gate Pass</th>
               <th className=" font-[600] py-4 px-4">Status</th>
-              <th className="flex justify-end mx-3 mt-5"><button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+              <th className="flex justify-end px-2 mt-5"><button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
           EXPORT
         </button></th>
             </tr>
