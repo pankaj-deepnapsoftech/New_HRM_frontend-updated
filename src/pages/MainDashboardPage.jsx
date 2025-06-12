@@ -136,7 +136,7 @@ const MainDashboardPage = () => {
 
   {/* Cards and Chart in Single Row */}
   <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-3 md:pt-10  md:pb-6 items-start">
-    <div className="flex  flex-wrap  gap-2 md:gap-4 ml-3 md:ml-5 ">
+    <div className="flex  flex-wrap  gap-2 md:gap-4 ml-3 md:ml-2 ">
     {statsCards.map((card, i) => (
       <div
         key={i}
@@ -161,7 +161,7 @@ const MainDashboardPage = () => {
     </div>
 
     {/* Pie Chart Side by Side */}
-    <div className="flex-1 max-w-md  bg-white p-6 md:p-8 md:mr-5 rounded-sm shadow-md">
+    <div className="flex-1 max-w-md  bg-white p-6 md:p-4 md:mr-5 rounded-sm shadow-md">
       <Pie data={data} options={options} />
     </div>
   </div>
