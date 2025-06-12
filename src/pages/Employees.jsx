@@ -3,58 +3,58 @@ import EmployeeForm from "@/Drawer/EmployeeDetails/EmployeeRegistration";
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash, FaImage } from "react-icons/fa";
 import ViewModal from "@/Drawer/Employees/ViewModal";
-import { useEpmDeleteDataMutation, useEpmGetDataQuery } from "@/service/Employee.services";
+import {
+  useEpmDeleteDataMutation,
+  useEpmGetDataQuery,
+} from "@/service/Employee.services";
 import { FaEnvelope } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-
-
-
 const EmployeeTable = () => {
-
-  const { data, refetch } = useEpmGetDataQuery()
-  const [EmpDeleteData] = useEpmDeleteDataMutation()
-
+  const { data, refetch } = useEpmGetDataQuery();
+  const [EmpDeleteData] = useEpmDeleteDataMutation();
 
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showForm, setShowFrom] = useState(false);
-  const [editTable, setEdittable] = useState(null)
+  const [editTable, setEdittable] = useState(null);
   const employee = data?.data;
 
   const hanldedelete = async (_id) => {
     try {
       if (window.confirm("are you sure you want to delete this element ?")) {
-        const res = await EmpDeleteData(_id).unwrap()
-        toast.success(res?.message)
-        refetch()
+        const res = await EmpDeleteData(_id).unwrap();
+        toast.success(res?.message);
+        refetch();
       }
     } catch (error) {
-      console.log(error)
-      toast.error(error?.data?.message || error.message || "Failed to delete employee");
+      console.log(error);
+      toast.error(
+        error?.data?.message || error.message || "Failed to delete employee"
+      );
     }
-  }
-
+  };
 
   useEffect(() => {
     if (!showForm) {
-      refetch()
+      refetch();
     }
-
-  }, [refetch, showForm])
+  }, [refetch, showForm]);
 
   return (
     <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
-      <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-8 rounded-md shadow-md shadow-gray-400">
-        <h2 className="text-xl font-[500]">Employee Details</h2>
-      </div>
-      <div className="flex gap-4  mb-10  mx-5 md:mx-10">
+      <div className="flex gap-4  justify-end pt-3   mx-5 md:mx-10">
         <button
-          onClick={() => { setShowFrom(!showForm); setEdittable(null) }}
+          onClick={() => {
+            setShowFrom(!showForm);
+            setEdittable(null);
+          }}
           className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
         >
-          Register Employee
+          Add Employee Details
         </button>
-
+      </div>
+      <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-8 rounded-md shadow-md shadow-gray-400">
+        <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
       <div className="overflow-x-auto rounded-t-sm md:rounded-t-xl shadow-md mx-5 md:mx-10 mb-8 scrollbar-visible">
         <table className="min-w-full shadow-lg border border-gray-200 text-sm">
@@ -71,7 +71,9 @@ const EmployeeTable = () => {
               <th className="p-4 text-left whitespace-nowrap">Aadhaar</th>
               <th className="p-4 text-left whitespace-nowrap">PAN Card</th>
               <th className="p-4 text-left whitespace-nowrap">Voter ID</th>
-              <th className="p-4 text-left whitespace-nowrap">Driving License</th>
+              <th className="p-4 text-left whitespace-nowrap">
+                Driving License
+              </th>
               <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
               <th className="p-4 text-left whitespace-nowrap">Salary</th>
               <th className="p-4 text-left whitespace-nowrap">Photo</th>
@@ -83,7 +85,9 @@ const EmployeeTable = () => {
             {employee?.map((emp) => (
               <tr
                 key={emp._id}
-                className={`border-t border-gray-200 ${emp._id % 2 === 0 ? "bg-gray-200" : "bg-white"} text-[16px] `}
+                className={`border-t border-gray-200 ${
+                  emp._id % 2 === 0 ? "bg-gray-200" : "bg-white"
+                } text-[16px] `}
               >
                 <td className="pl-4 py-3">{emp.Emp_id}</td>
                 <td className="pl-4 py-3">{emp.Address}</td>
@@ -94,48 +98,91 @@ const EmployeeTable = () => {
                 <td className="pl-4 py-3">{emp.IFSC_Code}</td>
                 <td className="pl-4 py-3">{emp.UAN_number}</td>
                 <td className="pl-4 py-3">
-                  <a href={emp.aadhaar} target="_blank" rel="noopener noreferrer" title="View Aadhaar">
+                  <a
+                    href={emp.aadhaar}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Aadhaar"
+                  >
                     Aadhaar
                   </a>
                 </td>
                 <td className="pl-4 py-3">
-                  <a href={emp.pancard} target="_blank" rel="noopener noreferrer" title="View PAN">
+                  <a
+                    href={emp.pancard}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View PAN"
+                  >
                     Pancard
                   </a>
                 </td>
                 <td className="pl-4 py-3">
-                  <a href={emp.Voter_Id} target="_blank" rel="noopener noreferrer" title="View Voter ID">
+                  <a
+                    href={emp.Voter_Id}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Voter ID"
+                  >
                     Voter Id
                   </a>
                 </td>
                 <td className="pl-4 py-3">
-                  <a href={emp.Driving_Licance} target="_blank" rel="noopener noreferrer" title="View Driving License">
+                  <a
+                    href={emp.Driving_Licance}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Driving License"
+                  >
                     Driving Licance
                   </a>
                 </td>
                 <td className="pl-4 py-3">
-                  <a href={emp.Bank_Proof} target="_blank" rel="noopener noreferrer" title="View Bank Proof">
+                  <a
+                    href={emp.Bank_Proof}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Bank Proof"
+                  >
                     Bank Proof
                   </a>
                 </td>
                 <td className="pl-4 py-3">{emp.salary}</td>
 
                 <td className="pl-4 py-3">
-                  <a href={emp.photo} target="_blank" rel="noopener noreferrer" title="View Bank Proof">
+                  <a
+                    href={emp.photo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Bank Proof"
+                  >
                     Photo
                   </a>
                 </td>
 
-
                 <td className="pl-4 py-3 flex gap-2 text-lg">
-                  <FaEye onClick={() => setShowDetailModal(true)} className="text-blue-500 cursor-pointer hover:scale-110 transition-transform" title="View" />
-                  <FaEdit onClick={()=> { setShowFrom(true); setEdittable(emp)}} className="text-green-500 cursor-pointer hover:scale-110 transition-transform" title="Edit" />
-                  <FaTrash onClick={() => hanldedelete(emp._id)} className="text-red-500 cursor-pointer hover:scale-110 transition-transform" title="Delete" />
+                  <FaEye
+                    onClick={() => setShowDetailModal(true)}
+                    className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
+                    title="View"
+                  />
+                  <FaEdit
+                    onClick={() => {
+                      setShowFrom(true);
+                      setEdittable(emp);
+                    }}
+                    className="text-green-500 cursor-pointer hover:scale-110 transition-transform"
+                    title="Edit"
+                  />
+                  <FaTrash
+                    onClick={() => hanldedelete(emp._id)}
+                    className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
+                    title="Delete"
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
-
         </table>
       </div>
 
@@ -144,7 +191,11 @@ const EmployeeTable = () => {
         setShowDetailModal={setShowDetailModal}
         employee={employee}
       />
-      <EmployeeForm setShowFrom={setShowFrom} showForm={showForm} editTable={editTable} />
+      <EmployeeForm
+        setShowFrom={setShowFrom}
+        showForm={showForm}
+        editTable={editTable}
+      />
     </div>
   );
 };

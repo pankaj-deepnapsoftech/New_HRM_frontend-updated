@@ -8,6 +8,7 @@ import {
   Title,
 } from 'chart.js';
 
+
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 // Optional: Uncomment if using AOS animations
@@ -34,7 +35,7 @@ const MainDashboardPage = () => {
   {
     label: "Total Employees",
     value: "1.2K",
-    iconBg: "bg-red-200",
+    iconBg: "bg-blue-200",
     iconColor: "text-red-500",
     icon: "👤",
     change: "+147%",
@@ -52,9 +53,9 @@ const MainDashboardPage = () => {
   {
     label: "Absent",
     value: "4.53%",
-    iconBg: "bg-blue-200",
-    iconColor: "text-blue-500",
-    icon: "🔥",
+    iconBg: "bg-red-200",
+    iconColor: "text-black-500",
+    icon: "🚫",
     change: "-10.7%",
     changeColor: "text-red-500",
   },
@@ -114,8 +115,8 @@ const MainDashboardPage = () => {
   };
 
   return (
-    <main className="flex-1 font-sans">
-      <section className="p-6 md:p-10">
+    <main className="flex-1 font-sans p-10">
+     
   <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
     <div>
       <p className="text-sm mb-2 opacity-80">{today}</p>
@@ -131,24 +132,24 @@ const MainDashboardPage = () => {
       alt="Welcome Illustration"
       className=" w-[150px] md:w-[200px] mt-6 sm:mt-0"
     />
-  </section>
+</section>
+
 
   {/* Cards and Chart in Single Row */}
-  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-5 md:pt-10  md:pb-10 items-start">
-    <div className="flex  flex-wrap  gap-6 ml-5 ">
+ <div className="bg-gray-100 flex flex-col lg:flex-row gap-2 pt-2 md:pt-10 md:pb-6 items-start">
+  {/* Cards Container */}
+  <div className="flex flex-wrap gap-2 md:gap-2 ml-2 md:ml-2 lg:flex-1">
     {statsCards.map((card, i) => (
       <div
         key={i}
-        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-64 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
+        className="bg-white rounded-sm shadow-md w-full sm:w-80 md:w-60 h-48 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
       >
-        <div className="flex justify-between items-start ">
+        <div className="flex justify-between items-start">
           <div>
-            <p className="text-md text-gray-800 font-semibold">{card.label}</p>
-            <p className="text-xl font-bold">{card.value}</p>
+            <p className="text-lg md:text-md text-gray-700 font-semibold">{card.label}</p>
+            <p className="text-xl pt-5 md:pt-1 font-bold">{card.value}</p>
           </div>
-          <div
-            className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}
-          >
+          <div className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}>
             <span className={`text-lg ${card.iconColor}`}>{card.icon}</span>
           </div>
         </div>
@@ -157,16 +158,15 @@ const MainDashboardPage = () => {
         </p>
       </div>
     ))}
-    </div>
+  </div>
 
-    {/* Pie Chart Side by Side */}
-    <div className="flex-1 max-w-md  bg-white p-8 mr-5 rounded-sm shadow-md">
+  {/* Pie Chart Container */}
+  <div className="w-2xl md:w-full lg:w-auto lg:mr-4 mt-4 lg:mt-0">
+    <div className="flex max-w-sm bg-white p-6 md:p-2 rounded-sm shadow-md">
       <Pie data={data} options={options} />
     </div>
   </div>
-</section>
-
-    
+</div>
     </main>
   );
 };

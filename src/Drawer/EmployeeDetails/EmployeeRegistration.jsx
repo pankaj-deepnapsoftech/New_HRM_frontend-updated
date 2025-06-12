@@ -14,8 +14,8 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
 
     const {
-        handleBlur, handleSubmit, handleChange, resetForm,
-        touched, errors, values, setFieldValue
+        handleBlur, handleSubmit, handleChange, resetForm,setFieldValue,
+        touched, errors, values
     } = useFormik({
         initialValues: editTable || {
             Designation: '', Department: '', Address: '', salary: '',
@@ -54,14 +54,14 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
     return (
         <section className={`${showForm ? "opacity-100 visible" : "opacity-0 invisible"} fixed inset-0 bg-black/40 flex items-start justify-center pt-10 transition-opacity duration-500 ease-in-out z-50`}>
-            <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100">
+           <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100 custom-scrollbar">
 
                 <button
                     className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
                     onClick={() => setShowFrom(false)}
                     aria-label="Close"
                 >
-                    <IoIosClose size={32} />
+                    <IoIosClose size={32}/>
                 </button>
 
                 <h2 className="text-4xl font-bold text-center text-gray-700 mb-10">Employee Information Form</h2>

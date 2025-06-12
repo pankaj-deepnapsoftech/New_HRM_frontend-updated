@@ -12,7 +12,7 @@ import { LuEyeClosed } from "react-icons/lu";
 import { setLoginState } from "@/store/slice/AuthSlice";
 import { useDispatch } from "react-redux";
 
-const Signup = () => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [SignUp, { isLoading }] = useSignUpMutation();
   const dispatch = useDispatch();
@@ -54,11 +54,18 @@ const Signup = () => {
   });
 
   return (
-    <div className="min-h-screen w-1/2 flex bg-gray-100">
-      <div className="w-full bg-white flex items-center justify-center p-10">
+    <div className="min-h-screen  flex bg-gray-100">
+      <div className="w-1/2 bg-gradient-to-br from-sky-200 to-sky-400 flex items-center justify-center">
+        <img
+          src="/register.png"
+          alt="Login Illustration"
+          className="w-[70%] h-auto"
+        />
+      </div>
+      <div className="w-1/2 flex items-center justify-center bg-white px-8 py-6">
         <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-            Sign Up
+            Sign Up As Employee
           </h2>
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
@@ -233,15 +240,15 @@ const Signup = () => {
 
           <p className="text-sm text-gray-600 text-center mt-6">
             Already have an account?{" "}
-            <NavLink to="/" className="text-sky-600 hover:underline">
+            <NavLink to="/login" className="text-sky-600 hover:underline">
               Sign In
             </NavLink>
           </p>
           <NavLink
-            to="/login"
+            to="/sign-up"
             className="block w-full text-center mt-6 border  border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
           >
-            Login as an employee
+            Sign Up as an Admin
           </NavLink>
         </div>
       </div>
@@ -249,4 +256,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;

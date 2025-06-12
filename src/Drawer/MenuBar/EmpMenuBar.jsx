@@ -4,21 +4,20 @@ import { FiUser, FiLock, FiSettings, FiLogOut } from "react-icons/fi";
 import UserProfile from "@/pages/UserProfile";
 import { useDispatch } from "react-redux";
 import { removeData } from "@/store/slice/AuthSlice";
+import { browserName, isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import {
   useChangePasswordMutation,
-
 useLogoutUserMutation,
 } from "@/service/Auth.services";
 import { ChangePassSchema } from "@/Validation/AuthValidation/ChangePassValidation";
 import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
-import AccountSettingsModal from "./AccountSetting";
-import { browserName, isMobile } from "react-device-detect";
+// import AccountSettingsModal from "./AccountSetting";
 // import { browserName, isMobile } from "react-device-detect";
 
-const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
+const EmpMenuBar = ({ showEmpMenuBar, setShowEmpMenuBar}) => {
   const sidebarRef = useRef(null);
   const [ChangePassword, { isLoading }] = useChangePasswordMutation();
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -28,16 +27,18 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [LogoutUser] = useLogoutUserMutation();
   const dispatch = useDispatch();
-  const [isSettingsOpen, setSettingsOpen] = useState(false);
+//   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const handleLogout = async () => {
     try {
       const res = await LogoutUser({isMobile, browser: browserName}).unwrap();
       dispatch(removeData());
-      window.location.href = "/";
-      toast.success(res.message);
-    } catch (error) {
-      toast.error(error.data.message);
-    }
+       toast.success(res.message || "Logged out successfully");
+     console.log(res)
+         window.location.href = "/";
+       } catch (error) {
+         console.log(error)
+         toast.error(error?.data?.message || "Logout failed");
+       }
   };
 
   const {
@@ -68,8 +69,8 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setShowUserMenuBar(false);
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)){
+        setShowEmpMenuBar(false);
       }
     };
 
@@ -87,7 +88,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
       <section
         ref={sidebarRef}
         className={`${
-          showUserMenuBar ? "translate-x-0" : "translate-x-full"
+         showEmpMenuBar ? "translate-x-0" : "translate-x-full"
         } fixed top-0 right-0 z-50 h-screen w-[60vw] md:w-[20vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-transform duration-500 ease-in-out`}
         role="dialog"
         aria-modal="true"
@@ -95,7 +96,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
         <div className="flex justify-end p-4">
           <button
             className="text-white hover:text-gray-300 transition cursor-pointer"
-            onClick={() => setShowUserMenuBar(false)}
+            onClick={() => setShowEmpMenuBar(false)}
             aria-label="Close menu"
           >
             <IoIosClose size={32} />
@@ -129,8 +130,8 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
               <button
                 className="flex items-center w-full gap-4 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 ease-in-out cursor-pointer"
                 onClick={() => {
-                  setSettingsOpen(true); // open modal
-                  setShowUserMenuBar(false); // close sidebar
+                //   setSettingsOpen(true); // open modal
+                 setShowEmpMenuBar(false); // close sidebar
                 }}
               >
                 <FiSettings size={20} className="shrink-0" />
@@ -262,12 +263,12 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
       </div>
 
       <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
-      <AccountSettingsModal
+      {/* <AccountSettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setSettingsOpen(false)}
-      />
+      /> */}
     </>
   );
 };
 
-export default UserMenuBar;
+export default EmpMenuBar;
