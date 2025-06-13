@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { FiUser, FiLock, FiSettings, FiLogOut } from "react-icons/fi";
-import UserProfile from "@/pages/UserProfile";
+import UserProfile from "@/Drawer/AdminDetails/UserProfile";
 import { useDispatch } from "react-redux";
 import { removeData } from "@/store/slice/AuthSlice";
 import { toast } from "react-toastify";
@@ -12,16 +12,17 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { browserName, isMobile } from "react-device-detect";
 import EmpAccountSettings from "./EmpAccountSetting";
+import EmpProfile from "./EmpProfile";
 // import { browserName, isMobile } from "react-device-detect";
+const EmpMenuBar = ({ showEmpMenuBar, setShowEmpMenuBar }) => {
 
-const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   const sidebarRef = useRef(null);
   const [ChangePassword, { isLoading }] = useChangePasswordMutation();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showChangePassPage, setshowChangePassPage] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showEmpMenu, setShowEmpMenu] = useState(false);
   const [LogoutUser] = useLogoutUserMutation();
   const dispatch = useDispatch();
   const [isSettingsOpen, setSettingsOpen] = useState(false);
@@ -65,7 +66,7 @@ const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setShowUserMenuBar(false);
+        setShowEmpMenuBar(false);
       }
     };
 
@@ -82,16 +83,17 @@ const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
     <>
       <section
         ref={sidebarRef}
-        className={`${
-          showUserMenuBar ? "translate-x-0" : "translate-x-full"
-        } fixed top-0 right-0 z-50 h-screen w-[60vw] md:w-[20vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-transform duration-500 ease-in-out`}
+       className={`fixed top-0 z-50 h-screen w-[60vw] md:w-[20vw] bg-gradient-to-b from-[#805d96] to-[#43344d] shadow-lg transition-all duration-500 ease-in-out ${
+  showEmpMenuBar ? "right-0" : "-right-full"
+}`}
+
         role="dialog"
         aria-modal="true"
       >
         <div className="flex justify-end p-4">
           <button
             className="text-white hover:text-gray-300 transition cursor-pointer"
-            onClick={() => setShowUserMenuBar(false)}
+            onClick={() => setShowEmpMenuBar(false)}
             aria-label="Close menu"
           >
             <IoIosClose size={32} />
@@ -102,18 +104,18 @@ const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
           <ul className="flex flex-col gap-3 text-base font-medium">
             <li>
               <button
-                onClick={() => {setShowUserMenu(!showUserMenu), setShowUserMenuBar(!showUserMenuBar)}}
+                onClick={() => {setShowEmpMenu(!showEmpMenu), setShowEmpMenuBar(!showEmpMenuBar)}}
                 className="flex items-center w-full gap-4 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <FiUser size={20} className="shrink-0" />
-                <span>View Profile</span>
+                <span>View Employee Profile</span>
               </button>
             </li>
 
             <li>
               <button
                 disabled={isLoading}
-                onClick={() => {setshowChangePassPage(!showChangePassPage),setShowUserMenuBar(!showUserMenuBar)}}
+                onClick={() => {setshowChangePassPage(!showChangePassPage),setShowEmpMenuBar(!showEmpMenuBar)}}
                 className="flex items-center w-full gap-4 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <FiLock size={20} className="shrink-0" />
@@ -126,7 +128,7 @@ const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
                 className="flex items-center w-full gap-4 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 ease-in-out cursor-pointer"
                 onClick={() => {
                   setSettingsOpen(true); // open modal
-                  setShowUserMenuBar(false); // close sidebar
+                  setShowEmpMenuBar(false); // close sidebar
                 }}
               >
                 <FiSettings size={20} className="shrink-0" />
@@ -257,7 +259,7 @@ const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
         </div>
       </div>
 
-      {/* <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} /> */}
+      <EmpProfile showUserMenu={showEmpMenu} setShowMenu={setShowEmpMenu} />
       <EmpAccountSettings
         isOpen={isSettingsOpen}
         onClose={() => setSettingsOpen(false)}

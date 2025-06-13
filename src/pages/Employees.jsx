@@ -77,7 +77,7 @@ const EmployeeTable = () => {
               </th>
               <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
               <th className="p-4 text-left whitespace-nowrap">Salary</th>
-              <th className="p-4 text-left whitespace-nowrap">Photo</th>
+              {/* <th className="p-4 text-left whitespace-nowrap">Photo</th> */}
               <th className="p-4 text-left whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -94,7 +94,7 @@ const EmployeeTable = () => {
                 <td className="pl-4 py-3">{emp.Address}</td>
                 <td className="pl-4 py-3">{emp.Department}</td>
                 <td className="pl-4 py-3">{emp.Designation}</td>
-                <td className="pl-4 py-3">{emp.Back_Name}</td>
+                <td className="pl-4 py-3">{emp.Bank_Name}</td>
                 <td className="pl-4 py-3">{emp.Bank_Account}</td>
                 <td className="pl-4 py-3">{emp.IFSC_Code}</td>
                 <td className="pl-4 py-3">{emp.UAN_number}</td>
@@ -150,7 +150,7 @@ const EmployeeTable = () => {
                 </td>
                 <td className="pl-4 py-3">{emp.salary}</td>
 
-                <td className="pl-4 py-3">
+                {/* <td className="pl-4 py-3">
                   <a
                     href={emp.photo}
                     target="_blank"
@@ -159,7 +159,7 @@ const EmployeeTable = () => {
                   >
                     Photo
                   </a>
-                </td>
+                </td> */}
 
                 <td className="pl-4 py-6 flex gap-2 text-lg">
                   <FaEye

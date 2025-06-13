@@ -22,7 +22,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
             photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
             UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
         },
-        // validationSchema: EmpDetailsSchema,
+        validationSchema: EmpDetailsSchema,
         enableReinitialize: true,
         onSubmit: async (values) => {
             try {
@@ -109,7 +109,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
-                            { label: 'Photo', name: 'photo' },
+                            
                             { label: 'Bank Proof (Cheque/Passbook)', name: 'Bank_Proof' },
                             { label: 'Aadhaar Number', name: 'aadhaar' },
                             { label: 'PAN Card', name: 'pancard' },

@@ -8,7 +8,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
   const fieldsOrder = [
     "Emp_id",
     "Address",
-    "Back_Name",
+    "Bank_Name",
     "Bank_Account",
     "Bank_Proof",
     "Department",
@@ -50,7 +50,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
         <div className="text-center mb-6">
           {employee.photo && (
             <img
-              src={employee.photo}
+              src="/EMP.png"
               alt="Employee"
               className="w-24 h-24 rounded-full object-cover mx-auto shadow-md"
             />

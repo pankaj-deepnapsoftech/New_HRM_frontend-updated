@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegBell } from "react-icons/fa";
-
 import EmpMenuBar from "@/Drawer/MenuBar/EmpMenuBar";
 import EmpNotification from "@/Drawer/EmpDetails/EmpNotification";
 
@@ -8,7 +7,7 @@ const UserHeader = ({isMobile}) => {
   const [showEmpMenuBar, setShowEmpMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
-  const userName = "Dinki Kaur";
+  const userName = "Nitin Thakur";
   const userInitials = userName
     .split(" ")
     .map((word) => word[0])
@@ -58,10 +57,10 @@ const UserHeader = ({isMobile}) => {
           </div>
         </div>
       </div>
-      <EmpMenuBar
-        setShowEmpMenuBar={setShowEmpMenuBar}
-        showEmpMenuBar={showEmpMenuBar}
-      />
+<EmpMenuBar
+  setShowEmpMenuBar={setShowEmpMenuBar}
+  showEmpMenuBar={showEmpMenuBar}
+/>
     </div>
   );
 };

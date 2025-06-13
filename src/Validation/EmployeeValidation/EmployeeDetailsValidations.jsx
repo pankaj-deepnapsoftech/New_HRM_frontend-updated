@@ -1,49 +1,47 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
-const EmpDetailsSchema = Yup.object({
-   
+const FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'application/pdf'];
 
-    Designation: Yup.string()
-        .required("Designation is required")
-        .min(2, "Too short")
-        .max(50, "Too long"),
+const EmpDetailsSchema = Yup.object().shape({
+  Designation: Yup.string().required('Designation is required'),
+  Department: Yup.string().required('Department is required'),
+  Address: Yup.string().required('Address is required'),
+  salary: Yup.number().required('Salary is required').min(0, 'Salary must be positive'),
 
-    Department: Yup.string()
-        .required("Department is required")
-        .min(2, "Too short")
-        .max(50, "Too long"),
+  // File validations
+  aadhaar: Yup.mixed()
+    .required('Aadhaar file is required')
+    .test('fileSize', 'File too large', value => !value || value.size <= FILE_SIZE)
+    .test('fileType', 'Unsupported file format', value => !value || SUPPORTED_FORMATS.includes(value.type)),
 
-    Address: Yup.string()
-        .required("Address is required")
-        .min(5, "Address is too short"),
+  pancard: Yup.mixed()
+    .required('PAN card is required')
+    .test('fileSize', 'File too large', value => !value || value.size <= FILE_SIZE)
+    .test('fileType', 'Unsupported file format', value => !value || SUPPORTED_FORMATS.includes(value.type)),
 
-    salary: Yup.number()
-        .required("Salary is required")
-        .typeError("Salary must be a number")
-        .positive("Salary must be positive"),
+  Driving_Licance: Yup.mixed()
+    .required('Driving license is required')
+    .test('fileSize', 'File too large', value => !value || value.size <= FILE_SIZE)
+    .test('fileType', 'Unsupported file format', value => !value || SUPPORTED_FORMATS.includes(value.type)),
 
-    photo: Yup.mixed()
-        .required("Photo is required"),
-       
+  Voter_Id: Yup.mixed()
+    .required('Voter ID is required')
+    .test('fileSize', 'File too large', value => !value || value.size <= FILE_SIZE)
+    .test('fileType', 'Unsupported file format', value => !value || SUPPORTED_FORMATS.includes(value.type)),
 
-    pancard: Yup.mixed()
-        .required("PAN card is required"),
+  Bank_Proof: Yup.mixed()
+    .required('Bank proof is required')
+    .test('fileSize', 'File too large', value => !value || value.size <= FILE_SIZE)
+    .test('fileType', 'Unsupported file format', value => !value || SUPPORTED_FORMATS.includes(value.type)),
 
-    aadhaar: Yup.mixed()
-        .required("Aadhaar number is required"),
+  UAN_number: Yup.string()
+    .matches(/^\d+$/, 'UAN must be numeric')
+    .required('UAN number is required'),
 
-    Back_Name: Yup.string()
-        .required("Bank name is required"),
-
-    Bank_Account: Yup.string()
-        .required("Bank account number is required"),
-
-    IFSC_Code: Yup.string()
-        .required("IFSC Code is required"),
-
-    Bank_Proof: Yup.mixed()
-        .required("Bank proof is required")
-   
+  Back_Name: Yup.string().required('Bank name is required'),
+  Bank_Account: Yup.string().required('Bank account number is required'),
+  IFSC_Code: Yup.string().required('IFSC code is required')
 });
 
 export default EmpDetailsSchema;

@@ -25,7 +25,7 @@ const UserLeaveStatus = () => {
   return (
     <div className="min-h-screen bg-gray-100  px-6 md:px-12 py-10">
       {/* Header */}
-      <div className="bg-gray-400 text-white text-center rounded-t-2xl py-5 px-5 shadow-md ">
+      <div className="bg-gray-400 text-white text-center rounded-2xl py-4 px-5 shadow-md mb-10">
         <h1 className="text-2xl md:text-3xl font-bold">Employee Request Leave Status</h1>
       </div>
 

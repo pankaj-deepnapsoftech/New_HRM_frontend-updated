@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { FiUser, FiLock, FiSettings, FiLogOut } from "react-icons/fi";
-import UserProfile from "@/pages/UserProfile";
+import UserProfile from "@/Drawer/AdminDetails/UserProfile";
 import { useDispatch } from "react-redux";
 import { removeData } from "@/store/slice/AuthSlice";
 import { browserName, isMobile } from "react-device-detect";
