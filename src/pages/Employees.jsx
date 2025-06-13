@@ -65,7 +65,7 @@ const EmployeeTable = () => {
               <th className="p-4 text-left whitespace-nowrap">Address</th>
               <th className="p-4 text-left whitespace-nowrap">Department</th>
               <th className="p-4 text-left whitespace-nowrap">Designation</th>
-              <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
+              <th className="p-4 text-left whitespace-nowrap">Back Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
               <th className="p-4 text-left whitespace-nowrap">UAN Number</th>
