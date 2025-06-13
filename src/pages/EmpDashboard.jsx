@@ -1,7 +1,6 @@
+import { Formik } from "formik";
 import React, { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-
-// import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
@@ -12,7 +11,6 @@ const validationSchema = Yup.object().shape({
   salary: Yup.number().typeError("Salary must be a number").required("Salary is required"),
   date: Yup.date().required("Joining date is required"),
 });
-
 const employees = [
   {
     fname: "Nitish Prajapati",
@@ -69,7 +67,7 @@ const EmpDashboard = () => {
       </div>
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 bg-opacity-40">
-          <div className="bg-white p-6 rounded-md w-full max-w-xl shadow-md relative">
+          <div className="bg-white p-6 rounded-md w-full max-w-xl shadow-md relative ">
             <button
               className="absolute top-4 right-4 text-gray-400 cursor-pointer hover:text-red-500 transition"
               onClick={() => setShowModal(false)}
@@ -78,7 +76,7 @@ const EmpDashboard = () => {
               <IoIosClose size={32} />
             </button>
             <h3 className="text-lg font-bold mb-4">Add New Employees</h3>
-            <formik 
+            <Formik 
             initialvalues={{
               fname:"",
               department:"",
@@ -176,7 +174,7 @@ const EmpDashboard = () => {
                 </button>
               </div>
             </form>
-            </formik>
+            </Formik>
           </div>
         </div>
       )}

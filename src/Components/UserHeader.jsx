@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegBell } from "react-icons/fa";
-import NotificationModal from "@/Drawer/NotificationModal";
+
 import EmpMenuBar from "@/Drawer/MenuBar/EmpMenuBar";
+import EmpNotification from "@/Drawer/EmpDetails/EmpNotification";
 
 const UserHeader = ({isMobile}) => {
   const [showEmpMenuBar, setShowEmpMenuBar] = useState(false);
@@ -44,7 +45,7 @@ const UserHeader = ({isMobile}) => {
           </button>
           {showNotification && (
             <div ref={notificationRef} className="absolute right-0 top-8 z-50">
-              <NotificationModal />
+              <EmpNotification/>
             </div>
           )}
         </div>

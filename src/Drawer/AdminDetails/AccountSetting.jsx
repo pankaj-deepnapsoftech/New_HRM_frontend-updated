@@ -18,7 +18,7 @@ const AccountSettingsModal = ({ isOpen, onClose }) => {
                 alt="Profile"
                 className="w-24 h-24 rounded-full mb-2"
               />
-              <h2 className="font-semibold text-lg mb-6">Dinki</h2>
+              <h2 className="font-semibold text-lg mb-6">Nitin</h2>
               <ul className="space-y-4 text-left w-full">
                 <li className="text-gray-600 hover:text-blue-500 font-semibold">Account Settings</li>
                  <li className="text-gray-600 hover:text-blue-500 font-semibold">Privacy</li>
@@ -60,7 +60,7 @@ const AccountSettingsModal = ({ isOpen, onClose }) => {
 
             <div className="flex gap-4 mt-6">
               <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-6 py-2 rounded">Save</button>
-              <button onClick={onClose} className="text-gray-600 hover:underline">Cancel</button>
+              <button onClick={onClose} className="text-gray-600 px-4 border border-gray-400 rounded hover:scale-105">Cancel</button>
             </div>
           </div>
         </div>

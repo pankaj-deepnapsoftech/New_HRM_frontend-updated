@@ -15,6 +15,7 @@ const EmployeeTable = () => {
   const [EmpDeleteData] = useEpmDeleteDataMutation();
 
   const [showDetailModal, setShowDetailModal] = useState(false);
+  const[selectedEmployee, setSelectedEmployee]=useState(null)
   const [showForm, setShowFrom] = useState(false);
   const [editTable, setEdittable] = useState(null);
   const employee = data?.data;
@@ -33,7 +34,6 @@ const EmployeeTable = () => {
       );
     }
   };
-
   useEffect(() => {
     if (!showForm) {
       refetch();
@@ -42,7 +42,11 @@ const EmployeeTable = () => {
 
   return (
     <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
-      <div className="flex gap-4  justify-end pt-3   mx-5 md:mx-10">
+     
+      <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
+        <h2 className="text-xl font-[500]">Employees All Details</h2>
+      </div>
+       <div className="flex justify-end mb-4 mx-5 md:mx-10">
         <button
           onClick={() => {
             setShowFrom(!showForm);
@@ -52,9 +56,6 @@ const EmployeeTable = () => {
         >
           Add Employee Details
         </button>
-      </div>
-      <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-8 rounded-md shadow-md shadow-gray-400">
-        <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
       <div className="overflow-x-auto rounded-t-sm md:rounded-t-xl shadow-md mx-5 md:mx-10 mb-8 scrollbar-visible">
         <table className="min-w-full shadow-lg border border-gray-200 text-sm">
@@ -160,9 +161,10 @@ const EmployeeTable = () => {
                   </a>
                 </td>
 
-                <td className="pl-4 py-3 flex gap-2 text-lg">
+                <td className="pl-4 py-6 flex gap-2 text-lg">
                   <FaEye
-                    onClick={() => setShowDetailModal(true)}
+                    onClick={() =>{setShowDetailModal(true); setSelectedEmployee(emp)}}
+
                     className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
                     title="View"
                   />
@@ -189,7 +191,7 @@ const EmployeeTable = () => {
       <ViewModal
         showDetailModal={showDetailModal}
         setShowDetailModal={setShowDetailModal}
-        employee={employee}
+        employee={selectedEmployee}
       />
       <EmployeeForm
         setShowFrom={setShowFrom}

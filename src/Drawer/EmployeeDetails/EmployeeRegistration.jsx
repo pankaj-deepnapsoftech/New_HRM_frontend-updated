@@ -57,7 +57,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
     return (
         <section className={`${showForm ? "opacity-100 visible" : "opacity-0 invisible"} fixed inset-0 bg-black/40 flex items-start justify-center pt-10 transition-opacity duration-500 ease-in-out z-50`}>
-           <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100 custom-scrollbar">
+           <div className="w-full max-w-xl bg-white rounded-sm shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100 custom-scrollbar">
 
                 <button
                     className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"

@@ -43,7 +43,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
           onClick={() => setShowDetailModal(false)}
           className="absolute top-3 right-3 text-gray-500 hover:text-black"
         >
-          <IoMdClose size={22} />
+          <IoMdClose size={22}/>
         </button>
 
         {/* Photo & Name */}
@@ -63,7 +63,6 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
           {fieldsOrder.map((key) => {
             // skip photo here since displayed above
             if (key === "photo") return null;
-
             const value = employee[key];
             return (
               <div

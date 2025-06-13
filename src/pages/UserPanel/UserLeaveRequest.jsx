@@ -1,14 +1,37 @@
 import React from "react";
-
+import {Formik} from "formik";
+import * as Yup from "yup"
+const validationSchema = Yup.object().shape({
+  fname: Yup.string().required("Full name is required"),
+  department: Yup.string().required("Department is required"),
+  designation: Yup.string().required("Designation is required"),
+  empCode: Yup.string().required("Employee code is required"),
+  salary: Yup.number().typeError("Salary must be a number").required("Salary is required"),
+  date: Yup.date().required("Joining date is required"),
+});
 const UserLeaveRequest = () => {
   return (
     <div className="min-h-screen  bg-gray-50 px-4 py-2 flex items-center justify-center">
       <div className="w-full max-w-xl bg-white shadow-2xl rounded-2xl p-8">
         {/* Header */}
-        <div className=" text-gray-800 text-center py-8 rounded-t-xl  mb-6">
+        <div className=" text-gray-800 text-center py-4 rounded-t-xl  mb-6">
           <h1 className="text-2xl font-bold">Employee Leave Request</h1>
         </div>
-
+<Formik
+initialValues={{
+  from:"",
+  to:"",
+  request:"",
+  type:"",
+  reason:""
+}}
+validationSchema={validationSchema}
+onSubmit={(value,{resetForm})=>{
+  console.log("submitted:",value);
+  resetForm();
+  // setShowModal(false)
+}}
+>
         <form className="space-y-6">
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -85,12 +108,13 @@ const UserLeaveRequest = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-gray-700 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md transition"
+              className="bg-gradient-to-br from-gray-400 to-gray-600 hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition"
             >
               Submit
             </button>
           </div>
         </form>
+        </Formik>
       </div>
     </div>
   );

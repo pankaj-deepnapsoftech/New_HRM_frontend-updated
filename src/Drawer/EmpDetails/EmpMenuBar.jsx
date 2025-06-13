@@ -5,20 +5,16 @@ import UserProfile from "@/pages/UserProfile";
 import { useDispatch } from "react-redux";
 import { removeData } from "@/store/slice/AuthSlice";
 import { toast } from "react-toastify";
-import {
-  useChangePasswordMutation,
-
-useLogoutUserMutation,
-} from "@/service/Auth.services";
+import {useChangePasswordMutation,useLogoutUserMutation} from "@/service/Auth.services";
 import { ChangePassSchema } from "@/Validation/AuthValidation/ChangePassValidation";
 import { useFormik } from "formik";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
-import AccountSettingsModal from "./AccountSetting";
 import { browserName, isMobile } from "react-device-detect";
+import EmpAccountSettings from "./EmpAccountSetting";
 // import { browserName, isMobile } from "react-device-detect";
 
-const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
+const EmpMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   const sidebarRef = useRef(null);
   const [ChangePassword, { isLoading }] = useChangePasswordMutation();
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -58,7 +54,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
     onSubmit: async (values) => {
       try {
         const res = await ChangePassword(values).unwrap();
-        console.log(res);
+        toast.success(res?.message)
         resetForm();
       } catch (error) {
         console.log(error);
@@ -106,7 +102,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
           <ul className="flex flex-col gap-3 text-base font-medium">
             <li>
               <button
-                onClick={() => setShowUserMenu(!showUserMenu)}
+                onClick={() => {setShowUserMenu(!showUserMenu), setShowUserMenuBar(!showUserMenuBar)}}
                 className="flex items-center w-full gap-4 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <FiUser size={20} className="shrink-0" />
@@ -117,7 +113,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
             <li>
               <button
                 disabled={isLoading}
-                onClick={() => setshowChangePassPage(!showChangePassPage)}
+                onClick={() => {setshowChangePassPage(!showChangePassPage),setShowUserMenuBar(!showUserMenuBar)}}
                 className="flex items-center w-full gap-4 p-3 rounded-lg hover:bg-white/10 transition-all duration-200 ease-in-out cursor-pointer"
               >
                 <FiLock size={20} className="shrink-0" />
@@ -261,8 +257,8 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
         </div>
       </div>
 
-      <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
-      <AccountSettingsModal
+      {/* <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} /> */}
+      <EmpAccountSettings
         isOpen={isSettingsOpen}
         onClose={() => setSettingsOpen(false)}
       />
@@ -270,4 +266,4 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
   );
 };
 
-export default UserMenuBar;
+export default EmpMenuBar;
