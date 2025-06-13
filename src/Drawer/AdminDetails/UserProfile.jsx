@@ -1,8 +1,14 @@
 
 import React from "react";
 import { IoIosClose } from "react-icons/io"
+import { useSelector } from "react-redux";
 
 const UserProfile = ({ showUserMenu, setShowMenu }) => {
+  
+   const fullName=useSelector((state=>state.Auth.fullName))
+const username=useSelector((state=>state.Auth.username))
+const email=useSelector((state=>state.Auth.email))
+const phone=useSelector((state=>state.Auth.phone))
 const handleBackgroundClick = () => {
     setShowMenu(false);
   };
@@ -38,41 +44,34 @@ const handleBackgroundClick = () => {
 
         <div className="flex justify-center -mt-12">
           <img
-            src="https://i.pravatar.cc/100?img=12"
+            src="/3dd.png"
             alt="Profile"
-            className="w-24 h-24  rounded-full object-cover border-4 border-white shadow-md"
+            className="w-28 h-28 rounded-full object-cover  border-white "
           />
         </div>
 
 
         <div className="px-6 py-4 text-gray-900 text-sm sm:text-base">
           <div className="text-center mb-4">
-            <h2 className="text-xl font-bold">Dinki Kaur</h2>
+            <h2 className="text-xl font-bold">{fullName}</h2>
             <p className="text-sm text-gray-600">Admin</p>
           </div>
-
-
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="font-medium">Age</span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">21</span>
+              <span className="font-medium">User Name</span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">{username}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-medium">Education</span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Graduated</span>
+              <span className="font-medium">Email</span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">{email}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-medium">Location</span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Faridabad</span>
+              <span className="font-medium">Phone Number</span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">{phone}</span>
             </div>
           </div>
-
-
-
         </div>
       </div>
-
-
     </div>
   );
 };

@@ -7,10 +7,10 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isMobile, browserName } from "react-device-detect";
 import { toast } from "react-toastify";
-import { MdRemoveRedEye } from "react-icons/md";
-import { LuEyeClosed } from "react-icons/lu";
 import { setLoginState } from "@/store/slice/AuthSlice";
 import { useDispatch } from "react-redux";
+import { IoEyeOutline } from "react-icons/io5";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -140,7 +140,7 @@ const Register = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-9 text-md text-sky-600 cursor-pointer"
               >
-                {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
+                {showPassword ? <IoEyeOutline/> :  <FaRegEyeSlash/>}
               </button>
             </div>
             <div>

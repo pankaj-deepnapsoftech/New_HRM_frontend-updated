@@ -13,8 +13,8 @@ import { useSelector } from "react-redux";
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 const MainDashboardPage = () => {
-
- const userName=useSelector((state=>state.Auth.username))
+const
+  userName=useSelector((state=>state.Auth.username))
 
   const today = new Date().toLocaleDateString(undefined, {
     weekday: "long",

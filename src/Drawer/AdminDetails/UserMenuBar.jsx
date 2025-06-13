@@ -179,7 +179,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
                   name="oldPassword"
                   type={showOldPassword ? "text" : "password"}
                   value={values.oldPassword}
-                  className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
+                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 />
                 <button
                   type="button"
@@ -205,7 +205,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
                   type={showNewPassword ? "text" : "password"}
                   name="newPassword"
                   value={values.newPassword}
-                  className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
+                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 />
                 <button
                   type="button"
@@ -231,7 +231,7 @@ const UserMenuBar = ({ showUserMenuBar, setShowUserMenuBar }) => {
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={values.confirmPassword}
-                  className="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300"
+                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 />
                 <button
                   type="button"

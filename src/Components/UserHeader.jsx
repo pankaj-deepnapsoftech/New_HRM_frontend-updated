@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegBell } from "react-icons/fa";
-import EmpMenuBar from "@/Drawer/MenuBar/EmpMenuBar";
+import EmpMenuBar from "@/Drawer/EmpDetails/EmpMenuBar";
 import EmpNotification from "@/Drawer/EmpDetails/EmpNotification";
 
 const UserHeader = ({isMobile}) => {

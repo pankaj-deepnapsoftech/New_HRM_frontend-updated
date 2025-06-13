@@ -50,7 +50,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
         <div className="text-center mb-6">
           {employee.photo && (
             <img
-              src="/EMP.png"
+              src="/profilee.png"
               alt="Employee"
               className="w-24 h-24 rounded-full object-cover mx-auto shadow-md"
             />
