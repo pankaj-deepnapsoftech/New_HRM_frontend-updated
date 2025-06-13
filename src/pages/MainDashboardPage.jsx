@@ -7,18 +7,15 @@ import {
   Legend,
   Title,
 } from 'chart.js';
+import { useSelector } from "react-redux";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-// Optional: Uncomment if using AOS animations
-// import AOS from "aos";
-// import "aos/dist/aos.css";
-
-// Optional: Uncomment if using Heroicons
-// import { UserGroupIcon, EyeIcon, ChartBarIcon } from "@heroicons/react/24/solid";
-
 const MainDashboardPage = () => {
+
+ const userName=useSelector((state=>state.Auth.username))
+
   const today = new Date().toLocaleDateString(undefined, {
     weekday: "long",
     month: "long",
@@ -26,10 +23,6 @@ const MainDashboardPage = () => {
     year: "numeric",
   });
 
-  // Optional: Animation on Scroll
-  // useEffect(() => {
-  //   AOS.init({ duration: 1000 });
-  // }, []);
 
  const statsCards = [
   {
@@ -119,7 +112,7 @@ const MainDashboardPage = () => {
     <div>
       <p className="text-sm mb-2 opacity-80">{today}</p>
       <h1 className="text-4xl font-extrabold mb-1">
-        Welcome back, <span className="text-white">John</span> 👋
+        Welcome back, <span className="text-white ">{userName.charAt(0).toUpperCase() + userName.slice(1)}</span> 👋
       </h1>
       <p className="text-sm text-white/80">
         Here’s what’s happening today in your portal.

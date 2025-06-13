@@ -3,14 +3,14 @@ import { FaRegBell, FaBars, FaRegUser } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import UserMenuBar from "@/Drawer/AdminDetails/UserMenuBar";
 import NotificationModal from "@/Drawer/AdminDetails/NotificationModal";
-
+import { useSelector } from "react-redux";
 const Header = () => {
   const[searchQuery,setSearchQuery] =useState("")
   const [showUserMenuBar, setShowUserMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
-  const userName = "Dinki Kaur";
-  const userInitials = userName
+  const fullName = useSelector((state=>state.Auth.fullName))
+  const userInitials = fullName
     .split(" ")
     .map((word) => word[0])
     .join("")

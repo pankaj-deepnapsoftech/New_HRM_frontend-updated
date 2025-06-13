@@ -65,7 +65,7 @@ const EmployeeTable = () => {
               <th className="p-4 text-left whitespace-nowrap">Address</th>
               <th className="p-4 text-left whitespace-nowrap">Department</th>
               <th className="p-4 text-left whitespace-nowrap">Designation</th>
-              <th className="p-4 text-left whitespace-nowrap">Back Name</th>
+              <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
               <th className="p-4 text-left whitespace-nowrap">UAN Number</th>
@@ -94,7 +94,7 @@ const EmployeeTable = () => {
                 <td className="pl-4 py-3">{emp.Address}</td>
                 <td className="pl-4 py-3">{emp.Department}</td>
                 <td className="pl-4 py-3">{emp.Designation}</td>
-                <td className="pl-4 py-3">{emp.Bank_Name}</td>
+                <td className="pl-4 py-3">{emp.Back_Name}</td>
                 <td className="pl-4 py-3">{emp.Bank_Account}</td>
                 <td className="pl-4 py-3">{emp.IFSC_Code}</td>
                 <td className="pl-4 py-3">{emp.UAN_number}</td>

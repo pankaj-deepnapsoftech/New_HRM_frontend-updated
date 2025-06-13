@@ -167,8 +167,8 @@ const EmpDashboard = () => {
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white p-6 rounded-md w-[90%] max-w-xl shadow-md relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/40">
+          <div className="bg-white p-6 rounded-md w-[80%] max-w-xl shadow-md relative">
             <button
               onClick={() => {
                 setShowModal(false);
@@ -183,60 +183,66 @@ const EmpDashboard = () => {
               {editMode ? "Edit Employee" : "Add New Employee"}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-3">
+              <label className="text-md font-semibold text-gray-600">Full Name</label>
               <input
                 type="text"
                 name="fname"
-                placeholder="Full Name"
+                // placeholder="name"
                 value={formData.fname}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
+                  <label className="text-md font-semibold text-gray-600">Department</label>
               <input
                 type="text"
                 name="department"
-                placeholder="Department"
+                // placeholder="Department"
                 value={formData.department}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
+                  <label className="text-md font-semibold text-gray-600">Designation</label>
               <input
                 type="text"
                 name="designation"
-                placeholder="Designation"
+                // placeholder="Designation"
                 value={formData.designation}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
+                  <label className="text-md font-semibold text-gray-600">Emp-Code</label>
               <input
                 type="text"
                 name="empCode"
-                placeholder="Employee Code"
+                // placeholder="Employee Code"
                 value={formData.empCode}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+               className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
+                  <label className="text-md font-semibold text-gray-600">Salary</label>
               <input
                 type="number"
                 name="salary"
-                placeholder="Salary"
+                // placeholder="Salary"
                 value={formData.salary}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
+                  <label className="text-md font-semibold text-gray-600">Full Name</label>
               <input
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
-              <div className="flex justify-end space-x-2">
+              <div className="flex justify-center space-x-2">
 
                 <button
                   type="submit"

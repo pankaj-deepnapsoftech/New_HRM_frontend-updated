@@ -8,7 +8,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
   const fieldsOrder = [
     "Emp_id",
     "Address",
-    "Bank_Name",
+    "Back_Name",
     "Bank_Account",
     "Bank_Proof",
     "Department",
