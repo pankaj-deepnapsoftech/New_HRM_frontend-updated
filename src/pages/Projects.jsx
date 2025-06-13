@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import Select from "react-select";
-import {
-  useGetAllProjectsQuery,
-  useAddProjectMutation,
-} from "@/service/Projects.Service";
-import { useGetAllUsersQuery } from "@/service/User.services";
-import { IoIosClose } from "react-icons/io";
+import React, { useState } from 'react';
+import Select from 'react-select';
+import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Projects.Service';
+import { useGetAllUsersQuery } from '@/service/User.services';
+import { IoIosClose } from 'react-icons/io';
 
-const Projects = () => {
+const Projects = ({searchQuery}) => {
   const { data, refetch, isLoading } = useGetAllProjectsQuery();
   const [addProject] = useAddProjectMutation();
   const { data: userData } = useGetAllUsersQuery();
@@ -68,21 +65,40 @@ const Projects = () => {
   };
 
   const projects = data?.data?.projectDetails || [];
- const filteredProjects = projects.filter((project) => {
-  if (!startDate && !endDate) return true;
+ const filteredProjects = projects
+  .filter((project) => {
+    // Filter by date range
+    if (!startDate && !endDate) return true;
 
-  const projectStart = new Date(project.startDate);
-  const projectEnd = new Date(project.endDate);
-  const filterStart = startDate ? new Date(startDate) : null;
-  const filterEnd = endDate ? new Date(endDate) : null;
+    const projectStart = new Date(project.startDate);
+    const projectEnd = new Date(project.endDate);
+    const filterStart = startDate ? new Date(startDate) : null;
+    const filterEnd = endDate ? new Date(endDate) : null;
 
-  if (filterStart && projectEnd < filterStart) return false;
-  if (filterEnd && projectStart > filterEnd) return false;
+    if (filterStart && projectEnd < filterStart) return false;
+    if (filterEnd && projectStart > filterEnd) return false;
 
-  return true;
-});
+    return true;
+  })
+  .filter((project) => {
+    if (!searchQuery) return true;
+
+    const lowerQuery = searchQuery.toLowerCase();
+
+    const nameMatch = project.name?.toLowerCase().includes(lowerQuery);
+    const managerMatch = project.manager?.fullName
+      ?.toLowerCase()
+      .includes(lowerQuery);
+    const membersMatch = project.members
+      ?.map((m) => m.fullName?.toLowerCase())
+      .some((name) => name?.includes(lowerQuery));
+
+    return nameMatch || managerMatch || membersMatch;
+  });
+
 
   if (isLoading) return <p className="text-center py-10">Loading projects…</p>;
+
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-4xl mx-auto mt-10">
@@ -259,15 +275,9 @@ const Projects = () => {
                         .join(", ")
                     : "N/A"}
                 </td>
-                <td className="p-3 px-2">
-                  {project.manager?.fullName || "N/A"}
-                </td>
-                <td className="p-3 px-2">
-                  {new Date(project.startDate).toLocaleDateString()}
-                </td>
-                <td className="p-3 px-2">
-                  {new Date(project.endDate).toLocaleDateString()}
-                </td>
+                <td className="p-3 px-2">{project.manager?.fullName || "N/A"}</td>
+                <td className="p-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
+                <td className="p-3 px-2">{new Date(project.endDate).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

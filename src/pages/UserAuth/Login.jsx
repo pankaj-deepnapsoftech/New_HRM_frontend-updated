@@ -35,13 +35,18 @@ const EmpLogin = () => {
 
       try {
         const res = await SignIn(totalData).unwrap();
-        toast.success(res.message);
-        navigate("/");
-        resetForm();
-        dispatch(setLoginState());
+
+        if (res?.message) {
+          toast.success(res.message);
+          dispatch(setLoginState());
+          resetForm();
+          navigate("/user");
+        } else {
+          toast.error("Login successful, but unexpected response.");
+        }
       } catch (error) {
-        console.log(error);
-        toast.error(error?.data?.message || "Login failed");
+        const errorMessage = error?.data?.message || "Login failed";
+        toast.error(errorMessage);
       }
     },
   });
@@ -156,7 +161,7 @@ const EmpLogin = () => {
             Login as an Admin
           </NavLink>
         </div>
-      </div>        
+      </div>
     </div>
   );
 };

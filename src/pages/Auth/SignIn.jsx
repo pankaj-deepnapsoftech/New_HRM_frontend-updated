@@ -53,7 +53,7 @@ const Login = () => {
         <h2 className="text-3xl font-bold text-gray-800 mb-1 text-center">
           Welcome Back Admin!
         </h2>
-        <p className="text-center mb-6">Please Login to access your account</p>
+        <p className="text-center mb-8">Please Login to access your account</p>
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label className="text-gray-700 block mb-1" htmlFor="username">
@@ -137,10 +137,10 @@ const Login = () => {
           </NavLink>
         </p>
         <NavLink
-          to="/register"
+          to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
         >
-          Sign Up As an employee
+          Login As an employee
         </NavLink>
       </div>
     </div>

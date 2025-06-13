@@ -77,16 +77,14 @@ const MainDashboardPage = () => {
   //   { label: "Absent", value: "0", bg: "from-rose-400 to-red-400" },
   // ];
   const data = {
-    labels: ['Employees', 'On Leave', 'Contractors', 'Interns'],
+    labels: ['IT','SALES'],
     datasets: [
       {
         label: 'HRM Distribution',
-        data: [120, 15, 30, 10],
+        data: [120, 60],
         backgroundColor: [
-          '#34d399', 
-          '#f87171', 
-          '#fbbf24', 
-          '#a78bfa', 
+          '#36A2EB', 
+          '#FF6384', 
         ],
         borderWidth: 1,
       },
@@ -115,9 +113,9 @@ const MainDashboardPage = () => {
   };
 
   return (
-    <main className="flex-1 font-sans p-10">
+    <main className="flex-1 font-sans  p-4 md:p-8">
      
-  <section className="flex flex-col sm:flex-row justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
+  <section className="flex flex-col sm:flex-row  justify-between items-center bg-gradient-to-r from-[#82479e] to-[#B19CD9] text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl">
     <div>
       <p className="text-sm mb-2 opacity-80">{today}</p>
       <h1 className="text-4xl font-extrabold mb-1">
@@ -136,36 +134,40 @@ const MainDashboardPage = () => {
 
 
   {/* Cards and Chart in Single Row */}
-  <div className=" bg-gray-100 flex flex-col lg:flex-row gap-2  pt-3 md:pt-10  md:pb-6 items-start">
-    <div className="flex  flex-wrap  gap-2 md:gap-4 ml-3 md:ml-2 ">
+  <div className="w-full bg-gray-100 flex flex-col lg:flex-row gap-4 pt-4 md:pt-10 md:pb-6 px-3 md:px-6">
+  {/* Cards Container */}
+  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
     {statsCards.map((card, i) => (
       <div
         key={i}
-        className="bg-white rounded-sm shadow-md w-80 h-48 md:w-60 md:h-40 p-6 mb-3 flex flex-col gap-5 text-gray-800"
+        className="bg-white rounded-sm shadow-md w-full sm:w-72 md:w-60 h-auto p-5 flex flex-col gap-4 text-gray-800"
       >
         <div className="flex justify-between items-start">
           <div>
             <p className="text-lg md:text-md text-gray-700 font-semibold">{card.label}</p>
-            <p className="text-xl pt-5 md:pt-1 font-bold">{card.value}</p>
+            <p className="text-2xl pt-2 md:pt-1 font-bold">{card.value}</p>
           </div>
           <div className={`w-8 h-8 flex items-center justify-center rounded-full ${card.iconBg}`}>
             <span className={`text-lg ${card.iconColor}`}>{card.icon}</span>
           </div>
         </div>
         <p className={`text-sm ${card.changeColor}`}>
-          {card.change} <span className=" text-gray-400">vs prev. 28 days</span>
+          {card.change} <span className="text-gray-400">vs prev. 28 days</span>
         </p>
       </div>
     ))}
   </div>
 
   {/* Pie Chart Container */}
-  <div className="w-2xl md:w-full lg:w-auto lg:mr-4 mt-4 lg:mt-0">
-    <div className="flex max-w-sm bg-white p-6 md:p-2 rounded-sm shadow-md">
-      <Pie data={data} options={options} />
+  <div className="w-full lg:w-[350px] mt-6 lg:mt-0 lg:ml-auto">
+    <div className="flex justify-center bg-white p-4 rounded-sm shadow-md">
+      <div className="w-full max-w-xs md:max-w-sm">
+        <Pie data={data} options={options} />
+      </div>
     </div>
   </div>
 </div>
+
     </main>
   );
 };

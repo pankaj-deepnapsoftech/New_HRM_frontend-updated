@@ -39,7 +39,7 @@ const AdvanceMoneyRequest = () => {
 <div className="text-center">
             <button
               type="submit"
-              className="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-2 rounded-md transition"
+              className="bg-gradient-to-br from-gray-400 to-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-2 rounded-md transition"
             >
               Submit Request
             </button>

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegBell, FaBars, FaRegUser } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
-import UserMenuBar from "@/Drawer/UserDetails/UserMenuBar";
-import NotificationModal from "@/Drawer/NotificationModal";
+import UserMenuBar from "@/Drawer/AdminDetails/UserMenuBar";
+import NotificationModal from "@/Drawer/AdminDetails/NotificationModal";
 
 const Header = () => {
+  const[searchQuery,setSearchQuery] =useState("")
   const [showUserMenuBar, setShowUserMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
@@ -38,10 +39,12 @@ const Header = () => {
           <input
             type="search"
             placeholder="Type to Search..."
-            className="w-full pl-4 pr-12 py-1.5 border border-gray-300 bg-gray-50  focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-full"
+            value={searchQuery}
+            onChange={(e)=>setSearchQuery(e.target.value)}
+            className="w-full pl-4 pr-12 py-1.5 border border-gray-300 bg-gray-50  focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-full"
           />
 
-          <div className="absolute top-1 bottom-1 right-1 bg-gray-300 px-2 py-2 flex items-center justify-center rounded-full cursor-pointer">
+          <div onClick={()=>console.log("searching for:",searchQuery)} className="absolute top-1 bottom-1 right-1 bg-gray-300 px-2 py-2 flex items-center justify-center rounded-full cursor-pointer">
             <IoSearchSharp className="text-gray-500 text-lg hover:scale-110" />
           </div>
         </div>
@@ -62,16 +65,19 @@ const Header = () => {
             </div>
           )}
         </div>
+      <div className="relative w-12 h-12">
+  {/* Custom Pulse Ring */}
+  <span className="absolute inset-0 rounded-full border-4 border-purple-300 animate-customPulse z-0"></span>
 
-        <div className="relative">
-          <div
-            onClick={() => setShowUserMenuBar(!showUserMenuBar)}
-            className="bg-[#906eb1fd] text-gray-100 font-semibold text-xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
-          >
-            {userInitials}
-          </div>
-        </div>
-      </div>
+  {/* Avatar */}
+  <div
+    onClick={() => setShowUserMenuBar(!showUserMenuBar)}
+    className="relative z-10 bg-[#8a759efd] text-white font-semibold text-xl w-12 h-12 rounded-full flex items-center justify-center cursor-pointer"
+  >
+    {userInitials}
+  </div>
+ </div>
+</div>
 
       <UserMenuBar
         setShowUserMenuBar={setShowUserMenuBar}

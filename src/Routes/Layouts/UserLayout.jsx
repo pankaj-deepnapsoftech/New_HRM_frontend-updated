@@ -48,7 +48,7 @@ const UserLayout = () => {
         </div>
 
         {/* Main Page Content */}
-        <div class="h-screen overflow-scroll  overflow-y-auto px-4 py-2">
+        <div class="h-screen overflow-y-auto px-4 py-2">
           <Outlet />
         </div>
       </div>
