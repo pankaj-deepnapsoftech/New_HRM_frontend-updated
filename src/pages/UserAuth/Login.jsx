@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import { useSignInMutation } from "@/service/Auth.services";
 import { useDispatch } from "react-redux";
 import { setLoginState } from "@/store/slice/AuthSlice";
-import { LuEyeClosed } from "react-icons/lu";
-import { MdRemoveRedEye } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const EmpLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -112,7 +112,7 @@ const EmpLogin = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-2.5 text-sky-600 text-xl"
                 >
-                  {showPassword ? <MdRemoveRedEye /> : <LuEyeClosed />}
+                  {showPassword ?<IoEyeOutline/> :  <FaRegEyeSlash/>}
                 </button>
               </div>
               {touched.password && errors.password && (

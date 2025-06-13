@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaHome, FaBars, FaFingerprint } from "react-icons/fa";
+import React, { useEffect, useRef } from "react";
+import { FaHome, FaFingerprint } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import {  RiMoneyRupeeCircleFill, RiSecurePaymentLine } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
@@ -71,7 +71,7 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
     element:<UserDashboard/>
   },
   {
-    text:<span className="text-[1rem] font-semibold" font-semibold>View Attendance</span>,
+    text:<span className="text-[1rem] font-semibold">View Attendance</span>,
      icon: <FaFingerprint className="text-2xl" />,
    path:"/user/attendance",
    element:<UserAttendance/>

@@ -14,7 +14,7 @@ const EmpAccountSettings = ({ isOpen, onClose }) => {
           <aside className="w-full md:w-1/3 border-r border-gray-200 pr-6">
             <div className="flex flex-col items-center text-center">
               <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
+                src="/profilee.png"
                 alt="Profile"
                 className="w-24 h-24 rounded-full mb-2"
               />
