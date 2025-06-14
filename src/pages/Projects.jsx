@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Projects.Service';
-import { useGetAllUsersQuery } from '@/service/User.services';
+
+import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
 import { IoIosClose } from 'react-icons/io';
 
-const Projects = ({searchQuery}) => {
+const Projects = ({ searchQuery }) => {
   const { data, refetch, isLoading } = useGetAllProjectsQuery();
   const [addProject] = useAddProjectMutation();
-  const { data: userData } = useGetAllUsersQuery();
-  const users = userData || [];
+
+  const { data: empData } = useGetAllEmpDataQuery();
+  const employees = empData?.data || [];
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -22,11 +24,6 @@ const Projects = ({searchQuery}) => {
     description: "",
   });
 
-  // Convert users to react-select format
-  const userOptions = users.map((user) => ({
-    label: user.fullName,
-    value: user._id,
-  }));
 
   const getSelectedOptions = (options, selectedIds) =>
     options.filter((option) => selectedIds.includes(option.value));
@@ -65,39 +62,55 @@ const Projects = ({searchQuery}) => {
   };
 
   const projects = data?.data?.projectDetails || [];
- const filteredProjects = projects
-  .filter((project) => {
-    // Filter by date range
-    if (!startDate && !endDate) return true;
+  const filteredProjects = projects
+    .filter((project) => {
+      // Filter by date range
+      if (!startDate && !endDate) return true;
 
-    const projectStart = new Date(project.startDate);
-    const projectEnd = new Date(project.endDate);
-    const filterStart = startDate ? new Date(startDate) : null;
-    const filterEnd = endDate ? new Date(endDate) : null;
+      const projectStart = new Date(project.startDate);
+      const projectEnd = new Date(project.endDate);
+      const filterStart = startDate ? new Date(startDate) : null;
+      const filterEnd = endDate ? new Date(endDate) : null;
 
-    if (filterStart && projectEnd < filterStart) return false;
-    if (filterEnd && projectStart > filterEnd) return false;
+      if (filterStart && projectEnd < filterStart) return false;
+      if (filterEnd && projectStart > filterEnd) return false;
 
-    return true;
-  })
-  .filter((project) => {
-    if (!searchQuery) return true;
+      return true;
+    })
+    .filter((project) => {
+      if (!searchQuery) return true;
 
-    const lowerQuery = searchQuery.toLowerCase();
+      const lowerQuery = searchQuery.toLowerCase();
 
-    const nameMatch = project.name?.toLowerCase().includes(lowerQuery);
-    const managerMatch = project.manager?.fullName
-      ?.toLowerCase()
-      .includes(lowerQuery);
-    const membersMatch = project.members
-      ?.map((m) => m.fullName?.toLowerCase())
-      .some((name) => name?.includes(lowerQuery));
+      const nameMatch = project.name?.toLowerCase().includes(lowerQuery);
+      const managerMatch = project.manager?.fullName
+        ?.toLowerCase()
+        .includes(lowerQuery);
+      const membersMatch = project.members
+        ?.map((m) => m.fullName?.toLowerCase())
+        .some((name) => name?.includes(lowerQuery));
 
-    return nameMatch || managerMatch || membersMatch;
-  });
+      return nameMatch || managerMatch || membersMatch;
+    });
 
 
   if (isLoading) return <p className="text-center py-10">Loading projects…</p>;
+
+  
+  const managerOptions = employees
+    .filter((emp) => emp.designation.toLowerCase() === "manager" )
+    .map((emp) => ({
+      label: emp.fname,
+      value: emp._id,
+    }));
+
+  const memberOptions = employees
+    .filter((emp) => emp.designation.toLowerCase() !== "manager")
+    .map((emp) => ({
+      label: emp.fname,
+      value: emp._id,
+    }));
+
 
 
   return (
@@ -161,17 +174,17 @@ const Projects = ({searchQuery}) => {
                 required
               />
 
-              {/* Select Manager (React-Select) */}
+
+              {/* Select Manager */}
               <div>
                 <label className="block font-medium text-sm mb-1">
                   Select Manager <span className="text-red-500">*</span>
                 </label>
                 <Select
                   name="manager"
-                  options={userOptions}
+                  options={managerOptions}
                   value={
-                    userOptions.find((opt) => opt.value === formData.manager) ||
-                    null
+                    managerOptions.find((opt) => opt.value === formData.manager) || null
                   }
                   onChange={(selected) =>
                     setFormData((prev) => ({
@@ -183,7 +196,7 @@ const Projects = ({searchQuery}) => {
                 />
               </div>
 
-              {/* Select Members (React-Select Multi) */}
+              {/*  Select Members */}
               <div>
                 <label className="block font-medium text-sm mb-1">
                   Select Members <span className="text-red-500">*</span>
@@ -191,8 +204,10 @@ const Projects = ({searchQuery}) => {
                 <Select
                   isMulti
                   name="members"
-                  options={userOptions}
-                  value={getSelectedOptions(userOptions, formData.members)}
+                  options={memberOptions}
+                  value={memberOptions.filter((opt) =>
+                    formData.members.includes(opt.value)
+                  )}
                   onChange={(selected) =>
                     setFormData((prev) => ({
                       ...prev,
@@ -263,16 +278,15 @@ const Projects = ({searchQuery}) => {
             {filteredProjects.map((project, idx) => (
               <tr
                 key={project._id}
-                className={`border-b border-gray-200 ${
-                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                }`}
+                className={`border-b border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                  }`}
               >
                 <td className="p-3 px-2">{project.name}</td>
                 <td className="p-3 px-2">
                   {project.members?.length > 0
                     ? project.members
-                        .map((m) => m.fullName || "Unknown")
-                        .join(", ")
+                      .map((m) => m.fullName || "Unknown")
+                      .join(", ")
                     : "N/A"}
                 </td>
                 <td className="p-3 px-2">{project.manager?.fullName || "N/A"}</td>
