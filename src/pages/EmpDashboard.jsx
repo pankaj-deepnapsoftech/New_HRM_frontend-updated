@@ -233,7 +233,7 @@ const EmpDashboard = () => {
                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                 required
               />
-                  <label className="text-md font-semibold text-gray-600">Full Name</label>
+                  <label className="text-md font-semibold text-gray-600">Date Of Joining</label>
               <input
                 type="date"
                 name="date"
