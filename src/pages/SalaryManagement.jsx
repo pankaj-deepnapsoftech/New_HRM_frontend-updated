@@ -17,12 +17,12 @@ export default function SalaryManagement() {
         <table className="w-5xl md:min-w-full table-auto bg-white ">
           <thead className="bg-gray-200 text-gray-700 uppercase text-sm ">
             <tr>
-              <th className=" py-4 font-[600] px-2">Full Name</th>
-              <th className=" py-4 font-[600] px-2">Emp-Code</th>
-              <th className=" py-4 font-[600] px-2">New Monthly Salary</th>
-              <th className=" py-4 font-[600] px-2">Present Days</th>
-              <th className=" py-4 font-[600] px-2">Leaves</th>
-              <th className=" py-4 font-[600] px-2">Calculated Salary</th>
+              <th className=" py-4 font-[600] pr-6">Full Name</th>
+              <th className=" py-4 font-[600] pr-6">Emp-Code</th>
+              <th className=" py-4 font-[600] pr-6">New Monthly Salary</th>
+              <th className=" py-4 font-[600] pr-6">Present Days</th>
+              <th className=" py-4 font-[600] pr-6">Leaves</th>
+              <th className=" py-4 font-[600] pr-6">Calculated Salary</th>
             </tr>
           </thead>
           <tbody>

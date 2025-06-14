@@ -1,9 +1,10 @@
-import React from "react";
+import LocationModal from "@/Drawer/Employees/LocationModal";
+import React, { useState } from "react";
 
 const employees_report = [
   {
     name: "Nitish",
-    location: "View Location",
+    location: "Sector 45, Faridabad, Haryana 121003",
     department: "IT",
     designation: "Developer",
     salary: 5000,
@@ -14,7 +15,8 @@ const employees_report = [
   },
   {
     name: "abhi",
-    location: "View Location",
+    location:
+      "Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016",
     department: "IT",
     designation: "Manager",
     salary: 12000,
@@ -25,7 +27,7 @@ const employees_report = [
   },
   {
     name: "komal",
-    location: "View Location",
+    location: "B8 Noida, Sector 132 Noida",
     department: "sale",
     designation: "manager",
     salary: 10000,
@@ -36,7 +38,7 @@ const employees_report = [
   },
   {
     name: "Deepak",
-    location: "View Location",
+    location: "A/12 block-A South Extension,Delhi",
     department: "Sales",
     designation: "Boss",
     salary: 10,
@@ -48,12 +50,18 @@ const employees_report = [
 ];
 
 const EmployeesReports = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("");
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       <div className="bg-gray-300 text text-center  mx-4 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees Report</h2>
       </div>
-
+      <div className="flex justify-end mr-10 mb-4">
+        <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+          EXPORT
+        </button>
+      </div>
       <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md mx-4 md:mx-6 mb-8">
         <table className=" min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
@@ -67,9 +75,6 @@ const EmployeesReports = () => {
               <th className=" font-[600] py-4 px-2">Present Days</th>
               <th className=" font-[600] py-4 px-4">Gate Pass</th>
               <th className=" font-[600] py-4 px-4">Status</th>
-              <th className="flex justify-end px-2 mt-5"><button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
-          EXPORT
-        </button></th>
             </tr>
           </thead>
           <tbody>
@@ -81,19 +86,32 @@ const EmployeesReports = () => {
                 }`}
               >
                 <td className="py-3 px-3">{emp.name}</td>
-                <td className="py-3 px-4 font-[400] text-blue-600 hover:underline cursor-pointer">
-                  {emp.location}
+                <td
+                  className="py-3 px-4 font-[400] text-sm text-blue-600 hover:underline cursor-pointer"
+                  onClick={() => {
+                    setSelectedLocation(emp.location);
+                    setShowModal(true);
+                  }}
+                >
+                  View Location
                 </td>
                 <td className="py-3 px-4 capitalize">{emp.department}</td>
                 <td className="py-3 px-4 capitalize">{emp.designation}</td>
                 <td className="py-3 px-4">${emp.salary.toLocaleString()}</td>
-                <td className="py-3 px-4">
-                  {emp.assets.length > 0 ? emp.assets.join(", ") : "None"}
+                <td className="py-3 px-4 space-x-2">
+                  {emp.assets.map((asset, i) => (
+                    <span
+                      key={i}
+                      className="text-blue-700 bg-blue-200 px-2 py-1 rounded-full text-xs"
+                    >
+                      {asset}
+                    </span>
+                  ))}
                 </td>
                 <td className="py-3 px-4">{emp.presentDays}</td>
                 <td className="py-3 px-4">{emp.gatePass}</td>
                 <td
-                  className={` my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit 
+                  className={` my-5 py-4 px-3 mr-2 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit 
     ${
       emp.status === "active"
         ? "bg-green-100 text-green-700"
@@ -107,6 +125,11 @@ const EmployeesReports = () => {
           </tbody>
         </table>
       </div>
+      <LocationModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        location={selectedLocation}
+      />
     </div>
   );
 };

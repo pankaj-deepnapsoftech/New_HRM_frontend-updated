@@ -1,28 +1,29 @@
-import React from 'react';
-import { IoIosClose } from 'react-icons/io';
+import React from "react";
+import { IoIosClose } from "react-icons/io";
+const EarningDetails = ({ showEarningDetails, setShowEarningDetails, employee }) => {
+  if (!employee) return null;
 
-const earningDetails = {
-  basic: 12000,
-  fund: 1440,
-  incentives: 500,
-  reimbursement: 0,
-  advance: 0,
-  total: 11060,
-};
-const EarningDetails = ({ showEarningDetails, setshowEarningDetails }) => {
-  if (!earningDetails) return null;
+  const earningDetails = {
+    basic: 12000,
+    fund: 1440,
+    incentives: 500,
+    reimbursement: 0,
+    advance: 0,
+    total: 11060,
+  };
+
   return (
     <section className={`${showEarningDetails ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full flex items-center justify-center bg-black/40  transition-opacity duration-500 ease-in-out`}>
-      <div className="bg-white rounded-xl w-[70vw] h-[60vh] p-8 shadow-2xl animate-fade-in border border-gray-200">
+      <div className="bg-white rounded-xl w-lg p-8 shadow-2xl animate-fade-in border border-gray-200">
         <button
           className="text-gray-600 flex cursor-pointer justify-end w-full hover:text-red-600"
-          onClick={() => setshowEarningDetails(false)}
+          onClick={() => setShowEarningDetails(false)}
           aria-label="Close"
         >
           <IoIosClose size={36} />
         </button>
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6 border-b pb-3">
-          Earning Details
+          Earning Details - {employee?.fname}
         </h2>
 
         <div className="space-y-4 text-base text-gray-700">
@@ -53,9 +54,7 @@ const EarningDetails = ({ showEarningDetails, setshowEarningDetails }) => {
           </div>
         </div>
       </div>
-
     </section>
   );
 };
-
-export default EarningDetails;
+export default EarningDetails
