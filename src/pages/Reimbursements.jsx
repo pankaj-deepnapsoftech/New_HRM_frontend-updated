@@ -23,16 +23,16 @@ const[open,setOpen]=useState(false)
 
       <div className="overflow-x-auto scrollbar-visible shadow-lg rounded-t-sm md:rounded-xl mt-10">
         <table className="min-w-full bg-white divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-200 text-gray-700  uppercase text-xs">
+          <thead className="bg-gray-200 text-[15px] text-gray-700  uppercase text-xs">
             <tr>
-              <th className="px-6 py-5 text-left">Name</th>
-              <th className="px-6 py-5 text-left">Department</th>
-              <th className="px-6 py-5 text-left">Designation</th>
-              <th className="px-6 py-5 text-left">Reimbursements</th>
-              <th className="px-6 py-5 text-left">Add Reimbursements</th>
+              <th className="px-4 py-3 whitespace-nowrap text-left">Name</th>
+              <th className="px-4 py-3 whitespace-nowrap text-left">Department</th>
+              <th className="px-4 py-3 whitespace-nowrap text-left">Designation</th>
+              <th className="px-4 py-3 whitespace-nowrap text-left">Reimbursements</th>
+              <th className="px-4 py-3 whitespace-nowrap text-left">Add Reimbursements</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y text-[16px] divide-gray-100">
             {employees.map((emp, index) => (
               <tr key={index}  className={`border-b border-gray-300 ${index %2 == 0? "bg-white":"bg-gray-100"}`}>
                 <td className="px-6 py-5 font-medium text-gray-900">{emp.name}</td>

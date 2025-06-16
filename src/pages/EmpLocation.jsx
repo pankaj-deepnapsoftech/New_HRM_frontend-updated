@@ -24,24 +24,24 @@ const EmpLocation = data?.data  ;
          <table className=" w-3xl md:min-w-full shadow-lg border border-gray-200 text-sm">
            <thead className="bg-gray-200 text-gray-700">
              <tr>
-               <th className="p-4  text-left">Full Name</th>
-               <th className="p-2 text-left">Email</th>
-               <th className="p-2 text-left">Location</th>
-               <th className="p-2 text-left">Department</th>
-               <th className="p-2 text-left">Designation</th>
-               <th className="p-2 text-left">Emp-Code</th>
+               <th className= " py-2 px-2  text-left text-[16px]">Full Name</th>
+               <th className="   py-2 px-2 text-left text-[16px]">Email</th>
+               <th className="   py-2 px-2 text-left text-[16px]">Location</th>
+               <th className= " py-2 px-2  text-left text-[16px]">Department</th>
+               <th className= " py-2 px-2  text-left text-[16px]">Designation</th>
+               <th className="   py-2 px-2 text-left text-[16px]">Emp-Code</th>
              </tr>
            </thead>
            <tbody>
              {EmpLocation?.map((emp, idx) => (
                
                <tr key={idx} className={`border-t border-gray-200 ${idx%2==0? "bg-white":'bg-gray-100'}`}>
-                 <td className="p-2 px-3">{emp.fname}</td>
-                 <td className="p-2 px-3">{emp.email}</td>
-                 <td className="p-2 px-3  hover:underline" >{emp.location}</td>
-                 <td className="p-2 px-3">{emp.department}</td>
-                 <td className="p-2 px-3">{emp.designation}</td>
-                 <td className="p-2 px-3">{emp.empCode}</td>
+                 <td className="p-2 px-2 py-3 text-[17px]">{emp.fname}</td>
+                 <td className="p-2 px-2 py-3 text-[17px]">{emp.email}</td>
+                 <td className="p-2 px-2 py-3 text-[17px]  hover:underline" >{emp.location}</td>
+                 <td className="p-2 px-2 py-3 text-[17px]">{emp.department}</td>
+                 <td className="p-2 px-2 py-3 text-[17px]">{emp.designation}</td>
+                 <td className="p-2 px-2 py-3 text-[17px]">{emp.empCode}</td>
                  
                </tr>
              ))}

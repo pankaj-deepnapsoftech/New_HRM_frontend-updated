@@ -114,7 +114,8 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                             { label: 'Aadhaar Number', name: 'aadhaar' },
                             { label: 'PAN Card', name: 'pancard' },
                             { label: 'Driving Licence', name: 'Driving_Licance' },
-                            { label: 'Voter ID', name: 'Voter_Id' }
+                            { label: 'Voter ID', name: 'Voter_Id' },
+                            { label: 'Photo', name: 'photo' }
                         ].map(({ label, name }) => (
                             <div key={name}>
                                 <label className="block mb-1 font-medium text-gray-700">{label}</label>

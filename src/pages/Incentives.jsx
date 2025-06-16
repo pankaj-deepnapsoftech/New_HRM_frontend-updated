@@ -46,7 +46,7 @@ const Incentives = () => {
 
       <div className="overflow-x-auto  shadow-lg rounded-t-sm md:rounded-2xl mt-10 mx-2 md:mx-10">
         <table className="min-w-full bg-white divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-200 text-gray-700  uppercase text-xs ">
+          <thead className="bg-gray-200 text-gray-700   uppercase text-md ">
             <tr>
               <th className="px-6 py-5 text-left">Name</th>
               <th className="px-6 py-5 text-left">Department</th>
@@ -55,7 +55,7 @@ const Incentives = () => {
               <th className="px-6 py-5 text-left">Add Incentives</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y text-[16px] divide-gray-100">
             {employees.map((emp, index) => (
               <tr
                 key={index}
@@ -63,7 +63,7 @@ const Incentives = () => {
                   index % 2 == 0 ? "bg-white" : "bg-gray-100"
                 }`}
               >
-                <td className="px-6 py-5 font-medium text-gray-900">
+                <td className="px-6 py-5 font-medium text-gray-700">
                   {emp.name}
                 </td>
                 <td className="px-6 py-5 text-gray-500 capitalize">

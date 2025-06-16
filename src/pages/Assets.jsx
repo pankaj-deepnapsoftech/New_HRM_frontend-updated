@@ -1,37 +1,11 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import {
+  useGetAllEmpDataQuery,
+  useAddAssetMutation, // ✅ Use the correct hook
+} from "@/service/EmpData.services";
 
-const initialEmployees = [
-  {
-    name: "Nitish",
-    dept: "IT",
-    designation: "Developer",
-    assets: ["Bike", "keyboard"],
-    selectedAsset: "",
-  },
-  {
-    name: "abhi",
-    dept: "IT",
-    designation: "Manager",
-    assets: [],
-    selectedAsset: "",
-  },
-  {
-    name: "komal",
-    dept: "sale",
-    designation: "manager",
-    assets: ["Laptop"],
-    selectedAsset: "",
-  },
-  {
-    name: "Deepak",
-    dept: "Sales",
-    designation: "Boss",
-    assets: [],
-    selectedAsset: "",
-  },
-];
-
+// Available assets to pick from
 const assetOptions = ["Laptop", "Bike", "Mobile", "Headset"];
 const formattedAssetOptions = assetOptions.map((asset) => ({
   value: asset,
@@ -45,40 +19,49 @@ const customStyles = {
     borderColor: state.isFocused ? "#8B5CF6" : "#D1D5DB",
     boxShadow: state.isFocused ? "0 0 0 2px rgba(139, 92, 246, 0.5)" : "none",
     fontSize: "0.875rem",
-    "&:hover": {
-      borderColor: "#8B5CF6",
-    },
+    "&:hover": { borderColor: "#8B5CF6" },
   }),
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected
-      ? "#E9D5FF" // purple-200 for selected
+      ? "#E9D5FF"
       : state.isFocused
-        ? "#F3E8FF" // purple-100 for hover
-        : "white",
+      ? "#F3E8FF"
+      : "white",
     color: "black",
     cursor: "pointer",
   }),
 };
 
 const AssignAssets = () => {
-  const [employees, setEmployees] = useState(initialEmployees);
+  const { data, isLoading, refetch } = useGetAllEmpDataQuery();
+  const [addAsset] = useAddAssetMutation(); // ✅ Use correct hook
 
-  const handleAssetChange = (index, selected) => {
-    const updated = [...employees];
-    updated[index].selectedAsset = selected ? selected.value : "";
-    setEmployees(updated);
+  const [selectedAssets, setSelectedAssets] = useState({});
+
+  const handleAssetChange = (empId, selected) => {
+    setSelectedAssets((prev) => ({
+      ...prev,
+      [empId]: selected ? selected.value : "",
+    }));
   };
 
-  const handleAddAsset = (index) => {
-    const updated = [...employees];
-    const selected = updated[index].selectedAsset;
-    if (selected && !updated[index].assets.includes(selected)) {
-      updated[index].assets.push(selected);
-      updated[index].selectedAsset = "";
-      setEmployees(updated);
+  const handleAddAsset = async (emp) => {
+    const selected = selectedAssets[emp._id];
+    if (!selected) return;
+
+    try {
+      await addAsset({ id: emp._id, asset: selected }).unwrap();
+      setSelectedAssets((prev) => ({ ...prev, [emp._id]: "" }));
+      refetch();
+    } catch (err) {
+      console.error("Failed to add asset:", err);
     }
   };
+
+  if (isLoading) return <p className="text-center py-10">Loading employees…</p>;
+
+  const employees = data?.data || [];
 
   return (
     <div className="p-4 bg-gray-50 rounded shadow-md max-w-4xl mx-auto mt-10">
@@ -98,16 +81,16 @@ const AssignAssets = () => {
             </tr>
           </thead>
           <tbody>
-            {employees.map((emp, index) => (
+            {employees.map((emp) => (
               <tr
-                key={index}
+                key={emp._id}
                 className="border-b border-gray-300 hover:bg-gray-50"
               >
-                <td className="p-2">{emp.name}</td>
-                <td className="p-2">{emp.dept}</td>
-                <td className="p-2">{emp.designation}</td>
-                <td className="p-2 space-x-2">
-                  {emp.assets.map((asset, i) => (
+                <td className="p-2 text-[16px]">{emp.fname || "N/A"}</td>
+                <td className="p-2 text-[16px]">{emp.department || "N/A"}</td>
+                <td className="p-2 text-[16px]">{emp.designation || "N/A"}</td>
+                <td className="p-2 text-[16px] space-x-2">
+                  {(emp.assets || []).map((asset, i) => (
                     <span
                       key={i}
                       className="text-blue-700 bg-blue-200 px-2 py-1 rounded-full text-xs"
@@ -116,15 +99,20 @@ const AssignAssets = () => {
                     </span>
                   ))}
                 </td>
-                <td className="p-3">
+                <td className="p-3 ">
                   <Select
                     options={formattedAssetOptions}
                     value={
-                      emp.selectedAsset
-                        ? { value: emp.selectedAsset, label: emp.selectedAsset }
+                      selectedAssets[emp._id]
+                        ? {
+                            value: selectedAssets[emp._id],
+                            label: selectedAssets[emp._id],
+                          }
                         : null
                     }
-                    onChange={(selected) => handleAssetChange(index, selected)}
+                    onChange={(selected) =>
+                      handleAssetChange(emp._id, selected)
+                    }
                     placeholder="Assign or add assets"
                     styles={{
                       ...customStyles,
@@ -134,13 +122,11 @@ const AssignAssets = () => {
                     menuPosition="absolute"
                     isClearable
                   />
-
-
                 </td>
                 <td className="p-3">
                   <button
-                    onClick={() => handleAddAsset(index)}
-                    className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4 py-1 rounded hover:bg-gradient-to-tl"
+                    onClick={() => handleAddAsset(emp)}
+                    className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4  text-[17px] py-1 rounded hover:bg-gradient-to-tl"
                   >
                     ADD
                   </button>

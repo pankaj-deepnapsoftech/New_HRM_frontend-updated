@@ -6,7 +6,7 @@ import LocationModal from "@/Drawer/Employees/LocationModal";
 const EmployeesReports = () => {
   const { data, isLoading } = useGetAllEmpDataQuery();
   const employees = data?.data || [];
-const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   if (isLoading) {
     return (
@@ -40,14 +40,14 @@ const [showModal, setShowModal] = useState(false);
         <h2 className="text-xl font-[500]">Employees Report</h2>
       </div>
       <div className="flex justify-end mr-10 mb-4">
-        <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+        <button onClick={handleExport} className="bg-gradient-to-br from-slate-400 to bg-slate-600 cursor-pointer hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
           EXPORT
         </button>
       </div>
       <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md mx-4 md:mx-6 mb-8">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
-            <tr className="bg-gray-200 text-gray-700 text-left">
+            <tr className="bg-gray-200 whitespace-nowrap text-gray-700 text-left">
               <th className="font-[600] py-4 px-4">Name</th>
               <th className="font-[600] py-4 px-4">Location</th>
               <th className="font-[600] py-4 px-4">Department</th>
@@ -56,18 +56,10 @@ const [showModal, setShowModal] = useState(false);
               <th className="font-[600] py-4 px-4">Assets</th>
               <th className="font-[600] py-4 px-2">Present Days</th>
               <th className="font-[600] py-4 px-4">Gate Pass</th>
-              <th className="font-[600] py-4 px-4">Status</th>
-              <th className="flex justify-end px-2 mt-5">
-                <button
-                  onClick={handleExport}
-                  className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200"
-                >
-                  EXPORT
-                </button>
-              </th>
+              <th className="font-[600] py-4 px-4">Status</th>  
             </tr>
           </thead>
-          <tbody>
+          <tbody className="whitespace-nowrap">
             {employees.length === 0 ? (
               <tr>
                 <td colSpan={10} className="text-center py-6 text-gray-500">
@@ -78,9 +70,8 @@ const [showModal, setShowModal] = useState(false);
               employees.map((emp, index) => (
                 <tr
                   key={emp._id}
-                  className={`border-b border-gray-200 ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
+                  className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
                 >
                   <td className="py-3 px-3">{emp.fname || "NA"}</td>
                   <td className="py-3 px-4 font-[400] text-blue-600 hover:underline cursor-pointer">
@@ -107,11 +98,10 @@ const [showModal, setShowModal] = useState(false);
                     {emp.gatePassRequests ? emp.gatePassRequests.length : "NA"}
                   </td>
                   <td
-                    className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${
-                      emp.Empstatus === "active"
+                    className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${emp.Empstatus === "active"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
-                    }`}
+                      }`}
                   >
                     {emp.Empstatus || "NA"}
                   </td>

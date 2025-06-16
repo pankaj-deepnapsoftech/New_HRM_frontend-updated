@@ -43,7 +43,7 @@ const ShowCauseNotices = () => {
           </thead>
           <tbody>
             {showCauseData.map((entry, index) => (
-              <tr key={index} className="border-b border-gray-300 text-gray-600">
+              <tr key={index} className="border-b text-[16px] whitespace-nowrap border-gray-300 text-gray-600">
                 <td className="px-4 py-3">{entry.complaintBy}</td>
                 <td className="px-4 py-3">{entry.department}</td>
                 <td className="px-4 py-3">{entry.reason}</td>

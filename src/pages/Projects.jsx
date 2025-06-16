@@ -4,9 +4,12 @@ import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Project
 
 import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
 import { IoIosClose } from 'react-icons/io';
+import Pagination from './Pagination/Pagination';
 
 const Projects = ({ searchQuery }) => {
-  const { data, refetch, isLoading } = useGetAllProjectsQuery();
+
+  const [page, setPage] = useState(1)
+  const { data, refetch, isLoading } = useGetAllProjectsQuery({page});
   const [addProject] = useAddProjectMutation();
 
   const { data: empData } = useGetAllEmpDataQuery();
@@ -55,7 +58,7 @@ const Projects = ({ searchQuery }) => {
         description: "",
       });
       setShowModal(false);
-      refetch();
+      refetch(page);
     } catch (error) {
       console.error("Error creating project:", error);
     }
@@ -297,6 +300,7 @@ const Projects = ({ searchQuery }) => {
           </tbody>
         </table>
       </div>
+      <Pagination page={page} setPage={setPage} hasNextPage={filteredProjects.length === 10} />
     </div>
   );
 };

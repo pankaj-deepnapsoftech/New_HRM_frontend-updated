@@ -9,15 +9,20 @@ import {
 } from "@/service/Employee.services";
 import { FaEnvelope } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Pagination from "./Pagination/Pagination";
 
 const EmployeeTable = () => {
-  const { data, refetch } = useEpmGetDataQuery();
-  const [EmpDeleteData] = useEpmDeleteDataMutation();
+
 
   const [showDetailModal, setShowDetailModal] = useState(false);
   const[selectedEmployee, setSelectedEmployee]=useState(null)
   const [showForm, setShowFrom] = useState(false);
   const [editTable, setEdittable] = useState(null);
+  const [page , setPage] = useState(1)
+
+  const { data, refetch } = useEpmGetDataQuery({page});
+  const [EmpDeleteData] = useEpmDeleteDataMutation();
+
   const employee = data?.data;
 
   const hanldedelete = async (_id) => {
@@ -36,9 +41,9 @@ const EmployeeTable = () => {
   };
   useEffect(() => {
     if (!showForm) {
-      refetch();
+      refetch(page);
     }
-  }, [refetch, showForm]);
+  }, [refetch, showForm,page]);
 
   return (
     <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
@@ -198,6 +203,7 @@ const EmployeeTable = () => {
         showForm={showForm}
         editTable={editTable}
       />
+      <Pagination page={page} setPage={setPage}  hasNextPage={employee?.length === 10} /> 
     </div>
   );
 };

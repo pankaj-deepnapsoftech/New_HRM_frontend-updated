@@ -19,7 +19,7 @@ const AllLeaves = () => {
       </div>
 
       <div className="overflow-x-scroll scrollbar-visible rounded-t-xl shadow-md mx-4 md:mx-6 mb-8 mt-8">
-        <table className="w-5xl md:min-w-full table-auto bg-white">
+        <table className="w-5xl md:min-w-full whitespace-nowrap table-auto bg-white">
           <thead className="bg-gray-200 text-gray-700 text-sm uppercase">
             <tr>
               <th className="px-3 py-3 text-left">Name</th>
@@ -40,20 +40,20 @@ const AllLeaves = () => {
                   index % 2 === 0 ? "bg-white" : "bg-gray-50"
                 }`}
               >
-                <td className="px-3 py-4">
+                <td className="px-3 py-2 text-[17px]">
                   {emp.fname || emp.fullName || "NA"}
                 </td>
-                <td className="px-3 py-4">{emp.email || "NA"}</td>
-                <td className="px-3 py-4">{emp.department || "NA"}</td>
-                <td className="px-3 py-4">{emp.designation || "NA"}</td>
-                <td className="px-3 py-4">{emp.empCode || "NA"}</td>
-                <td className="px-3 py-4">
+                <td className="px-3 py-2 text-[17px]">{emp.email || "NA"}</td>
+                <td className="px-3 py-2 text-[17px]">{emp.department || "NA"}</td>
+                <td className="px-3 py-2 text-[17px]">{emp.designation || "NA"}</td>
+                <td className="px-3 py-2 text-[17px]">{emp.empCode || "NA"}</td>
+                <td className="px-3 py-2 text-[17px]">
                   {emp.halfDayLeavesThisMonth ?? "NA"}
                 </td>
-                <td className="px-3 py-4">
+                <td className="px-3 py-2 text-[17px]">
                   {emp.fullDayLeavesThisMonth ?? "NA"}
                 </td>
-                <td className="px-3 py-4">{"NA"}</td>
+                <td className="px-3 py-2 text-[17px]">{"NA"}</td>
               </tr>
             ))}
           </tbody>

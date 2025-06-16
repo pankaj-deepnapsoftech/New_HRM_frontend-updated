@@ -13,9 +13,9 @@ const EmpApi = Api.injectEndpoints({
       providesTags: ["Employee"],
     }),
     EpmGetData: build.query({
-      query() {
+      query({page = 1}) {
         return {
-          url: "/employee/employees",
+          url: `/employee/employees?page=${page}&limit=10`,
           method: "GET",
         };
       },

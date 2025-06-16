@@ -44,7 +44,7 @@ const EmpPayslip = () => {
 
       <div className="overflow-x-auto scrollbar-visible bg-white shadow-lg rounded-t-xl mt-10">
         <table className="w-6xl md:w-full divide-y divide-gray-200 text-sm sm:text-base">
-          <thead className="bg-gray-200 text-gray-700 uppercase text-xs sm:text-sm">
+          <thead className="bg-gray-200 whitespace-nowrap text-gray-700 uppercase text-xs sm:text-sm">
             <tr>
               <th className="px-6 py-3 text-left">Full Name</th>
               <th className="px-6 py-3 text-left">Department</th>
@@ -56,14 +56,14 @@ const EmpPayslip = () => {
               <th className="px-6 py-3 text-left">Generate Pay Slip</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y whitespace-nowrap divide-gray-100">
             {employees.map((emp, index) => {
               const fund = calculateFund(emp.actualSalary);
               const total = calculateTotal(emp.actualSalary, emp.workingDays).toFixed(2);
 
               return (
                 <tr key={index} className={`border-t border-gray-200 ${index %2 == 0? "bg-white":"bg-gray-100"}`} >
-                  <td className="px-6 py-3 font-medium text-gray-900">{emp.name}</td>
+                  <td className="px-6 py-3 font-medium text-gray-700">{emp.name}</td>
                   <td className="px-6 py-3 text-gray-600 capitalize">{emp.department}</td>
                   <td className="px-6 py-3 text-gray-700 capitalize">{emp.designation}</td>
                   <td className="px-6 py-3">₹{emp.actualSalary.toFixed(2)}</td>
