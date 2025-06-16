@@ -1,3 +1,5 @@
+//projects.jsx
+
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Projects.Service';
@@ -288,11 +290,11 @@ const Projects = ({ searchQuery }) => {
                 <td className="p-3 px-2">
                   {project.members?.length > 0
                     ? project.members
-                      .map((m) => m.fullName || "Unknown")
+                      .map((m) => m.fname || "Unknown")
                       .join(", ")
                     : "N/A"}
                 </td>
-                <td className="p-3 px-2">{project.manager?.fullName || "N/A"}</td>
+                <td className="p-3 px-2">{project.manager?.fname || "N/A"}</td>
                 <td className="p-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
                 <td className="p-3 px-2">{new Date(project.endDate).toLocaleDateString()}</td>
               </tr>

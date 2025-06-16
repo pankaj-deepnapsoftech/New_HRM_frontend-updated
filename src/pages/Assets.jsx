@@ -86,10 +86,10 @@ const AssignAssets = () => {
                 key={emp._id}
                 className="border-b border-gray-300 hover:bg-gray-50"
               >
-                <td className="p-2 text-[16px]">{emp.fname || "N/A"}</td>
-                <td className="p-2 text-[16px]">{emp.department || "N/A"}</td>
-                <td className="p-2 text-[16px]">{emp.designation || "N/A"}</td>
-                <td className="p-2 text-[16px] space-x-2">
+                <td className="p-2">{emp.fname || "N/A"}</td>
+                <td className="p-2">{emp.department || "N/A"}</td>
+                <td className="p-2">{emp.designation || "N/A"}</td>
+                <td className="p-2 space-x-2">
                   {(emp.assets || []).map((asset, i) => (
                     <span
                       key={i}
@@ -126,7 +126,7 @@ const AssignAssets = () => {
                 <td className="p-3">
                   <button
                     onClick={() => handleAddAsset(emp)}
-                    className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4  text-[17px] py-1 rounded hover:bg-gradient-to-tl"
+                    className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4 py-1 rounded hover:bg-gradient-to-tl"
                   >
                     ADD
                   </button>
