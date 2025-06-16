@@ -54,8 +54,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#E9D5FF" // purple-200 for selected
       : state.isFocused
-      ? "#F3E8FF" // purple-100 for hover
-      : "white",
+        ? "#F3E8FF" // purple-100 for hover
+        : "white",
     color: "black",
     cursor: "pointer",
   }),
@@ -134,6 +134,8 @@ const AssignAssets = () => {
                     menuPosition="absolute"
                     isClearable
                   />
+
+
                 </td>
                 <td className="p-3">
                   <button

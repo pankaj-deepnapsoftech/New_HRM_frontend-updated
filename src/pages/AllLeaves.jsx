@@ -1,58 +1,25 @@
 import React from "react";
-
-const employees = [
-  {
-    fullName: "Nitish Prajapati",
-    email: "nitishprajapati987@gmail.com",
-    department: "IT",
-    role: "Developer",
-    empCode: "NIT51130226",
-    halfLeaves: 0,
-    fullLeaves: 1,
-    presentLeave: "N/A",
-  },
-  {
-    fullName: "abhi pjpt",
-    email: "abhi123@gmail.com",
-    department: "IT",
-    role: "Manager",
-    empCode: "ABH74130227",
-    halfLeaves: 0,
-    fullLeaves: 0,
-    presentLeave: "N/A",
-  },
-  {
-    fullName: "komal singh",
-    email: "komal@gmail.com",
-    department: "sale",
-    role: "manager",
-    empCode: "KOM98740307",
-    halfLeaves: 1,
-    fullLeaves: 0,
-    presentLeave: "N/A",
-  },
-  {
-    fullName: "Deepak Sharma",
-    email: "dsharma1010@gmail.com",
-    department: "Sales",
-    role: "Boss",
-    empCode: "DEE23890101",
-    halfLeaves: 0,
-    fullLeaves: 0,
-    presentLeave: "N/A",
-  },
-];
+// ✅ Import RTK hook
+import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 
 const AllLeaves = () => {
+  // ✅ Fetch employees from empdata API
+  const { data: empResponse = {}, isLoading } = useGetAllEmpDataQuery();
+  const employees = empResponse.data || [];
+
+  // ✅ Show loader if needed
+  if (isLoading) {
+    return <p className="text-center py-10">Loading employee leaves…</p>;
+  }
+
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10 ">
-      <div className="bg-gray-300 text-gray-600 font-semibold text-xl py-4 px-6 mx-4 md:mx-6 text-center  rounded-lg shadow-md shadow-gray-400">
+      <div className="bg-gray-300 text-gray-600 font-semibold text-xl py-4 px-6 mx-4 md:mx-6 text-center rounded-lg shadow-md shadow-gray-400">
         Employee All Leave
       </div>
-      
-      <div className="overflow-x-scroll scrollbar-visible rounded-t-xl shadow-md mx-4 md:mx-6 mb-8 mt-8">
 
-        <table className=" w-5xl md:min-w-full table-auto bg-white">
+      <div className="overflow-x-scroll scrollbar-visible rounded-t-xl shadow-md mx-4 md:mx-6 mb-8 mt-8">
+        <table className="w-5xl md:min-w-full table-auto bg-white">
           <thead className="bg-gray-200 text-gray-700 text-sm uppercase">
             <tr>
               <th className="px-3 py-3 text-left">Name</th>
@@ -68,19 +35,25 @@ const AllLeaves = () => {
           <tbody className="text-gray-700 text-sm">
             {employees.map((emp, index) => (
               <tr
-                 key={index}
-                className={`border-t border-gray-200  ${
-                  index % 2 == 0 ? "bg-white" : "bg-gray-50"
+                key={emp._id || index}
+                className={`border-t border-gray-200 ${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
                 }`}
               >
-                <td className="px-3 py-4">{emp.fullName}</td>
-                <td className="px-3 py-4">{emp.email}</td>
-                <td className="px-3 py-4">{emp.department}</td>
-                <td className="px-3 py-4">{emp.role}</td>
-                <td className="px-3 py-4">{emp.empCode}</td>
-                <td className="px-3 py-4">{emp.halfLeaves}</td>
-                <td className="px-3 py-4">{emp.fullLeaves}</td>
-                <td className="px-3 py-4">{emp.presentLeave}</td>
+                <td className="px-3 py-4">
+                  {emp.fname || emp.fullName || "NA"}
+                </td>
+                <td className="px-3 py-4">{emp.email || "NA"}</td>
+                <td className="px-3 py-4">{emp.department || "NA"}</td>
+                <td className="px-3 py-4">{emp.designation || "NA"}</td>
+                <td className="px-3 py-4">{emp.empCode || "NA"}</td>
+                <td className="px-3 py-4">
+                  {emp.halfDayLeavesThisMonth ?? "NA"}
+                </td>
+                <td className="px-3 py-4">
+                  {emp.fullDayLeavesThisMonth ?? "NA"}
+                </td>
+                <td className="px-3 py-4">{"NA"}</td>
               </tr>
             ))}
           </tbody>

@@ -1,14 +1,18 @@
-import React from 'react';
-import Select from 'react-select';
-import { useFormik } from 'formik';
-import EmpLeaveSchema from '@/Validation/EmpLeaveBalance/EmpLeaveSchema';
+import React from "react";
+import Select from "react-select";
+import { useFormik } from "formik";
+import EmpLeaveSchema from "@/Validation/EmpLeaveBalance/EmpLeaveSchema";
+import {
+  useGetAllEmpDataQuery,
+  useUpdateEmpDataMutation,
+} from "@/service/EmpData.services";
 
 const EmpLeaveBalance = () => {
-  const employees = [
-    { value: "john", label: "John Doe" },
-    { value: "jane", label: "Jane Smith" },
-    { value: "alice", label: "Alice Johnson" },
-  ];
+  // ✅ Use RTK Query hook to fetch empdata
+  const { data: empResponse = {}, isLoading } = useGetAllEmpDataQuery();
+  const employees = empResponse.data || [];
+
+  const [updateEmpData] = useUpdateEmpDataMutation();
 
   const leaveTypes = [
     { value: "full", label: "Full-Day" },
@@ -29,15 +33,15 @@ const EmpLeaveBalance = () => {
       padding: "2px 4px",
       fontSize: "0.95rem",
       transition: "all 0.2s ease-in-out",
-      '&:hover': { borderColor: "#8B5CF6" },
+      "&:hover": { borderColor: "#8B5CF6" },
     }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isSelected
         ? "#C084FC"
         : state.isFocused
-        ? "#E9D5FF"
-        : "white",
+          ? "#E9D5FF"
+          : "white",
       color: "black",
       cursor: "pointer",
     }),
@@ -60,12 +64,41 @@ const EmpLeaveBalance = () => {
       days: "",
     },
     validationSchema: EmpLeaveSchema,
-    onSubmit: (values) => {
-      alert(
-        `Leave balance ${values.action.value}d for ${values.employee.label} (${values.leaveType.label}) by ${values.days} days.`
-      );
+    onSubmit: async (values) => {
+      try {
+        const empId = values.employee.value;
+        const leaveField =
+          values.leaveType.value === "full"
+            ? "fullDayLeavesThisMonth"
+            : "halfDayLeavesThisMonth";
+        const change = parseFloat(values.days);
+        const isIncrement = values.action.value === "increase" ? 1 : -1;
+
+        const selectedEmp = employees.find((e) => e._id === empId);
+        const current = selectedEmp?.[leaveField] || 0;
+        const newCount = Math.max(current + isIncrement * change, 0);
+
+        // ✅ Use RTK Query to update
+        await updateEmpData({
+          id: empId,
+          [leaveField]: newCount,
+        }).unwrap();
+
+        alert("Leave balance updated successfully!");
+        formik.resetForm();
+      } catch (err) {
+        console.error("Update failed:", err);
+        alert("Something went wrong, check console.");
+      }
     },
   });
+
+  if (isLoading) return <p>Loading employees...</p>;
+
+  const employeeOptions = employees.map((emp) => ({
+    value: emp._id,
+    label: emp.fname || "Unnamed",
+  }));
 
   return (
     <div className="bg-gray-100 flex items-center justify-center pt-20 md:pt-10 p-5">
@@ -74,12 +107,11 @@ const EmpLeaveBalance = () => {
           Employee Leave Balance
         </h2>
         <form onSubmit={formik.handleSubmit} className="space-y-6">
-          {/* Employee */}
           <div>
             <label className="block font-medium text-gray-700 mb-2">Employee</label>
             <Select
               name="employee"
-              options={employees}
+              options={employeeOptions}
               value={formik.values.employee}
               onChange={(value) => formik.setFieldValue("employee", value)}
               onBlur={() => formik.setFieldTouched("employee", true)}
@@ -91,7 +123,6 @@ const EmpLeaveBalance = () => {
             )}
           </div>
 
-          {/* Leave Type */}
           <div>
             <label className="block font-medium text-gray-700 mb-2">Leave Type</label>
             <Select
@@ -108,7 +139,6 @@ const EmpLeaveBalance = () => {
             )}
           </div>
 
-          {/* Action */}
           <div>
             <label className="block font-medium text-gray-700 mb-2">Action</label>
             <Select
@@ -125,7 +155,6 @@ const EmpLeaveBalance = () => {
             )}
           </div>
 
-          {/* Days */}
           <div>
             <label htmlFor="days" className="block font-medium text-gray-700 mb-2">
               Days

@@ -6,7 +6,7 @@ import {
   useDeleteEmpDataMutation,
 } from "@/service/EmpData.services";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
-import { IoIosClose, IoMdClose } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
 
 const EmpDashboard = () => {
   const { data, refetch, isLoading } = useGetAllEmpDataQuery();
@@ -26,6 +26,8 @@ const EmpDashboard = () => {
     empCode: "",
     salary: "",
     date: "",
+    location: "",
+    email: "", // ✅ Only in form
   });
 
   const handleChange = (e) => {
@@ -48,6 +50,8 @@ const EmpDashboard = () => {
         empCode: "",
         salary: "",
         date: "",
+        location: "",
+        email: "", // ✅ Clear too
       });
       setShowModal(false);
       setEditMode(false);
@@ -84,13 +88,15 @@ const EmpDashboard = () => {
           onClick={() => {
             setShowModal(true);
             setEditMode(false);
-            setFormData({ 
+            setFormData({
               fname: "",
               department: "",
               designation: "",
               empCode: "",
               salary: "",
               date: "",
+              location: "",
+              email: "", // ✅ Reset
             });
           }}
           className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
@@ -108,6 +114,7 @@ const EmpDashboard = () => {
               <th className="p-3 text-left">Designation</th>
               <th className="p-3 text-left">Emp Code</th>
               <th className="p-3 text-left">Salary</th>
+              <th className="p-3 text-left">Location</th>
               <th className="p-3 text-left">Date</th>
               <th className="p-3 text-left">Actions</th>
             </tr>
@@ -116,14 +123,14 @@ const EmpDashboard = () => {
             {employees.map((emp, idx) => (
               <tr
                 key={emp._id}
-                className={`border-b border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                  }`}
+                className={`border-b border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
               >
                 <td className="p-3 px-2">{emp.fname}</td>
                 <td className="p-3 px-2">{emp.department}</td>
                 <td className="p-3 px-2">{emp.designation}</td>
                 <td className="p-3 px-2">{emp.empCode}</td>
                 <td className="p-3 px-2">{emp.salary}</td>
+                <td className="p-3 px-2">{emp.location || "NA"}</td>
                 <td className="p-3 px-2">
                   {new Date(emp.date).toLocaleDateString()}
                 </td>
@@ -146,6 +153,8 @@ const EmpDashboard = () => {
                         empCode: emp.empCode,
                         salary: emp.salary,
                         date: emp.date.split("T")[0],
+                        location: emp.location || "",
+                        email: emp.email || "", // ✅ Include for edit
                       });
                       setSelectedEmployee(emp);
                       setShowModal(true);
@@ -167,7 +176,7 @@ const EmpDashboard = () => {
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white p-6 rounded-md w-[80%] max-w-xl shadow-md relative">
             <button
               onClick={() => {
@@ -183,67 +192,87 @@ const EmpDashboard = () => {
               {editMode ? "Edit Employee" : "Add New Employee"}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-3">
-              <label className="text-md font-semibold text-gray-600">Full Name</label>
               <input
                 type="text"
                 name="fname"
-                // placeholder="name"
+                placeholder="Full Name"
                 value={formData.fname}
                 onChange={handleChange}
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300"
                 required
               />
-                  <label className="text-md font-semibold text-gray-600">Department</label>
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 rounded-lg border border-gray-300"
+                required
+              />
+
               <input
                 type="text"
                 name="department"
-                // placeholder="Department"
+                placeholder="Department"
                 value={formData.department}
                 onChange={handleChange}
-                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300"
                 required
               />
-                  <label className="text-md font-semibold text-gray-600">Designation</label>
+
               <input
                 type="text"
                 name="designation"
-                // placeholder="Designation"
+                placeholder="Designation"
                 value={formData.designation}
                 onChange={handleChange}
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300"
                 required
               />
-                  <label className="text-md font-semibold text-gray-600">Emp-Code</label>
+
               <input
                 type="text"
                 name="empCode"
-                // placeholder="Employee Code"
+                placeholder="Employee Code"
                 value={formData.empCode}
                 onChange={handleChange}
-               className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300"
                 required
               />
-                  <label className="text-md font-semibold text-gray-600">Salary</label>
+
               <input
                 type="number"
                 name="salary"
-                // placeholder="Salary"
+                placeholder="Salary"
                 value={formData.salary}
                 onChange={handleChange}
-                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300"
                 required
               />
-                  <label className="text-md font-semibold text-gray-600">Date Of Joining</label>
+
+              <input
+                type="text"
+                name="location"
+                placeholder="Location"
+                value={formData.location}
+                onChange={handleChange}
+                className="w-full p-3 rounded-lg border border-gray-300"
+                required
+              />
+
               <input
                 type="date"
                 name="date"
+                placeholder="Date of Joining"
                 value={formData.date}
                 onChange={handleChange}
-                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                className="w-full p-3 rounded-lg border border-gray-300"
                 required
               />
-              <div className="flex justify-center space-x-2">
 
+              <div className="flex justify-center">
                 <button
                   type="submit"
                   className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
@@ -267,27 +296,28 @@ const EmpDashboard = () => {
               <IoIosClose size={32} />
             </button>
 
-
             <h3 className="text-lg font-bold mb-4">Employee Details</h3>
             <div className="space-y-2 text-sm">
-              {Object.entries(selectedEmployee)
-                .filter(
-                  ([key]) =>
-                    !["_id", "createdAt", "updatedAt", "__v"].includes(key)
-                )
-                .map(([key, value]) => (
-                  <div
-                    key={key}
-                    className="flex justify-between border-b py-2"
-                  >
-                    <span className="font-medium capitalize">{key}:</span>
-                    <span>
-                      {key === "date"
-                        ? new Date(value).toLocaleDateString()
-                        : value?.toString()}
-                    </span>
-                  </div>
-                ))}
+              {[
+                { label: "Name", value: selectedEmployee.fname },
+                { label: "Department", value: selectedEmployee.department },
+                { label: "Designation", value: selectedEmployee.designation },
+                { label: "Emp Code", value: selectedEmployee.empCode },
+                { label: "Salary", value: selectedEmployee.salary },
+                { label: "Location", value: selectedEmployee.location || "NA" },
+                {
+                  label: "Date",
+                  value: new Date(selectedEmployee.date).toLocaleDateString(),
+                },
+              ].map(({ label, value }) => (
+                <div
+                  key={label}
+                  className="flex justify-between border-b py-2"
+                >
+                  <span className="font-medium">{label}:</span>
+                  <span>{value}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
