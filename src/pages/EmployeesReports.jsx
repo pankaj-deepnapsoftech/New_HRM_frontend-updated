@@ -37,7 +37,11 @@ const EmployeesReports = () => {
       <div className="bg-gray-300 text text-center mx-4 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees Report</h2>
       </div>
-
+      <div className="flex justify-end mr-10 mb-4">
+        <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+          EXPORT
+        </button>
+      </div>
       <div className="overflow-x-scroll scrollbar-visible rounded-t-sm md:rounded-t-xl shadow-md mx-4 md:mx-6 mb-8">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
@@ -115,6 +119,11 @@ const EmployeesReports = () => {
           </tbody>
         </table>
       </div>
+      <LocationModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        location={selectedLocation}
+      />
     </div>
   );
 };

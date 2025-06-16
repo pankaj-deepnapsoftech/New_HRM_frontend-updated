@@ -1,37 +1,37 @@
 import React, { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io"; // Close icon
 
-const LocationModal = ({ isOpen, onClose, location }) => {
+const LocationModal = ({ showModal,setShowModal, location }) => {
   const modalRef = useRef();
 
   // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose();
+        setShowModal();
       }
     };
 
-    if (isOpen) {
+    if (showModal) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [showModal, setShowModal]);
 
-  if (!isOpen) return null;
+  if (!showModal) return null;
 
   return (
     <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
       <div
         ref={modalRef}
-        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative"
+        className="bg-white rounded-lg shadow-lg p-3 px-16 relative"
       >
         {/* Close Icon */}
         <button
-          onClick={onClose}
+          onClick={()=>setShowModal(false)}
           className="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
         >
           <IoMdClose size={20} />
