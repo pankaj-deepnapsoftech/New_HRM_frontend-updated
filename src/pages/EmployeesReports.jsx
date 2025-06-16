@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 import * as XLSX from "xlsx";
+import LocationModal from "@/Drawer/Employees/LocationModal";
 
 const EmployeesReports = () => {
   const { data, isLoading } = useGetAllEmpDataQuery();
   const employees = data?.data || [];
-
+const [showModal, setShowModal] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("");
   if (isLoading) {
     return (
       <div className="text-center py-10 text-lg font-medium">Loading report...</div>
