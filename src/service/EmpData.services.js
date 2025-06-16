@@ -1,5 +1,5 @@
 // src/service/EmpData.services.js
-import { Api } from "../store/api/api"; 
+import { Api } from "../store/api/api";
 
 export const empApi = Api.injectEndpoints({
   endpoints: (builder) => ({
@@ -20,6 +20,14 @@ export const empApi = Api.injectEndpoints({
         body,
       }),
     }),
+    addAsset: builder.mutation({
+      query: ({ id, asset }) => ({
+        url: `/empdata/${id}/add-asset`,
+        method: "PUT",
+        body: { asset },
+      }),
+    }),
+
     deleteEmpData: builder.mutation({
       query: (id) => ({
         url: `/empdata/${id}`,
@@ -34,4 +42,5 @@ export const {
   useAddEmpDataMutation,
   useUpdateEmpDataMutation,
   useDeleteEmpDataMutation,
+  useAddAssetMutation, 
 } = empApi;
