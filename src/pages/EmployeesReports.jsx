@@ -1,18 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 import * as XLSX from "xlsx";
-import LocationModal from "@/Drawer/Employees/LocationModal";
-
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { toast } from "react-toastify";
+mapboxgl.accessToken = `${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 const EmployeesReports = () => {
+
   const { data, isLoading } = useGetAllEmpDataQuery();
   const employees = data?.data || [];
-  const [showModal, setShowModal] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("");
-  if (isLoading) {
-    return (
-      <div className="text-center py-10 text-lg font-medium">Loading report...</div>
-    );
-  }
+ 
+  const [showMap, setShowMap] = useState(false);
+  const [mapData, setMapData] = useState({
+    lng: 0,
+    lat: 0,
+    place: "",
+  });
+
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+
+  
+  useEffect(() => {
+    if (showMap && mapContainer.current && mapData.lng && mapData.lat) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v12",
+        center: [mapData.lng, mapData.lat],
+        zoom: 12,
+      });
+
+      new mapboxgl.Marker().setLngLat([mapData.lng, mapData.lat]).addTo(map.current);
+
+      return () => map.current?.remove();
+    }
+  }, [showMap, mapData]);
+  const handleLocationClick = async (location) => {
+    try {
+      const query = encodeURIComponent(location);
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${mapboxgl.accessToken}`
+      );
+      const data = await response.json();
+      if (data?.features?.length > 0) {
+        const [lng, lat] = data.features[0].center;
+        setMapData({ lng, lat, place: location });
+        setShowMap(true);
+      } else {
+        toast("Location not found on map.");
+      }
+    } catch (error) {
+      console.error("Error fetching map data:", error);
+    }
+  };
 
   const handleExport = () => {
     const exportData = employees.map((emp) => ({
@@ -56,7 +96,7 @@ const EmployeesReports = () => {
               <th className="font-[600] py-4 px-4">Assets</th>
               <th className="font-[600] py-4 px-2">Present Days</th>
               <th className="font-[600] py-4 px-4">Gate Pass</th>
-              <th className="font-[600] py-4 px-4">Status</th>  
+              <th className="font-[600] py-4 px-4">Status</th>
             </tr>
           </thead>
           <tbody className="whitespace-nowrap">
@@ -74,7 +114,10 @@ const EmployeesReports = () => {
                     }`}
                 >
                   <td className="py-3 px-3">{emp.fname || "NA"}</td>
-                  <td className="py-3 px-4 font-[400] text-blue-600 hover:underline cursor-pointer">
+                  <td
+                    className="p-2 px-3 text-blue-600 hover:underline cursor-pointer"
+                    onClick={() => handleLocationClick(emp.location)}
+                  >
                     {emp.location || "NA"}
                   </td>
                   <td className="py-3 px-4 capitalize">
@@ -86,10 +129,21 @@ const EmployeesReports = () => {
                   <td className="py-3 px-4">
                     {emp.salary ? emp.salary : "NA"}
                   </td>
-                  <td className="py-3 px-4">
-                    {emp.assets && emp.assets.length > 0
-                      ? emp.assets.join(", ")
-                      : "NA"}
+                  <td className=" py-3 px-4">
+                    <div className="flex gap-2 flex-wrap">
+                      {emp.assets?.length > 0 ? (
+                        emp.assets.map((asset, i) => (
+                          <span
+                            key={i}
+                            className="bg-blue-100 text-blue-700 text-xs px-2 py-2 rounded-full"
+                          >
+                            {asset}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-gray-400">None</span>
+                      )}
+                    </div>
                   </td>
                   <td className="py-3 px-4">
                     {emp.attendance ? emp.attendance.length : "NA"}
@@ -99,8 +153,8 @@ const EmployeesReports = () => {
                   </td>
                   <td
                     className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${emp.Empstatus === "active"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
                       }`}
                   >
                     {emp.Empstatus || "NA"}
@@ -111,11 +165,41 @@ const EmployeesReports = () => {
           </tbody>
         </table>
       </div>
-      <LocationModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        location={selectedLocation}
-      />
+      {showMap && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
+        >
+          <div className="relative bg-white p-4 rounded-lg w-[90%] max-w-3xl shadow-xl transform transition-transform duration-300 animate-scaleIn">
+            <h3 className="text-lg font-semibold mb-2">Location: {mapData.place}</h3>
+            <div ref={mapContainer} className="w-full h-96 rounded-lg overflow-hidden shadow-inner" />
+            <button
+              onClick={() => setShowMap(false)}
+              className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-all duration-200"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+     
+      <style >{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease forwards;
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.3s ease forwards;
+        }
+      `}</style>
+    
     </div>
   );
 };

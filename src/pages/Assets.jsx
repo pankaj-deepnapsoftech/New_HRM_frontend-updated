@@ -35,7 +35,7 @@ const customStyles = {
 
 const AssignAssets = () => {
   const { data, isLoading, refetch } = useGetAllEmpDataQuery();
-  const [addAsset] = useAddAssetMutation(); // ✅ Use correct hook
+  const [addAsset] = useAddAssetMutation(); 
 
   const [selectedAssets, setSelectedAssets] = useState({});
 

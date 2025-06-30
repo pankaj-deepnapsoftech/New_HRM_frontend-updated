@@ -333,7 +333,7 @@ const EmpDashboard = () => {
           </div>
         </div>
       )}
-      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 10}/>
+      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 2}/>
     </div>
   );
 };

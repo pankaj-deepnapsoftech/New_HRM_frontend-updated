@@ -13,7 +13,6 @@ import Pagination from "./Pagination/Pagination";
 
 const EmployeeTable = () => {
 
-
   const [showDetailModal, setShowDetailModal] = useState(false);
   const[selectedEmployee, setSelectedEmployee]=useState(null)
   const [showForm, setShowFrom] = useState(false);

@@ -4,9 +4,7 @@ import { Api } from "../store/api/api";
 export const empApi = Api.injectEndpoints({
   endpoints: (builder) => ({
     getAllEmpData: builder.query({
-      query: ({ page = 1 }) => ({
-        url: `/empdata?page=${page}&limit=10`,
-      }),
+      query: () =>  "/empdata",
     }),
     
     
