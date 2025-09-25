@@ -1,18 +1,24 @@
 //projects.jsx
 
-import React, { useState } from 'react';
-import Select from 'react-select';
-import { useGetAllProjectsQuery, useAddProjectMutation } from '@/service/Projects.Service';
-
-import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
-import { IoIosClose } from 'react-icons/io';
-import Pagination from './Pagination/Pagination';
+import React, { useState } from "react";
+import Select from "react-select";
+import {
+  useGetAllProjectsQuery,
+  useAddProjectMutation,
+  useDeleteProjectMutation,
+} from "@/service/Projects.Service";
+import ProjectViewModal from "@/Drawer/Projects/ProjectViewModal";
+import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
+import { IoIosClose } from "react-icons/io";
+import Pagination from "./Pagination/Pagination";
+import { Eye, Trash } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Projects = ({ searchQuery }) => {
-
-  const [page, setPage] = useState(1)
-  const { data, refetch, isLoading } = useGetAllProjectsQuery({page});
+  const [page, setPage] = useState(1);
+  const { data, refetch, isLoading } = useGetAllProjectsQuery({ page });
   const [addProject] = useAddProjectMutation();
+  const [deleteProject] = useDeleteProjectMutation();
 
   const { data: empData } = useGetAllEmpDataQuery();
   const employees = empData?.data || [];
@@ -20,6 +26,8 @@ const Projects = ({ searchQuery }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     manager: "",
@@ -28,7 +36,6 @@ const Projects = ({ searchQuery }) => {
     endDate: "",
     description: "",
   });
-
 
   const getSelectedOptions = (options, selectedIds) =>
     options.filter((option) => selectedIds.includes(option.value));
@@ -61,8 +68,25 @@ const Projects = ({ searchQuery }) => {
       });
       setShowModal(false);
       refetch(page);
+      toast.success("Project created successfully!");
     } catch (error) {
       console.error("Error creating project:", error);
+      toast.error("Failed to create project");
+    }
+  };
+
+  const handleDelete = async (projectId) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this project?")) {
+        await deleteProject(projectId).unwrap();
+        toast.success("Project deleted successfully!");
+        refetch();
+      }
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      toast.error(
+        error?.data?.message || error.message || "Failed to delete project"
+      );
     }
   };
 
@@ -98,12 +122,10 @@ const Projects = ({ searchQuery }) => {
       return nameMatch || managerMatch || membersMatch;
     });
 
-
   if (isLoading) return <p className="text-center py-10">Loading projects…</p>;
 
-  
   const managerOptions = employees
-    .filter((emp) => emp.designation.toLowerCase() === "manager" )
+    .filter((emp) => emp.designation.toLowerCase() === "manager")
     .map((emp) => ({
       label: emp.fname,
       value: emp._id,
@@ -115,8 +137,6 @@ const Projects = ({ searchQuery }) => {
       label: emp.fname,
       value: emp._id,
     }));
-
-
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-4xl mx-auto mt-10">
@@ -179,7 +199,6 @@ const Projects = ({ searchQuery }) => {
                 required
               />
 
-
               {/* Select Manager */}
               <div>
                 <label className="block font-medium text-sm mb-1">
@@ -189,7 +208,9 @@ const Projects = ({ searchQuery }) => {
                   name="manager"
                   options={managerOptions}
                   value={
-                    managerOptions.find((opt) => opt.value === formData.manager) || null
+                    managerOptions.find(
+                      (opt) => opt.value === formData.manager
+                    ) || null
                   }
                   onChange={(selected) =>
                     setFormData((prev) => ({
@@ -277,32 +298,66 @@ const Projects = ({ searchQuery }) => {
               <th className="px-2 py-3 text-left">Manager</th>
               <th className="px-2 py-3 text-left">Start-Date</th>
               <th className="px-2 py-3 text-left">End-Date</th>
+              <th className="px-2 py-3 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
             {filteredProjects.map((project, idx) => (
               <tr
                 key={project._id}
-                className={`border-b border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                  }`}
+                className={`border-b border-gray-200 ${
+                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                }`}
               >
                 <td className="p-3 px-2">{project.name}</td>
                 <td className="p-3 px-2">
                   {project.members?.length > 0
                     ? project.members
-                      .map((m) => m.fname || "Unknown")
-                      .join(", ")
+                        .map((m) => m.fname || "Unknown")
+                        .join(", ")
                     : "N/A"}
                 </td>
                 <td className="p-3 px-2">{project.manager?.fname || "N/A"}</td>
-                <td className="p-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
-                <td className="p-3 px-2">{new Date(project.endDate).toLocaleDateString()}</td>
+                <td className="p-3 px-2">
+                  {new Date(project.startDate).toLocaleDateString()}
+                </td>
+                <td className="p-3 px-2">
+                  {new Date(project.endDate).toLocaleDateString()}
+                </td>
+                <td className="p-3 px-2 flex items-center">
+                  <Eye
+                    className="cursor-pointer hover:text-blue-600 mr-4"
+                    size={18}
+                    onClick={() => {
+                      setShowDetailModal(true);
+                      setSelectedProject(project);
+                    }}
+                    title="View Project"
+                  />
+                  <Trash
+                    className="cursor-pointer hover:text-red-600"
+                    size={18}
+                    onClick={() => handleDelete(project._id)}
+                    title="Delete Project"
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Pagination page={page} setPage={setPage} hasNextPage={filteredProjects.length === 10} />
+
+      <ProjectViewModal
+        showDetailModal={showDetailModal}
+        setShowDetailModal={setShowDetailModal}
+        project={selectedProject}
+      />
+
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={filteredProjects.length === 10}
+      />
     </div>
   );
 };
