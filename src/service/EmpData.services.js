@@ -29,6 +29,13 @@ export const empApi = Api.injectEndpoints({
         body: { asset },
       }),
     }),
+    removeAsset: builder.mutation({
+      query: ({ id, asset }) => ({
+        url: `/empdata/${id}/remove-asset`,
+        method: "PUT",
+        body: { asset },
+      }),
+    }),
 
     deleteEmpData: builder.mutation({
       query: (id) => ({
@@ -44,5 +51,6 @@ export const {
   useAddEmpDataMutation,
   useUpdateEmpDataMutation,
   useDeleteEmpDataMutation,
-  useAddAssetMutation, 
+  useAddAssetMutation,
+  useRemoveAssetMutation,
 } = empApi;
