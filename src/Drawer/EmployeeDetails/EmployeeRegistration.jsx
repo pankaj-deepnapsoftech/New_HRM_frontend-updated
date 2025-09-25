@@ -26,15 +26,24 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
         enableReinitialize: true,
         onSubmit: async (values) => {
             try {
-                
+                // Build FormData, but only append file fields if a new File is selected
                 const formData = new FormData();
                 Object.entries(values).forEach(([key, value]) => {
-                    formData.append(key, value);
+                    const isFileField = ['aadhaar','pancard','Driving_Licance','Voter_Id','Bank_Proof','photo'].includes(key);
+                    if (isFileField) {
+                        if (value && typeof value !== 'string') {
+                            formData.append(key, value);
+                        }
+                        // if it's a string (existing URL/path), skip so backend retains previous file
+                    } else {
+                        formData.append(key, value ?? '');
+                    }
                 });
-                
+
                 if (editTable) {
-                   
-                    await EpmUpdateData(values).unwrap();
+                    // Keep the existing mutation signature by attaching _id onto the FormData object
+                    formData._id = values._id;
+                    await EpmUpdateData(formData).unwrap();
                     toast.success("Employee updated successfully");
                 } else {
                     const res = await EmpAllData(formData).unwrap();
@@ -129,6 +138,19 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                                     onBlur={handleBlur}
                                     className="w-full border border-gray-300 p-2 rounded-md file:bg-indigo-100 file:text-indigo-700 file:px-4 file:py-1 file:rounded-md"
                                 />
+                                {editTable && typeof values[name] === 'string' && values[name] && (
+                                    <div className="mt-2 text-sm text-gray-600 flex items-center gap-2">
+                                        <span>Current file:</span>
+                                        <a
+                                            href={values[name]}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-indigo-600 underline"
+                                        >
+                                            View
+                                        </a>
+                                    </div>
+                                )}
                                 {touched[name] && errors[name] && (
                                     <p className="text-sm text-red-500 mt-1">{errors[name]}</p>
                                 )}
