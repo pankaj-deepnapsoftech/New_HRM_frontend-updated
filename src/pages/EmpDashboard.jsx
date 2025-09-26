@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useGetAllEmpDataQuery,
   useAddEmpDataMutation,
@@ -15,7 +15,7 @@ import Pagination from "./Pagination/Pagination";
 
 const EmpDashboard = () => {
   const [page, setPage] = useState(1);
-  const { data, refetch, isLoading } = useGetAllEmpDataQuery({page});
+  const { data, refetch, isLoading } = useGetAllEmpDataQuery({ page });
   const [addEmpData] = useAddEmpDataMutation();
   const [updateEmpData] = useUpdateEmpDataMutation();
   const [deleteEmpData] = useDeleteEmpDataMutation();
@@ -25,13 +25,39 @@ const EmpDashboard = () => {
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [credModal, setCredModal] = useState(null); // holds employee row
-  const [credForm, setCredForm] = useState({ email: "", password: "", fullName: "", phone: "" });
+  const [credModal, setCredModal] = useState(null);
+  const [credForm, setCredForm] = useState({
+    email: "",
+    password: "",
+    fullName: "",
+    phone: "",
+  });
   const [showPwd, setShowPwd] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "");
-  
-  
+
   const employees = data?.data || [];
+
+  const uniqueDepartments = [
+    ...new Set(employees.map((emp) => emp.department).filter(Boolean)),
+  ];
+
+  const filteredEmployees = employees.filter((emp) => {
+    const matchesSearch =
+      searchQuery === "" ||
+      emp.fname?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.empCode?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.department?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.designation?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.location?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesDepartment =
+      selectedDepartment === "" || emp.department === selectedDepartment;
+
+    return matchesSearch && matchesDepartment;
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -82,8 +108,30 @@ const EmpDashboard = () => {
       <div className="bg-gray-300 text-center py-4 my-8 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employee Dashboard</h2>
       </div>
+      <div className="flex justify-between mb-4 gap-4 flex-wrap">
+        <div className="flex gap-4 flex-wrap flex-1">
+          <input
+            type="text"
+            placeholder="Search Name, Emp Code, Dept, Email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg flex-1 min-w-[250px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
 
-      <div className="flex justify-end mb-4">
+          <select
+            value={selectedDepartment}
+            onChange={(e) => setSelectedDepartment(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg min-w-[150px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          >
+            <option value="">All Departments</option>
+            {uniqueDepartments.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <button
           onClick={() => {
             setShowModal(true);
@@ -95,7 +143,6 @@ const EmpDashboard = () => {
           ADD EMPLOYEE DETAILS
         </button>
       </div>
-
       <div className="overflow-x-auto shadow-lg rounded">
         <table className="w-full min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-200 text-gray-700 uppercase font-semibold">
@@ -113,62 +160,87 @@ const EmpDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {employees.map((emp, idx) => (
-              <tr
-                key={emp._id}
-                className={`border-b  border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
-              >
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.email || "N/A"}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.department}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.designation}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.empCode}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.salary}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{emp.location || "NA"}</td>
-                <td className="pl-4 py-2 px-2 text-[16px]">{new Date(emp.date).toLocaleDateString()}</td>
-                <td className="pl-4 py-2 px-2 text-[16px] flex gap-3 ">
-                  <FaEye
-                    onClick={() => {
-                      setSelectedEmployee(emp);
-                      setShowViewModal(true);
-                    }}
-                    className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
-                    title="View"
-                  />
-                  <FaEdit
-                    onClick={() => {
-                      setSelectedEmployee(emp);
-                      setEditMode(true);
-                      setShowModal(true);
-                    }}
-                    className="text-green-500 cursor-pointer hover:scale-110 transition-transform"
-                    title="Edit"
-                  />
-                  <FaTrash
-                    onClick={() => handleDelete(emp._id)}
-                    className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
-                    title="Delete"
-                  />
-                </td>
-                <td className="pl-4 py-2 px-2 text-[16px]">
-                  <button
-                    onClick={() => {
-                      setCredModal(emp);
-                      setCredForm({ email: emp.email || "", password: "", fullName: emp.fname || "", phone: "" });
-                    }}
-                    className="inline-flex items-center gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-3 py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition"
-                    title="Create login credentials"
-                  >
-                    Create Login
-                  </button>
+            {filteredEmployees.length === 0 ? (
+              <tr>
+                <td colSpan="10" className="text-center py-8 text-gray-500">
+                  {searchQuery || selectedDepartment
+                    ? "No employees found matching your filters"
+                    : "No employees found"}
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredEmployees.map((emp, idx) => (
+                <tr
+                  key={emp._id}
+                  className={`border-b  border-gray-200 ${
+                    idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                  }`}
+                >
+                  <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    {emp.email || "N/A"}
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    {emp.department}
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    {emp.designation}
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">{emp.empCode}</td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">{emp.salary}</td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    {emp.location || "NA"}
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    {new Date(emp.date).toLocaleDateString()}
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px] flex gap-3 ">
+                    <FaEye
+                      onClick={() => {
+                        setSelectedEmployee(emp);
+                        setShowViewModal(true);
+                      }}
+                      className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
+                      title="View"
+                    />
+                    <FaEdit
+                      onClick={() => {
+                        setSelectedEmployee(emp);
+                        setEditMode(true);
+                        setShowModal(true);
+                      }}
+                      className="text-green-500 cursor-pointer hover:scale-110 transition-transform"
+                      title="Edit"
+                    />
+                    <FaTrash
+                      onClick={() => handleDelete(emp._id)}
+                      className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
+                      title="Delete"
+                    />
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    <button
+                      onClick={() => {
+                        setCredModal(emp);
+                        setCredForm({
+                          email: emp.email || "",
+                          password: "",
+                          fullName: emp.fname || "",
+                          phone: "",
+                        });
+                      }}
+                      className="inline-flex items-center gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-3 py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition"
+                      title="Create login credentials"
+                    >
+                      Create Login
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      </div>
-
-   
+      </div>{" "}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white p-6 rounded-md w-[80%] max-w-xl shadow-md relative">
@@ -187,7 +259,6 @@ const EmpDashboard = () => {
               {editMode ? "Edit Employee" : "Add New Employee"}
             </h3>
             <form onSubmit={formik.handleSubmit} className="space-y-3">
-            
               <div>
                 <input
                   type="text"
@@ -198,11 +269,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.fname && formik.errors.fname && (
-                  <div className="text-red-500 text-sm">{formik.errors.fname}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.fname}
+                  </div>
                 )}
               </div>
 
-            
               <div>
                 <input
                   type="email"
@@ -213,11 +285,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.email && formik.errors.email && (
-                  <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.email}
+                  </div>
                 )}
               </div>
 
-              {/* Department */}
               <div>
                 <input
                   type="text"
@@ -228,11 +301,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.department && formik.errors.department && (
-                  <div className="text-red-500 text-sm">{formik.errors.department}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.department}
+                  </div>
                 )}
               </div>
 
-              {/* Designation */}
               <div>
                 <input
                   type="text"
@@ -243,11 +317,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.designation && formik.errors.designation && (
-                  <div className="text-red-500 text-sm">{formik.errors.designation}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.designation}
+                  </div>
                 )}
               </div>
 
-  
               <div>
                 <input
                   type="text"
@@ -258,11 +333,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.empCode && formik.errors.empCode && (
-                  <div className="text-red-500 text-sm">{formik.errors.empCode}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.empCode}
+                  </div>
                 )}
               </div>
 
-    
               <div>
                 <input
                   type="number"
@@ -273,10 +349,11 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.salary && formik.errors.salary && (
-                  <div className="text-red-500 text-sm">{formik.errors.salary}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.salary}
+                  </div>
                 )}
               </div>
-
 
               <div>
                 <input
@@ -288,11 +365,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.location && formik.errors.location && (
-                  <div className="text-red-500 text-sm">{formik.errors.location}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.location}
+                  </div>
                 )}
               </div>
 
-    
               <div>
                 <input
                   type="date"
@@ -302,11 +380,12 @@ const EmpDashboard = () => {
                   className="w-full p-3 rounded-lg border border-gray-300"
                 />
                 {formik.touched.date && formik.errors.date && (
-                  <div className="text-red-500 text-sm">{formik.errors.date}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.date}
+                  </div>
                 )}
               </div>
 
-           
               <div className="flex justify-center">
                 <button
                   type="submit"
@@ -316,12 +395,9 @@ const EmpDashboard = () => {
                 </button>
               </div>
             </form>
-
           </div>
         </div>
       )}
-
-      {/* View Modal */}
       {showViewModal && selectedEmployee && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white p-6 rounded-md w-[90%] max-w-xl shadow-md relative">
@@ -355,7 +431,6 @@ const EmpDashboard = () => {
           </div>
         </div>
       )}
-      {/* Create Login Modal */}
       {credModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white p-6 rounded-md w-[90%] max-w-md shadow-md relative">
@@ -370,7 +445,9 @@ const EmpDashboard = () => {
               <input
                 type="email"
                 value={credForm.email}
-                onChange={(e) => setCredForm((p) => ({ ...p, email: e.target.value }))}
+                onChange={(e) =>
+                  setCredForm((p) => ({ ...p, email: e.target.value }))
+                }
                 placeholder="Email"
                 className="w-full p-3 rounded-lg border border-gray-300"
               />
@@ -378,7 +455,9 @@ const EmpDashboard = () => {
                 <input
                   type={showPwd ? "text" : "password"}
                   value={credForm.password}
-                  onChange={(e) => setCredForm((p) => ({ ...p, password: e.target.value }))}
+                  onChange={(e) =>
+                    setCredForm((p) => ({ ...p, password: e.target.value }))
+                  }
                   placeholder="Password (optional)"
                   className="w-full p-3 pr-10 rounded-lg border border-gray-300"
                 />
@@ -392,10 +471,18 @@ const EmpDashboard = () => {
                   {showPwd ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              <p className="text-xs text-gray-500">Agar password blank hua to temporary password auto-generate hoga.</p>
+              <p className="text-xs text-gray-500">
+                Agar password blank hua to temporary password auto-generate
+                hoga.
+              </p>
             </div>
             <div className="flex justify-end gap-3 mt-5">
-              <button onClick={() => setCredModal(null)} className="px-4 py-2 rounded border border-gray-300">Cancel</button>
+              <button
+                onClick={() => setCredModal(null)}
+                className="px-4 py-2 rounded border border-gray-300"
+              >
+                Cancel
+              </button>
               <button
                 onClick={async () => {
                   try {
@@ -403,11 +490,19 @@ const EmpDashboard = () => {
                       toast.error("Please enter a valid email");
                       return;
                     }
-                    if (credForm.password && (credForm.password.length < 6 || credForm.password.length > 16)) {
+                    if (
+                      credForm.password &&
+                      (credForm.password.length < 6 ||
+                        credForm.password.length > 16)
+                    ) {
                       toast.error("Password must be 6-16 characters");
                       return;
                     }
-                    const res = await createCredentials({ id: credModal._id, email: credForm.email.trim(), password: credForm.password?.trim() }).unwrap();
+                    const res = await createCredentials({
+                      id: credModal._id,
+                      email: credForm.email.trim(),
+                      password: credForm.password?.trim(),
+                    }).unwrap();
                     const pwd = res?.data?.tempPassword;
                     if (pwd) {
                       toast.success(`Temporary password: ${pwd}`);
@@ -417,7 +512,8 @@ const EmpDashboard = () => {
                     setCredModal(null);
                     refetch();
                   } catch (e) {
-                    const msg = e?.data?.message || "Failed to create credentials";
+                    const msg =
+                      e?.data?.message || "Failed to create credentials";
                     toast.error(msg);
                   }
                 }}
@@ -429,7 +525,11 @@ const EmpDashboard = () => {
           </div>
         </div>
       )}
-      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 2}/>
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={filteredEmployees?.length === 2}
+      />
     </div>
   );
 };

@@ -12,17 +12,67 @@ import { toast } from "react-toastify";
 import Pagination from "./Pagination/Pagination";
 
 const EmployeeTable = () => {
-
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const[selectedEmployee, setSelectedEmployee]=useState(null)
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [showForm, setShowFrom] = useState(false);
   const [editTable, setEdittable] = useState(null);
-  const [page , setPage] = useState(1)
+  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
 
-  const { data, refetch } = useEpmGetDataQuery({page});
+  const { data, refetch } = useEpmGetDataQuery({ page });
   const [EmpDeleteData] = useEpmDeleteDataMutation();
 
-  const employee = data?.data;
+  const employee = data?.data || [];
+
+  const highlightSearchTerm = (text, searchTerm) => {
+    if (!searchTerm || !text) return text;
+
+    const regex = new RegExp(
+      `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi"
+    );
+    const parts = text.toString().split(regex);
+
+    return parts.map((part, index) =>
+      regex.test(part) ? (
+        <span key={index}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
+  const uniqueDepartments = [
+    ...new Set(employee.map((emp) => emp.Department).filter(Boolean)),
+  ];
+
+  const filteredEmployees = employee.filter((emp) => {
+    const matchesSearch =
+      searchQuery === "" ||
+      emp.Emp_id?.toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      emp.Address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.Department?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.Designation?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.Back_Name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.Bank_Account?.toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      emp.IFSC_Code?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emp.UAN_number?.toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      emp.salary?.toString().toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesDepartment =
+      selectedDepartment === "" || emp.Department === selectedDepartment;
+
+    return matchesSearch && matchesDepartment;
+  });
 
   const hanldedelete = async (_id) => {
     try {
@@ -38,28 +88,52 @@ const EmployeeTable = () => {
       );
     }
   };
+
   useEffect(() => {
     if (!showForm) {
       refetch(page);
     }
-  }, [refetch, showForm,page]);
+  }, [refetch, showForm, page]);
 
   return (
     <div className="p-1 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
-     
       <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
-       <div className="flex justify-end mb-4 mx-5 md:mx-10">
-        <button
-          onClick={() => {
-            setShowFrom(!showForm);
-            setEdittable(null);
-          }}
-          className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
-        >
-          Add Employee Details
-        </button>
+
+      <div className="flex justify-between mb-4 gap-4 flex-wrap mx-5 md:mx-10">
+        <div className="flex gap-4 flex-wrap flex-1">
+          <input
+            type="text"
+            placeholder="Search Emp ID, Address, Department, Bank Details, Salary..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg flex-1 min-w-[250px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+
+          <select
+            value={selectedDepartment}
+            onChange={(e) => setSelectedDepartment(e.target.value)}
+            className="border border-gray-300 p-2 rounded-lg min-w-[150px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          >
+            <option value="">All Departments</option>
+            {uniqueDepartments.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+
+          <button
+            onClick={() => {
+              setShowFrom(!showForm);
+              setEdittable(null);
+            }}
+            className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
+          >
+            Add Employee Details
+          </button>
+        </div>
       </div>
       <div className="overflow-x-auto rounded-t-sm md:rounded-t-xl shadow-md mx-5 md:mx-10 mb-8 scrollbar-visible">
         <table className="min-w-full shadow-lg border border-gray-200 text-sm">
@@ -81,113 +155,131 @@ const EmployeeTable = () => {
               </th>
               <th className="p-4 text-left whitespace-nowrap">Bank Proof</th>
               <th className="p-4 text-left whitespace-nowrap">Salary</th>
-              {/* <th className="p-4 text-left whitespace-nowrap">Photo</th> */}
               <th className="p-4 text-left whitespace-nowrap">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {employee?.map((emp) => (
-              <tr
-                key={emp._id}
-                className={`border-t border-gray-200 ${
-                  emp._id % 2 === 0 ? "bg-gray-200" : "bg-white"
-                } text-[16px] `}
-              >
-                <td className="pl-4 py-3">{emp.Emp_id}</td>
-                <td className="pl-4 py-3">{emp.Address}</td>
-                <td className="pl-4 py-3">{emp.Department}</td>
-                <td className="pl-4 py-3">{emp.Designation}</td>
-                <td className="pl-4 py-3">{emp.Back_Name}</td>
-                <td className="pl-4 py-3">{emp.Bank_Account}</td>
-                <td className="pl-4 py-3">{emp.IFSC_Code}</td>
-                <td className="pl-4 py-3">{emp.UAN_number}</td>
-                <td className="pl-4 py-3">
-                  <a
-                    href={emp.aadhaar}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View Aadhaar"
-                  >
-                    Aadhaar
-                  </a>
-                </td>
-                <td className="pl-4 py-3">
-                  <a
-                    href={emp.pancard}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View PAN"
-                  >
-                    Pancard
-                  </a>
-                </td>
-                <td className="pl-4 py-3">
-                  <a
-                    href={emp.Voter_Id}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View Voter ID"
-                  >
-                    Voter Id
-                  </a>
-                </td>
-                <td className="pl-4 py-3">
-                  <a
-                    href={emp.Driving_Licance}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View Driving License"
-                  >
-                    Driving Licance
-                  </a>
-                </td>
-                <td className="pl-4 py-3">
-                  <a
-                    href={emp.Bank_Proof}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View Bank Proof"
-                  >
-                    Bank Proof
-                  </a>
-                </td>
-                <td className="pl-4 py-3">{emp.salary}</td>
-
-                {/* <td className="pl-4 py-3">
-                  <a
-                    href={emp.photo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View Bank Proof"
-                  >
-                    Photo
-                  </a>
-                </td> */}
-
-                <td className="pl-4 py-6 flex gap-2 text-lg">
-                  <FaEye
-                    onClick={() =>{setShowDetailModal(true); setSelectedEmployee(emp)}}
-
-                    className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
-                    title="View"
-                  />
-                  <FaEdit
-                    onClick={() => {
-                      setShowFrom(true);
-                      setEdittable(emp);
-                    }}
-                    className="text-green-500 cursor-pointer hover:scale-110 transition-transform"
-                    title="Edit"
-                  />
-                  <FaTrash
-                    onClick={() => hanldedelete(emp._id)}
-                    className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
-                    title="Delete"
-                  />
+            {filteredEmployees.length === 0 ? (
+              <tr>
+                <td colSpan="15" className="text-center py-8 text-gray-500">
+                  {searchQuery || selectedDepartment
+                    ? "No employees found matching your filters"
+                    : "No employees found"}
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredEmployees.map((emp) => (
+                <tr
+                  key={emp._id}
+                  className={`border-t border-gray-200 ${
+                    emp._id % 2 === 0 ? "bg-gray-200" : "bg-white"
+                  } text-[16px] `}
+                >
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.Emp_id, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.Address, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.Department, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.Designation, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.Back_Name, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.Bank_Account, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.IFSC_Code, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.UAN_number, searchQuery)}
+                  </td>
+                  <td className="pl-4 py-3">
+                    <a
+                      href={emp.aadhaar}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View Aadhaar"
+                    >
+                      Aadhaar
+                    </a>
+                  </td>
+                  <td className="pl-4 py-3">
+                    <a
+                      href={emp.pancard}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View PAN"
+                    >
+                      Pancard
+                    </a>
+                  </td>
+                  <td className="pl-4 py-3">
+                    <a
+                      href={emp.Voter_Id}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View Voter ID"
+                    >
+                      Voter Id
+                    </a>
+                  </td>
+                  <td className="pl-4 py-3">
+                    <a
+                      href={emp.Driving_Licance}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View Driving License"
+                    >
+                      Driving Licance
+                    </a>
+                  </td>
+                  <td className="pl-4 py-3">
+                    <a
+                      href={emp.Bank_Proof}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View Bank Proof"
+                    >
+                      Bank Proof
+                    </a>
+                  </td>
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp.salary, searchQuery)}
+                  </td>
+
+                  <td className="pl-4 py-6 flex gap-2 text-lg">
+                    <FaEye
+                      onClick={() => {
+                        setShowDetailModal(true);
+                        setSelectedEmployee(emp);
+                      }}
+                      className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
+                      title="View"
+                    />
+                    <FaEdit
+                      onClick={() => {
+                        setShowFrom(true);
+                        setEdittable(emp);
+                      }}
+                      className="text-green-500 cursor-pointer hover:scale-110 transition-transform"
+                      title="Edit"
+                    />
+                    <FaTrash
+                      onClick={() => hanldedelete(emp._id)}
+                      className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
+                      title="Delete"
+                    />
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -202,7 +294,11 @@ const EmployeeTable = () => {
         showForm={showForm}
         editTable={editTable}
       />
-      <Pagination page={page} setPage={setPage}  hasNextPage={employee?.length === 10} /> 
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={filteredEmployees?.length === 10}
+      />
     </div>
   );
 };
