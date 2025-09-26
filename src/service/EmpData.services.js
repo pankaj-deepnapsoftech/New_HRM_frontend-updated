@@ -36,6 +36,13 @@ export const empApi = Api.injectEndpoints({
         body: { asset },
       }),
     }),
+    createCredentials: builder.mutation({
+      query: ({ id, email, password, fullName, phone }) => ({
+        url: `/empdata/${id}/create-credentials`,
+        method: "PUT",
+        body: { email, password, fullName, phone },
+      }),
+    }),
 
     deleteEmpData: builder.mutation({
       query: (id) => ({
@@ -53,4 +60,5 @@ export const {
   useDeleteEmpDataMutation,
   useAddAssetMutation,
   useRemoveAssetMutation,
+  useCreateCredentialsMutation,
 } = empApi;

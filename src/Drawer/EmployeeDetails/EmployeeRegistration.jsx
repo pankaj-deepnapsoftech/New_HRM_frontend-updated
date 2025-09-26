@@ -21,6 +21,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
             Designation: '', Department: '', Address: '', salary: '',
             photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
             UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
+            empFullName: '', empEmail: '', empPhone: '', empPassword: ''
         },
         validationSchema: EmpDetailsSchema,
         enableReinitialize: true,
@@ -94,6 +95,31 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                                     value={values[name]}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
+                                    className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
+                                />
+                                {touched[name] && errors[name] && (
+                                    <p className="text-sm text-red-500 mt-1">{errors[name]}</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                            { label: 'Full Name', name: 'empFullName' },
+                            { label: 'Email (for login)', name: 'empEmail', type: 'email', placeholder: 'employee@example.com' },
+                            { label: 'Phone', name: 'empPhone' },
+                            { label: 'Password (for login)', name: 'empPassword', type: 'password', placeholder: 'Set a temporary password' }
+                        ].map(({ label, name, type = 'text', placeholder }) => (
+                            <div key={name}>
+                                <label className="block mb-1 font-medium text-gray-700">{label}</label>
+                                <input
+                                    type={type}
+                                    name={name}
+                                    value={values[name]}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    placeholder={placeholder}
                                     className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm"
                                 />
                                 {touched[name] && errors[name] && (

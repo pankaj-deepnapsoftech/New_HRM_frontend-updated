@@ -4,9 +4,11 @@ import {
   useAddEmpDataMutation,
   useUpdateEmpDataMutation,
   useDeleteEmpDataMutation,
+  useCreateCredentialsMutation,
 } from "@/service/EmpData.services";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaEdit, FaTrash } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { validationSchema } from "@/Validation/EmpDashboardValidation";
 import Pagination from "./Pagination/Pagination";
@@ -17,11 +19,16 @@ const EmpDashboard = () => {
   const [addEmpData] = useAddEmpDataMutation();
   const [updateEmpData] = useUpdateEmpDataMutation();
   const [deleteEmpData] = useDeleteEmpDataMutation();
+  const [createCredentials] = useCreateCredentialsMutation();
 
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [editMode, setEditMode] = useState(false);
+  const [credModal, setCredModal] = useState(null); // holds employee row
+  const [credForm, setCredForm] = useState({ email: "", password: "", fullName: "", phone: "" });
+  const [showPwd, setShowPwd] = useState(false);
+  const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "");
   
   
   const employees = data?.data || [];
@@ -94,6 +101,7 @@ const EmpDashboard = () => {
           <thead className="bg-gray-200 text-gray-700 uppercase font-semibold">
             <tr>
               <th className="p-3 text-left">Name</th>
+              <th className="p-3 text-left">Email</th>
               <th className="p-3 text-left">Department</th>
               <th className="p-3 text-left">Designation</th>
               <th className="p-3 text-left">Emp Code</th>
@@ -101,6 +109,7 @@ const EmpDashboard = () => {
               <th className="p-3 text-left">Location</th>
               <th className="p-3 text-left">Date</th>
               <th className="p-3 text-left">Actions</th>
+              <th className="p-3 text-left">Login</th>
             </tr>
           </thead>
           <tbody>
@@ -110,6 +119,7 @@ const EmpDashboard = () => {
                 className={`border-b  border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
               >
                 <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
+                <td className="pl-4 py-2 px-2 text-[16px]">{emp.email || "N/A"}</td>
                 <td className="pl-4 py-2 px-2 text-[16px]">{emp.department}</td>
                 <td className="pl-4 py-2 px-2 text-[16px]">{emp.designation}</td>
                 <td className="pl-4 py-2 px-2 text-[16px]">{emp.empCode}</td>
@@ -139,6 +149,18 @@ const EmpDashboard = () => {
                     className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
                     title="Delete"
                   />
+                </td>
+                <td className="pl-4 py-2 px-2 text-[16px]">
+                  <button
+                    onClick={() => {
+                      setCredModal(emp);
+                      setCredForm({ email: emp.email || "", password: "", fullName: emp.fname || "", phone: "" });
+                    }}
+                    className="inline-flex items-center gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-3 py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition"
+                    title="Create login credentials"
+                  >
+                    Create Login
+                  </button>
                 </td>
               </tr>
             ))}
@@ -329,6 +351,80 @@ const EmpDashboard = () => {
                   <span>{value}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Create Login Modal */}
+      {credModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white p-6 rounded-md w-[90%] max-w-md shadow-md relative">
+            <button
+              onClick={() => setCredModal(null)}
+              className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
+            >
+              <IoIosClose size={32} />
+            </button>
+            <h3 className="text-lg font-bold mb-4">Create Login</h3>
+            <div className="space-y-3">
+              <input
+                type="email"
+                value={credForm.email}
+                onChange={(e) => setCredForm((p) => ({ ...p, email: e.target.value }))}
+                placeholder="Email"
+                className="w-full p-3 rounded-lg border border-gray-300"
+              />
+              <div className="relative">
+                <input
+                  type={showPwd ? "text" : "password"}
+                  value={credForm.password}
+                  onChange={(e) => setCredForm((p) => ({ ...p, password: e.target.value }))}
+                  placeholder="Password (optional)"
+                  className="w-full p-3 pr-10 rounded-lg border border-gray-300"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPwd((s) => !s)}
+                  className="absolute inset-y-0 right-2 my-auto text-gray-600 hover:text-gray-800"
+                  aria-label={showPwd ? "Hide password" : "Show password"}
+                  title={showPwd ? "Hide password" : "Show password"}
+                >
+                  {showPwd ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+              <p className="text-xs text-gray-500">Agar password blank hua to temporary password auto-generate hoga.</p>
+            </div>
+            <div className="flex justify-end gap-3 mt-5">
+              <button onClick={() => setCredModal(null)} className="px-4 py-2 rounded border border-gray-300">Cancel</button>
+              <button
+                onClick={async () => {
+                  try {
+                    if (!isValidEmail(credForm.email)) {
+                      toast.error("Please enter a valid email");
+                      return;
+                    }
+                    if (credForm.password && (credForm.password.length < 6 || credForm.password.length > 16)) {
+                      toast.error("Password must be 6-16 characters");
+                      return;
+                    }
+                    const res = await createCredentials({ id: credModal._id, email: credForm.email.trim(), password: credForm.password?.trim() }).unwrap();
+                    const pwd = res?.data?.tempPassword;
+                    if (pwd) {
+                      toast.success(`Temporary password: ${pwd}`);
+                    } else {
+                      toast.success("Credentials created");
+                    }
+                    setCredModal(null);
+                    refetch();
+                  } catch (e) {
+                    const msg = e?.data?.message || "Failed to create credentials";
+                    toast.error(msg);
+                  }
+                }}
+                className="px-4 py-2 rounded bg-indigo-600 text-white"
+              >
+                Create
+              </button>
             </div>
           </div>
         </div>

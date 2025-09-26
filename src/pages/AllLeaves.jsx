@@ -26,7 +26,7 @@ const AllLeaves = () => {
               <th className="px-3 py-3 text-left">Email</th>
               <th className="px-3 py-3 text-left">Department</th>
               <th className="px-3 py-3 text-left">Role</th>
-              <th className="px-3 py-3 text-left">Emp-Code</th>
+              <th className="px-3 py-3 text-left">Emp-Code</th> 
               <th className="px-3 py-3 text-left">No. of Half Leaves</th>
               <th className="px-3 py-3 text-left">No. of Full Leaves</th>
               <th className="px-3 py-3 text-left">Present Leave</th>
