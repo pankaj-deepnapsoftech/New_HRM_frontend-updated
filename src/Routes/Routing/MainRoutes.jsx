@@ -18,6 +18,7 @@ import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
+import Departments from "@/pages/Departments";
 
 export const MainRoutes = [
   {
@@ -48,6 +49,10 @@ export const MainRoutes = [
   {
     path: "/empdashboard",
     element: <EmpDashboard />,
+  },
+  {
+    path: "/departments",
+    element: <Departments />,
   },
   {
     path: "/projects",

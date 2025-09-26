@@ -8,7 +8,6 @@ import {
 } from "@/service/EmpData.services";
 
 const EmpLeaveBalance = () => {
-  // ✅ Use RTK Query hook to fetch empdata
   const { data: empResponse = {}, isLoading } = useGetAllEmpDataQuery();
   const employees = empResponse.data || [];
 

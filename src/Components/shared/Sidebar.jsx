@@ -43,7 +43,7 @@ import AssignAssets from "@/pages/Assets";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
-import { FaChalkboardUser, FaUsersRectangle } from "react-icons/fa6";
+import { FaChalkboardUser, FaPeopleRoof, FaUsersRectangle } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import PayrollSummary from "@/pages/PayrollSummary";
 import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
@@ -52,6 +52,7 @@ import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllAttendance from "@/pages/AllAttendence";
 import AllLeaves from "@/pages/AllLeaves";
+import Departments from "@/pages/Departments";
 
 
 const Sidebar = () => {
@@ -117,6 +118,12 @@ const Sidebar = () => {
       icon: <BsPersonCircle className="text-2xl" />,
       path: "/employees",
       element: <EmployeeTable />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Department</span>,
+      icon: <FaPeopleRoof className="text-2xl" />,
+      path: "/departments",
+      element: <Departments />,
     },
     {
       text: <span className="text-[1rem] font-semibold">Projects</span>,
