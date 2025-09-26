@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGetAllEmpDataQuery, useUpdateEmpDataMutation } from "@/service/EmpData.services";
 
 const TerminatedEmp = () => {
-
+  const [confirmId, setConfirmId] = useState(null);
   const { data, isLoading, refetch } = useGetAllEmpDataQuery();
   const employees = data?.data || [];
   const [updateEmpStatus] = useUpdateEmpDataMutation();
@@ -12,6 +12,7 @@ const TerminatedEmp = () => {
     try {
       await updateEmpStatus({ id, Empstatus: "Terminated" }).unwrap();
       refetch();
+      setConfirmId(null);
     } catch (err) {
       console.error("Failed to terminate:", err);
     }
@@ -80,7 +81,7 @@ const TerminatedEmp = () => {
                 <td className="py-3 px-4">
                   {(emp.Empstatus ?? "active") === "active" ? (
                     <button
-                      onClick={() => handleTerminate(emp._id)}
+                      onClick={() => setConfirmId(emp._id)}
                       className="bg-gradient-to-br from-red-400 to-red-700 hover:scale-105 transition transform text-white px-2 py-1 rounded-sm shadow-md"
                     >
                       Terminate
@@ -95,6 +96,29 @@ const TerminatedEmp = () => {
           </tbody>
         </table>
       </div>
+      {confirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setConfirmId(null)} />
+          <div className="relative bg-white rounded-md shadow-lg p-6 w-80">
+            <h3 className="text-lg font-semibold text-gray-800">Confirm Termination</h3>
+            <p className="text-sm text-gray-600 mt-2">Are you sure you want to terminate this employee?</p>
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                onClick={() => setConfirmId(null)}
+                className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleTerminate(confirmId)}
+                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
