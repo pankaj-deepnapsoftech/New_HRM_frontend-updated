@@ -1,37 +1,14 @@
+import { useGetAllUsersQuery } from '@/service/User.services';
 import React from 'react';
 
-const attendanceData = [
-  {
-    firstName: "Nitish",
-    lastName: "Prajapati",
-    email: "nitishprajapati987@gmail.com",
-    status: "Absent",
-    loginTime: "N/A"
-  },
-  {
-    firstName: "Abhi",
-    lastName: "Pjpt",
-    email: "abhi123@gmail.com",
-    status: "Present",
-    loginTime: "N/A"
-  },
-  {
-    firstName: "Komal",
-    lastName: "Singh",
-    email: "komal@gmail.com",
-    status: "Absent",
-    loginTime: "N/A"
-  },
-  {
-    firstName: "Deepak",
-    lastName: "Sharma",
-    email: "dsharma1010@gmail.com",
-    status: "present",
-    loginTime: "N/A"
-  }
-];
+
 
 const DailyAttendance = () => {
+
+
+  const { data:userData} = useGetAllUsersQuery()
+
+
   return (
     <section className="p-5 bg-gray-50 rounded  max-w-4xl mx-auto mt-10">
      <div className="bg-gray-300 text text-center  py-4 my-8 rounded-md shadow-md shadow-gray-400">
@@ -48,15 +25,15 @@ const DailyAttendance = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-md">
-            {attendanceData.map((user, index) => (
+            {userData?.map((user, index) => (
               <tr key={index} className=" border-b border-gray-200 hover:bg-gray-50 transition">
                 <td className="py-3 px-4">
-                  {user.firstName} {user.lastName}
-                </td>
+                  {user.fullName} 
+                </td> 
                 <td className="py-3 px-4">{user.email}</td>
                 <td className="py-3 px-4">
                   <span className={` py-4 px-6 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit  ${user.status === "Absent" ? "text-red-500 bg-red-100" : "text-green-500 bg-green-100"}`}>
-                    {user.status}
+                    {user.status || "N/A"}
                   </span>
                 </td>
                 <td className="py-3 px-6">{user.loginTime}</td>
