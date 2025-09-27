@@ -14,7 +14,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 const MainDashboardPage = () => {
   try {
-    const userName = useSelector((state) => state.Auth.username);
+  const userName = useSelector((state) => state.Auth.username);
 
   const today = new Date().toLocaleDateString(undefined, {
     weekday: "long",
@@ -151,26 +151,26 @@ const MainDashboardPage = () => {
     'linear-gradient(135deg, #f472b6 0%, #ef4444 100%)', // pink-red
   ];
 
-    return (
-      <main className="flex-1 font-sans p-4 md:p-8" style={{ backgroundColor: '#f0fbfc' }}>
-        <section className="relative overflow-hidden flex flex-col sm:flex-row justify-between items-center text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl" style={{ backgroundColor: 'rgb(17, 85, 96)' }}>
-          <div className="absolute right-0 top-0 w-64 h-64 rounded-full opacity-20" style={{ background: 'radial-gradient(circle at center, #ffffff, transparent 60%)' }} />
-          <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle at center, #0d4b55, transparent 60%)' }} />
-          <div>
-            <p className="text-sm mb-2 text-white/90">{today}</p>
-            <h1 className="text-4xl font-extrabold mb-1 text-white">
-              Welcome back, <br />{userName.charAt(0).toUpperCase() + userName.slice(1)} <span className="align-middle"></span>
-            </h1>
-            {/* <p className="text-sm text-white/90">
+  return (
+    <main className="flex-1 font-sans p-4 md:p-8" style={{ backgroundColor: '#f0fbfc' }}>
+      <section className="relative overflow-hidden flex flex-col sm:flex-row justify-between items-center text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl" style={{ backgroundColor: 'rgb(17, 85, 96)' }}>
+        <div className="absolute right-0 top-0 w-64 h-64 rounded-full opacity-20" style={{ background: 'radial-gradient(circle at center, #ffffff, transparent 60%)' }} />
+        <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle at center, #0d4b55, transparent 60%)' }} />
+        <div>
+          <p className="text-sm mb-2 text-white/90">{today}</p>
+          <h1 className="text-4xl font-extrabold mb-1 text-white">
+            Welcome back, <br />{userName.charAt(0).toUpperCase() + userName.slice(1)} <span className="align-middle"></span>
+          </h1>
+          {/* <p className="text-sm text-white/90">
               Here's what's happening today in your portal.
-            </p> */}
-          </div>
-          <img
-            src="/Hand coding-amico.png"
-            alt="Welcome Illustration"
-            className="w-[150px] md:w-[200px] mt-6 sm:mt-0"
-          />
-        </section>
+          </p> */}
+        </div>
+        <img
+          src="/Hand coding-amico.png"
+          alt="Welcome Illustration"
+          className="w-[150px] md:w-[200px] mt-6 sm:mt-0"
+        />
+      </section>
 
         {/* Error Display */}
         {error && (
@@ -180,51 +180,51 @@ const MainDashboardPage = () => {
           </div>
         )}
 
-        {/* Cards and Chart in Single Row */}
-        <div className="w-full flex flex-col lg:flex-row gap-4 pt-4 md:pt-10 md:pb-6 px-3 md:px-6" style={{ backgroundColor: '#e6f7f9' }}>
-          {/* Cards Container */}
-          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-            {statsCards.map((card, i) => (
-              <div
-                key={i}
-                className="rounded-md shadow w-full sm:w-72 md:w-60 h-[120px] p-4 flex flex-col justify-between transition-transform hover:-translate-y-1 hover:shadow-lg"
-                style={{ background: cardGradients[i % cardGradients.length], color: '#ffffff' }}
-              >
-                <div className="flex justify-between items-start">
-                  <div className="text-[12px] leading-4 opacity-90">{card.label}</div>
-                  <div className="text-lg font-bold">{card.value}</div>
-                </div>
-                <div className="flex items-center text-[12px] opacity-95">
-                  <span className="mr-2 text-base leading-none">{card.icon}</span>
-                  <span>{card.label}</span>
-                  <span className="ml-auto">{card.change?.replace('+', '') || '301'}</span>
-                </div>
+      {/* Cards and Chart in Single Row */}
+      <div className="w-full flex flex-col lg:flex-row gap-4 pt-4 md:pt-10 md:pb-6 px-3 md:px-6" style={{ backgroundColor: '#e6f7f9' }}>
+        {/* Cards Container */}
+        <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+          {statsCards.map((card, i) => (
+            <div
+              key={i}
+              className="rounded-md shadow w-full sm:w-72 md:w-60 h-[120px] p-4 flex flex-col justify-between transition-transform hover:-translate-y-1 hover:shadow-lg"
+              style={{ background: cardGradients[i % cardGradients.length], color: '#ffffff' }}
+            >
+              <div className="flex justify-between items-start">
+                <div className="text-[12px] leading-4 opacity-90">{card.label}</div>
+                <div className="text-lg font-bold">{card.value}</div>
               </div>
-            ))}
-          </div>
+              <div className="flex items-center text-[12px] opacity-95">
+                <span className="mr-2 text-base leading-none">{card.icon}</span>
+                <span>{card.label}</span>
+                <span className="ml-auto">{card.change?.replace('+', '') || '301'}</span>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          {/* Pie Chart Container */}
+        {/* Pie Chart Container */}
           <div className="w-full lg:w-[350px] mt-6 lg:mt-0 lg:ml-auto">
-            <div className="flex justify-center p-4 rounded-sm shadow-md" style={{ backgroundColor: '#ffffff', borderTop: '4px solid #0d4b55' }}>
-              <div className="w-full max-w-xs md:max-w-sm">
-                {isLoading ? (
-                  <div className="animate-pulse">
-                    <div className="h-48 w-48 mx-auto rounded-full" style={{ backgroundColor: '#e6f7f9' }} />
-                    <div className="h-3 w-3/4 mx-auto mt-4 rounded" style={{ backgroundColor: '#e6f7f9' }} />
-                  </div>
+          <div className="flex justify-center p-4 rounded-sm shadow-md" style={{ backgroundColor: '#ffffff', borderTop: '4px solid #0d4b55' }}>
+            <div className="w-full max-w-xs md:max-w-sm">
+              {isLoading ? (
+                <div className="animate-pulse">
+                  <div className="h-48 w-48 mx-auto rounded-full" style={{ backgroundColor: '#e6f7f9' }} />
+                  <div className="h-3 w-3/4 mx-auto mt-4 rounded" style={{ backgroundColor: '#e6f7f9' }} />
+                </div>
                 ) : labels.length > 0 ? (
                   <Doughnut data={dataPie} options={options} />
-                ) : (
+              ) : (
                   <div className="flex items-center justify-center h-48 text-gray-500">
                     <p>No department data available</p>
                   </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
-        </div>
-      </main>
-    );
+          </div>
+      </div>
+    </main>
+  );
   } catch (error) {
     console.error('Dashboard Error:', error);
     return (
