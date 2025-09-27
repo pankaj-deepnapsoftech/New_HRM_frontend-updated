@@ -5,7 +5,7 @@ export const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     department: Yup.string().required("Department is required"),
     designation: Yup.string().required("Designation is required"),
-    empCode: Yup.string().required("Employee code is required"),
+    // empCode: Yup.string().required("Employee code is required"),
     salary: Yup.number()
         .typeError("Salary must be a number")
         .positive("Salary must be positive")
