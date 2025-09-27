@@ -114,7 +114,7 @@ const Sidebar = () => {
       path: "/empdashboard",
     },
     {
-      text: <span className="text-[1rem] font-semibold">Employees</span>,
+      text: <span className="text-[1rem] font-semibold">Employees Details</span>,
       icon: <BsPersonCircle className="text-2xl" />,
       path: "/employees",
       element: <EmployeeTable />,

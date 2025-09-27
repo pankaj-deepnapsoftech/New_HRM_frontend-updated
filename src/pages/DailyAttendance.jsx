@@ -1,4 +1,4 @@
-import { useGetAllUsersQuery } from '@/service/User.services';
+import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
 import React from 'react';
 
 
@@ -6,8 +6,8 @@ import React from 'react';
 const DailyAttendance = () => {
 
 
-  const { data:userData} = useGetAllUsersQuery()
-
+  const { data: userData } = useGetAllEmpDataQuery();
+  console.log(userData?.data)
 
   return (
     <section className="p-5 bg-gray-50 rounded  max-w-4xl mx-auto mt-10">
@@ -25,10 +25,10 @@ const DailyAttendance = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-md">
-            {userData?.map((user, index) => (
+            {userData?.data?.map((user, index) => (
               <tr key={index} className=" border-b border-gray-200 hover:bg-gray-50 transition">
                 <td className="py-3 px-4">
-                  {user.fullName} 
+                  {user.fname} 
                 </td> 
                 <td className="py-3 px-4">{user.email}</td>
                 <td className="py-3 px-4">

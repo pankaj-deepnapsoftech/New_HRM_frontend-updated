@@ -21,6 +21,7 @@ const EmployeeTable = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const { data, refetch } = useEpmGetDataQuery({ page });
+  console.log(data?.data)
   const [EmpDeleteData] = useEpmDeleteDataMutation();
 
   const employee = data?.data || [];
