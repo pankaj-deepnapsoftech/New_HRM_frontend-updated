@@ -10,6 +10,7 @@ import {
 import { FaEnvelope } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Pagination from "./Pagination/Pagination";
+import { useGetAllDepartmentQuery } from "@/service/Department";
 
 const EmployeeTable = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -21,9 +22,8 @@ const EmployeeTable = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const { data, refetch } = useEpmGetDataQuery({ page });
-  console.log(data?.data)
   const [EmpDeleteData] = useEpmDeleteDataMutation();
-
+  const { data: departmentData } = useGetAllDepartmentQuery()
   const employee = data?.data || [];
 
   const highlightSearchTerm = (text, searchTerm) => {
@@ -46,9 +46,14 @@ const EmployeeTable = () => {
     );
   };
 
-  const uniqueDepartments = [
-    ...new Set(employee.map((emp) => emp.Department).filter(Boolean)),
-  ];
+  const departmentMap = departmentData?.data?.reduce((acc, curr) => {
+    const dept = curr.department_name?.trim();
+    if (!acc[dept]) acc[dept] = new Set();
+    acc[dept].add(curr.sub_department);
+    return acc;
+  }, {});
+
+  const uniqueDepartments = Object.keys(departmentMap || {});
 
   const filteredEmployees = employee.filter((emp) => {
     const matchesSearch =
@@ -101,7 +106,7 @@ const EmployeeTable = () => {
       <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
-
+                     
       <div className="flex justify-between mb-4 gap-4 flex-wrap mx-5 md:mx-10">
         <div className="flex gap-4 flex-wrap flex-1">
           <input
