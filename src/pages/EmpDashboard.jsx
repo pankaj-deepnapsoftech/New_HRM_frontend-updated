@@ -16,7 +16,8 @@ import { useGetAllDepartmentQuery } from "@/service/Department";
 
 const EmpDashboard = () => {
   const [page, setPage] = useState(1);
-  const { data, refetch, isLoading } = useGetAllEmpDataQuery({ page });
+  const limit = 10;
+  const { data, refetch, isLoading } = useGetAllEmpDataQuery({ page, limit });
   const [addEmpData] = useAddEmpDataMutation();
   const [updateEmpData] = useUpdateEmpDataMutation();
   const [deleteEmpData] = useDeleteEmpDataMutation();
@@ -581,7 +582,7 @@ const EmpDashboard = () => {
       <Pagination
         page={page}
         setPage={setPage}
-        hasNextPage={filteredEmployees?.length === 2}
+        hasNextPage={filteredEmployees?.length === 10}
       />
     </div>
   );

@@ -4,10 +4,12 @@ import { Api } from "../store/api/api";
 export const empApi = Api.injectEndpoints({
   endpoints: (builder) => ({
     getAllEmpData: builder.query({
-      query: () =>  "/empdata",
+      query: ({page, limit}) => ({
+        url: `/empdata?page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
     }),
-    
-    
+
     addEmpData: builder.mutation({
       query: (newEmp) => ({
         url: "/empdata",
