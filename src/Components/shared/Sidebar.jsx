@@ -43,7 +43,7 @@ import AssignAssets from "@/pages/Assets";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
-import { FaChalkboardUser, FaUsersRectangle } from "react-icons/fa6";
+import { FaChalkboardUser, FaPeopleRoof, FaUsersRectangle } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import PayrollSummary from "@/pages/PayrollSummary";
 import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
@@ -52,6 +52,7 @@ import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllAttendance from "@/pages/AllAttendence";
 import AllLeaves from "@/pages/AllLeaves";
+import Departments from "@/pages/Departments";
 
 
 const Sidebar = () => {
@@ -117,6 +118,12 @@ const Sidebar = () => {
       icon: <BsPersonCircle className="text-2xl" />,
       path: "/employees",
       element: <EmployeeTable />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Department</span>,
+      icon: <FaPeopleRoof className="text-2xl" />,
+      path: "/departments",
+      element: <Departments />,
     },
     {
       text: <span className="text-[1rem] font-semibold">Projects</span>,
@@ -291,11 +298,12 @@ const Sidebar = () => {
       )}
       <aside
         ref={sidebarRef}
-        className={`sidebar-scroll overflow-y-auto fixed top-0 left-0 bottom-0 h-screen w-64 md:w-72 bg-gradient-to-t from-[#281c30] to-[#806097] text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
+        className={`sidebar-scroll overflow-y-auto fixed top-0 left-0 bottom-0 h-screen w-64 md:w-72 text-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out 
   ${showSidebar ? "translate-x-0" : "-translate-x-full"} 
   md:translate-x-0 md:static md:block`}
+        style={{ backgroundColor: 'rgb(17, 85, 96)' }}
       >
-        <div className="flex items-center py-1 w-full border-b border-white/40   ">
+        <div className="flex items-center py-1 w-full border-b  " style={{ borderColor: 'rgba(255,255,255,0.4)' }}>
           <img
             src="/d logo.png"
             alt="Deepnap Softech Logo"
@@ -321,9 +329,10 @@ const Sidebar = () => {
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
               ${
                 isActive
-                  ? "bg-white/80 text-purple-500 font-bold shadow-md"
+                  ? "bg-white/90 font-bold shadow-md"
                   : "hover:bg-white/10"
               }`}
+                  style={isActive ? { color: '#0d4b55' } : {}}
                 >
                   {item.icon}
                   <span>{item.text}</span>
@@ -344,9 +353,10 @@ const Sidebar = () => {
                           className={`flex items-center gap-1 px-1 py-3 rounded-md cursor-pointer transition duration-300 
                       ${
                         isSubActive
-                          ? "bg-white/80 text-purple-500 font-bold shadow-md"
+                          ? "bg-white/90 font-bold shadow-md"
                           : "hover:bg-white/10"
                       }`}
+                          style={isSubActive ? { color: '#0d4b55' } : {}}
                         >
                           {subItem.icon}
                           <span>{subItem.text}</span>
@@ -365,7 +375,8 @@ const Sidebar = () => {
           <button
             type="submit"
             onClick={handleLogout}
-            className=" w-40 md:w-48 flex items-center justify-center py-2 mt-8  ml-7 mb-5 p-3 bg-white/50 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110 hover:scale-105"
+            className=" w-40 md:w-48 flex items-center justify-center py-2 mt-8  ml-7 mb-5 p-3 text-white font-semibold rounded-lg transition duration-300 hover:brightness-110 hover:scale-105"
+            style={{ backgroundColor: '#42B9C6' }}
           >
             {" "}
             <FiLogOut size={15} className="shrink-0  " />
