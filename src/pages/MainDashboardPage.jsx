@@ -173,7 +173,7 @@ const MainDashboardPage = () => {
 
   return (
     <main className="flex-1 font-sans p-4 md:p-8" style={{ backgroundColor: '#f0fbfc' }}>
-      <section className="relative overflow-hidden flex flex-col sm:flex-row justify-between items-center text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl" style={{ backgroundColor: 'rgb(17, 85, 96)' }}>
+        <section className="relative overflow-hidden flex flex-col sm:flex-row justify-between items-center text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl" style={{ backgroundColor: 'rgb(17, 85, 96)' }}>
         <div className="absolute right-0 top-0 w-64 h-64 rounded-full opacity-20" style={{ background: 'radial-gradient(circle at center, #ffffff, transparent 60%)' }} />
         <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle at center, #0d4b55, transparent 60%)' }} />
         <div>

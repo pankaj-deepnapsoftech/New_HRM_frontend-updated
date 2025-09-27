@@ -18,88 +18,89 @@ import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
+import AdminRouteGuard from "@/Components/AdminRouteGuard";
 
 export const MainRoutes = [
   {
     path: "/",
-    element: <MainDashboardPage />,
+    element: <AdminRouteGuard><MainDashboardPage /></AdminRouteGuard>,
   },
   {
     path: "/employees",
-    element: <EmployeeTable />,
+    element: <AdminRouteGuard><EmployeeTable /></AdminRouteGuard>,
   },
   {
     path: "/employees-reports",
-    element: <EmployeesReports />,
+    element: <AdminRouteGuard><EmployeesReports /></AdminRouteGuard>,
   },
 
   {
     path: "/empyloyees-attendence",
-    element: <DailyAttendance />,
+    element: <AdminRouteGuard><DailyAttendance /></AdminRouteGuard>,
   },
   {
     path: "/all-attendence",
-    element: <AllAttendence/>,
+    element: <AdminRouteGuard><AllAttendence/></AdminRouteGuard>,
   },
   {
     path: "/all-leaves",
-    element: <AllLeaves/>,
+    element: <AdminRouteGuard><AllLeaves/></AdminRouteGuard>,
   },
   {
     path: "/empdashboard",
-    element: <EmpDashboard />,
+    element: <AdminRouteGuard><EmpDashboard /></AdminRouteGuard>,
   },
   {
     path: "/projects",
-    element: <Projects />,
+    element: <AdminRouteGuard><Projects /></AdminRouteGuard>,
   },
   {
     path: "/empleaves",
-    element: <EmpLeaveBalance />,
+    element: <AdminRouteGuard><EmpLeaveBalance /></AdminRouteGuard>,
   },
   {
     path: "/salarymanagement",
-    element: <SalaryManagement />,
+    element: <AdminRouteGuard><SalaryManagement /></AdminRouteGuard>,
   },
   {
     path: "/employee/location",
-    element: <EmpLocation/>,
+    element: <AdminRouteGuard><EmpLocation/></AdminRouteGuard>,
   },
   {
     path: "/company/assets",
-    element: <AssignAssets />,
+    element: <AdminRouteGuard><AssignAssets /></AdminRouteGuard>,
   },
   {
     path: "/employee/terminated",
-    element: <TerminatedEmp />,
+    element: <AdminRouteGuard><TerminatedEmp /></AdminRouteGuard>,
   },
   {
     path: "/gatepass/approval",
-    element: <GatepassApprovals />,
+    element: <AdminRouteGuard><GatepassApprovals /></AdminRouteGuard>,
   },
   {
     path: "/view/employee/show-cause/notice",
-    element: <ShowCauseNotices />,
+    element: <AdminRouteGuard><ShowCauseNotices /></AdminRouteGuard>,
   },
   {
     path: "/employee/payrollSummary",
-    element: <PayrollSummary />,
+    element: <AdminRouteGuard><PayrollSummary /></AdminRouteGuard>,
   },
   {
     path: "/employee/advance/money/request",
-    element: <EmpMoneyRequest />,
+    element: <AdminRouteGuard><EmpMoneyRequest /></AdminRouteGuard>,
   },
   {
     path: "/employee/incentives",
-    element: <Incentives />,
+    element: <AdminRouteGuard><Incentives /></AdminRouteGuard>,
   },
   {
     path: "/employee/reimbursements",
-    element: <Reimbursements />,
+    element: <AdminRouteGuard><Reimbursements /></AdminRouteGuard>,
   },
   {
     path: "/generate/employee/payslip",
-    element: <EmpPayslip/>,
+    element: <AdminRouteGuard><EmpPayslip/></AdminRouteGuard>,
   },
   
 ];

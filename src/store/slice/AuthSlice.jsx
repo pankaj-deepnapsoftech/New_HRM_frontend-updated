@@ -6,6 +6,7 @@ const initialState = {
     email:"",
     phone:"",
     username:"",
+    role:"",
     isLogin:false
 }
 
@@ -18,6 +19,7 @@ export const AuthSlice = createSlice({
             state.fullName = action.payload.fullName;
             state.phone = action.payload.phone;
             state.username = action.payload.username;
+            state.role = action.payload.role;
             state.isLogin = true;
         },
         removeData:(state)=>{
@@ -26,6 +28,7 @@ export const AuthSlice = createSlice({
             state.fullName = "";
             state.phone = "";
             state.username = "";
+            state.role = "";
             state.isLogin = false;
         },
         setLoginState:(state)=>{
