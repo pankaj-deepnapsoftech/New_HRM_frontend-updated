@@ -8,7 +8,7 @@ import {
   Title,
 } from 'chart.js';
 import { useSelector } from "react-redux";
-import { useGetAllEmpDataQuery } from "@/service/EmpData.services"; 
+import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -26,7 +26,7 @@ const MainDashboardPage = () => {
   const { data, isLoading } = useGetAllEmpDataQuery();
   const employees = data?.data || [];
 
- 
+
   const departmentCounts = employees.reduce((acc, emp) => {
     const dept = emp.department || "Unknown";
     acc[dept] = (acc[dept] || 0) + 1;
@@ -36,70 +36,89 @@ const MainDashboardPage = () => {
   const labels = Object.keys(departmentCounts);
   const counts = Object.values(departmentCounts);
 
-  
+
   // Donut uses a single gradient fill across slices (see backgroundColor function below)
 
-  const dataPie = {
-    labels,
-    datasets: [
-      // Outer ring
-      {
-        label: 'Departments',
-        data: counts,
-        backgroundColor: (context) => {
-          const gradients = [
-            { from: 'rgb(52, 211, 153)', to: 'rgb(16, 185, 129)' },
-            { from: 'rgb(79, 156, 249)', to: 'rgb(108, 193, 255)' },
-            { from: 'rgb(232, 113, 175)', to: 'rgb(239, 68, 68)' },
-            { from: 'rgb(251, 191, 36)', to: 'rgb(245, 158, 11)' },
-          ];
-          const { ctx, chartArea } = context.chart || {};
-          const { dataIndex } = context;
-          const g = gradients[dataIndex % gradients.length];
-          if (!ctx || !chartArea) return g.to;
-          const gradient = ctx.createLinearGradient(
-            chartArea.left,
-            chartArea.bottom,
-            chartArea.right,
-            chartArea.top
-          );
-          gradient.addColorStop(0, g.from);
-          gradient.addColorStop(1, g.to);
-          return gradient;
-        },
-        borderWidth: 1,
-        weight: 1,
-      },
-      // Inner ring (lighter alpha overlay)
-      {
-        label: 'Departments (inner)',
-        data: counts,
-        backgroundColor: (context) => {
-          const gradients = [
-            { from: 'rgba(52, 211, 153, 0.45)', to: 'rgba(16, 185, 129, 0.45)' },
-            { from: 'rgba(79, 156, 249, 0.45)', to: 'rgba(108, 193, 255, 0.45)' },
-            { from: 'rgba(232, 113, 175, 0.45)', to: 'rgba(239, 68, 68, 0.45)' },
-            { from: 'rgba(251, 191, 36, 0.45)', to: 'rgba(245, 158, 11, 0.45)' },
-          ];
-          const { ctx, chartArea } = context.chart || {};
-          const { dataIndex } = context;
-          const g = gradients[dataIndex % gradients.length];
-          if (!ctx || !chartArea) return g.to;
-          const gradient = ctx.createLinearGradient(
-            chartArea.left,
-            chartArea.bottom,
-            chartArea.right,
-            chartArea.top
-          );
-          gradient.addColorStop(0, g.from);
-          gradient.addColorStop(1, g.to);
-          return gradient;
-        },
-        borderWidth: 1,
-        weight: 1,
-      },
-    ],
-  };
+  // const dataPie = {
+  //   labels,
+  //   datasets: [
+  //     // Outer ring
+  //     {
+  //       label: 'Departments',
+  //       data: counts,
+  //       backgroundColor: (context) => {
+  //         const gradients = [
+  //           { from: 'rgb(52, 211, 153)', to: 'rgb(16, 185, 129)' },
+  //           { from: 'rgb(79, 156, 249)', to: 'rgb(108, 193, 255)' },
+  //           { from: 'rgb(232, 113, 175)', to: 'rgb(239, 68, 68)' },
+  //           { from: 'rgb(251, 191, 36)', to: 'rgb(245, 158, 11)' },
+  //         ];
+  //         const { ctx, chartArea } = context.chart || {};
+  //         const { dataIndex } = context;
+  //         const g = gradients[dataIndex % gradients.length];
+  //         if (!ctx || !chartArea) return g.to;
+  //         const gradient = ctx.createLinearGradient(
+  //           chartArea.left,
+  //           chartArea.bottom,
+  //           chartArea.right,
+  //           chartArea.top
+  //         );
+  //         gradient?.addColorStop(0, g?.from);
+  //         gradient?.addColorStop(1, g?.to);
+  //         return gradient;
+  //       },
+  //       borderWidth: 1,
+  //       weight: 1,
+  //     },
+  //     // Inner ring (lighter alpha overlay)
+  //     {
+  //       label: 'Departments (inner)',
+  //       data: counts,
+  //       backgroundColor: (context) => {
+  //         const gradients = [
+  //           { from: 'rgb(52, 211, 153)', to: 'rgb(16, 185, 129)' },
+  //           { from: 'rgb(79, 156, 249)', to: 'rgb(108, 193, 255)' },
+  //           { from: 'rgb(232, 113, 175)', to: 'rgb(239, 68, 68)' },
+  //           { from: 'rgb(251, 191, 36)', to: 'rgb(245, 158, 11)' },
+  //         ];
+
+  //         const { chart, dataIndex } = context;
+  //         const { ctx, chartArea } = chart || {};
+
+  //         // ✅ Return fallback solid color if any required data is missing
+  //         if (!ctx || !chartArea || typeof dataIndex !== 'number') {
+  //           return gradients[0].to;
+  //         }
+
+  //         const g = gradients[dataIndex % gradients.length];
+
+  //         // ✅ Extra guard
+  //         if (!g || !g.from || !g.to) {
+  //           return gradients[0].to;
+  //         }
+
+  //         try {
+  //           const gradient = ctx.createLinearGradient(
+  //             chartArea.left,
+  //             chartArea.bottom,
+  //             chartArea.right,
+  //             chartArea.top
+  //           );
+  //           gradient.addColorStop(0, g.from);
+  //           gradient.addColorStop(1, g.to);
+  //           return gradient;
+  //         } catch (e) {
+  //           console.warn('Gradient error:', e);
+  //           return g.to;
+  //         }
+  //       },
+
+
+  //       borderWidth: 1,
+  //       weight: 1,
+  //     },
+  //   ],
+  // };
 
   const options = {
     responsive: true,
@@ -173,7 +192,7 @@ const MainDashboardPage = () => {
 
   return (
     <main className="flex-1 font-sans p-4 md:p-8" style={{ backgroundColor: '#f0fbfc' }}>
-        <section className="relative overflow-hidden flex flex-col sm:flex-row justify-between items-center text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl" style={{ backgroundColor: 'rgb(17, 85, 96)' }}>
+      <section className="relative overflow-hidden flex flex-col sm:flex-row justify-between items-center text-white rounded-3xl px-10 py-8 mb-10 shadow-xl transition hover:shadow-2xl" style={{ backgroundColor: 'rgb(17, 85, 96)' }}>
         <div className="absolute right-0 top-0 w-64 h-64 rounded-full opacity-20" style={{ background: 'radial-gradient(circle at center, #ffffff, transparent 60%)' }} />
         <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle at center, #0d4b55, transparent 60%)' }} />
         <div>
@@ -209,14 +228,14 @@ const MainDashboardPage = () => {
               <div className="flex items-center text-[12px] opacity-95">
                 <span className="mr-2 text-base leading-none">{card.icon}</span>
                 <span>{card.label}</span>
-                <span className="ml-auto">{card.change?.replace('+','') || '301'}</span>
+                <span className="ml-auto">{card.change?.replace('+', '') || '301'}</span>
               </div>
             </div>
           ))}
         </div>
 
         {/* Pie Chart Container */}
-        <div className="w-full lg:w-[350px] mt-6 lg:mt-0 lg:ml-auto">
+        {/* <div className="w-full lg:w-[350px] mt-6 lg:mt-0 lg:ml-auto">
           <div className="flex justify-center p-4 rounded-sm shadow-md" style={{ backgroundColor: '#ffffff', borderTop: '4px solid #0d4b55' }}>
             <div className="w-full max-w-xs md:max-w-sm">
               {isLoading ? (
@@ -229,7 +248,7 @@ const MainDashboardPage = () => {
               )}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </main>
   );
