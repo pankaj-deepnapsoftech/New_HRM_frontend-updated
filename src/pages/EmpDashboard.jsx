@@ -377,7 +377,7 @@ const EmpDashboard = () => {
                 )}
               </div>
 
-              <div>
+              {/* <div>
                 <input
                   type="text"
                   name="empCode"
@@ -391,7 +391,7 @@ const EmpDashboard = () => {
                     {formik.errors.empCode}
                   </div>
                 )}
-              </div>
+              </div> */}
 
               <div>
                 <input

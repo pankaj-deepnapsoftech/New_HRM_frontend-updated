@@ -7,7 +7,7 @@ import EmpDashboard from "@/pages/EmpDashboard";
 import EmpLeaveBalance from "@/pages/EmpLeaveBalance";
 import EmpLocation from "@/pages/EmpLocation";
 import GatepassApprovals from "@/pages/GatepassAproval";
-import MainDashboardPage from "@/pages/MainDashboardPage";
+
 import Projects from "@/pages/Projects";
 import SalaryManagement from "@/pages/SalaryManagement";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
@@ -20,6 +20,7 @@ import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
 import AdminRouteGuard from "@/Components/AdminRouteGuard";
 import Departments from "@/pages/Departments";
+import MainDashboardPage from "@/pages/MainDashboardPage";
 
 export const MainRoutes = [
   {
