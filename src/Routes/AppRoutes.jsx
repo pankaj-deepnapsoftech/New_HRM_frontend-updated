@@ -29,7 +29,7 @@ const AppRoutes = () => {
   }, [data, dispatch]);
 
   useEffect(() => {
-    if (Auth.isLogin || !Auth.isLogin) {
+    if (Auth.isLogin) {
       refetch();
     }
   }, [Auth.isLogin, refetch]);
@@ -48,7 +48,7 @@ const AppRoutes = () => {
     </Route>
   )}
 
-  {data?.data && (
+  {data?.data && data?.data?.role === 'Admin' && (
     <Route element={<RootLayout />}>
       {MainRoutes.map((item, index) => (
         <Route key={index} path={item.path} element={item.element} />
@@ -56,7 +56,7 @@ const AppRoutes = () => {
     </Route>
   )}
 
-  {data?.data && (
+  {data?.data && data?.data?.role !== 'Admin' && (
     <Route path="/user" element={<UserLayout />}>
       {UserRoute.map((item, index) => (
         <Route key={index} path={item.path} element={item.element} />

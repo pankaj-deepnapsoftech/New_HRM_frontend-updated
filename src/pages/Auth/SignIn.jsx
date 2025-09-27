@@ -32,14 +32,23 @@ const Login = () => {
     },
     validationSchema: SignInSchema,
     onSubmit: async (values) => {
-      const totalData = { ...values, isMobile, browser: browserName };
+      const totalData = { ...values, isMobile, browser: browserName, loginType: "admin" };
 
       try {
         const res = await SignIn(totalData).unwrap();
         toast.success(res.message);
-        navigate("/");
+        
         resetForm();
         dispatch(setLoginState());
+        
+        // Navigate based on role after state update
+        setTimeout(() => {
+          if (res.data.role === 'Admin') {
+            navigate("/");
+          } else {
+            navigate("/user");
+          }
+        }, 100);
 
       } catch (error) {
         console.log(error);
@@ -131,12 +140,12 @@ const Login = () => {
 
           {/* Google Sign-in (commented) */}
         </form>
-        <p className="text-sm text-gray-600 text-center mt-6">
+        {/* <p className="text-sm text-gray-600 text-center mt-6">
           Don’t have an account?{" "}
           <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
             Sign Up
           </NavLink>
-        </p>
+        </p> */}
         <NavLink
           to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"

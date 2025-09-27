@@ -1,11 +1,111 @@
-import React from "react";
+import React, { useState } from "react";
 import {Formik} from "formik";
-import * as Yup from "yup"
+import * as Yup from "yup";
+import { FaUpload, FaFilePdf, FaFileImage, FaFileArchive, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const UserLeaveRequest = () => {
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [isDragOver, setIsDragOver] = useState(false);
+
+  // File validation
+  const validateFile = (file) => {
+    const allowedTypes = [
+      'application/pdf',
+      'image/jpeg',
+      'image/jpg', 
+      'image/png',
+      'image/gif',
+      'application/zip',
+      'application/x-zip-compressed'
+    ];
+    
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Only PDF, Images (JPG, PNG, GIF) and ZIP files are allowed');
+      return false;
+    }
+    
+    if (file.size > maxSize) {
+      toast.error('File size must be less than 10MB');
+      return false;
+    }
+    
+    return true;
+  };
+
+  // Handle file upload
+  const handleFileUpload = (files) => {
+    const fileArray = Array.from(files);
+    
+    fileArray.forEach(file => {
+      if (validateFile(file)) {
+        const newFile = {
+          id: Date.now() + Math.random(),
+          file: file,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : null
+        };
+        
+        setUploadedFiles(prev => [...prev, newFile]);
+        toast.success(`${file.name} uploaded successfully`);
+      }
+    });
+  };
+
+  // Handle drag and drop
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const files = e.dataTransfer.files;
+    handleFileUpload(files);
+  };
+
+  // Remove file
+  const removeFile = (fileId) => {
+    setUploadedFiles(prev => {
+      const fileToRemove = prev.find(f => f.id === fileId);
+      if (fileToRemove && fileToRemove.preview) {
+        URL.revokeObjectURL(fileToRemove.preview);
+      }
+      return prev.filter(f => f.id !== fileId);
+    });
+    toast.success('File removed');
+  };
+
+  // Format file size
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Get file icon
+  const getFileIcon = (type) => {
+    if (type === 'application/pdf') return <FaFilePdf className="text-red-500" />;
+    if (type.startsWith('image/')) return <FaFileImage className="text-green-500" />;
+    if (type.includes('zip')) return <FaFileArchive className="text-blue-500" />;
+    return <FaFilePdf className="text-gray-500" />;
+  };
+
   return (
-    <div className="min-h-screen  bg-gray-50 px-4 py-2 flex items-center justify-center">
-      <div className="w-full max-w-xl bg-white shadow-2xl rounded-2xl p-8">
+    <div className="min-h-screen bg-gray-50 px-4 py-2 flex items-center justify-center">
+      <div className="w-full max-w-2xl bg-white shadow-2xl rounded-2xl p-8">
         {/* Header */}
         <div className=" text-gray-800 text-center py-4 rounded-t-xl  mb-6">
           <h1 className="text-2xl font-bold">Employee Leave Request</h1>
@@ -17,6 +117,7 @@ const UserLeaveRequest = () => {
     request: "",
     type: "",
     reason: "",
+    files: [],
   }}
   validationSchema={Yup.object().shape({
     from: Yup.date().required("Date is required"),
@@ -24,9 +125,17 @@ const UserLeaveRequest = () => {
     type: Yup.string().required("Must select a leave type"),
     reason: Yup.string().required("Reason is required"),
   })}
-  onSubmit={(values, { resetForm }) => {
+  onSubmit={(values, { resetForm, setSubmitting }) => {
     console.log("Submitted:", values);
+    console.log("Uploaded Files:", uploadedFiles);
+    
+    // Here you can add your API call to submit the form with files
+    // Example: submitLeaveRequest(values, uploadedFiles);
+    
+    setSubmitting(false);
     resetForm();
+    setUploadedFiles([]);
+    toast.success("Leave request submitted successfully!");
   }}
 >
   {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
@@ -146,6 +255,93 @@ const UserLeaveRequest = () => {
         />
         {touched.reason && errors.reason && (
           <p className="text-sm text-red-500">{errors.reason}</p>
+        )}
+      </div>
+
+      {/* File Upload Section */}
+      <div>
+        <label className="block font-medium text-gray-700 mb-3">
+          Supporting Documents (Optional)
+        </label>
+        <p className="text-sm text-gray-500 mb-3">
+          Upload PDF files, images, or ZIP files (Max 10MB each)
+        </p>
+        
+        {/* Drag and Drop Area */}
+        <div
+          className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+            isDragOver
+              ? 'border-blue-500 bg-blue-50'
+              : 'border-gray-300 hover:border-gray-400'
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <FaUpload className="mx-auto text-4xl text-gray-400 mb-4" />
+          <p className="text-gray-600 mb-2">
+            Drag & drop files here, or{' '}
+            <label className="text-blue-600 hover:text-blue-800 cursor-pointer">
+              browse files
+              <input
+                type="file"
+                multiple
+                accept=".pdf,.jpg,.jpeg,.png,.gif,.zip"
+                onChange={(e) => handleFileUpload(e.target.files)}
+                className="hidden"
+              />
+            </label>
+          </p>
+          <p className="text-sm text-gray-400">
+            Supported: PDF, Images (JPG, PNG, GIF), ZIP files
+          </p>
+        </div>
+
+        {/* Uploaded Files List */}
+        {uploadedFiles.length > 0 && (
+          <div className="mt-4">
+            <h4 className="text-sm font-medium text-gray-700 mb-2">
+              Uploaded Files ({uploadedFiles.length})
+            </h4>
+            <div className="space-y-2">
+              {uploadedFiles.map((file) => (
+                <div
+                  key={file.id}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
+                >
+                  <div className="flex items-center space-x-3">
+                    {file.preview ? (
+                      <img
+                        src={file.preview}
+                        alt={file.name}
+                        className="w-10 h-10 object-cover rounded"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded">
+                        {getFileIcon(file.type)}
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                        {file.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {formatFileSize(file.size)}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(file.id)}
+                    className="text-red-500 hover:text-red-700 p-1"
+                    title="Remove file"
+                  >
+                    <FaTrash className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   useGetAllEmpDataQuery,
   useAddEmpDataMutation,
@@ -12,10 +12,12 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { validationSchema } from "@/Validation/EmpDashboardValidation";
 import Pagination from "./Pagination/Pagination";
+import { useGetAllDepartmentQuery } from "@/service/Department";
 
 const EmpDashboard = () => {
   const [page, setPage] = useState(1);
-  const { data, refetch, isLoading } = useGetAllEmpDataQuery({ page });
+  const limit = 10;
+  const { data, refetch, isLoading } = useGetAllEmpDataQuery({ page, limit });
   const [addEmpData] = useAddEmpDataMutation();
   const [updateEmpData] = useUpdateEmpDataMutation();
   const [deleteEmpData] = useDeleteEmpDataMutation();
@@ -34,14 +36,25 @@ const EmpDashboard = () => {
   });
   const [showPwd, setShowPwd] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
   const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "");
-
+  const { data: departmentData } = useGetAllDepartmentQuery()
   const employees = data?.data || [];
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+   
+  const departmentMap = departmentData?.data?.reduce((acc, curr) => {
+    const dept = curr.department_name?.trim();
+    if (!acc[dept]) acc[dept] = new Set();
+    acc[dept].add(curr.sub_department);
+    return acc;
+  }, {});
+  
+  const uniqueDepartments = Object.keys(departmentMap || {});
 
-  const uniqueDepartments = [
-    ...new Set(employees.map((emp) => emp.department).filter(Boolean)),
-  ];
+  const filteredSubDepartments = selectedDepartment
+    ? Array.from(departmentMap[selectedDepartment] || [])
+    : [];
+
+
 
   const filteredEmployees = employees.filter((emp) => {
     const matchesSearch =
@@ -69,6 +82,7 @@ const EmpDashboard = () => {
       date: selectedEmployee?.date?.split("T")[0] || "",
       location: selectedEmployee?.location || "",
       email: selectedEmployee?.email || "",
+      sub_department: selectedEmployee?.sub_department || ""
     },
     validationSchema: validationSchema,
     enableReinitialize: true,
@@ -172,9 +186,8 @@ const EmpDashboard = () => {
               filteredEmployees.map((emp, idx) => (
                 <tr
                   key={emp._id}
-                  className={`border-b  border-gray-200 ${
-                    idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                  }`}
+                  className={`border-b  border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                    }`}
                 >
                   <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
                   <td className="pl-4 py-2 px-2 text-[16px]">
@@ -291,21 +304,62 @@ const EmpDashboard = () => {
                 )}
               </div>
 
+             
               <div>
-                <input
-                  type="text"
+                <label htmlFor="department" className="block mb-1 font-medium text-gray-700">
+                  Department
+                </label>
+                <select
                   name="department"
-                  placeholder="Department"
-                  value={formik.values.department}
-                  onChange={formik.handleChange}
+                  id="department"
+                  value={selectedDepartment}
+                  onChange={(e) => {
+                    const selected = e.target.value;
+                    setSelectedDepartment(selected);
+                    formik.setFieldValue('department', selected);
+                    formik.setFieldValue('sub_department', '');
+                  }}
+                  onBlur={formik.handleBlur}
                   className="w-full p-3 rounded-lg border border-gray-300"
-                />
+                >
+                  <option value="">Select Department</option>
+                  {uniqueDepartments.map((dept, index) => (
+                    <option key={index} value={dept}>
+                      {dept}
+                    </option>
+                  ))}
+                </select>
                 {formik.touched.department && formik.errors.department && (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.department}
-                  </div>
+                  <div className="text-red-500 text-sm mt-1">{formik.errors.department}</div>
                 )}
               </div>
+
+              {/* Sub Department Dropdown */}
+              <div className="mt-4">
+                <label htmlFor="sub_department" className="block mb-1 font-medium text-gray-700">
+                  Sub Department
+                </label>
+                <select
+                  name="sub_department"
+                  id="sub_department"
+                  value={formik.values.sub_department}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="w-full p-3 rounded-lg border border-gray-300"
+                  disabled={!selectedDepartment}
+                >
+                  <option value="">Select Sub Department</option>
+                  {filteredSubDepartments.map((sub, idx) => (
+                    <option key={idx} value={sub}>
+                      {sub}
+                    </option>
+                  ))}
+                </select>
+                {formik.touched.sub_department && formik.errors.sub_department && (
+                  <div className="text-red-500 text-sm mt-1">{formik.errors.sub_department}</div>
+                )}
+              </div>
+
 
               <div>
                 <input
@@ -528,7 +582,7 @@ const EmpDashboard = () => {
       <Pagination
         page={page}
         setPage={setPage}
-        hasNextPage={filteredEmployees?.length === 2}
+        hasNextPage={filteredEmployees?.length === 10}
       />
     </div>
   );
