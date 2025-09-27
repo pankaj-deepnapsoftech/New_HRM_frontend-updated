@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 import { FaDownload } from "react-icons/fa";
 import * as XLSX from "xlsx";
+import Pagination from "./Pagination/Pagination";
 
 export default function SalaryManagement() {
   const [employees, setEmployees] = useState([]);
-  const { data, isLoading } = useGetAllEmpDataQuery({ page: 1, limit: 1000 }); // Fetch all employees by setting a high limit (adjust if needed)
+  const [page,setPage] = useState(1)
+   const limit = 10 ;
+  const { data, isLoading } = useGetAllEmpDataQuery({ page, limit }); // Fetch all employees by setting a high limit (adjust if needed)
 
   useEffect(() => {
     if (data?.data) {
@@ -129,6 +132,7 @@ export default function SalaryManagement() {
           Download Salary Report
         </button>
       </div>
+      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 10} />
     </div>
   );
 }

@@ -159,11 +159,12 @@ const EmpDashboard = () => {
       </div>
       <div className="overflow-x-auto shadow-lg rounded">
         <table className="w-full min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-200 text-gray-700 uppercase font-semibold">
+          <thead className="bg-gray-200 whitespace-nowrap text-gray-700 uppercase font-semibold">
             <tr>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Email</th>
               <th className="p-3 text-left">Department</th>
+              <th className="p-4 text-left whitespace-nowrap">Sub Department</th>
               <th className="p-3 text-left">Designation</th>
               <th className="p-3 text-left">Emp Code</th>
               <th className="p-3 text-left">Salary</th>
@@ -186,7 +187,7 @@ const EmpDashboard = () => {
               filteredEmployees.map((emp, idx) => (
                 <tr
                   key={emp._id}
-                  className={`border-b  border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                  className={`border-b whitespace-nowrap  border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
                     }`}
                 >
                   <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
@@ -195,6 +196,9 @@ const EmpDashboard = () => {
                   </td>
                   <td className="pl-4 py-2 px-2 text-[16px]">
                     {emp.department}
+                  </td>
+                  <td className="pl-4 py-2 px-2 text-[16px]">
+                    {emp.sub_department} 
                   </td>
                   <td className="pl-4 py-2 px-2 text-[16px]">
                     {emp.designation}

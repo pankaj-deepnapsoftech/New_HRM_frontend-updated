@@ -148,6 +148,7 @@ const EmployeeTable = () => {
               <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
               <th className="p-4 text-left whitespace-nowrap">Address</th>
               <th className="p-4 text-left whitespace-nowrap">Department</th>
+              
               <th className="p-4 text-left whitespace-nowrap">Designation</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
