@@ -19,6 +19,7 @@ import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
 import AdminRouteGuard from "@/Components/AdminRouteGuard";
+import Departments from "@/pages/Departments";
 
 export const MainRoutes = [
   {
@@ -49,6 +50,10 @@ export const MainRoutes = [
   {
     path: "/empdashboard",
     element: <AdminRouteGuard><EmpDashboard /></AdminRouteGuard>,
+  },
+  {
+    path: "/departments",
+    element: <Departments />,
   },
   {
     path: "/projects",

@@ -5,7 +5,7 @@ export const Api = createApi({
     reducerPath: 'Api',
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BACKEND_URL,credentials:"include" }),
     endpoints: () => ({}),
-    tagTypes: ["Auth","Employee", "Project" , "User"],
+    tagTypes: ["Auth","Employee", "Project" , "User","Department"],
 
 })  
 

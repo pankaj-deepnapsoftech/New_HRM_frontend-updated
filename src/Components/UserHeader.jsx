@@ -3,7 +3,7 @@ import { FaRegBell } from "react-icons/fa";
 import EmpMenuBar from "@/Drawer/EmpDetails/EmpMenuBar";
 import EmpNotification from "@/Drawer/EmpDetails/EmpNotification";
 
-const UserHeader = ({isMobile}) => {
+const UserHeader = ({ isMobile }) => {
   const [showEmpMenuBar, setShowEmpMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
@@ -31,10 +31,9 @@ const UserHeader = ({isMobile}) => {
   }, []);
 
   return (
-    <div   className={`w-full h-16 bg-gray-100 px-4 sm:px-6 md:px-10 flex items-center justify-end z-10 ${
-    isMobile ? "" : "shadow-md"
-  }`}
->
+    <div className={`w-full h-16 bg-gray-100 px-4 sm:px-6 md:px-10 flex items-center justify-end z-10 ${isMobile ? "" : "shadow-md"
+      }`}
+    >
       <div className="flex items-center gap-10"></div>
       {/* Right Section: Notification & User */}
       <div className="flex items-center gap-4 ml-auto">
@@ -44,7 +43,7 @@ const UserHeader = ({isMobile}) => {
           </button>
           {showNotification && (
             <div ref={notificationRef} className="absolute right-0 top-8 z-50">
-              <EmpNotification/>
+              <EmpNotification />
             </div>
           )}
         </div>
@@ -57,10 +56,10 @@ const UserHeader = ({isMobile}) => {
           </div>
         </div>
       </div>
-<EmpMenuBar
-  setShowEmpMenuBar={setShowEmpMenuBar}
-  showEmpMenuBar={showEmpMenuBar}
-/>
+      <EmpMenuBar
+        setShowEmpMenuBar={setShowEmpMenuBar}
+        showEmpMenuBar={showEmpMenuBar}
+      />
     </div>
   );
 };

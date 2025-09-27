@@ -1,12 +1,66 @@
+import React, { useState, useEffect } from "react";
+import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 import { FaDownload } from "react-icons/fa";
+import * as XLSX from "xlsx";
 
 export default function SalaryManagement() {
-  const employees = [
-    { name: "Nitish kumar", code: "NIT51130226", salary: 5000, days: 3, leaves: 0 },
-    { name: "abhi", code: "ABH74130227", salary: 12000, days: 1, leaves: 0 },
-    { name: "komal", code: "KOM98740307", salary: 10000, days: 1, leaves: 0 },
-    { name: "Deepak", code: "DEE23890101", salary: 10, days: 0, leaves: 0 },
-  ];
+  const [employees, setEmployees] = useState([]);
+  const { data, isLoading } = useGetAllEmpDataQuery({ page: 1, limit: 1000 }); // Fetch all employees by setting a high limit (adjust if needed)
+
+  useEffect(() => {
+    if (data?.data) {
+      setEmployees(
+        data.data.map((emp) => {
+          // Calculate default present days from attendance for current month (September 2025)
+          const currentMonth = "2025-09"; // Based on the provided current date
+          const presentDays = emp.attendance.filter(
+            (a) => a.date.startsWith(currentMonth) && a.status.toLowerCase() === "present"
+          ).length;
+
+          // Calculate default leaves (full days + half days equivalent)
+          const leaves = emp.fullDayLeavesThisMonth + emp.halfDayLeavesThisMonth * 0.5;
+
+          return {
+            id: emp._id,
+            name: `${emp.fname} ${emp.lastName || ""}`.trim(),
+            code: emp.empCode,
+            salary: emp.salary,
+            days: presentDays, // Default to calculated present days
+            leaves: leaves, // Default to calculated leaves
+          };
+        })
+      );
+    }
+  }, [data]);
+
+  const handleInputChange = (index, field, value) => {
+    const newEmps = [...employees];
+    newEmps[index][field] = parseFloat(value) || 0;
+    setEmployees(newEmps);
+  };
+
+  const calculateSalary = (emp) => {
+    const daysInMonth = 30; // Assuming 30 days in the month for calculation
+    return Math.round((emp.salary / daysInMonth) * emp.days); // Simple pro-rated calculation based on present days
+  };
+
+  const downloadReport = () => {
+    const reportData = employees.map((emp) => ({
+      "Full Name": emp.name,
+      "Emp-Code": emp.code,
+      "New Monthly Salary": emp.salary,
+      "Present Days": emp.days,
+      "Leaves": emp.leaves,
+      "Calculated Salary": calculateSalary(emp),
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(reportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Salary Report");
+    XLSX.writeFile(wb, "salary_report.xlsx");
+  };
+
+  if (isLoading) return <div className="text-center py-10">Loading employee data...</div>;
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
@@ -38,25 +92,28 @@ export default function SalaryManagement() {
                 <td className="py-4 px-5">
                   <input
                     type="number"
-                    defaultValue={emp.salary}
+                    value={emp.salary}
+                    onChange={(e) => handleInputChange(i, "salary", e.target.value)}
                     className="w-40 px-5 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   />
                 </td>
                 <td className="py-4 px-5 ">
                   <input
                     type="number"
-                    defaultValue={emp.days}
+                    value={emp.days}
+                    onChange={(e) => handleInputChange(i, "days", e.target.value)}
                     className="w-30 px-3 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   />
                 </td>
                 <td className="py-4 px-3">
                   <input
                     type="number"
-                    defaultValue={emp.leaves}
+                    value={emp.leaves}
+                    onChange={(e) => handleInputChange(i, "leaves", e.target.value)}
                     className="w-30 px-3 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   />
                 </td>
-                <td className="py-4 px-3">0</td>
+                <td className="py-4 px-3">{calculateSalary(emp)}</td>
               </tr>
             ))}
           </tbody>
@@ -64,7 +121,10 @@ export default function SalaryManagement() {
       </div>
 
       <div className="py-4 px-3 bg-gray-50 text-center">
-        <button className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 flex items-center gap-2 mx-auto">
+        <button
+          onClick={downloadReport}
+          className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 flex items-center gap-2 mx-auto"
+        >
           <FaDownload />
           Download Salary Report
         </button>
