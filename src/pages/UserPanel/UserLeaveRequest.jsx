@@ -3,10 +3,18 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import { FaUpload, FaFilePdf, FaFileImage, FaFileArchive, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useSubmitLeaveRequestMutation } from "../../store/api/api";
+import { useSelector } from "react-redux";
 
 const UserLeaveRequest = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  
+  // Get user data from Redux store
+  const { Auth } = useSelector((state) => state);
+  
+  // RTK Query mutation hook
+  const [submitLeaveRequest, { isLoading, error }] = useSubmitLeaveRequestMutation();
 
   // File validation
   const validateFile = (file) => {
@@ -125,17 +133,53 @@ const UserLeaveRequest = () => {
     type: Yup.string().required("Must select a leave type"),
     reason: Yup.string().required("Reason is required"),
   })}
-  onSubmit={(values, { resetForm, setSubmitting }) => {
-    console.log("Submitted:", values);
-    console.log("Uploaded Files:", uploadedFiles);
-    
-    // Here you can add your API call to submit the form with files
-    // Example: submitLeaveRequest(values, uploadedFiles);
-    
-    setSubmitting(false);
+  onSubmit={async (values, { resetForm, setSubmitting }) => {
+    try {
+      // Check if user is logged in and has an ID
+      if (!Auth._id) {
+        toast.error("User not logged in. Please log in again.");
+        return;
+      }
+
+      // Prepare the leave request data according to API structure
+      const leaveRequestData = {
+        employeeId: Auth._id, // Add the employee ID from Redux store
+        from: new Date(values.from).toISOString(),
+        to: new Date(values.to).toISOString(),
+        type: values.type, // Now using the correct values directly
+        mode: values.request || "full", // Use the request value (half/full) or default to "full"
+        reason: values.reason,
+        // Note: For file uploads, you might need to use FormData instead of JSON
+        // file: uploadedFiles.length > 0 ? uploadedFiles[0].file : null,
+      };
+
+      // If you need to upload files, you would need to modify the API endpoint to handle FormData
+      // For now, we'll send the basic leave request data
+
+      console.log("Submitting leave request:", leaveRequestData);
+      
+      // Submit the leave request using RTK Query
+      const result = await submitLeaveRequest(leaveRequestData).unwrap();
+      
+      console.log("Leave request submitted successfully:", result);
+      
+      // Show success message
+      toast.success(result.message || "Leave request submitted successfully!");
+      
+      // Reset form and clear files
     resetForm();
     setUploadedFiles([]);
-    toast.success("Leave request submitted successfully!");
+      
+    } catch (error) {
+      console.error("Error submitting leave request:", error);
+      
+      // Show error message
+      const errorMessage = error?.data?.message || error?.message || "Failed to submit leave request";
+      toast.error(errorMessage);
+      
+    } finally {
+      setSubmitting(false);
+    }
   }}
 >
   {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
@@ -190,9 +234,9 @@ const UserLeaveRequest = () => {
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           >
             <option value="">Select Leave Type</option>
-            <option value="sick">Sick Leave</option>
-            <option value="casual">Casual Leave</option>
-            <option value="earned">Earned Leave</option>
+            <option value="sickLeave">Sick Leave</option>
+            <option value="casualLeave">Casual Leave</option>
+            <option value="earnedLeave">Earned Leave</option>
           </select>
           {touched.type && errors.type && (
             <p className="text-sm text-red-500">{errors.type}</p>
@@ -349,9 +393,12 @@ const UserLeaveRequest = () => {
       <div className="text-center">
         <button
           type="submit"
-          className="bg-gradient-to-br from-gray-400 to-gray-600 hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition"
+          disabled={isLoading}
+          className={`bg-gradient-to-br from-gray-400 to-gray-600 hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition ${
+            isLoading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
-          Submit
+          {isLoading ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     </form>

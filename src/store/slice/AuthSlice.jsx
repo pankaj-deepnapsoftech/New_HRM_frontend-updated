@@ -7,6 +7,7 @@ const initialState = {
     phone:"",
     username:"",
     role:"",
+    _id:"", // Add user ID
     isLogin:false
 }
 
@@ -20,6 +21,7 @@ export const AuthSlice = createSlice({
             state.phone = action.payload.phone;
             state.username = action.payload.username;
             state.role = action.payload.role;
+            state._id = action.payload._id; // Add user ID
             state.isLogin = true;
         },
         removeData:(state)=>{
@@ -29,6 +31,7 @@ export const AuthSlice = createSlice({
             state.phone = "";
             state.username = "";
             state.role = "";
+            state._id = ""; // Clear user ID
             state.isLogin = false;
         },
         setLoginState:(state)=>{
