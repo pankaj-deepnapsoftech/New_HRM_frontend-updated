@@ -4,12 +4,15 @@ import * as XLSX from "xlsx";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { toast } from "react-toastify";
+import Pagination from "./Pagination/Pagination";
 mapboxgl.accessToken = `${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 const EmployeesReports = () => {
 
-  const { data, isLoading } = useGetAllEmpDataQuery();
+
+  const [page,setPage] = useState(1)
+  const limit = 10 ;
+  const { data: data } = useGetAllEmpDataQuery({page,limit});
   const employees = data?.data || [];
- 
   const [showMap, setShowMap] = useState(false);
   const [mapData, setMapData] = useState({
     lng: 0,
@@ -74,6 +77,8 @@ const EmployeesReports = () => {
     XLSX.writeFile(workbook, "Employee_Report.xlsx");
   };
 
+  console.log(data)
+   
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       <div className="bg-gray-300 text text-center mx-4 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
@@ -200,6 +205,8 @@ const EmployeesReports = () => {
         }
       `}</style>
     
+      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 10}/>
+     
     </div>
   );
 };

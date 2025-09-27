@@ -1,7 +1,6 @@
 import AllAttendence from "@/pages/AllAttendence";
 import DailyAttendance from "@/pages/DailyAttendance";
 import EmployeeTable from "@/pages/Employees";
-import EmployeesReports from "@/pages/EmployeesReports";
 import AssignAssets from "@/pages/Assets";
 import EmpDashboard from "@/pages/EmpDashboard";
 import EmpLeaveBalance from "@/pages/EmpLeaveBalance";
@@ -21,6 +20,7 @@ import AllLeaves from "@/pages/AllLeaves";
 import AdminRouteGuard from "@/Components/AdminRouteGuard";
 import Departments from "@/pages/Departments";
 import MainDashboardPage from "@/pages/MainDashboardPage";
+import EmployeesReports from "@/pages/EmployeesReports";
 
 export const MainRoutes = [
   {
