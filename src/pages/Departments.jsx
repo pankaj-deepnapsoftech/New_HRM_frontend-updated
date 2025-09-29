@@ -74,7 +74,7 @@ const Departments = () => {
                         setShowModal(true);
                         setEditable(null)
                     }}
-                    className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
+                    className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
                 >
                     Add Department
                 </button>
