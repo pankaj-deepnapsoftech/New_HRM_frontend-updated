@@ -96,7 +96,7 @@ const Departments = () => {
                                     <td className="p-4 whitespace-nowrap">{dept.sub_department}</td>
                                     <td className="p-4 whitespace-nowrap flex gap-3">
                                         <button onClick={() => { setEditable(dept); setShowModal(true) }} >
-                                            <SquarePen color='gray' size={18} />
+                                            <SquarePen color='blue' size={18} />
                                         </button>
                                         <button disabled={deleting} onClick={() => handledelete(dept?._id)}>
                                             <Trash color='red' size={18} />

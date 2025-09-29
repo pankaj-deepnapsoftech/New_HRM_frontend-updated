@@ -248,7 +248,7 @@ const EmpDashboard = () => {
                           phone: "",
                         });
                       }}
-                      className="inline-flex items-center gap-2  active:scale-95 transition"
+                      className="inline-flex items-center gap-2  active:scale-95 transition text-indigo-800"
                       title="Create login credentials"
                     >
                       <IoMdLogIn />
