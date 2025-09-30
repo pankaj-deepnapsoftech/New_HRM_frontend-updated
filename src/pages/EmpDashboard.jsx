@@ -7,7 +7,7 @@ import {
   useCreateCredentialsMutation,
 } from "@/service/EmpData.services";
 import { FaEye, FaEyeSlash, FaEdit, FaTrash } from "react-icons/fa";
-import { IoIosClose } from "react-icons/io";
+import { IoIosClose, IoMdLogIn } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { validationSchema } from "@/Validation/EmpDashboardValidation";
@@ -251,7 +251,7 @@ const EmpDashboard = () => {
                       className="inline-flex items-center gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-3 py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition"
                       title="Create login credentials"
                     >
-                      Create Login
+                      <IoMdLogIn />
                     </button>
                   </td>
                 </tr>
