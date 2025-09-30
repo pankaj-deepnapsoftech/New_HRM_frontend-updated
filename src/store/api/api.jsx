@@ -37,6 +37,10 @@ export const Api = createApi({
             }),
             invalidatesTags: ['LeaveRequest'],
         }),
+        getPendingLeaveRequests: builder.query({
+            query: () => '/leaves/requests/pending',
+            providesTags: ['LeaveRequest'],
+        }),
     }),
     tagTypes: ["Auth","Employee", "Project" , "User","Department", "LeaveRequest"],
 
@@ -48,7 +52,8 @@ export const {
     useGetLeaveRequestsQuery,
     useGetLeaveRequestByIdQuery,
     useUpdateLeaveRequestMutation,
-    useDeleteLeaveRequestMutation
+    useDeleteLeaveRequestMutation,
+    useGetPendingLeaveRequestsQuery
 } = Api
 
 

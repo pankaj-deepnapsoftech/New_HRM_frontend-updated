@@ -14,6 +14,7 @@ import {
   MdCoPresent,
   MdOutlineBlock,
   MdOutlineStickyNote2,
+  MdDashboard,
 } from "react-icons/md";
 import { TbListDetails, TbReportMoney } from "react-icons/tb";
 import { IoLocationOutline } from "react-icons/io5";
@@ -104,6 +105,11 @@ const Sidebar = () => {
       text: <span className="text-[1rem] font-semibold">Dashboard</span>,
       icon: <FaHome className="text-2xl" />,
       path: "/",
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">HR Dashboard</span>,
+      icon: <MdDashboard className="text-2xl" />,
+      path: "/hrdashboard",
     },
     {
       text: <span className="text-[1rem] font-semibold">Emp Dashboard</span>,
