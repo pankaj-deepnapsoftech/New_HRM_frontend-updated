@@ -24,8 +24,7 @@ const UserLeaveRequest = () => {
 
   const { Auth } = useSelector((state) => state);
 
-  const [submitLeaveRequest, { isLoading, error }] =
-    useSubmitLeaveRequestMutation();
+  const [submitLeaveRequest, { isLoading }] = useSubmitLeaveRequestMutation();
 
   const currentYear = new Date().getFullYear();
 
@@ -165,11 +164,12 @@ const UserLeaveRequest = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-10">
-      <div className="bg-gray-400 rounded-xl shadow-md text-white py-4 px-6 text-center mb-8">
-        <h1 className="text-3xl font-bold tracking-wide">
+      <div className="text-gray-800 text-center py-4 rounded-t-xl mb-6 bg-gradient-to-r from-gray-300 to-gray-400 shadow-md">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-600">
           Employee Leave Request
         </h1>
       </div>
+
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4">
           <h2 className="text-xl font-semibold text-gray-800">
@@ -178,7 +178,7 @@ const UserLeaveRequest = () => {
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-[#6d5281] text-white px-4 py-2 rounded transition hover:bg-[#5a4470]"
+          className="bg-[#615fff] text-white px-4 py-2 rounded transition hover:bg-[#5a4470]"
         >
           Add Leave Request
         </button>
@@ -540,7 +540,7 @@ const UserLeaveRequest = () => {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className={`bg-gradient-to-br from-gray-400 to-gray-600 hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition ${
+                        className={`bg-[#615fff] hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition ${
                           isLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                       >
