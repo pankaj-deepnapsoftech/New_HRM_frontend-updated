@@ -1,7 +1,12 @@
-import React from 'react';
-import { FaFileAlt } from 'react-icons/fa';
+import { useGetEmployeeDocumentDetailsQuery } from '@/service/Employee.services'
+import React, { useEffect } from 'react'
 
 const UserDocument = () => {
+  const { data: GetEmpDocument } = useGetEmployeeDocumentDetailsQuery()
+
+  useEffect(() => {
+
+  }, [])
   return (
     <div className="mt-10 bg-gray-50 flex flex-col items-center justify-center">
       {/* Header */}
