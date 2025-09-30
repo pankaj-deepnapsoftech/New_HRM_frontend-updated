@@ -192,7 +192,7 @@ const UserLeaveRequest = () => {
                       to: new Date(values.to).toISOString(),
                       type: values.type,
                       mode: values.request || "full",
-                      reason: values.reason,
+                      description: values.reason,
                     };
                     console.log("Submitting leave request:", leaveRequestData);
 
@@ -283,7 +283,8 @@ const UserLeaveRequest = () => {
                           <option value="">Select Leave Type</option>
                           <option value="sickLeave">Sick Leave</option>
                           <option value="casualLeave">Casual Leave</option>
-                          <option value="earnedLeave">Earned Leave</option>
+                          <option value="paidLeave">Paid Leave</option>
+                          <option value="emergencyLeave">Emergency Leave</option>
                         </select>
                         {touched.type && errors.type && (
                           <p className="text-sm text-red-500">{errors.type}</p>
@@ -294,36 +295,17 @@ const UserLeaveRequest = () => {
                         <label className="block font-medium text-gray-700 mb-1">
                           Request Leave
                         </label>
-                        <div className="flex gap-4 items-center">
-                          <label className="flex items-center gap-2 text-gray-600">
-                            <input
-                              type="checkbox"
-                              name="request"
-                              value="half"
-                              checked={values.request === "half"}
-                              onChange={(e) =>
-                                e.target.checked
-                                  ? (values.request = "half")
-                                  : (values.request = "")
-                              }
-                            />
-                            Half Day
-                          </label>
-                          <label className="flex items-center gap-2 text-gray-600">
-                            <input
-                              type="checkbox"
-                              name="request"
-                              value="full"
-                              checked={values.request === "full"}
-                              onChange={(e) =>
-                                e.target.checked
-                                  ? (values.request = "full")
-                                  : (values.request = "")
-                              }
-                            />
-                            Full Day
-                          </label>
-                        </div>
+                        <select
+                          name="request"
+                          value={values.request}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        >
+                          <option value="">Select Request Type</option>
+                          <option value="half">Half Day</option>
+                          <option value="full">Full Day</option>
+                        </select>
                       </div>
                     </div>
 
