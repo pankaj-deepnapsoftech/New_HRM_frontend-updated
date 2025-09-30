@@ -1,12 +1,17 @@
-
 import React, { useState, useEffect, useRef } from "react";
-import mapboxgl from "mapbox-gl";
+import L from "leaflet"; 
+import "leaflet/dist/leaflet.css";
 import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { toast } from "react-toastify";
 import Pagination from "./Pagination/Pagination";
 
-mapboxgl.accessToken = `${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
+// Fix default markers icon issue with Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 const EmpLocation = () => {
   const [page, setPage] = useState(1);
@@ -26,37 +31,57 @@ const EmpLocation = () => {
 
   useEffect(() => {
     if (showMap && mapContainer.current && mapData.lng && mapData.lat) {
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/mapbox/streets-v12",
-        center: [mapData.lng, mapData.lat],
-        zoom: 12,
-      });
+      // Initialize Leaflet map
+      map.current = L.map(mapContainer.current).setView([mapData.lat, mapData.lng], 12);
 
-      new mapboxgl.Marker()
-        .setLngLat([mapData.lng, mapData.lat])
-        .addTo(map.current);
+      // Add OpenStreetMap tile layer (completely free, no API key needed)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }).addTo(map.current);
 
-      return () => map.current?.remove();
+      // Add marker with popup for the location
+      L.marker([mapData.lat, mapData.lng])
+        .addTo(map.current)
+        .bindPopup(`<b>${mapData.place}</b>`)
+        .openPopup();
+
+      // Add default controls: zoom, scale, fullscreen (if supported)
+      L.control.zoom({ position: 'topright' }).addTo(map.current);
+      L.control.scale().addTo(map.current);
+
+      return () => {
+        if (map.current) {
+          map.current.remove();
+        }
+      };
     }
   }, [showMap, mapData]);
 
   const handleLocationClick = async (location) => {
+    if (!location || location === "NA") {
+      toast("No location available for this employee.");
+      return;
+    }
+
     try {
+      // Use OpenStreetMap Nominatim API for geocoding (free, no API key, rate-limited but suitable for this use case)
       const query = encodeURIComponent(location);
       const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${mapboxgl.accessToken}`
+        `https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1&addressdetails=1`
       );
-      const data = await response.json();
-      if (data?.features?.length > 0) {
-        const [lng, lat] = data.features[0].center;
-        setMapData({ lng, lat, place: location });
+      const results = await response.json();
+      
+      if (results.length > 0) {
+        const { lat, lon } = results[0];
+        setMapData({ lng: parseFloat(lon), lat: parseFloat(lat), place: location });
         setShowMap(true);
       } else {
-        toast("Location not found on map.");
+        toast("Location not found on map. Please check the spelling.");
       }
     } catch (error) {
       console.error("Error fetching map data:", error);
+      toast("Error loading map. Please try again.");
     }
   };
 
@@ -82,8 +107,9 @@ const EmpLocation = () => {
             {EmpLocation?.map((emp, idx) => (
               <tr
                 key={idx}
-                className={`border-t border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                  }`}
+                className={`border-t border-gray-200 ${
+                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                }`}
               >
                 <td className="p-2 px-3">{emp.fname || "NA"}</td>
                 <td className="p-2 px-3">{emp.email || "NA"}</td>
@@ -103,12 +129,13 @@ const EmpLocation = () => {
       </div>
 
       {showMap && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn">
           <div className="relative bg-white p-4 rounded-lg w-[90%] max-w-3xl shadow-xl transform transition-transform duration-300 animate-scaleIn">
             <h3 className="text-lg font-semibold mb-2">Location: {mapData.place}</h3>
-            <div ref={mapContainer} className="w-full h-96 rounded-lg overflow-hidden shadow-inner" />
+            <div
+              ref={mapContainer}
+              className="w-full h-96 rounded-lg overflow-hidden shadow-inner"
+            />
             <button
               onClick={() => setShowMap(false)}
               className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-all duration-200"
@@ -119,8 +146,7 @@ const EmpLocation = () => {
         </div>
       )}
 
-
-      <style >{`
+      <style>{`
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
