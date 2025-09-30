@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
+import { useGetAllEmpDataQuery, useGetAllEmpDataWithoutPaginatioQuery } from '@/service/EmpData.services';
 import { useEmpAllMutation, useEpmUpdateDataMutation } from '@/service/Employee.services';
 import EmpDetailsSchema from '@/Validation/EmployeeValidation/EmployeeDetailsValidations';
 import { useFormik } from 'formik';
@@ -9,12 +9,10 @@ import { toast } from 'react-toastify';
 
 const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
     const fileRefs = useRef({});
-    const [page,setPage] = useState(1)
-    const limit = 10 ;
     const [EmpAllData, { isLoading }] = useEmpAllMutation();
     const [EpmUpdateData] = useEpmUpdateDataMutation()
-    const { data: EmpData } = useGetAllEmpDataQuery({page,limit})
-
+    const { data: EmpData } = useGetAllEmpDataWithoutPaginatioQuery()
+ 
 
     const {
         handleBlur, handleSubmit, handleChange, resetForm,setFieldValue,
@@ -91,21 +89,29 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
                             if (selectedEmp) {
                                 setFieldValue("empFullName", selectedEmp.fname || "");
-                              
                                 setFieldValue("_id", selectedEmp._id);
+                            } else {
+                                setFieldValue("empFullName", "");
+                                setFieldValue("_id", "");
                             }
                         }}
-                        className="block w-full px-3 py-2 text-md text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm
-    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="block w-full  px-4 py-3 text-md font-medium text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
+                        aria-label="Select Employee"
                     >
-                        <option value="">Select a user</option>
+                        <option  className="text-gray-400">
+                            Select a user
+                        </option>
                         {EmpData?.data?.map((emp) => (
-                            <option key={emp._id} value={emp?._id}>
+                            <option
+                                key={emp._id}
+                                value={emp._id}
+                                className="hover:bg-indigo-100 "
+                            >
                                 {emp.fname}
                             </option>
-
                         ))}
                     </select>
+
 
                
 
