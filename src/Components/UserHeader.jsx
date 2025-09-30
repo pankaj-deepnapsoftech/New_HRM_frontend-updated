@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaRegBell } from "react-icons/fa";
 import EmpMenuBar from "@/Drawer/EmpDetails/EmpMenuBar";
 import EmpNotification from "@/Drawer/EmpDetails/EmpNotification";
+import { useLogedInuserQuery } from "@/service/Auth.services";
 
 const UserHeader = () => {
   const [showEmpMenuBar, setShowEmpMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
-  const userName = "Nitin Thakur"; // Replace with your redux state if needed
-  const userInitials = userName
-    .split(" ")
+  const { data: username } = useLogedInuserQuery()
+  const userName = username?.data?.fullName ;
+
+  const userInitials = userName?.split(" ")
     .map((word) => word[0])
     .join("")
     .toUpperCase();

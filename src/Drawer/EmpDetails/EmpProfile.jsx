@@ -1,3 +1,4 @@
+import { useLogedInuserQuery } from "@/service/Auth.services";
 import React from "react";
 import { IoIosClose } from "react-icons/io";
 
@@ -9,6 +10,13 @@ const EmpProfile = ({ showUserMenu, setShowMenu }) => {
   const handleContentClick = (e) => {
     e.stopPropagation();
   };
+
+  const { data:userData} = useLogedInuserQuery();
+
+  const userName = userData?.data?.fullName ;
+
+
+  const firstlater = userName?.split(" ").map((word)=>word[0]).join("").toUpperCase();
 
   return (
     <div
@@ -22,10 +30,10 @@ const EmpProfile = ({ showUserMenu, setShowMenu }) => {
         onClick={handleContentClick}
       >
         {/* Header */}
-        <div className="h-28 bg-gradient-to-r from-indigo-600 to-indigo-700 p-6 text-white flex items-start justify-between rounded-t-2xl shadow-md">
-          <h1 className="text-xl md:text-2xl font-semibold">Employee Profile</h1>
+        <div className="h-28 bg-gradient-to-r from-indigo-600 to-indigo-700 p-6 text-white flex items-start justify-end rounded-t-2xl shadow-md">
+          {/* <h1 className="text-xl md:text-2xl font-semibold">Employee Profile</h1> */}
           <button
-            className="text-white hover:text-gray-300 transition"
+            className="text-white cursor-pointer  hover:text-gray-300 transition"
             onClick={() => setShowMenu(false)}
             aria-label="Close"
           >
@@ -35,32 +43,41 @@ const EmpProfile = ({ showUserMenu, setShowMenu }) => {
 
         {/* Profile Image */}
         <div className="flex justify-center -mt-16">
-          <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-            <img src="/3dd.png" alt="Profile" className="w-full h-full object-cover" />
+          <div
+            className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 
+               bg-gradient-to-br from-blue-600 to-sky-500 
+               text-white font-bold text-xl sm:text-2xl 
+               rounded-full flex items-center justify-center 
+               cursor-pointer hover:scale-110 shadow-2xl 
+               transition-transform duration-300"
+            title="Profile"
+          >
+            {firstlater}
           </div>
         </div>
+
 
         {/* Info Section */}
         <div className="px-6 py-6 text-gray-900 text-sm sm:text-base">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold">Dinki Kaur</h2>
+            <h2 className="text-2xl font-bold">{userName}  </h2>
             <p className="text-sm md:text-base text-gray-400">Employee</p>
           </div>
 
           <div className="space-y-4">
             <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
               <span className="font-medium text-gray-700">User Name</span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">21</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{userName}</span>
             </div>
 
             <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
               <span className="font-medium text-gray-700">Email</span>
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">Graduated</span>
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">{userData?.data?.email}</span>
             </div>
 
             <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
               <span className="font-medium text-gray-700">Phone</span>
-              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">Faridabad</span>
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">{userData?.data?.phone || "N/A"}</span>
             </div>
           </div>
         </div>

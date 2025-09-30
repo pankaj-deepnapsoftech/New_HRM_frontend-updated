@@ -20,7 +20,7 @@ const UserDocument = () => {
 
 
   const DocCard = ({ title, value }) => (
-    <div className="border rounded-lg p-4 shadow-sm bg-gray-50">
+    <div className="border rounded-lg p-4 flex justify-between shadow-sm bg-gray-50">
       <h3 className="font-semibold text-gray-600">{title}</h3>
       {value ? (
         <a
