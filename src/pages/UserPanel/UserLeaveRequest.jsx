@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -7,20 +7,45 @@ import {
   FaFileImage,
   FaFileArchive,
   FaTrash,
+  FaSync,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useSubmitLeaveRequestMutation } from "../../service/LeaveRequest.services";
+import {
+  useSubmitLeaveRequestMutation,
+  useGetEmployeeLeaveRequestsQuery,
+} from "../../service/LeaveRequest.services";
 import { useSelector } from "react-redux";
 
 const UserLeaveRequest = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [lastFetchTime, setLastFetchTime] = useState(null);
 
   const { Auth } = useSelector((state) => state);
 
   const [submitLeaveRequest, { isLoading, error }] =
     useSubmitLeaveRequestMutation();
+
+  const currentYear = new Date().getFullYear();
+
+  const {
+    data: employeeLeaveRequests,
+    isLoading: requestsLoading,
+    error: requestsError,
+    refetch: refetchRequests,
+  } = useGetEmployeeLeaveRequestsQuery(
+    { employeeId: Auth?._id, year: currentYear },
+    {
+      skip: !Auth?._id,
+    }
+  );
+
+  useEffect(() => {
+    if (employeeLeaveRequests) {
+      setLastFetchTime(new Date());
+    }
+  }, [employeeLeaveRequests]);
 
   const validateFile = (file) => {
     const allowedTypes = [
@@ -116,6 +141,28 @@ const UserLeaveRequest = () => {
     return <FaFilePdf className="text-gray-500" />;
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case "approved":
+        return "bg-green-100 text-green-800 border border-green-200";
+      case "rejected":
+        return "bg-red-100 text-red-800 border border-red-200";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800 border border-yellow-200";
+      default:
+        return "bg-gray-100 text-gray-800 border border-gray-200";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-10">
       <div className="bg-gray-400 rounded-xl shadow-md text-white py-4 px-6 text-center mb-8">
@@ -123,28 +170,102 @@ const UserLeaveRequest = () => {
           Employee Leave Request
         </h1>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-semibold text-gray-800">
+            My Leave Requests ({currentYear})
+          </h2>
+        </div>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-[#6d5281] text-white px-4 py-2 rounded transition"
+          className="bg-[#6d5281] text-white px-4 py-2 rounded transition hover:bg-[#5a4470]"
         >
           Add Leave Request
         </button>
       </div>
 
       <div className="overflow-x-auto shadow-lg rounded">
-        <table className="w-full min-w-full divide-y mt-10 divide-gray-200 text-sm">
+        <table className="w-full min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-200 whitespace-nowrap text-gray-700 uppercase font-semibold">
             <tr>
               <th className="p-3 text-left">Leave Type</th>
-              <th className="p-3 text-left">Request Leave</th>
+              <th className="p-3 text-left">Request Type</th>
               <th className="p-3 text-left">From Date</th>
-              <th className="p-4 text-left whitespace-nowrap">To Date</th>
-              <th className="p-3 text-left">Reason for Leave</th>
+              <th className="p-3 text-left">To Date</th>
+              <th className="p-3 text-left">Reason</th>
               <th className="p-3 text-left">Supporting Documents</th>
+              <th className="p-3 text-left">Status</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {requestsLoading ? (
+              <tr>
+                <td colSpan="7" className="p-4 text-center text-gray-500">
+                  Loading leave requests...
+                </td>
+              </tr>
+            ) : requestsError ? (
+              <tr>
+                <td colSpan="7" className="p-4 text-center text-red-500">
+                  Error loading requests:{" "}
+                  {requestsError?.data?.message || "Unknown error"}
+                </td>
+              </tr>
+            ) : employeeLeaveRequests?.data &&
+              employeeLeaveRequests.data.length > 0 ? (
+              employeeLeaveRequests.data.map((request) => (
+                <tr key={request._id} className="hover:bg-gray-50">
+                  <td className="p-3 capitalize">
+                    {request.type?.replace(/([A-Z])/g, " $1").trim() || "N/A"}
+                  </td>
+                  <td className="p-3 capitalize">
+                    {request.mode || "Full Day"}
+                  </td>
+                  <td className="p-3">{formatDate(request.from)}</td>
+                  <td className="p-3">{formatDate(request.to)}</td>
+                  <td
+                    className="p-3 max-w-xs truncate"
+                    title={request.description}
+                  >
+                    {request.description || request.reason || "N/A"}
+                  </td>
+                  <td className="p-3">
+                    {request.file ? (
+                      <a
+                        href={request.file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                      >
+                        <FaFilePdf className="text-red-500" />
+                        View
+                      </a>
+                    ) : (
+                      <span className="text-gray-400">No document</span>
+                    )}
+                  </td>
+                  <td className="p-3">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 w-fit ${getStatusColor(
+                        request.status
+                      )}`}
+                    >
+                      {request.status
+                        ? request.status.charAt(0).toUpperCase() +
+                          request.status.slice(1)
+                        : "Pending"}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="p-4 text-center text-gray-500">
+                  No leave requests found for {currentYear}
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
 
@@ -212,6 +333,8 @@ const UserLeaveRequest = () => {
                     resetForm();
                     setUploadedFiles([]);
                     setShowForm(false);
+
+                    refetchRequests();
                   } catch (error) {
                     console.error("Error submitting leave request:", error);
 
@@ -284,7 +407,9 @@ const UserLeaveRequest = () => {
                           <option value="sickLeave">Sick Leave</option>
                           <option value="casualLeave">Casual Leave</option>
                           <option value="paidLeave">Paid Leave</option>
-                          <option value="emergencyLeave">Emergency Leave</option>
+                          <option value="emergencyLeave">
+                            Emergency Leave
+                          </option>
                         </select>
                         {touched.type && errors.type && (
                           <p className="text-sm text-red-500">{errors.type}</p>
