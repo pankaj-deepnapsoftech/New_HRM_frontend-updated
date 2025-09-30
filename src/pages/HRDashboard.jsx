@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useGetPendingLeaveRequestsQuery, useUpdateLeaveRequestMutation } from "@/store/api/api";
+import { useGetPendingLeaveRequestsQuery, useUpdateLeaveRequestMutation } from "@/service/LeaveRequest.services";
 import { toast } from "react-toastify";
 
 const formatDate = (iso) => {
