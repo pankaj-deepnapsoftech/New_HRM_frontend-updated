@@ -180,7 +180,7 @@ const EmpDashboard = () => {
             {filteredEmployees.length === 0 ? (
               <tr>
                 <td colSpan="10" className="text-center py-8 text-gray-500">
-                  {searchQuery || selectedDepartment
+                  {  selectedDepartment
                     ? "No employees found matching your filters"
                     : "No employees found"}
                 </td>
@@ -531,10 +531,7 @@ const EmpDashboard = () => {
                   {showPwd ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              <p className="text-xs text-gray-500">
-                Agar password blank hua to temporary password auto-generate
-                hoga.
-              </p>
+             
             </div>
             <div className="flex justify-end gap-3 mt-5">
               <button

@@ -51,6 +51,7 @@ const HRDashboard = () => {
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-gray-200 whitespace-nowrap text-gray-700 text-left">
+                <th className="font-[600] py-4 px-4">Employee Code</th>
                 <th className="font-[600] py-4 px-4">Employee</th>
                 <th className="font-[600] py-4 px-4">Type</th>
                 <th className="font-[600] py-4 px-4">Mode</th>
@@ -68,7 +69,8 @@ const HRDashboard = () => {
                     index % 2 === 0 ? "bg-white" : "bg-gray-50"
                   }`}
                 >
-                  <td className="py-3 px-4">{req.employeeId || "NA"}</td>
+                  <td className="py-3 px-4">{req.employeeId?.empCode || "NA"}</td>
+                  <td className="py-3 px-4">{req.employeeId?.fname || "NA"}</td>
                   <td className="py-3 px-4 capitalize">{req.type || "NA"}</td>
                   <td className="py-3 px-4 capitalize">{req.mode || "NA"}</td>
                   <td className="py-3 px-4">{formatDate(req.from)}</td>

@@ -9,6 +9,14 @@ export const empApi = Api.injectEndpoints({
         method: "GET",
       }),
     }),
+    
+
+    getAllEmpDataWithoutPaginatio: builder.query({
+      query: () => ({
+        url: `/empdata/all`,
+        method: "GET",
+      }),
+    }),
 
     addEmpData: builder.mutation({
       query: (newEmp) => ({
@@ -63,4 +71,5 @@ export const {
   useAddAssetMutation,
   useRemoveAssetMutation,
   useCreateCredentialsMutation,
+  useGetAllEmpDataWithoutPaginatioQuery
 } = empApi;
