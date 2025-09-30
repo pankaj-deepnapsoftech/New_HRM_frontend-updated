@@ -24,7 +24,7 @@ export const Api = createApi({
         }),
         updateLeaveRequest: builder.mutation({
             query: ({ id, ...patch }) => ({
-                url: `/leaves/requests/${id}`,
+                url: `/leaves/requests/${id}/status`,
                 method: 'PATCH',
                 body: patch,
             }),
