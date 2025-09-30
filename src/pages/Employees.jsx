@@ -23,7 +23,7 @@ const EmployeeTable = () => {
 
   const { data, refetch } = useEpmGetDataQuery({ page });
   const [EmpDeleteData] = useEpmDeleteDataMutation();
-  const { data: departmentData } = useGetAllDepartmentQuery()
+  const { data: departmentData } = useGetAllDepartmentQuery();
   const employee = data?.data || [];
 
   const highlightSearchTerm = (text, searchTerm) => {
@@ -36,13 +36,7 @@ const EmployeeTable = () => {
     const parts = text.toString().split(regex);
 
     return parts.map((part, index) =>
-      regex.test(part) ? (
-        <span key={index}>
-          {part}
-        </span>
-      ) : (
-        part
-      )
+      regex.test(part) ? <span key={index}>{part}</span> : part
     );
   };
 
@@ -106,7 +100,7 @@ const EmployeeTable = () => {
       <div className="bg-gradient-to-b from-gray-300 to bg-gray-300 text text-center  mx-5 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees All Details</h2>
       </div>
-                     
+
       <div className="flex justify-between mb-4 gap-4 flex-wrap mx-5 md:mx-10">
         <div className="flex gap-4 flex-wrap flex-1">
           <input
@@ -135,7 +129,7 @@ const EmployeeTable = () => {
               setShowFrom(!showForm);
               setEdittable(null);
             }}
-            className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
+            className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-5 py-3 rounded-lg shadow-lg hover:scale-105 transition transform font-semibold"
           >
             Add Employee Details
           </button>
@@ -146,7 +140,7 @@ const EmployeeTable = () => {
           <thead className="bg-gray-200 text-[16px] text-gray-700 font-semibold">
             <tr>
               <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
-              
+
               <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
@@ -182,7 +176,7 @@ const EmployeeTable = () => {
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp?.Emp_id?.empCode, searchQuery)}
                   </td>
-              
+
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Back_Name, searchQuery)}
                   </td>
@@ -245,7 +239,6 @@ const EmployeeTable = () => {
                       Bank Proof
                     </a>
                   </td>
-               
 
                   <td className="pl-4 py-6 flex gap-2 text-lg">
                     <FaEye
