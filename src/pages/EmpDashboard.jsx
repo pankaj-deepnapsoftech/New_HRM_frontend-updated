@@ -7,7 +7,7 @@ import {
   useCreateCredentialsMutation,
 } from "@/service/EmpData.services";
 import { FaEye, FaEyeSlash, FaEdit, FaTrash } from "react-icons/fa";
-import { IoIosClose } from "react-icons/io";
+import { IoIosClose, IoMdLogIn } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { validationSchema } from "@/Validation/EmpDashboardValidation";
@@ -180,7 +180,7 @@ const EmpDashboard = () => {
             {filteredEmployees.length === 0 ? (
               <tr>
                 <td colSpan="10" className="text-center py-8 text-gray-500">
-                  {searchQuery || selectedDepartment
+                  {  selectedDepartment
                     ? "No employees found matching your filters"
                     : "No employees found"}
                 </td>
@@ -251,7 +251,7 @@ const EmpDashboard = () => {
                       className="inline-flex items-center gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-3 py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition"
                       title="Create login credentials"
                     >
-                      Create Login
+                      <IoMdLogIn />
                     </button>
                   </td>
                 </tr>
@@ -531,10 +531,7 @@ const EmpDashboard = () => {
                   {showPwd ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              <p className="text-xs text-gray-500">
-                Agar password blank hua to temporary password auto-generate
-                hoga.
-              </p>
+             
             </div>
             <div className="flex justify-end gap-3 mt-5">
               <button

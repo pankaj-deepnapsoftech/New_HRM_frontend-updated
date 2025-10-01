@@ -6,13 +6,14 @@ export const leaveRequestApi = Api.injectEndpoints({
     // Leave Request Endpoints
     submitLeaveRequest: builder.mutation({
       query: (leaveData) => ({
-        url: '/leaves/requests',
-        method: 'POST',
+        url: "/leaves/requests",
+        method: "POST",
         body: leaveData,
       }),
+      invalidatesTags: ["LeaveRequest"],
     }),
     getLeaveRequests: builder.query({
-      query: () => '/leaves/requests',
+      query: () => "/leaves/requests",
     }),
     getLeaveRequestById: builder.query({
       query: (id) => `/leaves/requests/${id}`,
@@ -20,18 +21,25 @@ export const leaveRequestApi = Api.injectEndpoints({
     updateLeaveRequest: builder.mutation({
       query: ({ id, ...patch }) => ({
         url: `/leaves/requests/${id}/status`,
-        method: 'PATCH',
+        method: "PATCH",
         body: patch,
       }),
     }),
     deleteLeaveRequest: builder.mutation({
       query: (id) => ({
         url: `/leaves/requests/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
     getPendingLeaveRequests: builder.query({
-      query: () => '/leaves/requests/pending',
+      query: () => "/leaves/requests/pending",
+    }),
+    getEmployeeLeaves: builder.query({
+      query: ({ employeeId, year }) => `/leaves/leaves/${employeeId}/${year}`,
+    }),
+    getEmployeeLeaveRequests: builder.query({
+      query: ({ employeeId, year }) => `/leaves/requests/${employeeId}/${year}`,
+      providesTags: ["LeaveRequest"],
     }),
   }),
 });
@@ -42,5 +50,7 @@ export const {
   useGetLeaveRequestByIdQuery,
   useUpdateLeaveRequestMutation,
   useDeleteLeaveRequestMutation,
-  useGetPendingLeaveRequestsQuery
+  useGetPendingLeaveRequestsQuery,
+  useGetEmployeeLeavesQuery,
+  useGetEmployeeLeaveRequestsQuery,
 } = leaveRequestApi;

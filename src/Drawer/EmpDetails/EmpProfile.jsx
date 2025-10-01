@@ -1,33 +1,39 @@
-
+import { useLogedInuserQuery } from "@/service/Auth.services";
 import React from "react";
-import { IoIosClose } from "react-icons/io"
+import { IoIosClose } from "react-icons/io";
 
 const EmpProfile = ({ showUserMenu, setShowMenu }) => {
-const handleBackgroundClick = () => {
+  const handleBackgroundClick = () => {
     setShowMenu(false);
   };
 
-  // Prevent closing when clicking inside the modal
   const handleContentClick = (e) => {
     e.stopPropagation();
   };
 
+  const { data:userData} = useLogedInuserQuery();
+
+  const userName = userData?.data?.fullName ;
+
+
+  const firstlater = userName?.split(" ").map((word)=>word[0]).join("").toUpperCase();
+
   return (
     <div
-  onClick={handleBackgroundClick}
-      className={`fixed top-0 left-0 w-full h-screen inset-0 z-50 bg-black/40 p-4 flex items-center justify-center transition-opacity duration-300 ease-in-out
-      ${showUserMenu ? 'opacity-100 visible' : 'opacity-0 invisible'}
-    `}
-
-
+      onClick={handleBackgroundClick}
+      className={`fixed top-0 left-0 w-full h-screen inset-0 z-50 bg-black/40 p-4 flex items-start md:items-center justify-center transition-opacity duration-300 ease-in-out
+        ${showUserMenu ? "opacity-100 visible" : "opacity-0 invisible"}
+      `}
     >
-     
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden relative"  onClick={ handleContentClick}>
-
-        <div className="h-24 bg-gradient-to-r from-[#533F60] to-[#372a41] p-5 text-white flex items-start justify-between">
-          <h1 className="text-xl font-semibold">Employee Profile</h1>
+      <div
+        className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden relative transform transition-all duration-300 scale-95 md:scale-100"
+        onClick={handleContentClick}
+      >
+        {/* Header */}
+        <div className="h-28 bg-gradient-to-r from-indigo-600 to-indigo-700 p-6 text-white flex items-start justify-end rounded-t-2xl shadow-md">
+          {/* <h1 className="text-xl md:text-2xl font-semibold">Employee Profile</h1> */}
           <button
-            className="text-white hover:text-gray-300"
+            className="text-white cursor-pointer  hover:text-gray-300 transition"
             onClick={() => setShowMenu(false)}
             aria-label="Close"
           >
@@ -35,44 +41,47 @@ const handleBackgroundClick = () => {
           </button>
         </div>
 
-
-        <div className="flex justify-center -mt-12">
-          <img
-            src="/3dd.png"
-            alt="Profile"
-            className="w-24 h-24"
-          />
+        {/* Profile Image */}
+        <div className="flex justify-center -mt-16">
+          <div
+            className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 
+               bg-gradient-to-br from-blue-600 to-sky-500 
+               text-white font-bold text-xl sm:text-2xl 
+               rounded-full flex items-center justify-center 
+               cursor-pointer hover:scale-110 shadow-2xl 
+               transition-transform duration-300"
+            title="Profile"
+          >
+            {firstlater}
+          </div>
         </div>
 
 
-        <div className="px-6 py-4 text-gray-900 text-sm sm:text-base">
-          <div className="text-center mb-4">
-            <h2 className="text-xl font-bold">Dinki Kaur</h2>
-            <p className="text-sm text-gray-600">Employee</p>
+        {/* Info Section */}
+        <div className="px-6 py-6 text-gray-900 text-sm sm:text-base">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold">{userName}  </h2>
+            <p className="text-sm md:text-base text-gray-400">Employee</p>
           </div>
-
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="font-medium">User Name</span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">21</span>
+            <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
+              <span className="font-medium text-gray-700">User Name</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{userName}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="font-medium">Email</span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Graduated</span>
+
+            <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
+              <span className="font-medium text-gray-700">Email</span>
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">{userData?.data?.email}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="font-medium">Phone</span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-semibold">Faridabad</span>
+
+            <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
+              <span className="font-medium text-gray-700">Phone</span>
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">{userData?.data?.phone || "N/A"}</span>
             </div>
           </div>
-
-
-
         </div>
       </div>
-
-
     </div>
   );
 };

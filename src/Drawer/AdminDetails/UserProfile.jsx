@@ -8,6 +8,10 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
   const email = useSelector((state) => state.Auth.email);
   const phone = useSelector((state) => state.Auth.phone);
 
+  const FirstLetter = fullName?.split(" ").map((word) => word[0]).join("").toUpperCase()
+
+
+
   const handleBackgroundClick = () => {
     setShowMenu(false);
   };
@@ -31,8 +35,8 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
         `}
       >
         {/* Header */}
-        <div className="h-24 bg-indigo-500 p-5 text-white flex items-start justify-between rounded-t-2xl">
-          <h1 className="text-xl font-semibold">User Profile</h1>
+        <div className="h-24 bg-indigo-500 p-5 text-white flex items-start justify-end rounded-t-2xl">
+          
           <button
             className="text-white hover:text-red-400 transition"
             onClick={() => setShowMenu(false)}
@@ -42,21 +46,23 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
           </button>
         </div>
 
-        {/* Profile Image */}
+        
         <div className="flex justify-center -mt-12">
-          <img
-            src="/3dd.png"
-            alt="Profile"
-            className="w-28 h-28 rounded-full object-cover border-4 border-gray-300 shadow-md hover:scale-105 transition-transform duration-300"
-          />
+          
         </div>
 
         {/* User Info */}
         <div className="px-6 py-6 text-gray-900 text-sm sm:text-base">
-          <div className="text-center mb-6">
-            <h2 className="text-xl font-bold">{fullName}</h2>
-            <p className="text-sm text-gray-600">Admin</p>
+          <div className="flex flex-col items-center justify-center mb-6 text-center">
+            <div className="relative z-10 w-16 h-16 bg-gradient-to-br from-blue-600 to-sky-500 text-white font-bold text-xl rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110 hover:rotate-2">
+              {FirstLetter}
+            </div>
+
+            <p className="mt-2 text-base text-gray-700 font-medium tracking-wide">
+              Admin
+            </p>
           </div>
+
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">
