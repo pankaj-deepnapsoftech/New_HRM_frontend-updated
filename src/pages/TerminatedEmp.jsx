@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useGetAllEmpDataQuery, useUpdateEmpDataMutation } from "@/service/EmpData.services";
+import Pagination from "./Pagination/Pagination";
 
 const TerminatedEmp = () => {
+  const [page, setPage] = useState(1);
+  const limit = 10;
   const [confirmId, setConfirmId] = useState(null);
-  const { data, isLoading, refetch } = useGetAllEmpDataQuery();
+  const { data, isLoading, refetch } = useGetAllEmpDataQuery({page,limit});
+
   const employees = data?.data || [];
   const [updateEmpStatus] = useUpdateEmpDataMutation();
 
@@ -119,7 +123,9 @@ const TerminatedEmp = () => {
           </div>
         </div>
       )}
+      <Pagination page={page} setPage={setPage} hasNextPage={employees.length===10}/>
     </div>
+
   );
 };
 
