@@ -74,6 +74,49 @@ const ShowCauseNotices = () => {
           </div>
         </div>
 
+        {/* Summary Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-blue-100">
+                <FaUser className="h-6 w-6 text-blue-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Total Employees</p>
+                <p className="text-2xl font-bold text-gray-900">{termsStatusData?.data?.length || employeesData?.data?.length || 0}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-green-100">
+                <FaCheckCircle className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Submitted</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {termsStatusData?.data?.filter(item => item?.termsStatus?.submitted)?.length || 0}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-red-100">
+                <FaTimesCircle className="h-6 w-6 text-red-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Not Submitted</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {termsStatusData?.data?.filter(item => !item?.termsStatus?.submitted)?.length || 0}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Filters */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -212,49 +255,6 @@ const ShowCauseNotices = () => {
                 })}
               </tbody>
             </table>
-          </div>
-        </div>
-
-        {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-blue-100">
-                <FaUser className="h-6 w-6 text-blue-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Employees</p>
-                <p className="text-2xl font-bold text-gray-900">{employeesData?.data?.length || 0}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-green-100">
-                <FaCheckCircle className="h-6 w-6 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Submitted</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {employeesData?.data?.filter(emp => getTermsStatus(emp.employeeId).submitted).length || 0}
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-red-100">
-                <FaTimesCircle className="h-6 w-6 text-red-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Not Submitted</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {employeesData?.data?.filter(emp => !getTermsStatus(emp.employeeId).submitted).length || 0}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
