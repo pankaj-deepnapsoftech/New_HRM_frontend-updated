@@ -32,24 +32,28 @@ const Login = () => {
     },
     validationSchema: SignInSchema,
     onSubmit: async (values) => {
-      const totalData = { ...values, isMobile, browser: browserName, loginType: "admin" };
+      const totalData = {
+        ...values,
+        isMobile,
+        browser: browserName,
+        loginType: "admin",
+      };
 
       try {
         const res = await SignIn(totalData).unwrap();
         toast.success(res.message);
-        
+
         resetForm();
         dispatch(setLoginState());
-        
+
         // Navigate based on role after state update
         setTimeout(() => {
-          if (res.data.role === 'Admin') {
+          if (res.data.role === "Admin") {
             navigate("/");
           } else {
             navigate("/user");
           }
         }, 100);
-
       } catch (error) {
         console.log(error);
         toast.error(error.data.message);
@@ -107,7 +111,7 @@ const Login = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-3 text-md text-sky-600 hover:underline cursor-pointer"
               >
-                {showPassword ? <IoEyeOutline/> :  <FaRegEyeSlash/>}
+                {showPassword ? <IoEyeOutline /> : <FaRegEyeSlash />}
               </button>
             </div>
           </div>

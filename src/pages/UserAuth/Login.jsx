@@ -31,7 +31,12 @@ const EmpLogin = () => {
     },
     validationSchema: SignInSchema,
     onSubmit: async (values) => {
-      const totalData = { ...values, isMobile, browser: browserName, loginType: "user" };
+      const totalData = {
+        ...values,
+        isMobile,
+        browser: browserName,
+        loginType: "user",
+      };
 
       try {
         const res = await SignIn(totalData).unwrap();
@@ -40,10 +45,10 @@ const EmpLogin = () => {
           toast.success(res.message);
           dispatch(setLoginState());
           resetForm();
-          
+
           // Navigate based on role after state update
           setTimeout(() => {
-            if (res.data.role === 'Admin') {
+            if (res.data.role === "Admin") {
               navigate("/");
             } else {
               navigate("/user");
@@ -120,7 +125,7 @@ const EmpLogin = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-2.5 text-sky-600 text-xl"
                 >
-                  {showPassword ?<IoEyeOutline/> :  <FaRegEyeSlash/>}
+                  {showPassword ? <IoEyeOutline /> : <FaRegEyeSlash />}
                 </button>
               </div>
               {touched.password && errors.password && (
@@ -142,7 +147,6 @@ const EmpLogin = () => {
 
             <button
               type="submit"
-          
               disabled={isLoading}
               className="w-full py-2 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-600 transition"
             >
