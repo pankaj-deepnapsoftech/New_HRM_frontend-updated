@@ -13,15 +13,14 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
     const [EpmUpdateData] = useEpmUpdateDataMutation()
     const { data: EmpData } = useGetAllEmpDataWithoutPaginatioQuery()
  
-
     const {
         handleBlur, handleSubmit, handleChange, resetForm,setFieldValue,
         touched, errors, values
     } = useFormik({
-        initialValues: editTable || { 
-            photo: "", pancard: '', aadhaar: '', Driving_Licance: '', Voter_Id: '',
-            UAN_number: '', Back_Name: '', Bank_Account: '', IFSC_Code: '', Bank_Proof: "",
-            empFullName: '',
+        initialValues: { 
+            photo: editTable?.photo || "", pancard: editTable?.pancard || '', aadhaar: editTable?.aadhaar || '', Driving_Licance: editTable?.Driving_Licance || '', Voter_Id: editTable?.Voter_Id || '',
+            UAN_number: editTable?.UAN_number ||  '', Back_Name:editTable?.Back_Name ||  '', Bank_Account:editTable?.Bank_Account || '', IFSC_Code:editTable?.IFSC_Code || '', Bank_Proof:editTable?.Bank_Proof || "",
+            Emp_id: editTable?.Emp_id?._id || '', 
         },
         validationSchema: EmpDetailsSchema,
         enableReinitialize: true,
@@ -62,6 +61,10 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
         }
     });
 
+
+
+
+
     return (
         <section className={`${showForm ? "opacity-100 visible" : "opacity-0 invisible"} fixed inset-0 bg-black/40 flex items-start justify-center pt-10 transition-opacity duration-500 ease-in-out z-50`}>
            <div className="w-full max-w-xl bg-white rounded-sm shadow-xl p-10 overflow-y-auto max-h-[90vh] relative border border-indigo-100 custom-scrollbar">
@@ -80,18 +83,18 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
 
 
                     <select
-                        id="empFullName"
-                        name="empFullName"
-                        value={values.empId}
+                        id="Emp_id"
+                        name="Emp_id"
+                        value={values.Emp_id} 
                         onChange={(e) => {
                             const selectedId = e.target.value;
                             const selectedEmp = EmpData?.data?.find(emp => emp._id === selectedId);
 
                             if (selectedEmp) {
-                                setFieldValue("empFullName", selectedEmp.fname || "");
+                                setFieldValue("Emp_id", selectedEmp._id || "");
                                 setFieldValue("_id", selectedEmp._id);
                             } else {
-                                setFieldValue("empFullName", "");
+                                setFieldValue("Emp_id", "");
                                 setFieldValue("_id", "");
                             }
                         }}
@@ -109,7 +112,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                             >
                                 {emp.fname}
                             </option>
-                        ))}
+                        ))} 
                     </select>
 
 

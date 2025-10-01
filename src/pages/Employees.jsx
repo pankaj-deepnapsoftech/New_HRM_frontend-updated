@@ -140,7 +140,7 @@ const EmployeeTable = () => {
           <thead className="bg-gray-200 text-[16px] text-gray-700 font-semibold">
             <tr>
               <th className="p-4 text-left whitespace-nowrap">Emp ID</th>
-
+              <th className="p-4 text-left whitespace-nowrap">Employee Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Name</th>
               <th className="p-4 text-left whitespace-nowrap">Bank Account</th>
               <th className="p-4 text-left whitespace-nowrap">IFSC Code</th>
@@ -176,7 +176,9 @@ const EmployeeTable = () => {
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp?.Emp_id?.empCode, searchQuery)}
                   </td>
-
+                  <td className="pl-4 py-3">
+                    {highlightSearchTerm(emp?.Emp_id?.fname, searchQuery)}
+                  </td>
                   <td className="pl-4 py-3">
                     {highlightSearchTerm(emp.Back_Name, searchQuery)}
                   </td>
