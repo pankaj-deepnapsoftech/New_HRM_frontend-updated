@@ -39,6 +39,16 @@ export const empApi = Api.injectEndpoints({
         body: { asset },
       }),
     }),
+
+    getassetByid:builder.query({
+      query: (id)=>({
+        url:`/empdata/${id}`,
+        method:"GET",
+      })
+
+
+    }),
+
     removeAsset: builder.mutation({
       query: ({ id, asset }) => ({
         url: `/empdata/${id}/remove-asset`,
@@ -64,6 +74,7 @@ export const empApi = Api.injectEndpoints({
 });
 
 export const {
+  useGetassetByidQuery,
   useGetAllEmpDataQuery,
   useAddEmpDataMutation,
   useUpdateEmpDataMutation,

@@ -72,6 +72,7 @@ const EmpDashboard = () => {
   const formik = useFormik({
     initialValues: {
       fname: selectedEmployee?.fname || "",
+      phoneNumber: selectedEmployee?.phoneNumber || "",
       department: selectedEmployee?.department || "",
       designation: selectedEmployee?.designation || "",
       empCode: selectedEmployee?.empCode || "",
@@ -293,7 +294,7 @@ const EmpDashboard = () => {
                   </div>
                 )}
               </div>
-
+             
               <div>
                 <input
                   type="email"
@@ -310,7 +311,21 @@ const EmpDashboard = () => {
                 )}
               </div>
 
-             
+              <div>
+                <input
+                  type="number"
+                  name="phoneNumber"
+                  placeholder="Enter your number"
+                  value={formik.values.phoneNumber}
+                  onChange={formik.handleChange}
+                  className="w-full p-3 rounded-lg border border-gray-300"
+                />
+                {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.phoneNumber}
+                  </div>
+                )}
+              </div>
               <div>
                 <label htmlFor="department" className="block mb-1 font-medium text-gray-700">
                   Department
