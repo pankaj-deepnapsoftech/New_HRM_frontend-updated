@@ -16,9 +16,9 @@ const UserLeaveRequest = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [showForm, setShowForm] = useState(false);
-
+  
   const { Auth } = useSelector((state) => state);
-
+  
   const [submitLeaveRequest, { isLoading, error }] =
     useSubmitLeaveRequestMutation();
 
@@ -34,23 +34,23 @@ const UserLeaveRequest = () => {
     ];
 
     const maxSize = 10000 * 1024 * 1024;
-
+    
     if (!allowedTypes.includes(file.type)) {
       toast.error("Only PDF, Images (JPG, PNG, GIF) and ZIP files are allowed");
       return false;
     }
-
+    
     if (file.size > maxSize) {
       toast.error("File size must be less than 10MB");
       return false;
     }
-
+    
     return true;
   };
 
   const handleFileUpload = (files) => {
     const fileArray = Array.from(files);
-
+    
     fileArray.forEach((file) => {
       if (validateFile(file)) {
         const newFile = {
@@ -63,7 +63,7 @@ const UserLeaveRequest = () => {
             ? URL.createObjectURL(file)
             : null,
         };
-
+        
         setUploadedFiles((prev) => [...prev, newFile]);
         toast.success(`${file.name} uploaded successfully`);
       }
@@ -161,70 +161,70 @@ const UserLeaveRequest = () => {
               >
                 ×
               </button>
-            </div>
+        </div>
 
             <div className="p-6">
-              <Formik
-                initialValues={{
-                  from: "",
-                  to: "",
-                  request: "",
-                  type: "",
-                  reason: "",
-                  files: [],
-                }}
-                validationSchema={Yup.object().shape({
-                  from: Yup.date().required("Date is required"),
-                  to: Yup.date().required("Date is required"),
-                  type: Yup.string().required("Must select a leave type"),
-                  reason: Yup.string().required("Reason is required"),
-                })}
-                onSubmit={async (values, { resetForm, setSubmitting }) => {
-                  try {
-                    if (!Auth._id) {
-                      toast.error("User not logged in. Please log in again.");
-                      return;
-                    }
+<Formik
+  initialValues={{
+    from: "",
+    to: "",
+    request: "",
+    type: "",
+    reason: "",
+    files: [],
+  }}
+  validationSchema={Yup.object().shape({
+    from: Yup.date().required("Date is required"),
+    to: Yup.date().required("Date is required"),
+    type: Yup.string().required("Must select a leave type"),
+    reason: Yup.string().required("Reason is required"),
+  })}
+  onSubmit={async (values, { resetForm, setSubmitting }) => {
+    try {
+      if (!Auth._id) {
+        toast.error("User not logged in. Please log in again.");
+        return;
+      }
 
-                    const leaveRequestData = {
+      const leaveRequestData = {
                       employeeId: Auth._id,
-                      from: new Date(values.from).toISOString(),
-                      to: new Date(values.to).toISOString(),
+        from: new Date(values.from).toISOString(),
+        to: new Date(values.to).toISOString(),
                       type: values.type,
                       mode: values.request || "full",
                       description: values.reason,
                     };
-                    console.log("Submitting leave request:", leaveRequestData);
-
+      console.log("Submitting leave request:", leaveRequestData);
+      
                     const result = await submitLeaveRequest(
                       leaveRequestData
                     ).unwrap();
-
+      
                     console.log(
                       "Leave request submitted successfully:",
                       result
                     );
-
+      
                     toast.success(
                       result.message || "Leave request submitted successfully!"
                     );
-
-                    resetForm();
-                    setUploadedFiles([]);
+      
+    resetForm();
+    setUploadedFiles([]);
                     setShowForm(false);
-                  } catch (error) {
-                    console.error("Error submitting leave request:", error);
-
+    } catch (error) {
+      console.error("Error submitting leave request:", error);
+      
                     const errorMessage =
                       error?.data?.message ||
                       error?.message ||
                       "Failed to submit leave request";
-                    toast.error(errorMessage);
-                  } finally {
-                    setSubmitting(false);
-                  }
-                }}
-              >
+      toast.error(errorMessage);
+    } finally {
+      setSubmitting(false);
+    }
+  }}
+>
                 {({
                   handleSubmit,
                   handleChange,
@@ -233,70 +233,70 @@ const UserLeaveRequest = () => {
                   errors,
                   touched,
                 }) => (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block font-medium text-gray-700 mb-1">
-                          From Date<span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="date"
-                          name="from"
-                          value={values.from}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        />
-                        {touched.from && errors.from && (
-                          <p className="text-sm text-red-500">{errors.from}</p>
-                        )}
-                      </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">
+            From Date<span className="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            name="from"
+            value={values.from}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          />
+          {touched.from && errors.from && (
+            <p className="text-sm text-red-500">{errors.from}</p>
+          )}
+        </div>
 
-                      <div>
-                        <label className="block font-medium text-gray-700 mb-1">
-                          To Date<span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="date"
-                          name="to"
-                          value={values.to}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        />
-                        {touched.to && errors.to && (
-                          <p className="text-sm text-red-500">{errors.to}</p>
-                        )}
-                      </div>
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">
+            To Date<span className="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            name="to"
+            value={values.to}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          />
+          {touched.to && errors.to && (
+            <p className="text-sm text-red-500">{errors.to}</p>
+          )}
+        </div>
 
-                      <div>
-                        <label className="block font-medium text-gray-700 mb-1">
-                          Leave Type<span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          name="type"
-                          value={values.type}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        >
-                          <option value="">Select Leave Type</option>
-                          <option value="sickLeave">Sick Leave</option>
-                          <option value="casualLeave">Casual Leave</option>
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">
+            Leave Type<span className="text-red-500">*</span>
+          </label>
+          <select
+            name="type"
+            value={values.type}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          >
+            <option value="">Select Leave Type</option>
+            <option value="sickLeave">Sick Leave</option>
+            <option value="casualLeave">Casual Leave</option>
                           <option value="paidLeave">Paid Leave</option>
                           <option value="emergencyLeave">Emergency Leave</option>
-                        </select>
-                        {touched.type && errors.type && (
-                          <p className="text-sm text-red-500">{errors.type}</p>
-                        )}
-                      </div>
+          </select>
+          {touched.type && errors.type && (
+            <p className="text-sm text-red-500">{errors.type}</p>
+          )}
+        </div>
 
-                      <div>
-                        <label className="block font-medium text-gray-700 mb-1">
-                          Request Leave
-                        </label>
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">
+            Request Leave
+          </label>
                         <select
-                          name="request"
+                name="request"
                           value={values.request}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -306,127 +306,127 @@ const UserLeaveRequest = () => {
                           <option value="half">Half Day</option>
                           <option value="full">Full Day</option>
                         </select>
-                      </div>
-                    </div>
+        </div>
+      </div>
 
-                    <div>
-                      <label className="block font-medium text-gray-700 mb-1">
-                        Reason for Leave<span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        name="reason"
-                        rows={4}
-                        value={values.reason}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder="Write reason here..."
-                        className="w-full border border-gray-300 rounded-md px-3 py-2"
-                      />
-                      {touched.reason && errors.reason && (
-                        <p className="text-sm text-red-500">{errors.reason}</p>
-                      )}
-                    </div>
+      <div>
+        <label className="block font-medium text-gray-700 mb-1">
+          Reason for Leave<span className="text-red-500">*</span>
+        </label>
+        <textarea
+          name="reason"
+          rows={4}
+          value={values.reason}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Write reason here..."
+          className="w-full border border-gray-300 rounded-md px-3 py-2"
+        />
+        {touched.reason && errors.reason && (
+          <p className="text-sm text-red-500">{errors.reason}</p>
+        )}
+      </div>
 
-                    <div>
-                      <label className="block font-medium text-gray-700 mb-3">
-                        Supporting Documents (Optional)
-                      </label>
-                      <p className="text-sm text-gray-500 mb-3">
-                        Upload PDF files, images, or ZIP files (Max 10MB each)
-                      </p>
-
-                      <div
-                        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-                          isDragOver
+      <div>
+        <label className="block font-medium text-gray-700 mb-3">
+          Supporting Documents (Optional)
+        </label>
+        <p className="text-sm text-gray-500 mb-3">
+          Upload PDF files, images, or ZIP files (Max 10MB each)
+        </p>
+        
+        <div
+          className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+            isDragOver
                             ? "border-blue-500 bg-blue-50"
                             : "border-gray-300 hover:border-gray-400"
-                        }`}
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        onDrop={handleDrop}
-                      >
-                        <FaUpload className="mx-auto text-4xl text-gray-400 mb-4" />
-                        <p className="text-gray-600 mb-2">
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <FaUpload className="mx-auto text-4xl text-gray-400 mb-4" />
+          <p className="text-gray-600 mb-2">
                           Drag & drop files here, or{" "}
-                          <label className="text-blue-600 hover:text-blue-800 cursor-pointer">
-                            browse files
-                            <input
-                              type="file"
-                              multiple
-                              accept=".pdf,.jpg,.jpeg,.png,.gif,.zip"
-                              onChange={(e) => handleFileUpload(e.target.files)}
-                              className="hidden"
-                            />
-                          </label>
-                        </p>
-                        <p className="text-sm text-gray-400">
-                          Supported: PDF, Images (JPG, PNG, GIF), ZIP files
-                        </p>
+            <label className="text-blue-600 hover:text-blue-800 cursor-pointer">
+              browse files
+              <input
+                type="file"
+                multiple
+                accept=".pdf,.jpg,.jpeg,.png,.gif,.zip"
+                onChange={(e) => handleFileUpload(e.target.files)}
+                className="hidden"
+              />
+            </label>
+          </p>
+          <p className="text-sm text-gray-400">
+            Supported: PDF, Images (JPG, PNG, GIF), ZIP files
+          </p>
+        </div>
+
+        {uploadedFiles.length > 0 && (
+          <div className="mt-4">
+            <h4 className="text-sm font-medium text-gray-700 mb-2">
+              Uploaded Files ({uploadedFiles.length})
+            </h4>
+            <div className="space-y-2">
+              {uploadedFiles.map((file) => (
+                <div
+                  key={file.id}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
+                >
+                  <div className="flex items-center space-x-3">
+                    {file.preview ? (
+                      <img
+                        src={file.preview}
+                        alt={file.name}
+                        className="w-10 h-10 object-cover rounded"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded">
+                        {getFileIcon(file.type)}
                       </div>
-
-                      {uploadedFiles.length > 0 && (
-                        <div className="mt-4">
-                          <h4 className="text-sm font-medium text-gray-700 mb-2">
-                            Uploaded Files ({uploadedFiles.length})
-                          </h4>
-                          <div className="space-y-2">
-                            {uploadedFiles.map((file) => (
-                              <div
-                                key={file.id}
-                                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
-                              >
-                                <div className="flex items-center space-x-3">
-                                  {file.preview ? (
-                                    <img
-                                      src={file.preview}
-                                      alt={file.name}
-                                      className="w-10 h-10 object-cover rounded"
-                                    />
-                                  ) : (
-                                    <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded">
-                                      {getFileIcon(file.type)}
-                                    </div>
-                                  )}
-                                  <div>
-                                    <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
-                                      {file.name}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                      {formatFileSize(file.size)}
-                                    </p>
-                                  </div>
-                                </div>
-                                <button
-                                  type="button"
-                                  onClick={() => removeFile(file.id)}
-                                  className="text-red-500 hover:text-red-700 p-1"
-                                  title="Remove file"
-                                >
-                                  <FaTrash className="w-4 h-4" />
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                    )}
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                        {file.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {formatFileSize(file.size)}
+                      </p>
                     </div>
-
-                    <div className="text-center">
-                      <button
-                        type="submit"
-                        disabled={isLoading}
-                        className={`bg-gradient-to-br from-gray-400 to-gray-600 hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition ${
-                          isLoading ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
-                      >
-                        {isLoading ? "Submitting..." : "Submit"}
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </Formik>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(file.id)}
+                    className="text-red-500 hover:text-red-700 p-1"
+                    title="Remove file"
+                  >
+                    <FaTrash className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
+        )}
+      </div>
+
+      <div className="text-center">
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`bg-gradient-to-br from-gray-400 to-gray-600 hover:scale-105 text-white font-semibold px-6 py-2 rounded-md transition ${
+                          isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+                        {isLoading ? "Submitting..." : "Submit"}
+        </button>
+      </div>
+    </form>
+  )}
+</Formik>
+            </div>
+      </div>
         </div>
       )}
     </div>
