@@ -6,6 +6,7 @@ import UserLeaveRequest from "@/pages/UserPanel/UserLeaveRequest";
 import UserLeaveStatus from "@/pages/UserPanel/UserLeaveStatus";
 import UserPaySlip from "@/pages/UserPanel/UserPaySlip";
 import UserAssets from "@/pages/UserPanel/UserAssets";
+import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";
 
 export const UserRoute = [
   {
@@ -39,5 +40,9 @@ export const UserRoute = [
 {
     path:"/user/assets",
     element:<UserAssets/>
+},
+{
+    path:"/user/terms-conditions",
+    element:<TermsAndConditions/>
 }
 ];
