@@ -32,24 +32,28 @@ const Login = () => {
     },
     validationSchema: SignInSchema,
     onSubmit: async (values) => {
-      const totalData = { ...values, isMobile, browser: browserName, loginType: "admin" };
+      const totalData = {
+        ...values,
+        isMobile,
+        browser: browserName,
+        loginType: "admin",
+      };
 
       try {
         const res = await SignIn(totalData).unwrap();
         toast.success(res.message);
-        
+
         resetForm();
         dispatch(setLoginState());
-        
+
         // Navigate based on role after state update
         setTimeout(() => {
-          if (res.data.role === 'Admin') {
+          if (res.data.role === "Admin") {
             navigate("/");
           } else {
             navigate("/user");
           }
         }, 100);
-
       } catch (error) {
         console.log(error);
         toast.error(error.data.message);
@@ -61,7 +65,7 @@ const Login = () => {
     <div className="w-1/2 bg-white flex items-center justify-center p-10">
       <div className="w-full max-w-md ">
         <h2 className="text-3xl font-bold text-gray-800 mb-1 text-center">
-          Welcome Back Admin!
+          Welcome Back
         </h2>
         <p className="text-center mb-8">Please Login to access your account</p>
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -107,7 +111,7 @@ const Login = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-3 text-md text-sky-600 hover:underline cursor-pointer"
               >
-                {showPassword ? <IoEyeOutline/> :  <FaRegEyeSlash/>}
+                {showPassword ? <IoEyeOutline /> : <FaRegEyeSlash />}
               </button>
             </div>
           </div>
@@ -141,17 +145,17 @@ const Login = () => {
           {/* Google Sign-in (commented) */}
         </form>
         <p className="text-sm text-gray-600 text-center mt-6">
-          Don’t have an account?{" "}
+          If you are an Admin and Don’t have an account?{" "}
           <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
             Sign Up
           </NavLink>
         </p>
-        <NavLink
+        {/* <NavLink
           to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
         >
           Login As an employee
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   );

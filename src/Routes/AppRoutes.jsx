@@ -13,7 +13,7 @@ import Login from "@/pages/UserAuth/Login";
 import Register from "@/pages/UserAuth/Register";
 import EmpLogin from "@/pages/UserAuth/Login";
 
-  import UserLayout from "./Layouts/UserLayout";
+import UserLayout from "./Layouts/UserLayout";
 import { UserRoute } from "./Routing/UserRoute";
 // import Header from '@/Components/UserHeader';
 
@@ -39,36 +39,34 @@ const AppRoutes = () => {
   }
 
   return (
-  <Routes>
-  {!data?.data && (
-    <Route element={<AuthLayout />}>
-      {AuthRoute.map((item, index) => (
-        <Route key={index} path={item.path} element={item.element} />
-      ))}
-    </Route>
-  )}
+    <Routes>
+      {!data?.data && (
+        <Route element={<AuthLayout />}>
+          {AuthRoute.map((item, index) => (
+            <Route key={index} path={item.path} element={item.element} />
+          ))}
+        </Route>
+      )}
 
-  {data?.data && data?.data?.role === 'Admin' && (
-    <Route element={<RootLayout />}>
-      {MainRoutes.map((item, index) => (
-        <Route key={index} path={item.path} element={item.element} />
-      ))}
-    </Route>
-  )}
+      {data?.data && data?.data?.role === "Admin" && (
+        <Route element={<RootLayout />}>
+          {MainRoutes.map((item, index) => (
+            <Route key={index} path={item.path} element={item.element} />
+          ))}
+        </Route>
+      )}
 
-  {data?.data && data?.data?.role !== 'Admin' && (
-    <Route path="/user" element={<UserLayout />}>
-      {UserRoute.map((item, index) => (
-        <Route key={index} path={item.path} element={item.element} />
-      ))}
-    </Route>
-  )}
+      {data?.data && data?.data?.role !== "Admin" && (
+        <Route path="/user" element={<UserLayout />}>
+          {UserRoute.map((item, index) => (
+            <Route key={index} path={item.path} element={item.element} />
+          ))}
+        </Route>
+      )}
 
-  <Route path="/login" element={<EmpLogin/>} />
-   <Route  path="/register" element={<Register/>} />
-</Routes>
-
+      <Route path="/login" element={<EmpLogin />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
   );
 };
 export default AppRoutes;
-       

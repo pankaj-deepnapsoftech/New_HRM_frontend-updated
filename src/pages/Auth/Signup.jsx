@@ -182,7 +182,7 @@ const Signup = () => {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <label
                 htmlFor="employeeId"
                 className="block mb-1 text-sm font-medium text-gray-700"
@@ -204,7 +204,7 @@ const Signup = () => {
                   {errors.employeeId}
                 </p>
               )}
-            </div>
+            </div> */}
 
             <div className="flex items-center text-sm text-gray-600">
               <input type="checkbox" id="terms" name="terms" className="mr-2" />
@@ -237,12 +237,12 @@ const Signup = () => {
               Sign In
             </NavLink>
           </p>
-          <NavLink
+          {/* <NavLink
             to="/register"
             className="block w-full text-center mt-6 border  border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
           >
             Sign up as an employee
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </div>
