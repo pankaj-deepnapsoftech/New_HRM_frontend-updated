@@ -237,12 +237,12 @@ const Signup = () => {
               Sign In
             </NavLink>
           </p>
-          <NavLink
+          {/* <NavLink
             to="/register"
             className="block w-full text-center mt-6 border  border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
           >
             Sign up as an employee
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </div>

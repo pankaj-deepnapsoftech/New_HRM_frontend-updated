@@ -132,20 +132,20 @@ const Login = () => {
             Sign in
           </button>
 
-          {/* <div className="flex items-center justify-center my-6">
+          <div className="flex items-center justify-center my-6">
             <div className="h-px bg-gray-300 w-full"></div>
             <span className="px-3 text-sm text-gray-500">Or</span>
             <div className="h-px bg-gray-300 w-full"></div>
-          </div> */}
+          </div>
 
           {/* Google Sign-in (commented) */}
         </form>
-        {/* <p className="text-sm text-gray-600 text-center mt-6">
-          Don’t have an account?{" "}
+        <p className="text-sm text-gray-600 text-center mt-6">
+          If you are an Admin and Don’t have an account?{" "}
           <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
             Sign Up
           </NavLink>
-        </p> */}
+        </p>
         {/* <NavLink
           to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
