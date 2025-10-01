@@ -61,7 +61,7 @@ const Login = () => {
     <div className="w-1/2 bg-white flex items-center justify-center p-10">
       <div className="w-full max-w-md ">
         <h2 className="text-3xl font-bold text-gray-800 mb-1 text-center">
-          Welcome Back Admin!
+          Welcome Back
         </h2>
         <p className="text-center mb-8">Please Login to access your account</p>
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -132,11 +132,11 @@ const Login = () => {
             Sign in
           </button>
 
-          <div className="flex items-center justify-center my-6">
+          {/* <div className="flex items-center justify-center my-6">
             <div className="h-px bg-gray-300 w-full"></div>
             <span className="px-3 text-sm text-gray-500">Or</span>
             <div className="h-px bg-gray-300 w-full"></div>
-          </div>
+          </div> */}
 
           {/* Google Sign-in (commented) */}
         </form>
@@ -146,12 +146,12 @@ const Login = () => {
             Sign Up
           </NavLink>
         </p> */}
-        <NavLink
+        {/* <NavLink
           to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
         >
           Login As an employee
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   );

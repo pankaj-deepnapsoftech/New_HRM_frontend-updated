@@ -182,7 +182,7 @@ const Signup = () => {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <label
                 htmlFor="employeeId"
                 className="block mb-1 text-sm font-medium text-gray-700"
@@ -204,7 +204,7 @@ const Signup = () => {
                   {errors.employeeId}
                 </p>
               )}
-            </div>
+            </div> */}
 
             <div className="flex items-center text-sm text-gray-600">
               <input type="checkbox" id="terms" name="terms" className="mr-2" />

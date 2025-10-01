@@ -2,6 +2,7 @@ import { useForgotPasswordMutation } from '@/service/Auth.services'
 import { ForgotPasswordSchema } from '@/Validation/AuthValidation/ForgotPasswordValidation'
 import { useFormik } from 'formik'
 import React from 'react'
+import { toast } from 'react-toastify'
 
 const ForgotPassword = () => {
 
@@ -15,10 +16,12 @@ const ForgotPassword = () => {
         onSubmit: async(values) => {
           try {
               const res = await ForgotPassword(values).unwrap()
-              console.log(res)
               resetForm()
+              console.log(res)
+              toast.success(res.message)
           } catch (error) {
             console.log(error)
+            toast.error(error?.data?.message || "Something went wrong" )
           }
         }
     })
