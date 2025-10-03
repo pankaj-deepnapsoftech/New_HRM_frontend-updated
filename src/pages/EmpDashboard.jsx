@@ -96,6 +96,7 @@ const EmpDashboard = () => {
         setSelectedEmployee(null);
         formik.resetForm();
         refetch(page);
+        toast.success(`Employee ${editMode ? "updated" : "added"} successfully`);
       } catch (error) {
         console.error("Error saving employee:", error);
       }
