@@ -70,6 +70,28 @@ export const empApi = Api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+
+    // Attendance related endpoints
+    markLoginAttendance: builder.mutation({
+      query: (employeeId) => ({
+        url: `/empdata/${employeeId}/attendance/login`,
+        method: "POST",
+      }),
+    }),
+
+    markLogoutAttendance: builder.mutation({
+      query: (employeeId) => ({
+        url: `/empdata/${employeeId}/attendance/logout`,
+        method: "POST",
+      }),
+    }),
+
+    getDailyAttendance: builder.query({
+      query: (date) => ({
+        url: `/empdata/attendance/daily${date ? `?date=${date}` : ''}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -82,5 +104,8 @@ export const {
   useAddAssetMutation,
   useRemoveAssetMutation,
   useCreateCredentialsMutation,
-  useGetAllEmpDataWithoutPaginatioQuery
+  useGetAllEmpDataWithoutPaginatioQuery,
+  useMarkLoginAttendanceMutation,
+  useMarkLogoutAttendanceMutation,
+  useGetDailyAttendanceQuery
 } = empApi;
