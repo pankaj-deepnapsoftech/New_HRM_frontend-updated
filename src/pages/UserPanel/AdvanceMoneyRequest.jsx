@@ -16,7 +16,8 @@ const AdvanceMoneyRequest = () => {
           </h2>
           <div className="space-y-2 text-gray-700">
             <p>
-              <span className="font-medium text-gray-900">Name:</span> Rahul Gupta
+              <span className="font-medium text-gray-900">Name:</span> Rahul
+              Gupta
             </p>
             <p>
               <span className="font-medium text-gray-900">Salary:</span>{" "}

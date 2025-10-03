@@ -1,17 +1,13 @@
-import { useGetAllEmpDataQuery } from '@/service/EmpData.services';
-import React from 'react';
-
-
+import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
+import React from "react";
 
 const DailyAttendance = () => {
-
-
   const { data: userData } = useGetAllEmpDataQuery();
-  console.log(userData?.data)
+  console.log(userData?.data);
 
   return (
     <section className="p-5 bg-gray-50 rounded  max-w-4xl mx-auto mt-10">
-     <div className="bg-gray-300 text text-center  py-4 my-8 rounded-md shadow-md shadow-gray-400">
+      <div className="bg-gray-300 text text-center  py-4 my-8 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Daily Attendance report</h2>
       </div>
       <div className="overflow-x-auto rounded-t-sm md:rounded-t-xl shadow">
@@ -26,13 +22,20 @@ const DailyAttendance = () => {
           </thead>
           <tbody className="text-gray-700 text-md">
             {userData?.data?.map((user, index) => (
-              <tr key={index} className=" border-b border-gray-200 hover:bg-gray-50 transition">
-                <td className="py-3 px-4">
-                  {user.fname} 
-                </td> 
+              <tr
+                key={index}
+                className=" border-b border-gray-200 hover:bg-gray-50 transition"
+              >
+                <td className="py-3 px-4">{user.fname}</td>
                 <td className="py-3 px-4">{user.email}</td>
                 <td className="py-3 px-4">
-                  <span className={` py-4 px-6 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit  ${user.status === "Absent" ? "text-red-500 bg-red-100" : "text-green-500 bg-green-100"}`}>
+                  <span
+                    className={` py-4 px-6 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit  ${
+                      user.status === "Absent"
+                        ? "text-red-500 bg-red-100"
+                        : "text-green-500 bg-green-100"
+                    }`}
+                  >
                     {user.status || "N/A"}
                   </span>
                 </td>
@@ -42,9 +45,7 @@ const DailyAttendance = () => {
           </tbody>
         </table>
       </div>
-
     </section>
-
   );
 };
 

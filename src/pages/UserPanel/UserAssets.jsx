@@ -14,11 +14,12 @@ const UserAssets = () => {
       {/* Header */}
       <div className="w-full max-w-3xl mx-auto bg-gradient-to-r from-gray-400 to-gray-500 text-white py-6 px-8 rounded-xl shadow-xl text-center mb-14">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight drop-shadow-md">
-           Employee Assets
+          Employee Assets
         </h1>
         {employee && (
           <p className="text-lg mt-2 font-medium">
-            Assigned to: <span className="font-semibold">{employee.fname}</span> ({employee.empCode})
+            Assigned to: <span className="font-semibold">{employee.fname}</span>{" "}
+            ({employee.empCode})
           </p>
         )}
       </div>
@@ -51,7 +52,8 @@ const UserAssets = () => {
               No assets assigned yet
             </h2>
             <p className="text-gray-500 text-base">
-              You currently have no company-assigned assets. Please check back later or contact admin if needed.
+              You currently have no company-assigned assets. Please check back
+              later or contact admin if needed.
             </p>
           </div>
         )}

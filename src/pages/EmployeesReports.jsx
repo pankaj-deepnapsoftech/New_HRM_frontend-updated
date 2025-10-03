@@ -7,11 +7,9 @@ import { toast } from "react-toastify";
 import Pagination from "./Pagination/Pagination";
 mapboxgl.accessToken = `${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`;
 const EmployeesReports = () => {
-
-
-  const [page,setPage] = useState(1)
-  const limit = 10 ;
-  const { data: data } = useGetAllEmpDataQuery({page,limit});
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { data: data } = useGetAllEmpDataQuery({ page, limit });
   const employees = data?.data || [];
   const [showMap, setShowMap] = useState(false);
   const [mapData, setMapData] = useState({
@@ -23,7 +21,6 @@ const EmployeesReports = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  
   useEffect(() => {
     if (showMap && mapContainer.current && mapData.lng && mapData.lat) {
       map.current = new mapboxgl.Map({
@@ -33,7 +30,9 @@ const EmployeesReports = () => {
         zoom: 12,
       });
 
-      new mapboxgl.Marker().setLngLat([mapData.lng, mapData.lat]).addTo(map.current);
+      new mapboxgl.Marker()
+        .setLngLat([mapData.lng, mapData.lat])
+        .addTo(map.current);
 
       return () => map.current?.remove();
     }
@@ -64,7 +63,8 @@ const EmployeesReports = () => {
       Department: emp.department || "NA",
       Designation: emp.designation || "NA",
       Salary: emp.salary ? emp.salary.toLocaleString() : "NA",
-      Assets: emp.assets && emp.assets.length > 0 ? emp.assets.join(", ") : "NA",
+      Assets:
+        emp.assets && emp.assets.length > 0 ? emp.assets.join(", ") : "NA",
       PresentDays: emp.attendance ? emp.attendance.length : "NA",
       GatePass: emp.gatePassRequests ? emp.gatePassRequests.length : "NA",
       Status: emp.Empstatus || "NA",
@@ -77,15 +77,18 @@ const EmployeesReports = () => {
     XLSX.writeFile(workbook, "Employee_Report.xlsx");
   };
 
-  console.log(data)
-   
+  console.log(data);
+
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       <div className="bg-gray-300 text text-center mx-4 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employees Report</h2>
       </div>
       <div className="flex justify-end mr-10 mb-4">
-        <button onClick={handleExport} className="bg-gradient-to-br from-slate-400 to bg-slate-600 cursor-pointer hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
+        <button
+          onClick={handleExport}
+          className="bg-gradient-to-br from-slate-400 to bg-slate-600 cursor-pointer hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200"
+        >
           EXPORT
         </button>
       </div>
@@ -115,8 +118,9 @@ const EmployeesReports = () => {
               employees.map((emp, index) => (
                 <tr
                   key={emp._id}
-                  className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    }`}
+                  className={`border-b border-gray-200 ${
+                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                  }`}
                 >
                   <td className="py-3 px-3">{emp.fname || "NA"}</td>
                   <td
@@ -157,10 +161,11 @@ const EmployeesReports = () => {
                     {emp.gatePassRequests ? emp.gatePassRequests.length : "NA"}
                   </td>
                   <td
-                    className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${emp.Empstatus === "active"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
-                      }`}
+                    className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${
+                      emp.Empstatus === "active"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }`}
                   >
                     {emp.Empstatus || "NA"}
                   </td>
@@ -171,12 +176,15 @@ const EmployeesReports = () => {
         </table>
       </div>
       {showMap && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn">
           <div className="relative bg-white p-4 rounded-lg w-[90%] max-w-3xl shadow-xl transform transition-transform duration-300 animate-scaleIn">
-            <h3 className="text-lg font-semibold mb-2">Location: {mapData.place}</h3>
-            <div ref={mapContainer} className="w-full h-96 rounded-lg overflow-hidden shadow-inner" />
+            <h3 className="text-lg font-semibold mb-2">
+              Location: {mapData.place}
+            </h3>
+            <div
+              ref={mapContainer}
+              className="w-full h-96 rounded-lg overflow-hidden shadow-inner"
+            />
             <button
               onClick={() => setShowMap(false)}
               className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-all duration-200"
@@ -187,8 +195,7 @@ const EmployeesReports = () => {
         </div>
       )}
 
-     
-      <style >{`
+      <style>{`
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
@@ -204,9 +211,12 @@ const EmployeesReports = () => {
           animation: scaleIn 0.3s ease forwards;
         }
       `}</style>
-    
-      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 10}/>
-     
+
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={employees?.length === 10}
+      />
     </div>
   );
 };

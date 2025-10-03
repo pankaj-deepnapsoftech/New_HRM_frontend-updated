@@ -1,5 +1,5 @@
-import React from 'react';
-import { IoMdClose } from 'react-icons/io';
+import React from "react";
+import { IoMdClose } from "react-icons/io";
 
 const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
   if (!employee) return null;
@@ -24,9 +24,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
 
   // Convert key string like 'Back_Name' to 'Back Name'
   const formatKey = (key) =>
-    key
-      .replace(/_/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+    key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
   // Check if value is a URL (file link)
   const isFileLink = (value) =>
@@ -34,8 +32,9 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-black/40 flex justify-center items-center transition-all duration-500 ${showDetailModal ? "visible" : "invisible"
-        }`}
+      className={`fixed inset-0 z-50 bg-black/40 flex justify-center items-center transition-all duration-500 ${
+        showDetailModal ? "visible" : "invisible"
+      }`}
     >
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
@@ -43,7 +42,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
           onClick={() => setShowDetailModal(false)}
           className="absolute top-3 right-3 text-gray-500 hover:text-black"
         >
-          <IoMdClose size={22}/>
+          <IoMdClose size={22} />
         </button>
 
         {/* Photo & Name */}
@@ -55,7 +54,9 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
               className="w-24 h-24 rounded-full object-cover mx-auto shadow-md"
             />
           )}
-          <h3 className="text-lg font-semibold mt-3">{employee.Designation || "No Designation"}</h3>
+          <h3 className="text-lg font-semibold mt-3">
+            {employee.Designation || "No Designation"}
+          </h3>
         </div>
 
         {/* Info Grid */}

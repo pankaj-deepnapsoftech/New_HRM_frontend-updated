@@ -26,28 +26,34 @@ const GatepassApprovals = () => {
       </div>
 
       {/* Request Card */}
-      {[{
-        name: "Nitish",
-        id: "NIT51130226",
-        status: "Approved",
-        reason: "Company Work",
-        requestDate: "2/26/2025",
-        logoutTime: "10:53:59",
-        distance: "10",
-        workReason: "submit documents in bank",
-        payment: "₹50"
-      }, {
-        name: "Komal",
-        id: "KOM51130226",
-        status: "Approved",
-        reason: "Company Work",
-        requestDate: "2/26/2025",
-        logoutTime: "10:53:59",
-        distance: "10",
-        workReason: "submit documents in bank",
-        payment: "₹50"
-      }].map((emp, index) => (
-        <div key={index} className="bg-white mt-6 p-4 md:p-6 rounded-xl shadow-md w-full max-w-4xl">
+      {[
+        {
+          name: "Nitish",
+          id: "NIT51130226",
+          status: "Approved",
+          reason: "Company Work",
+          requestDate: "2/26/2025",
+          logoutTime: "10:53:59",
+          distance: "10",
+          workReason: "submit documents in bank",
+          payment: "₹50",
+        },
+        {
+          name: "Komal",
+          id: "KOM51130226",
+          status: "Approved",
+          reason: "Company Work",
+          requestDate: "2/26/2025",
+          logoutTime: "10:53:59",
+          distance: "10",
+          workReason: "submit documents in bank",
+          payment: "₹50",
+        },
+      ].map((emp, index) => (
+        <div
+          key={index}
+          className="bg-white mt-6 p-4 md:p-6 rounded-xl shadow-md w-full max-w-4xl"
+        >
           <p className="text-base md:text-lg font-semibold mb-3">
             Employee Name:{" "}
             <span className="text-blue-600 font-medium">
@@ -65,27 +71,39 @@ const GatepassApprovals = () => {
             <ul className="space-y-3 text-sm text-gray-700 mt-1">
               <li className="flex items-start gap-2">
                 <FaRegFileAlt className="mt-1 text-gray-600" />
-                <span><strong>Reason:</strong> {emp.reason}</span>
+                <span>
+                  <strong>Reason:</strong> {emp.reason}
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <MdDateRange className="mt-1 text-red-500" />
-                <span><strong>Request Date:</strong> {emp.requestDate}</span>
+                <span>
+                  <strong>Request Date:</strong> {emp.requestDate}
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <MdLogout className="mt-1 text-yellow-600" />
-                <span><strong>Logout Time:</strong> {emp.logoutTime}</span>
+                <span>
+                  <strong>Logout Time:</strong> {emp.logoutTime}
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <GiPathDistance className="mt-1 text-blue-500" />
-                <span><strong>Total KM:</strong> {emp.distance}</span>
+                <span>
+                  <strong>Total KM:</strong> {emp.distance}
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <BsFillBuildingsFill className="mt-1 text-indigo-500" />
-                <span><strong>Company Work Reason:</strong> {emp.workReason}</span>
+                <span>
+                  <strong>Company Work Reason:</strong> {emp.workReason}
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <FaMoneyBillWave className="mt-1 text-green-600" />
-                <span><strong>Total Payment:</strong> {emp.payment}</span>
+                <span>
+                  <strong>Total Payment:</strong> {emp.payment}
+                </span>
               </li>
             </ul>
           </div>

@@ -25,16 +25,10 @@ const employees = [
   },
 ];
 
-
-
 const PayrollSummary = () => {
-
- 
   const [showEarningDetails, setShowEarningDetails] = useState(false);
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-
-  
 
   return (
     <div className="p-4 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
@@ -55,8 +49,9 @@ const PayrollSummary = () => {
             {employees.map((emp, idx) => (
               <tr
                 key={idx}
-                className={`border-b border-gray-300 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                  }`}
+                className={`border-b border-gray-300 ${
+                  idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                }`}
               >
                 <td className="p-3 px-7">{emp.fname}</td>
                 <td className="p-3 px-7">{emp.department}</td>
@@ -64,7 +59,9 @@ const PayrollSummary = () => {
                 <td className="p-3 px-7">
                   <button
                     className="text-blue-600 hover:underline flex items-center gap-1"
-                    onClick={() =>{setShowEarningDetails(true), setSelectedEmployee(emp)}}
+                    onClick={() => {
+                      setShowEarningDetails(true), setSelectedEmployee(emp);
+                    }}
                   >
                     <MdRemoveRedEye />
                     View
@@ -77,13 +74,12 @@ const PayrollSummary = () => {
       </div>
 
       {showEarningDetails && selectedEmployee && (
-  <EarningDetails
-    showEarningDetails={showEarningDetails}
-    setShowEarningDetails={setShowEarningDetails}
-    employee={selectedEmployee}
-  />
-)}
-
+        <EarningDetails
+          showEarningDetails={showEarningDetails}
+          setShowEarningDetails={setShowEarningDetails}
+          employee={selectedEmployee}
+        />
+      )}
     </div>
   );
 };

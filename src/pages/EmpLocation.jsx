@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import L from "leaflet"; 
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
 import { toast } from "react-toastify";
@@ -8,9 +8,12 @@ import Pagination from "./Pagination/Pagination";
 // Fix default markers icon issue with Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
 const EmpLocation = () => {
@@ -32,11 +35,15 @@ const EmpLocation = () => {
   useEffect(() => {
     if (showMap && mapContainer.current && mapData.lng && mapData.lat) {
       // Initialize Leaflet map
-      map.current = L.map(mapContainer.current).setView([mapData.lat, mapData.lng], 12);
+      map.current = L.map(mapContainer.current).setView(
+        [mapData.lat, mapData.lng],
+        12
+      );
 
       // Add OpenStreetMap tile layer (completely free, no API key needed)
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       }).addTo(map.current);
 
@@ -47,7 +54,7 @@ const EmpLocation = () => {
         .openPopup();
 
       // Add default controls: zoom, scale, fullscreen (if supported)
-      L.control.zoom({ position: 'topright' }).addTo(map.current);
+      L.control.zoom({ position: "topright" }).addTo(map.current);
       L.control.scale().addTo(map.current);
 
       return () => {
@@ -71,10 +78,14 @@ const EmpLocation = () => {
         `https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1&addressdetails=1`
       );
       const results = await response.json();
-      
+
       if (results.length > 0) {
         const { lat, lon } = results[0];
-        setMapData({ lng: parseFloat(lon), lat: parseFloat(lat), place: location });
+        setMapData({
+          lng: parseFloat(lon),
+          lat: parseFloat(lat),
+          place: location,
+        });
         setShowMap(true);
       } else {
         toast("Location not found on map. Please check the spelling.");
@@ -131,7 +142,9 @@ const EmpLocation = () => {
       {showMap && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn">
           <div className="relative bg-white p-4 rounded-lg w-[90%] max-w-3xl shadow-xl transform transition-transform duration-300 animate-scaleIn">
-            <h3 className="text-lg font-semibold mb-2">Location: {mapData.place}</h3>
+            <h3 className="text-lg font-semibold mb-2">
+              Location: {mapData.place}
+            </h3>
             <div
               ref={mapContainer}
               className="w-full h-96 rounded-lg overflow-hidden shadow-inner"
@@ -163,7 +176,11 @@ const EmpLocation = () => {
         }
       `}</style>
 
-      <Pagination page={page} setPage={setPage} hasNextPage={EmpLocation.length === 10} />
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={EmpLocation.length === 10}
+      />
     </div>
   );
 };

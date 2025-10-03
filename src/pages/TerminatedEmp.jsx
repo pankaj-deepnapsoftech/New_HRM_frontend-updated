@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { useGetAllEmpDataQuery, useUpdateEmpDataMutation } from "@/service/EmpData.services";
+import {
+  useGetAllEmpDataQuery,
+  useUpdateEmpDataMutation,
+} from "@/service/EmpData.services";
 import Pagination from "./Pagination/Pagination";
 
 const TerminatedEmp = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
   const [confirmId, setConfirmId] = useState(null);
-  const { data, isLoading, refetch } = useGetAllEmpDataQuery({page,limit});
+  const { data, isLoading, refetch } = useGetAllEmpDataQuery({ page, limit });
 
   const employees = data?.data || [];
   const [updateEmpStatus] = useUpdateEmpDataMutation();
-
 
   const handleTerminate = async (id) => {
     try {
@@ -93,7 +95,6 @@ const TerminatedEmp = () => {
                   ) : (
                     <span className="text-gray-400">—</span>
                   )}
-
                 </td>
               </tr>
             ))}
@@ -102,10 +103,17 @@ const TerminatedEmp = () => {
       </div>
       {confirmId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setConfirmId(null)} />
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setConfirmId(null)}
+          />
           <div className="relative bg-white rounded-md shadow-lg p-6 w-80">
-            <h3 className="text-lg font-semibold text-gray-800">Confirm Termination</h3>
-            <p className="text-sm text-gray-600 mt-2">Are you sure you want to terminate this employee?</p>
+            <h3 className="text-lg font-semibold text-gray-800">
+              Confirm Termination
+            </h3>
+            <p className="text-sm text-gray-600 mt-2">
+              Are you sure you want to terminate this employee?
+            </p>
             <div className="mt-5 flex justify-end gap-3">
               <button
                 onClick={() => setConfirmId(null)}
@@ -123,9 +131,12 @@ const TerminatedEmp = () => {
           </div>
         </div>
       )}
-      <Pagination page={page} setPage={setPage} hasNextPage={employees.length===10}/>
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={employees.length === 10}
+      />
     </div>
-
   );
 };
 

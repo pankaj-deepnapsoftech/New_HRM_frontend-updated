@@ -335,10 +335,11 @@ const Sidebar = () => {
                     if (window.innerWidth < 768) setShowSidebar(false);
                   }}
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
-              ${isActive
-                      ? "bg-indigo-500 text-white font-bold shadow-md"
-                      : "hover:bg-indigo-50 hover:text-indigo-600"
-                    }`}
+              ${
+                isActive
+                  ? "bg-indigo-500 text-white font-bold shadow-md"
+                  : "hover:bg-indigo-50 hover:text-indigo-600"
+              }`}
                 >
                   {item.icon}
                   <span>{item.text}</span>
@@ -357,10 +358,11 @@ const Sidebar = () => {
                             if (window.innerWidth < 768) setShowSidebar(false);
                           }}
                           className={`flex items-center gap-1 px-1 py-2 rounded-md cursor-pointer transition duration-300 
-                      ${isSubActive
-                              ? "bg-sky-500 text-white font-semibold shadow-sm"
-                              : "hover:bg-sky-50 hover:text-sky-600"
-                            }`}
+                      ${
+                        isSubActive
+                          ? "bg-sky-500 text-white font-semibold shadow-sm"
+                          : "hover:bg-sky-50 hover:text-sky-600"
+                      }`}
                         >
                           {subItem.icon}
                           <span>{subItem.text}</span>

@@ -108,7 +108,9 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       element: <UserAssets />,
     },
     {
-      text: <span className="text-[1rem] font-semibold">Terms & Conditions</span>,
+      text: (
+        <span className="text-[1rem] font-semibold">Terms & Conditions</span>
+      ),
       icon: <FaFileContract className="text-2xl" />,
       path: "/user/terms-conditions",
       element: <TermsAndConditions />,

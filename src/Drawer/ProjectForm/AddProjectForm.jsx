@@ -131,7 +131,7 @@ const AddProjectForm = ({ setShowModal }) => {
 
       {/* Dates */}
       <div className="flex flex-col md:flex-row gap-4">
-         <div className="flex-1">
+        <div className="flex-1">
           <label className="block font-medium text-sm mb-1">
             Start Date <span className="text-red-500">*</span>
           </label>

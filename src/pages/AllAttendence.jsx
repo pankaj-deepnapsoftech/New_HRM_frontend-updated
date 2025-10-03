@@ -104,12 +104,12 @@ const AllAttendance = () => {
                 onChange={setSelectedDepartments}
               />
             </div>
-             <div className="ml-10 font-[500]">
-                  {" "}
-                  <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200  ">
-                    EXPORT
-                  </button>
-                </div>
+            <div className="ml-10 font-[500]">
+              {" "}
+              <button className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200  ">
+                EXPORT
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -128,7 +128,6 @@ const AllAttendance = () => {
                 <th className="px-4 py-4 font-[500]">Present Days</th>
                 <th className="px-4 py-4 font-[500]">Absent Days</th>
                 <th className="px-4 py-4 font-[500] text-right"></th>
-               
               </tr>
             </thead>
             <tbody>

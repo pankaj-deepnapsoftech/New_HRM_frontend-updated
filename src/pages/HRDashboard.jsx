@@ -69,7 +69,9 @@ const HRDashboard = () => {
                     index % 2 === 0 ? "bg-white" : "bg-gray-50"
                   }`}
                 >
-                  <td className="py-3 px-4">{req.employeeId?.empCode || "NA"}</td>
+                  <td className="py-3 px-4">
+                    {req.employeeId?.empCode || "NA"}
+                  </td>
                   <td className="py-3 px-4">{req.employeeId?.fname || "NA"}</td>
                   <td className="py-3 px-4 capitalize">{req.type || "NA"}</td>
                   <td className="py-3 px-4 capitalize">{req.mode || "NA"}</td>

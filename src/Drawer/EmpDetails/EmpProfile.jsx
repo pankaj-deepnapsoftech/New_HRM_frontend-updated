@@ -11,12 +11,15 @@ const EmpProfile = ({ showUserMenu, setShowMenu }) => {
     e.stopPropagation();
   };
 
-  const { data:userData} = useLogedInuserQuery();
+  const { data: userData } = useLogedInuserQuery();
 
-  const userName = userData?.data?.fullName ;
+  const userName = userData?.data?.fullName;
 
-
-  const firstlater = userName?.split(" ").map((word)=>word[0]).join("").toUpperCase();
+  const firstlater = userName
+    ?.split(" ")
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <div
@@ -56,28 +59,33 @@ const EmpProfile = ({ showUserMenu, setShowMenu }) => {
           </div>
         </div>
 
-
         {/* Info Section */}
         <div className="px-6 py-6 text-gray-900 text-sm sm:text-base">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold">{userName}  </h2>
+            <h2 className="text-2xl font-bold">{userName} </h2>
             <p className="text-sm md:text-base text-gray-400">Employee</p>
           </div>
 
           <div className="space-y-4">
             <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
               <span className="font-medium text-gray-700">User Name</span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{userName}</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">
+                {userName}
+              </span>
             </div>
 
             <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
               <span className="font-medium text-gray-700">Email</span>
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">{userData?.data?.email}</span>
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
+                {userData?.data?.email}
+              </span>
             </div>
 
             <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm hover:shadow-md transition cursor-default">
               <span className="font-medium text-gray-700">Phone</span>
-              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">{userData?.data?.phone || "N/A"}</span>
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">
+                {userData?.data?.phone || "N/A"}
+              </span>
             </div>
           </div>
         </div>
