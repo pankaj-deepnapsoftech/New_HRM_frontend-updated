@@ -92,6 +92,24 @@ export const empApi = Api.injectEndpoints({
         method: "GET",
       }),
     }),
+    terminateEmployee: builder.mutation({
+      query: ({ id }) => ({
+        url: `/empdata/${id}/terminate`,
+        method: "POST",
+      }),
+    }),
+    getAllTerminatedEmployees: builder.query({
+      query: ({ page, limit }) => ({
+        url: `/empdata/terminated?page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
+    }),
+    deleteTerminatedEmployee: builder.mutation({
+      query: ({ id }) => ({
+        url: `/empdata/terminated/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -107,5 +125,9 @@ export const {
   useGetAllEmpDataWithoutPaginatioQuery,
   useMarkLoginAttendanceMutation,
   useMarkLogoutAttendanceMutation,
-  useGetDailyAttendanceQuery
+  useGetDailyAttendanceQuery,
+  useTerminateEmployeeMutation,
+  useGetAllTerminatedEmployeesQuery,
+  useDeleteTerminatedEmployeeMutation,
+
 } = empApi;
