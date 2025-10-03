@@ -4,12 +4,11 @@ import { Api } from "../store/api/api";
 export const empApi = Api.injectEndpoints({
   endpoints: (builder) => ({
     getAllEmpData: builder.query({
-      query: ({page, limit}) => ({
+      query: ({ page, limit }) => ({
         url: `/empdata?page=${page}&limit=${limit}`,
         method: "GET",
       }),
     }),
-    
 
     getAllEmpDataWithoutPaginatio: builder.query({
       query: () => ({
@@ -60,6 +59,24 @@ export const empApi = Api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    terminateEmployee: builder.mutation({
+      query: ({ id }) => ({
+        url: `/empdata/${id}/terminate`,
+        method: "POST",
+      }),
+    }),
+    getAllTerminatedEmployees: builder.query({
+      query: ({ page, limit }) => ({
+        url: `/empdata/terminated?page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
+    }),
+    deleteTerminatedEmployee: builder.mutation({
+      query: ({ id }) => ({
+        url: `/empdata/terminated/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -71,5 +88,9 @@ export const {
   useAddAssetMutation,
   useRemoveAssetMutation,
   useCreateCredentialsMutation,
-  useGetAllEmpDataWithoutPaginatioQuery
+  useGetAllEmpDataWithoutPaginatioQuery,
+  useTerminateEmployeeMutation,
+  useGetAllTerminatedEmployeesQuery,
+  useDeleteTerminatedEmployeeMutation,
+
 } = empApi;
