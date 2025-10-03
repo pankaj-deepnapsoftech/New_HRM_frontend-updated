@@ -26,15 +26,15 @@ const UserLeaveStatus = () => {
     <div className="min-h-screen bg-gray-100  px-6 md:px-12 py-10">
       {/* Header */}
       <div className="bg-gray-400 text-white text-center rounded-2xl py-4 px-5 shadow-md mb-10">
-        <h1 className="text-2xl md:text-3xl font-bold">Employee Request Leave Status</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">
+          Employee Request Leave Status
+        </h1>
       </div>
 
       {/* Table Card */}
-   
-       
 
-        {/* Table */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden ">
+      {/* Table */}
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden ">
         <table className="min-w-full text-sm text-gray-700">
           <thead>
             <tr className="bg-gray-200 text-gray-600 text-left  uppercase text-xs tracking-wider">
@@ -65,9 +65,8 @@ const UserLeaveStatus = () => {
             ))}
           </tbody>
         </table>
-        </div>
       </div>
- 
+    </div>
   );
 };
 

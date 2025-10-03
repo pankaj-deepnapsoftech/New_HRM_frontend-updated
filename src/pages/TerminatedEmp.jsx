@@ -148,10 +148,17 @@ const TerminatedEmp = () => {
       {/* Confirmation modal for terminate */}
       {confirmId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setConfirmId(null)} />
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setConfirmId(null)}
+          />
           <div className="relative bg-white rounded-md shadow-lg p-6 w-80">
-            <h3 className="text-lg font-semibold text-gray-800">Confirm Termination</h3>
-            <p className="text-sm text-gray-600 mt-2">Are you sure you want to terminate this employee?</p>
+            <h3 className="text-lg font-semibold text-gray-800">
+              Confirm Termination
+            </h3>
+            <p className="text-sm text-gray-600 mt-2">
+              Are you sure you want to terminate this employee?
+            </p>
             <div className="mt-5 flex justify-end gap-3">
               <button
                 onClick={() => setConfirmId(null)}

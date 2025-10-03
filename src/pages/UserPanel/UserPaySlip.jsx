@@ -38,14 +38,18 @@ const UserPaySlip = () => {
           </thead>
           <tbody className="bg-white">
             <tr className="border-t border-gray-200 hover:bg-gray-50 transition-colors duration-200">
-              <td className="px-6 py-4 font-medium text-gray-800">{data.fullName}</td>
+              <td className="px-6 py-4 font-medium text-gray-800">
+                {data.fullName}
+              </td>
               <td className="px-6 py-4 text-gray-600">{data.email}</td>
               <td className="px-6 py-4">{data.department}</td>
               <td className="px-6 py-4">{data.role}</td>
               <td className="px-6 py-4">{data.actualSalary.toFixed(2)}</td>
               <td className="px-6 py-4">{data.workingDays}</td>
               <td className="px-6 py-4">{data.fund.toFixed(2)}</td>
-              <td className="px-6 py-4 font-semibold text-green-600">{data.totalSalary}</td>
+              <td className="px-6 py-4 font-semibold text-green-600">
+                {data.totalSalary}
+              </td>
               <td className="px-6 py-4">
                 <button className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-xl shadow-md transition-transform transform hover:scale-105">
                   <FaFileInvoiceDollar /> PAYSLIP

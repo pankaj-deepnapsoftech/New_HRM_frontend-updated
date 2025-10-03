@@ -39,8 +39,8 @@ const EmpLeaveBalance = () => {
       backgroundColor: state.isSelected
         ? "#C084FC"
         : state.isFocused
-          ? "#E9D5FF"
-          : "white",
+        ? "#E9D5FF"
+        : "white",
       color: "black",
       cursor: "pointer",
     }),
@@ -107,7 +107,9 @@ const EmpLeaveBalance = () => {
         </h2>
         <form onSubmit={formik.handleSubmit} className="space-y-6">
           <div>
-            <label className="block font-medium text-gray-700 mb-2">Employee</label>
+            <label className="block font-medium text-gray-700 mb-2">
+              Employee
+            </label>
             <Select
               name="employee"
               options={employeeOptions}
@@ -118,12 +120,16 @@ const EmpLeaveBalance = () => {
               placeholder="Select an Employee"
             />
             {formik.touched.employee && formik.errors.employee && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.employee}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {formik.errors.employee}
+              </p>
             )}
           </div>
 
           <div>
-            <label className="block font-medium text-gray-700 mb-2">Leave Type</label>
+            <label className="block font-medium text-gray-700 mb-2">
+              Leave Type
+            </label>
             <Select
               name="leaveType"
               options={leaveTypes}
@@ -134,12 +140,16 @@ const EmpLeaveBalance = () => {
               placeholder="Select Leave Type"
             />
             {formik.touched.leaveType && formik.errors.leaveType && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.leaveType}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {formik.errors.leaveType}
+              </p>
             )}
           </div>
 
           <div>
-            <label className="block font-medium text-gray-700 mb-2">Action</label>
+            <label className="block font-medium text-gray-700 mb-2">
+              Action
+            </label>
             <Select
               name="action"
               options={actions}
@@ -150,12 +160,17 @@ const EmpLeaveBalance = () => {
               placeholder="Select Action"
             />
             {formik.touched.action && formik.errors.action && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.action}</p>
+              <p className="text-sm text-red-500 mt-1">
+                {formik.errors.action}
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="days" className="block font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="days"
+              className="block font-medium text-gray-700 mb-2"
+            >
               Days
             </label>
             <input

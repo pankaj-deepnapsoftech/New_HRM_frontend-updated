@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import {
   useGetAllEmpDataQuery,
-  useAddAssetMutation, // ✅ Use the correct hook
+  useAddAssetMutation,
   useRemoveAssetMutation,
 } from "@/service/EmpData.services";
 import Pagination from "./Pagination/Pagination";
 
-// Available assets to pick from
-const assetOptions = ["Laptop", "Bike", "Mobile", "Headset"];
-const formattedAssetOptions = assetOptions.map((asset) => ({
-  value: asset,
-  label: asset,
-}));
+const defaultAssets = ["Laptop", "Bike", "Mobile", "Headset"];
+const formatOptions = (assets) =>
+  assets.map((asset) => ({ value: asset, label: asset }));
 
 const customStyles = {
   control: (provided, state) => ({
@@ -39,15 +36,32 @@ const AssignAssets = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
   const { data, isLoading, refetch } = useGetAllEmpDataQuery({ page, limit });
+
   const [addAsset] = useAddAssetMutation();
   const [removeAsset] = useRemoveAssetMutation();
 
   const [selectedAssets, setSelectedAssets] = useState({});
+  const [allAssetOptions, setAllAssetOptions] = useState(
+    formatOptions(defaultAssets)
+  );
 
   const handleAssetChange = (empId, selected) => {
     setSelectedAssets((prev) => ({
       ...prev,
       [empId]: selected ? selected.value : "",
+    }));
+  };
+
+  const handleCreateAsset = (inputValue, empId) => {
+    const exists = allAssetOptions.some((opt) => opt.value === inputValue);
+    if (!exists) {
+      const newOption = { value: inputValue, label: inputValue };
+      setAllAssetOptions((prev) => [...prev, newOption]);
+    }
+
+    setSelectedAssets((prev) => ({
+      ...prev,
+      [empId]: inputValue,
     }));
   };
 
@@ -95,78 +109,79 @@ const AssignAssets = () => {
             </tr>
           </thead>
           <tbody>
-            {employees.map((emp) => (
-              <tr
-                key={emp._id}
-                className="border-b border-gray-300 hover:bg-gray-50"
-              >
-                <td className="p-2">{emp.fname || "N/A"}</td>
-                <td className="p-2">{emp.department || "N/A"}</td>
-                <td className="p-2">{emp.designation || "N/A"}</td>
-                <td className="p-2 space-x-2">
-                  {(emp.assets || []).map((asset, i) => (
-                    <span
-                      key={i}
-                      className="inline-flex items-center gap-1 text-blue-700 bg-blue-200 px-2 py-1 rounded-full text-xs"
-                    >
-                      {asset}
-                      <button
-                        onClick={() => handleRemoveAsset(emp, asset)}
-                        className="ml-1 text-red-600 hover:text-red-800"
-                        aria-label={`Remove ${asset}`}
-                        title={`Remove ${asset}`}
+            {employees.map((emp) => {
+              const availableOptions = allAssetOptions.filter(
+                (opt) => !(emp.assets || []).includes(opt.value)
+              );
+
+              return (
+                <tr
+                  key={emp._id}
+                  className="border-b border-gray-300 hover:bg-gray-50"
+                >
+                  <td className="p-2">{emp.fname || "N/A"}</td>
+                  <td className="p-2">{emp.department || "N/A"}</td>
+                  <td className="p-2">{emp.designation || "N/A"}</td>
+                  <td className="p-2 space-x-2">
+                    {(emp.assets || []).map((asset, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center gap-1 text-blue-700 bg-blue-200 px-2 py-1 rounded-full text-xs"
                       >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                </td>
-                <td className="p-3 ">
-                  <Select
-                    options={formattedAssetOptions.filter(
-                      (opt) => !(emp.assets || []).includes(opt.value)
-                    )}
-                    value={
-                      selectedAssets[emp._id]
-                        ? {
-                            value: selectedAssets[emp._id],
-                            label: selectedAssets[emp._id],
-                          }
-                        : null
-                    }
-                    onChange={(selected) =>
-                      handleAssetChange(emp._id, selected)
-                    }
-                    placeholder="Assign or add assets"
-                    styles={{
-                      ...customStyles,
-                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                    }}
-                    menuPortalTarget={document.body}
-                    menuPosition="absolute"
-                    isClearable
-                    isDisabled={
-                      formattedAssetOptions.filter(
-                        (opt) => !(emp.assets || []).includes(opt.value)
-                      ).length === 0
-                    }
-                  />
-                </td>
-                <td className="p-3">
-                  <button
-                    onClick={() => handleAddAsset(emp)}
-                    className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4 py-1 rounded hover:bg-gradient-to-tl disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={
-                      formattedAssetOptions.filter(
-                        (opt) => !(emp.assets || []).includes(opt.value)
-                      ).length === 0 || !selectedAssets[emp._id]
-                    }
-                  >
-                    ADD
-                  </button>
-                </td>
-              </tr>
-            ))}
+                        {asset}
+                        <button
+                          onClick={() => handleRemoveAsset(emp, asset)}
+                          className="ml-1 text-red-600 hover:text-red-800"
+                          aria-label={`Remove ${asset}`}
+                          title={`Remove ${asset}`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </td>
+                  <td className="p-3 ">
+                    <CreatableSelect
+                      options={availableOptions}
+                      value={
+                        selectedAssets[emp._id]
+                          ? {
+                              value: selectedAssets[emp._id],
+                              label: selectedAssets[emp._id],
+                            }
+                          : null
+                      }
+                      onChange={(selected) =>
+                        handleAssetChange(emp._id, selected)
+                      }
+                      onCreateOption={(inputValue) =>
+                        handleCreateAsset(inputValue, emp._id)
+                      }
+                      placeholder="Assign or add assets"
+                      isClearable
+                      styles={{
+                        ...customStyles,
+                        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                      }}
+                      menuPortalTarget={document.body}
+                      menuPosition="absolute"
+                    />
+                  </td>
+                  <td className="p-3">
+                    <button
+                      onClick={() => handleAddAsset(emp)}
+                      className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4 py-1 rounded hover:bg-gradient-to-tl disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={
+                        availableOptions.length === 0 ||
+                        !selectedAssets[emp._id]
+                      }
+                    >
+                      ADD
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

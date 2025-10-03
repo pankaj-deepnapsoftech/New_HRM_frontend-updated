@@ -6,8 +6,8 @@ import Pagination from "./Pagination/Pagination";
 
 export default function SalaryManagement() {
   const [employees, setEmployees] = useState([]);
-  const [page,setPage] = useState(1)
-   const limit = 10 ;
+  const [page, setPage] = useState(1);
+  const limit = 10;
   const { data, isLoading } = useGetAllEmpDataQuery({ page, limit }); // Fetch all employees by setting a high limit (adjust if needed)
 
   useEffect(() => {
@@ -17,11 +17,14 @@ export default function SalaryManagement() {
           // Calculate default present days from attendance for current month (September 2025)
           const currentMonth = "2025-09"; // Based on the provided current date
           const presentDays = emp.attendance.filter(
-            (a) => a.date.startsWith(currentMonth) && a.status.toLowerCase() === "present"
+            (a) =>
+              a.date.startsWith(currentMonth) &&
+              a.status.toLowerCase() === "present"
           ).length;
 
           // Calculate default leaves (full days + half days equivalent)
-          const leaves = emp.fullDayLeavesThisMonth + emp.halfDayLeavesThisMonth * 0.5;
+          const leaves =
+            emp.fullDayLeavesThisMonth + emp.halfDayLeavesThisMonth * 0.5;
 
           return {
             id: emp._id,
@@ -53,7 +56,7 @@ export default function SalaryManagement() {
       "Emp-Code": emp.code,
       "New Monthly Salary": emp.salary,
       "Present Days": emp.days,
-      "Leaves": emp.leaves,
+      Leaves: emp.leaves,
       "Calculated Salary": calculateSalary(emp),
     }));
 
@@ -63,7 +66,8 @@ export default function SalaryManagement() {
     XLSX.writeFile(wb, "salary_report.xlsx");
   };
 
-  if (isLoading) return <div className="text-center py-10">Loading employee data...</div>;
+  if (isLoading)
+    return <div className="text-center py-10">Loading employee data...</div>;
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
@@ -96,7 +100,9 @@ export default function SalaryManagement() {
                   <input
                     type="number"
                     value={emp.salary}
-                    onChange={(e) => handleInputChange(i, "salary", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(i, "salary", e.target.value)
+                    }
                     className="w-40 px-5 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   />
                 </td>
@@ -104,7 +110,9 @@ export default function SalaryManagement() {
                   <input
                     type="number"
                     value={emp.days}
-                    onChange={(e) => handleInputChange(i, "days", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(i, "days", e.target.value)
+                    }
                     className="w-30 px-3 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   />
                 </td>
@@ -112,7 +120,9 @@ export default function SalaryManagement() {
                   <input
                     type="number"
                     value={emp.leaves}
-                    onChange={(e) => handleInputChange(i, "leaves", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(i, "leaves", e.target.value)
+                    }
                     className="w-30 px-3 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   />
                 </td>
@@ -132,7 +142,11 @@ export default function SalaryManagement() {
           Download Salary Report
         </button>
       </div>
-      <Pagination page={page} setPage={setPage} hasNextPage={employees?.length === 10} />
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={employees?.length === 10}
+      />
     </div>
   );
 }

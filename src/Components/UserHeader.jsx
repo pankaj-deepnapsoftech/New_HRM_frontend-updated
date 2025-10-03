@@ -8,10 +8,11 @@ const UserHeader = () => {
   const [showEmpMenuBar, setShowEmpMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
-  const { data: username } = useLogedInuserQuery()
-  const userName = username?.data?.fullName ;
+  const { data: username } = useLogedInuserQuery();
+  const userName = username?.data?.fullName;
 
-  const userInitials = userName?.split(" ")
+  const userInitials = userName
+    ?.split(" ")
     .map((word) => word[0])
     .join("")
     .toUpperCase();
