@@ -16,19 +16,22 @@ export default function SalaryManagement() {
         data.data.map((emp) => {
           // Calculate default present days from attendance for current month (September 2025)
           const currentMonth = "2025-09"; // Based on the provided current date
-          const presentDays = emp.attendance.filter(
-            (a) => a.date.startsWith(currentMonth) && a.status.toLowerCase() === "present"
+          const attendanceArr = Array.isArray(emp.attendance) ? emp.attendance : [];
+          const presentDays = attendanceArr.filter(
+            (a) => a?.date?.startsWith?.(currentMonth) && (a?.status || "").toLowerCase() === "present"
           ).length;
 
-          // Calculate default leaves (full days + half days equivalent)
-          const leaves = emp.fullDayLeavesThisMonth + emp.halfDayLeavesThisMonth * 0.5;
+          // Calculate default leaves (full days + half days equivalent) with fallbacks
+          const fullDay = Number(emp.fullDayLeavesThisMonth) || 0;
+          const halfDay = Number(emp.halfDayLeavesThisMonth) || 0;
+          const leaves = fullDay + halfDay * 0.5;
 
           return {
             id: emp._id,
-            name: `${emp.fname} ${emp.lastName || ""}`.trim(),
-            code: emp.empCode,
-            salary: emp.salary,
-            days: presentDays, // Default to calculated present days
+            name: `${emp.fname || ""} ${emp.lastName || ""}`.trim(),
+            code: emp.empCode || "",
+            salary: Number(emp.salary) || 0,
+            days: presentDays || 0, // Default to calculated present days
             leaves: leaves, // Default to calculated leaves
           };
         })
