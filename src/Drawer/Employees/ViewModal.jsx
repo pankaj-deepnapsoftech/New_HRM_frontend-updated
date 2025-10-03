@@ -3,7 +3,6 @@ import { IoMdClose } from 'react-icons/io';
 
 const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
   if (!employee) return null;
-
   // List keys in desired order (optional)
   const fieldsOrder = [
     "Emp_id",
@@ -21,6 +20,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
     "photo",
     "salary",
   ];
+  console.log(fieldsOrder)
 
   // Convert key string like 'Back_Name' to 'Back Name'
   const formatKey = (key) =>
@@ -60,7 +60,7 @@ const ViewModal = ({ showDetailModal, setShowDetailModal, employee }) => {
 
         {/* Info Grid */}
         <div className="bg-gray-100 rounded-lg p-4 text-sm space-y-2">
-          {fieldsOrder.map((key) => {
+          {fieldsOrder?.map((key) => {
             // skip photo here since displayed above
             if (key === "photo") return null;
             const value = employee[key];

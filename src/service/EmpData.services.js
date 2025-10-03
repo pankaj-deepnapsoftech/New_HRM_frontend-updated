@@ -4,12 +4,12 @@ import { Api } from "../store/api/api";
 export const empApi = Api.injectEndpoints({
   endpoints: (builder) => ({
     getAllEmpData: builder.query({
-      query: ({page, limit}) => ({
+      query: ({ page, limit }) => ({
         url: `/empdata?page=${page}&limit=${limit}`,
         method: "GET",
       }),
     }),
-    
+
 
     getAllEmpDataWithoutPaginatio: builder.query({
       query: () => ({
@@ -40,13 +40,23 @@ export const empApi = Api.injectEndpoints({
       }),
     }),
 
-    getassetByid:builder.query({
-      query: (id)=>({
-        url:`/empdata/${id}`,
-        method:"GET",
+    getassetByid: builder.query({
+      query: (id) => ({
+        url: `/empdata/${id}`,
+        method: "GET",
       })
 
 
+    }),
+
+
+
+    getEmpLeaveSummery: builder.query({
+      query: (employeeId) => {
+        return {
+          url: `/empdata/${employeeId}/leave-summary`
+        }
+      }
     }),
 
     removeAsset: builder.mutation({
@@ -82,5 +92,6 @@ export const {
   useAddAssetMutation,
   useRemoveAssetMutation,
   useCreateCredentialsMutation,
-  useGetAllEmpDataWithoutPaginatioQuery
+  useGetAllEmpDataWithoutPaginatioQuery,
+  useGetEmpLeaveSummeryQuery
 } = empApi;
