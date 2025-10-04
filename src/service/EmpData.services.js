@@ -10,6 +10,7 @@ export const empApi = Api.injectEndpoints({
       }),
     }),
 
+
     getAllEmpDataWithoutPaginatio: builder.query({
       query: () => ({
         url: `/empdata/all`,
@@ -24,7 +25,6 @@ export const empApi = Api.injectEndpoints({
         body: newEmp,
       }),
     }),
-
     updateEmpData: builder.mutation({
       query: ({ id, ...body }) => ({
         url: `/empdata/${id}`,
@@ -44,7 +44,19 @@ export const empApi = Api.injectEndpoints({
       query: (id) => ({
         url: `/empdata/${id}`,
         method: "GET",
-      }),
+      })
+
+
+    }),
+
+
+
+    getEmpLeaveSummery: builder.query({
+      query: (employeeId) => {
+        return {
+          url: `/empdata/${employeeId}/leave-summary`
+        }
+      }
     }),
 
     removeAsset: builder.mutation({
@@ -68,6 +80,60 @@ export const empApi = Api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+
+    // Attendance related endpoints
+    markLoginAttendance: builder.mutation({
+      query: (employeeId) => ({
+        url: `/empdata/${employeeId}/attendance/login`,
+        method: "POST",
+      }),
+    }),
+
+    markLogoutAttendance: builder.mutation({
+      query: (employeeId) => ({
+        url: `/empdata/${employeeId}/attendance/logout`,
+        method: "POST",
+      }),
+    }),
+
+    getDailyAttendance: builder.query({
+      query: (date) => ({
+        url: `/empdata/attendance/daily${date ? `?date=${date}` : ''}`,
+        method: "GET",
+      }),
+    }),
+
+    getMonthlyAttendance: builder.query({
+      query: ({ month, year, department }) => ({
+        url: `/empdata/attendance/monthly?month=${month}&year=${year}${department ? `&department=${department}` : ''}`,
+        method: "GET",
+      }),
+    }),
+
+    getYearlyAttendance: builder.query({
+      query: ({ year, department }) => ({
+        url: `/empdata/attendance/yearly?year=${year}${department ? `&department=${department}` : ''}`,
+        method: "GET",
+      }),
+    }),
+    terminateEmployee: builder.mutation({
+      query: ({ id }) => ({
+        url: `/empdata/${id}/terminate`,
+        method: "POST",
+      }),
+    }),
+    getAllTerminatedEmployees: builder.query({
+      query: ({ page, limit }) => ({
+        url: `/empdata/terminated?page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
+    }),
+    deleteTerminatedEmployee: builder.mutation({
+      query: ({ id }) => ({
+        url: `/empdata/terminated/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -81,4 +147,13 @@ export const {
   useRemoveAssetMutation,
   useCreateCredentialsMutation,
   useGetAllEmpDataWithoutPaginatioQuery,
+  useMarkLoginAttendanceMutation,
+  useMarkLogoutAttendanceMutation,
+  useGetDailyAttendanceQuery,
+  useGetMonthlyAttendanceQuery,
+  useGetYearlyAttendanceQuery,
+  useTerminateEmployeeMutation,
+  useGetAllTerminatedEmployeesQuery,
+  useDeleteTerminatedEmployeeMutation,
+  useGetEmpLeaveSummeryQuery
 } = empApi;

@@ -13,7 +13,7 @@ const EmpApi = Api.injectEndpoints({
       providesTags: ["Employee"],
     }),
     EpmGetData: build.query({
-      query({ page = 1 }) {
+      query({page = 1}) {
         return {
           url: `/employee/employees?page=${page}&limit=10`,
           method: "GET",
@@ -50,15 +50,16 @@ const EmpApi = Api.injectEndpoints({
       providesTags: ["Employee"],
     }),
 
-    getEmployeeDocumentDetails: build.query({
-      query: (id) => {
+    getEmployeeDocumentDetails:build.query({
+      query:(id)=> {
         return {
           url: `employee/employee/${id}`,
-          method: "GET",
+          method:"GET",
           providesTags: ["Employee"],
-        };
-      },
-    }),
+        }
+      }
+    })
+
   }),
 });
 
@@ -68,5 +69,5 @@ export const {
   useEpmDeleteDataMutation,
   useEpmUpdateDataMutation,
   useEmpLocationListQuery,
-  useGetEmployeeDocumentDetailsQuery,
+  useGetEmployeeDocumentDetailsQuery
 } = EmpApi;

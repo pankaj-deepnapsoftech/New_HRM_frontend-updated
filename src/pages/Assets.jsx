@@ -4,8 +4,10 @@ import {
   useGetAllEmpDataQuery,
   useAddAssetMutation,
   useRemoveAssetMutation,
+  
 } from "@/service/EmpData.services";
 import Pagination from "./Pagination/Pagination";
+
 
 const defaultAssets = ["Laptop", "Bike", "Mobile", "Headset"];
 const formatOptions = (assets) =>
@@ -25,8 +27,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#E9D5FF"
       : state.isFocused
-      ? "#F3E8FF"
-      : "white",
+        ? "#F3E8FF"
+        : "white",
     color: "black",
     cursor: "pointer",
   }),
@@ -39,11 +41,9 @@ const AssignAssets = () => {
 
   const [addAsset] = useAddAssetMutation();
   const [removeAsset] = useRemoveAssetMutation();
-
+ 
   const [selectedAssets, setSelectedAssets] = useState({});
-  const [allAssetOptions, setAllAssetOptions] = useState(
-    formatOptions(defaultAssets)
-  );
+  const [allAssetOptions, setAllAssetOptions] = useState(formatOptions(defaultAssets));
 
   const handleAssetChange = (empId, selected) => {
     setSelectedAssets((prev) => ({
@@ -53,6 +53,7 @@ const AssignAssets = () => {
   };
 
   const handleCreateAsset = (inputValue, empId) => {
+  
     const exists = allAssetOptions.some((opt) => opt.value === inputValue);
     if (!exists) {
       const newOption = { value: inputValue, label: inputValue };
@@ -63,6 +64,8 @@ const AssignAssets = () => {
       ...prev,
       [empId]: inputValue,
     }));
+
+   
   };
 
   const handleAddAsset = async (emp) => {
@@ -143,20 +146,15 @@ const AssignAssets = () => {
                   <td className="p-3 ">
                     <CreatableSelect
                       options={availableOptions}
-                      value={
-                        selectedAssets[emp._id]
-                          ? {
-                              value: selectedAssets[emp._id],
-                              label: selectedAssets[emp._id],
-                            }
-                          : null
+                      value={selectedAssets[emp._id]
+                        ? {
+                          value: selectedAssets[emp._id],
+                          label: selectedAssets[emp._id],
+                        }
+                        : null
                       }
-                      onChange={(selected) =>
-                        handleAssetChange(emp._id, selected)
-                      }
-                      onCreateOption={(inputValue) =>
-                        handleCreateAsset(inputValue, emp._id)
-                      }
+                      onChange={(selected) => handleAssetChange(emp._id, selected)}
+                      onCreateOption={(inputValue) => handleCreateAsset(inputValue, emp._id)}
                       placeholder="Assign or add assets"
                       isClearable
                       styles={{
@@ -166,14 +164,14 @@ const AssignAssets = () => {
                       menuPortalTarget={document.body}
                       menuPosition="absolute"
                     />
+
                   </td>
                   <td className="p-3">
                     <button
                       onClick={() => handleAddAsset(emp)}
                       className="bg-gradient-to-br from-green-400 to-green-500 text-white px-4 py-1 rounded hover:bg-gradient-to-tl disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={
-                        availableOptions.length === 0 ||
-                        !selectedAssets[emp._id]
+                        availableOptions.length === 0 || !selectedAssets[emp._id]
                       }
                     >
                       ADD

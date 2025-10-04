@@ -35,21 +35,27 @@ const EmpDashboard = () => {
     phone: "",
   });
 
+
+
+  console.log(credForm)
   const [showPwd, setShowPwd] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "");
-  const { data: departmentData } = useGetAllDepartmentQuery();
+  const { data: departmentData } = useGetAllDepartmentQuery()
   const employees = data?.data || [];
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+   
   const departmentMap = departmentData?.data?.reduce((acc, curr) => {
     const dept = curr.department_name?.trim();
     if (!acc[dept]) acc[dept] = new Set();
     acc[dept].add(curr.sub_department);
     return acc;
   }, {});
-
+  
   const uniqueDepartments = Object.keys(departmentMap || {});
+
+
+
 
   const filteredEmployees = employees.filter((emp) => {
     const matchesSearch =
@@ -78,7 +84,7 @@ const EmpDashboard = () => {
       date: selectedEmployee?.date?.split("T")[0] || "",
       location: selectedEmployee?.location || "",
       email: selectedEmployee?.email || "",
-      sub_department: selectedEmployee?.sub_department || "",
+      sub_department: selectedEmployee?.sub_department || ""
     },
     validationSchema: validationSchema,
     enableReinitialize: true,
@@ -94,14 +100,13 @@ const EmpDashboard = () => {
         setSelectedEmployee(null);
         formik.resetForm();
         refetch(page);
-        toast.success(
-          `Employee ${editMode ? "updated" : "added"} successfully`
-        );
+        toast.success(`Employee ${editMode ? "updated" : "added"} successfully`);
       } catch (error) {
         console.error("Error saving employee:", error);
       }
     },
   });
+
 
   const filteredSubDepartments = formik.values.department
     ? Array.from(departmentMap[formik.values.department] || [])
@@ -167,9 +172,7 @@ const EmpDashboard = () => {
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Email</th>
               <th className="p-3 text-left">Department</th>
-              <th className="p-4 text-left whitespace-nowrap">
-                Sub Department
-              </th>
+              <th className="p-4 text-left whitespace-nowrap">Sub Department</th>
               <th className="p-3 text-left">Designation</th>
               <th className="p-3 text-left">Emp Code</th>
               <th className="p-3 text-left">Salary</th>
@@ -183,7 +186,7 @@ const EmpDashboard = () => {
             {filteredEmployees.length === 0 ? (
               <tr>
                 <td colSpan="10" className="text-center py-8 text-gray-500">
-                  {selectedDepartment
+                  {  selectedDepartment
                     ? "No employees found matching your filters"
                     : "No employees found"}
                 </td>
@@ -192,9 +195,8 @@ const EmpDashboard = () => {
               filteredEmployees.map((emp, idx) => (
                 <tr
                   key={emp._id}
-                  className={`border-b whitespace-nowrap  border-gray-200 ${
-                    idx % 2 === 0 ? "bg-white" : "bg-gray-100"
-                  }`}
+                  className={`border-b whitespace-nowrap  border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-100"
+                    }`}
                 >
                   <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
                   <td className="pl-4 py-2 px-2 text-[16px]">
@@ -204,7 +206,7 @@ const EmpDashboard = () => {
                     {emp.department}
                   </td>
                   <td className="pl-4 py-2 px-2 text-[16px]">
-                    {emp.sub_department}
+                    {emp.sub_department} 
                   </td>
                   <td className="pl-4 py-2 px-2 text-[16px]">
                     {emp.designation}
@@ -247,7 +249,7 @@ const EmpDashboard = () => {
                         setCredModal(emp);
                         setCredForm({
                           email: emp.email || "",
-                          password: emp.password || "",
+                          password: "",
                           fullName: emp.fname || "",
                           phone: emp.phone || "",
                         });
@@ -297,7 +299,7 @@ const EmpDashboard = () => {
                   </div>
                 )}
               </div>
-
+             
               <div>
                 <input
                   type="email"
@@ -330,10 +332,7 @@ const EmpDashboard = () => {
                 )}
               </div>
               <div>
-                <label
-                  htmlFor="department"
-                  className="block mb-1 font-medium text-gray-700"
-                >
+                <label htmlFor="department" className="block mb-1 font-medium text-gray-700">
                   Department
                 </label>
                 <select
@@ -342,8 +341,8 @@ const EmpDashboard = () => {
                   value={formik.values.department}
                   onChange={(e) => {
                     const selected = e.target.value;
-                    formik.setFieldValue("department", selected);
-                    formik.setFieldValue("sub_department", "");
+                    formik.setFieldValue('department', selected);
+                    formik.setFieldValue('sub_department', '');
                   }}
                   onBlur={formik.handleBlur}
                   className="w-full p-3 rounded-lg border border-gray-300"
@@ -357,18 +356,13 @@ const EmpDashboard = () => {
                 </select>
 
                 {formik.touched.department && formik.errors.department && (
-                  <div className="text-red-500 text-sm mt-1">
-                    {formik.errors.department}
-                  </div>
+                  <div className="text-red-500 text-sm mt-1">{formik.errors.department}</div>
                 )}
               </div>
 
               {/* Sub Department Dropdown */}
               <div className="mt-4">
-                <label
-                  htmlFor="sub_department"
-                  className="block mb-1 font-medium text-gray-700"
-                >
+                <label htmlFor="sub_department" className="block mb-1 font-medium text-gray-700">
                   Sub Department
                 </label>
                 <select
@@ -378,7 +372,7 @@ const EmpDashboard = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   className="w-full p-3 rounded-lg border border-gray-300"
-                  disabled={!formik.values.department}
+                   disabled={!formik.values.department}
                 >
                   <option value="">Select Sub Department</option>
                   {filteredSubDepartments.map((sub, idx) => (
@@ -387,13 +381,11 @@ const EmpDashboard = () => {
                     </option>
                   ))}
                 </select>
-                {formik.touched.sub_department &&
-                  formik.errors.sub_department && (
-                    <div className="text-red-500 text-sm mt-1">
-                      {formik.errors.sub_department}
-                    </div>
-                  )}
+                {formik.touched.sub_department && formik.errors.sub_department && (
+                  <div className="text-red-500 text-sm mt-1">{formik.errors.sub_department}</div>
+                )}
               </div>
+
 
               <div>
                 <input
@@ -559,6 +551,7 @@ const EmpDashboard = () => {
                   {showPwd ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+             
             </div>
             <div className="flex justify-end gap-3 mt-5">
               <button

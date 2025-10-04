@@ -33,7 +33,7 @@ const AuthApi = Api.injectEndpoints({
       query: (body) => ({
         url: "/user/logout",
         method: "POST",
-        body, // Still a GET, but used as a mutation
+        body // Still a GET, but used as a mutation
       }),
       providesTags: ["Auth"],
     }),

@@ -1,23 +1,23 @@
-import { useLogedInuserQuery } from "@/service/Auth.services";
-import { useGetEmployeeDocumentDetailsQuery } from "@/service/Employee.services";
-import React from "react";
+import { useLogedInuserQuery } from '@/service/Auth.services';
+import { useGetEmployeeDocumentDetailsQuery } from '@/service/Employee.services';
+import React from 'react';
 
 const UserDocument = () => {
   const { data: userData } = useLogedInuserQuery();
   const userId = userData?.data?._id;
 
-  const { data: empDocument, isLoading } = useGetEmployeeDocumentDetailsQuery(
-    userId,
-    {
-      skip: !userId,
-    }
-  );
+  const { data: empDocument, isLoading } = useGetEmployeeDocumentDetailsQuery(userId, {
+    skip: !userId,
+  });
 
   const empDoc = empDocument?.data;
 
   if (isLoading) {
     return <p className="text-center py-10 text-lg">Loading...</p>;
   }
+
+
+
 
   const DocCard = ({ title, value }) => (
     <div className="border rounded-lg p-4 flex justify-between shadow-sm bg-gray-50">

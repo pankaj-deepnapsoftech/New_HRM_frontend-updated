@@ -6,6 +6,7 @@ import UserLeaveRequest from "@/pages/UserPanel/UserLeaveRequest";
 import UserLeaveStatus from "@/pages/UserPanel/UserLeaveStatus";
 import UserPaySlip from "@/pages/UserPanel/UserPaySlip";
 import UserAssets from "@/pages/UserPanel/UserAssets";
+import UserGatepass from "@/pages/UserPanel/UserGatepass";
 import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";
 
 export const UserRoute = [
@@ -14,35 +15,39 @@ export const UserRoute = [
     element: <UserDashboard />,
   },
   {
-    path: "/user/attendance",
-    element: <UserAttendance />,
+    path:"/user/attendance",
+    element:<UserAttendance/>
   },
-  {
-    path: "/user/request-leave",
-    element: <UserLeaveRequest />,
-  },
-  {
-    path: "/user/leave-status",
-    element: <UserLeaveStatus />,
-  },
-  {
-    path: "/user/document",
-    element: <UserDocument />,
-  },
-  {
-    path: "/user/advance-money",
-    element: <AdvanceMoneyRequest />,
-  },
-  {
-    path: "/user/payslip",
-    element: <UserPaySlip />,
-  },
-  {
-    path: "/user/assets",
-    element: <UserAssets />,
-  },
-  {
-    path: "/user/terms-conditions",
-    element: <TermsAndConditions />,
-  },
+{
+     path: "/user/request-leave",
+    element:<UserLeaveRequest/>
+},
+{
+    path:"/user/leave-status",
+    element:<UserLeaveStatus/>
+},
+{
+    path:"/user/document",
+    element:<UserDocument/>
+},
+{
+    path:"/user/advance-money",
+    element:<AdvanceMoneyRequest/>
+},
+{
+    path:"/user/payslip",
+    element:<UserPaySlip/>
+},
+{
+    path:"/user/assets",
+    element:<UserAssets/>
+},
+{
+    path:"/user/gate-pass",
+    element:<UserGatepass/>
+},
+{
+    path:"/user/terms-conditions",
+    element:<TermsAndConditions/>
+}
 ];

@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react';
 
 const EmpPayslip = () => {
   const employees = [
     {
-      name: "Nitish Prajapati",
-      department: "IT",
-      designation: "Developer",
+      name: 'Nitish Prajapati',
+      department: 'IT',
+      designation: 'Developer',
       actualSalary: 5000,
       workingDays: 3,
     },
     {
-      name: "Abhi Pjpt",
-      department: "IT",
-      designation: "Manager",
+      name: 'Abhi Pjpt',
+      department: 'IT',
+      designation: 'Manager',
       actualSalary: 12000,
       workingDays: 1,
     },
     {
-      name: "Komal Singh",
-      department: "sale",
-      designation: "manager",
+      name: 'Komal Singh',
+      department: 'sale',
+      designation: 'manager',
       actualSalary: 10000,
       workingDays: 1,
     },
     {
-      name: "Deepak Sharma",
-      department: "Sales",
-      designation: "Boss",
+      name: 'Deepak Sharma',
+      department: 'Sales',
+      designation: 'Boss',
       actualSalary: 10,
       workingDays: 0,
     },
@@ -39,9 +39,7 @@ const EmpPayslip = () => {
   return (
     <div className=" p-5 md:p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       <div className="bg-gray-300 text-gray-600 text-center py-4 rounded-xl shadow-md shadow-gray-400 ">
-        <h2 className="text-lg sm:text-2xl font-semibold">
-          Generate Employee Payslip
-        </h2>
+        <h2 className="text-lg sm:text-2xl font-semibold">Generate Employee Payslip</h2>
       </div>
 
       <div className="overflow-x-auto scrollbar-visible bg-white shadow-lg rounded-t-xl mt-10">
@@ -61,27 +59,13 @@ const EmpPayslip = () => {
           <tbody className="divide-y whitespace-nowrap divide-gray-100">
             {employees.map((emp, index) => {
               const fund = calculateFund(emp.actualSalary);
-              const total = calculateTotal(
-                emp.actualSalary,
-                emp.workingDays
-              ).toFixed(2);
+              const total = calculateTotal(emp.actualSalary, emp.workingDays).toFixed(2);
 
               return (
-                <tr
-                  key={index}
-                  className={`border-t border-gray-200 ${
-                    index % 2 == 0 ? "bg-white" : "bg-gray-100"
-                  }`}
-                >
-                  <td className="px-6 py-3 font-medium text-gray-700">
-                    {emp.name}
-                  </td>
-                  <td className="px-6 py-3 text-gray-600 capitalize">
-                    {emp.department}
-                  </td>
-                  <td className="px-6 py-3 text-gray-700 capitalize">
-                    {emp.designation}
-                  </td>
+                <tr key={index} className={`border-t border-gray-200 ${index %2 == 0? "bg-white":"bg-gray-100"}`} >
+                  <td className="px-6 py-3 font-medium text-gray-700">{emp.name}</td>
+                  <td className="px-6 py-3 text-gray-600 capitalize">{emp.department}</td>
+                  <td className="px-6 py-3 text-gray-700 capitalize">{emp.designation}</td>
                   <td className="px-6 py-3">₹{emp.actualSalary.toFixed(2)}</td>
                   <td className="px-6 py-3">{emp.workingDays}</td>
                   <td className="px-6 py-3">₹{fund}</td>

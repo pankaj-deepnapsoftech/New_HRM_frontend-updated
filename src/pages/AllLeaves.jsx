@@ -26,7 +26,7 @@ const AllLeaves = () => {
               <th className="px-3 py-3 text-left">Email</th>
               <th className="px-3 py-3 text-left">Department</th>
               <th className="px-3 py-3 text-left">Role</th>
-              <th className="px-3 py-3 text-left">Emp-Code</th>
+              <th className="px-3 py-3 text-left">Emp-Code</th> 
               <th className="px-3 py-3 text-left">No. of Half Leaves</th>
               <th className="px-3 py-3 text-left">No. of Full Leaves</th>
               <th className="px-3 py-3 text-left">Present Leave</th>
@@ -44,12 +44,8 @@ const AllLeaves = () => {
                   {emp.fname || emp.fullName || "NA"}
                 </td>
                 <td className="px-3 py-2 text-[17px]">{emp.email || "NA"}</td>
-                <td className="px-3 py-2 text-[17px]">
-                  {emp.department || "NA"}
-                </td>
-                <td className="px-3 py-2 text-[17px]">
-                  {emp.designation || "NA"}
-                </td>
+                <td className="px-3 py-2 text-[17px]">{emp.department || "NA"}</td>
+                <td className="px-3 py-2 text-[17px]">{emp.designation || "NA"}</td>
                 <td className="px-3 py-2 text-[17px]">{emp.empCode || "NA"}</td>
                 <td className="px-3 py-2 text-[17px]">
                   {emp.halfDayLeavesThisMonth ?? "NA"}

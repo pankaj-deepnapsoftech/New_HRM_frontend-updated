@@ -42,9 +42,12 @@ const ReimbursementModal = ({ onClose }) => {
 
         {/* Button */}
         <div className="mt-6 flex justify-around space-x-4">
-          <button className="bg-blue-600 text-white px-5 py-2 rounded shadow bg-gradient-to-br from-slate-500 to-slate-600 text-sm hover:bg-gradient-to-tl">
+          <button
+            className="bg-blue-600 text-white px-5 py-2 rounded shadow bg-gradient-to-br from-slate-500 to-slate-600 text-sm hover:bg-gradient-to-tl"
+          >
             ADD REIMBURSEMENTS
           </button>
+         
         </div>
       </div>
     </div>

@@ -268,7 +268,7 @@ const EmpMenuBar = ({ showEmpMenuBar, setShowEmpMenuBar }) => {
                       {formik.errors.confirmPassword}
                     </p>
                   )}
-              </div>
+              </div>   
 
               {/* Submit Button */}
               <button

@@ -1,14 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
+
 
 const initialState = {
-  fullName: "",
-  email: "",
-  phone: "",
-  username: "",
-  role: "",
-  _id: "", // Add user ID
-  isLogin: false,
-};
+    fullName:"",
+    email:"",
+    phone:"",
+    username:"",
+    role:"",
+    _id:"", // Add user ID
+    isLogin:false
+}
 
 export const AuthSlice = createSlice({
   name: "Auth",
@@ -39,4 +40,4 @@ export const AuthSlice = createSlice({
   },
 });
 
-export const { removeData, addData, setLoginState } = AuthSlice.actions;
+export const {removeData,addData,setLoginState} = AuthSlice.actions;

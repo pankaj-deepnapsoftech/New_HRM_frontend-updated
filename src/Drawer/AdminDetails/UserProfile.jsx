@@ -8,11 +8,9 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
   const email = useSelector((state) => state.Auth.email);
   const phone = useSelector((state) => state.Auth.phone);
 
-  const FirstLetter = fullName
-    ?.split(" ")
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
+  const FirstLetter = fullName?.split(" ").map((word) => word[0]).join("").toUpperCase()
+
+
 
   const handleBackgroundClick = () => {
     setShowMenu(false);
@@ -38,6 +36,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
       >
         {/* Header */}
         <div className="h-24 bg-indigo-500 p-5 text-white flex items-start justify-end rounded-t-2xl">
+          
           <button
             className="text-white hover:text-red-400 transition"
             onClick={() => setShowMenu(false)}
@@ -47,7 +46,10 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
           </button>
         </div>
 
-        <div className="flex justify-center -mt-12"></div>
+        
+        <div className="flex justify-center -mt-12">
+          
+        </div>
 
         {/* User Info */}
         <div className="px-6 py-6 text-gray-900 text-sm sm:text-base">
@@ -60,6 +62,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
               Admin
             </p>
           </div>
+
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io"; // Close icon
 
-const LocationModal = ({ showModal, setShowModal, location }) => {
+const LocationModal = ({ showModal,setShowModal, location }) => {
   const modalRef = useRef();
 
   // Close on outside click
@@ -31,7 +31,7 @@ const LocationModal = ({ showModal, setShowModal, location }) => {
       >
         {/* Close Icon */}
         <button
-          onClick={() => setShowModal(false)}
+          onClick={()=>setShowModal(false)}
           className="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
         >
           <IoMdClose size={20} />

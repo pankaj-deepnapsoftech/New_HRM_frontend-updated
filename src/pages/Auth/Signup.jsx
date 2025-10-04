@@ -133,7 +133,7 @@ const Signup = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-9 text-md text-sky-600 cursor-pointer"
               >
-                {showPassword ? <IoEyeOutline /> : <FaRegEyeSlash />}
+                {showPassword ? <IoEyeOutline/>:  <FaRegEyeSlash/>}
               </button>
             </div>
             <div>

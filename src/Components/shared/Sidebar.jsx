@@ -130,26 +130,26 @@ const Sidebar = () => {
       path: "/departments",
       element: <Departments />,
     },
-    {
-      text: <span className="text-[1rem] font-semibold">Projects</span>,
-      icon: <HiOutlineDocumentReport className="text-xl" />,
-      path: "/projects",
-      element: <Projects />,
-    },
+    // {
+    //   text: <span className="text-[1rem] font-semibold">Projects</span>,
+    //   icon: <HiOutlineDocumentReport className="text-xl" />,
+    //   path: "/projects",
+    //   element: <Projects />,
+    // },
     {
       text: <span className="text-[1rem] font-semibold">Reports</span>,
       icon: <RiListSettingsLine className="text-2xl" />,
       path: "/employees-reports",
       element: <EmployeesReports />,
     },
-    {
-      text: (
-        <span className="text-[1rem] font-semibold">Update Leave Balance</span>
-      ),
-      icon: <MdPerson className="text-2xl" />,
-      path: "/empleaves",
-      element: <EmpLeaveBalance />,
-    },
+    // {
+    //   text: (
+    //     <span className="text-[1rem] font-semibold">Update Leave Balance</span>
+    //   ),
+    //   icon: <MdPerson className="text-2xl" />,
+    //   path: "/empleaves",
+    //   element: <EmpLeaveBalance />,
+    // },
     {
       text: (
         <span className="text-[1rem] font-semibold">Salary Management</span>
@@ -187,12 +187,12 @@ const Sidebar = () => {
           path: "/all-attendence",
           element: <AllAttendance />,
         },
-        {
-          text: <span className="text-[1rem] font-semibold">All Leave</span>,
-          icon: <TbListDetails className="text-2xl mr-2" />,
-          path: "/all-leaves",
-          element: <AllLeaves />,
-        },
+        // {
+        //   text: <span className="text-[1rem] font-semibold">All Leave</span>,
+        //   icon: <TbListDetails className="text-2xl mr-2" />,
+        //   path: "/all-leaves",
+        //   element: <AllLeaves />,
+        // },
       ],
     },
     {
@@ -229,61 +229,61 @@ const Sidebar = () => {
       path: "/view/employee/show-cause/notice",
       element: <ShowCauseNotices />,
     },
-    {
-      text: (
-        <button
-          className="flex items-center gap-3 cursor-pointer"
-          onClick={() => setPayrollarrow(!payroolOpenArrow)}
-        >
-          <span className="text-[1rem] font-semibold">Payroll</span>
-          {payroolOpenArrow ? (
-            <IoIosArrowUp size={17} />
-          ) : (
-            <IoIosArrowDown size={17} />
-          )}
-        </button>
-      ),
-      icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
-      onClick: () => setPayrollOpen(!payrollOpen),
-      subMenu: payrollOpen && [
-        {
-          text: (
-            <span className="text-[1rem] font-semibold">Payroll Summary</span>
-          ),
-          icon: <MdOutlineStickyNote2 className="text-2xl mr-2" />,
-          path: "/employee/payrollSummary",
-          element: <PayrollSummary />,
-        },
-        {
-          text: (
-            <span className="text-[1rem] font-semibold">Advanced Money</span>
-          ),
-          icon: <TbReportMoney className="text-2xl mr-2" />,
-          path: "/employee/advance/money/request",
-          element: <EmpMoneyRequest />,
-        },
-        {
-          text: <span className="text-[1rem] font-semibold">Incentives</span>,
-          icon: <GiMoneyStack className="text-2xl mr-2" />,
-          path: "/employee/incentives",
-          element: <Incentives />,
-        },
-        {
-          text: (
-            <span className="text-[1rem] font-semibold">Reimbursements</span>
-          ),
-          icon: <GiTakeMyMoney className="text-2xl mr-2" />,
-          path: "/employee/reimbursements",
-          element: <Reimbursements />,
-        },
-        {
-          text: <span className="text-[1rem] font-semibold">Emp Payslip</span>,
-          icon: <RiSecurePaymentLine className="text-2xl mr-2" />,
-          path: "/generate/employee/payslip",
-          element: <EmpPayslip />,
-        },
-      ],
-    },
+    // {
+    //   text: (
+    //     <button
+    //       className="flex items-center gap-3 cursor-pointer"
+    //       onClick={() => setPayrollarrow(!payroolOpenArrow)}
+    //     >
+    //       <span className="text-[1rem] font-semibold">Payroll</span>
+    //       {payroolOpenArrow ? (
+    //         <IoIosArrowUp size={17} />
+    //       ) : (
+    //         <IoIosArrowDown size={17} />
+    //       )}
+    //     </button>
+    //   ),
+    //   icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
+    //   onClick: () => setPayrollOpen(!payrollOpen),
+    //   subMenu: payrollOpen && [
+    //     {
+    //       text: (
+    //         <span className="text-[1rem] font-semibold">Payroll Summary</span>
+    //       ),
+    //       icon: <MdOutlineStickyNote2 className="text-2xl mr-2" />,
+    //       path: "/employee/payrollSummary",
+    //       element: <PayrollSummary />,
+    //     },
+    //     {
+    //       text: (
+    //         <span className="text-[1rem] font-semibold">Advanced Money</span>
+    //       ),
+    //       icon: <TbReportMoney className="text-2xl mr-2" />,
+    //       path: "/employee/advance/money/request",
+    //       element: <EmpMoneyRequest />,
+    //     },
+    //     {
+    //       text: <span className="text-[1rem] font-semibold">Incentives</span>,
+    //       icon: <GiMoneyStack className="text-2xl mr-2" />,
+    //       path: "/employee/incentives",
+    //       element: <Incentives />,
+    //     },
+    //     {
+    //       text: (
+    //         <span className="text-[1rem] font-semibold">Reimbursements</span>
+    //       ),
+    //       icon: <GiTakeMyMoney className="text-2xl mr-2" />,
+    //       path: "/employee/reimbursements",
+    //       element: <Reimbursements />,
+    //     },
+    //     {
+    //       text: <span className="text-[1rem] font-semibold">Emp Payslip</span>,
+    //       icon: <RiSecurePaymentLine className="text-2xl mr-2" />,
+    //       path: "/generate/employee/payslip",
+    //       element: <EmpPayslip />,
+    //     },
+    //   ],
+    // },
   ];
 
   return (
@@ -335,11 +335,10 @@ const Sidebar = () => {
                     if (window.innerWidth < 768) setShowSidebar(false);
                   }}
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
-              ${
-                isActive
-                  ? "bg-indigo-500 text-white font-bold shadow-md"
-                  : "hover:bg-indigo-50 hover:text-indigo-600"
-              }`}
+              ${isActive
+                      ? "bg-indigo-500 text-white font-bold shadow-md"
+                      : "hover:bg-indigo-50 hover:text-indigo-600"
+                    }`}
                 >
                   {item.icon}
                   <span>{item.text}</span>
@@ -358,11 +357,10 @@ const Sidebar = () => {
                             if (window.innerWidth < 768) setShowSidebar(false);
                           }}
                           className={`flex items-center gap-1 px-1 py-2 rounded-md cursor-pointer transition duration-300 
-                      ${
-                        isSubActive
-                          ? "bg-sky-500 text-white font-semibold shadow-sm"
-                          : "hover:bg-sky-50 hover:text-sky-600"
-                      }`}
+                      ${isSubActive
+                              ? "bg-sky-500 text-white font-semibold shadow-sm"
+                              : "hover:bg-sky-50 hover:text-sky-600"
+                            }`}
                         >
                           {subItem.icon}
                           <span>{subItem.text}</span>
