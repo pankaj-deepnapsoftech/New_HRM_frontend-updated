@@ -1,9 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGetPendingLeaveRequestsQuery,
   useUpdateLeaveRequestMutation,
 } from "@/service/LeaveRequest.services";
 import { toast } from "react-toastify";
+import { useGetAllEmpDataWithoutPaginatioQuery, useGetEmpLeaveSummeryQuery } from "@/service/EmpData.services";
 
 const formatDate = (iso) => {
   try {
@@ -16,6 +17,12 @@ const formatDate = (iso) => {
 const HRDashboard = () => {
   const { data, isLoading, isError, refetch } =
     useGetPendingLeaveRequestsQuery();
+  const [employeeId, setEmployeeId] = useState(null);
+  const { data: alluser } = useGetAllEmpDataWithoutPaginatioQuery()
+  const { data: leaveData } = useGetEmpLeaveSummeryQuery(employeeId)
+  // console.log(leaveData?.data)
+
+
   const [updateLeaveRequest, { isLoading: isUpdating }] =
     useUpdateLeaveRequestMutation();
 
@@ -30,6 +37,10 @@ const HRDashboard = () => {
       toast.error(err?.data?.message || `Failed to ${action} request`);
     }
   };
+
+
+
+
 
   if (isLoading) return <div className="p-4">Loading pending requests...</div>;
   if (isError)
@@ -65,9 +76,8 @@ const HRDashboard = () => {
               {requests.map((req, index) => (
                 <tr
                   key={req._id}
-                  className={`border-b border-gray-200 ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
+                  className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
                 >
                   <td className="py-3 px-4">{req.employeeId?.empCode || "NA"}</td>
                   <td className="py-3 px-4">{req.employeeId?.fname || "NA"}</td>
@@ -76,13 +86,12 @@ const HRDashboard = () => {
                   <td className="py-3 px-4">{formatDate(req.from)}</td>
                   <td className="py-3 px-4">{formatDate(req.to)}</td>
                   <td
-                    className={`my-5 py-2 px-3 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${
-                      req.status === "approved"
+                    className={`my-5 py-2 px-3 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${req.status === "approved"
                         ? "bg-green-100 text-green-700"
                         : req.status === "rejected"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    }`}
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
                   >
                     {req.status}
                   </td>
@@ -109,7 +118,84 @@ const HRDashboard = () => {
             </tbody>
           </table>
         )}
+
+
+
+
       </div>
+      <div className="max-w-5xl mx-auto p-6">
+        
+        <form className="mb-6">
+          <div className="mb-4">
+            <label
+              htmlFor="user-select"
+              className="block mb-2 text-lg font-semibold text-gray-800"
+            >
+              Select User
+            </label>
+            <select
+              id="user-select"
+              value={employeeId}
+              onChange={(e) => setEmployeeId(e.target.value)}
+              className="w-1/4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+            >
+              <option value="">-- Select User --</option>
+              {alluser?.data?.map((user) => (
+                <option key={user?._id} value={user?._id}>
+                  {user?.fname || 'Unnamed User'}
+                </option>
+              ))}
+            </select>
+          </div>
+        </form>
+
+    
+        <div className="overflow-x-auto rounded-xl">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                  Allocated Leaves
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                  Used Leaves
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                  Remaining Leaves
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {leaveData?.data ? (
+                <tr className="hover:bg-gray-50">
+                  <td className="px-6 py-4 border-b">
+                    {leaveData.data.allocatedLeaves ?? 0}
+                  </td>
+                  <td className="px-6 py-4 border-b">
+                    {leaveData.data.usedLeaves ?? 0}
+                  </td>
+                  <td className="px-6 py-4 border-b">
+                    {leaveData.data.remainingLeaves ?? 0}
+                  </td>
+                </tr>
+              ) : (
+                <tr>
+                  <td
+                    colSpan="3"
+                    className="text-center px-6 py-4 text-gray-500 italic border-b"
+                  >
+                    {employeeId
+                      ? 'No leave data available for this user.'
+                      : 'Please select a user to view leave data.'}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
     </div>
   );
 };
