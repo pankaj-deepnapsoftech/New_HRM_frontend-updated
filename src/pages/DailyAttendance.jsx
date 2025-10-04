@@ -57,13 +57,14 @@ const DailyAttendance = () => {
               <th className="py-4 font-[500]  px-4">Status</th>
               <th className="py-4  font-[500] px-4">Login Time</th>
               <th className="py-4  font-[500] px-4">Logout Time</th>
+              <th className="py-4  font-[500] px-4">Login Location</th>
               <th className="py-4  font-[500] px-4">Working Hours</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-md">
             {isLoading ? (
               <tr>
-                <td colSpan="6" className="py-8 text-center">
+                <td colSpan="7" className="py-8 text-center">
                   <div className="flex justify-center items-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
                     <span className="ml-2">Loading attendance data...</span>
@@ -84,12 +85,17 @@ const DailyAttendance = () => {
                   </td>
                   <td className="py-3 px-6">{formatTime(employee.loginTime)}</td>
                   <td className="py-3 px-6">{formatTime(employee.logoutTime)}</td>
+                  <td className="py-3 px-6">
+                    <span className="text-blue-600 font-medium text-sm">
+                      {employee.loginLocation || 'N/A'}
+                    </span>
+                  </td>
                   <td className="py-3 px-6">{employee.totalWorkingHours || 'N/A'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="py-8 text-center text-gray-500">
+                <td colSpan="7" className="py-8 text-center text-gray-500">
                   No attendance data available for the selected date
                 </td>
               </tr>

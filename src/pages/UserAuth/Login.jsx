@@ -31,11 +31,76 @@ const EmpLogin = () => {
     },
     validationSchema: SignInSchema,
     onSubmit: async (values) => {
+      // Get user's current location
+      let location = "Unknown";
+      
+      // Try GPS location first
+      try {
+        if (navigator.geolocation) {
+          console.log("Requesting GPS location permission...");
+          
+          const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                console.log("GPS location obtained:", pos.coords);
+                resolve(pos);
+              },
+              (err) => {
+                console.log("GPS location error:", err);
+                reject(err);
+              },
+              {
+                timeout: 8000,
+                enableHighAccuracy: true,
+                maximumAge: 300000 // 5 minutes
+              }
+            );
+          });
+          
+          const { latitude, longitude } = position.coords;
+          location = `GPS: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+          console.log("GPS location set to:", location);
+        } else {
+          console.log("Geolocation not supported by browser");
+          location = "Geolocation not supported";
+        }
+      } catch (error) {
+        console.log("GPS location failed:", error);
+        
+        // Fallback to IP-based location
+        try {
+          console.log("Trying IP-based location...");
+          const ipResponse = await fetch('https://ipapi.co/json/');
+          const ipData = await ipResponse.json();
+          
+          if (ipData.latitude && ipData.longitude) {
+            location = `IP: ${ipData.latitude.toFixed(4)}, ${ipData.longitude.toFixed(4)} (${ipData.city}, ${ipData.country})`;
+            console.log("IP location set to:", location);
+          } else {
+            throw new Error("IP location data not available");
+          }
+        } catch (ipError) {
+          console.log("IP location also failed:", ipError);
+          
+          // Final fallback with specific error messages
+          if (error.code === 1) {
+            location = "Location permission denied";
+          } else if (error.code === 2) {
+            location = "Location unavailable";
+          } else if (error.code === 3) {
+            location = "Location timeout";
+          } else {
+            location = "Location not available";
+          }
+        }
+      }
+
       const totalData = {
         ...values,
         isMobile,
         browser: browserName,
         loginType: "user",
+        location: location,
       };
 
       try {
