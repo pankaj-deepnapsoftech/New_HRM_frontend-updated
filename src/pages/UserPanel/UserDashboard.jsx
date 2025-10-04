@@ -5,8 +5,8 @@ import {
   FaRupeeSign,
   FaDownload,
   FaHome,
-  FaStickyNote,
-  FaExclamationTriangle,
+  // FaStickyNote,
+  // FaExclamationTriangle,
   FaDoorOpen,
 } from "react-icons/fa";
 import { FcLeave } from "react-icons/fc";
@@ -18,14 +18,14 @@ import { motion } from "framer-motion";
 const actions = [
   { label: "Daily Attendance", icon: <FaCalendarAlt />, path: "/user/attendance", color: "bg-blue-100 text-blue-600" },
   { label: "Request Leaves", icon: <FcLeave />, path: "/user/request-leave", color: "bg-green-100 text-green-600" },
-  { label: "Leave Status", icon: <FaCalendarAlt />, path: "/user/leave-status", color: "bg-yellow-100 text-yellow-600" },
+  { label: "Leave Status", icon: <FaCalendarAlt />, path: "/user/request-leave", color: "bg-yellow-100 text-yellow-600" },
   { label: "Documents", icon: <FaFileAlt />, path: "/user/document", color: "bg-orange-100 text-orange-600" },
   { label: "Advance Money Request", icon: <FaRupeeSign />, path: "/user/advance-money", color: "bg-lime-100 text-lime-600" },
   { label: "Download Payslip", icon: <FaDownload />, path: "/user/payslip", color: "bg-indigo-100 text-indigo-600" },
   { label: "View Assets", icon: <FaHome />, path: "/user/assets", color: "bg-red-100 text-red-600" },
-  { label: "Notes", icon: <FaStickyNote />, path: "/user/notes", color: "bg-pink-100 text-pink-600" },
+  // { label: "Notes", icon: <FaStickyNote />, path: "/user/notes", color: "bg-pink-100 text-pink-600" },
   { label: "Request Gate Pass", icon: <FaDoorOpen />, path: "/user/gate-pass", color: "bg-sky-100 text-sky-600" },
-  { label: "Show Cause Notice", icon: <FaExclamationTriangle />, path: "/user/show-cause", color: "bg-rose-100 text-rose-600" },
+  // { label: "Show Cause Notice", icon: <FaExclamationTriangle />, path: "/user/show-cause", color: "bg-rose-100 text-rose-600" },
 ];
 
 const UserDashboard = () => {
