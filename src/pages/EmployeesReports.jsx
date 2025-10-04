@@ -77,8 +77,8 @@ const EmployeesReports = () => {
     XLSX.writeFile(workbook, "Employee_Report.xlsx");
   };
 
-  console.log(data)
-   
+  // console.log(data);
+
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       <div className="bg-gray-300 text text-center mx-4 md:mx-10 py-4 my-6 rounded-md shadow-md shadow-gray-400">
@@ -99,8 +99,8 @@ const EmployeesReports = () => {
               <th className="font-[600] py-4 px-4">Designation</th>
               <th className="font-[600] py-4 px-4">Salary</th>
               <th className="font-[600] py-4 px-4">Assets</th>
-              <th className="font-[600] py-4 px-2">Present Days</th>
-              <th className="font-[600] py-4 px-4">Gate Pass</th>
+              {/* <th className="font-[600] py-4 px-2">Present Days</th>
+              <th className="font-[600] py-4 px-4">Gate Pass</th> */}
               <th className="font-[600] py-4 px-4">Status</th>
             </tr>
           </thead>
@@ -150,12 +150,12 @@ const EmployeesReports = () => {
                       )}
                     </div>
                   </td>
-                  <td className="py-3 px-4">
+                  {/* <td className="py-3 px-4">
                     {emp.attendance ? emp.attendance.length : "NA"}
                   </td>
                   <td className="py-3 px-4">
                     {emp.gatePassRequests ? emp.gatePassRequests.length : "NA"}
-                  </td>
+                  </td> */}
                   <td
                     className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${emp.Empstatus === "active"
                       ? "bg-green-100 text-green-700"

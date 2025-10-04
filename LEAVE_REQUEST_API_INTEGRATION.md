@@ -135,7 +135,7 @@ const MyComponent = () => {
     
     try {
       const result = await submitLeaveRequest(leaveData).unwrap();
-      console.log('Success:', result);
+      // console.log('Success:', result);
     } catch (error) {
       console.error('Error:', error);
     }

@@ -46,7 +46,7 @@ const AddProjectForm = ({ setShowModal }) => {
         };
 
         const res = await ProjectsData(payload).unwrap();
-        console.log("Project created:", res);
+        // console.log("Project created:", res);
 
         formik.resetForm();
         setShowModal(false);

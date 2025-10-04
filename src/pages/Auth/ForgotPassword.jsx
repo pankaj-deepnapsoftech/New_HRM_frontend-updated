@@ -24,7 +24,7 @@ const ForgotPassword = () => {
       try {
         const res = await ForgotPassword(values).unwrap();
         resetForm();
-        console.log(res);
+        // console.log(res);
         toast.success(res.message);
       } catch (error) {
         console.log(error);
