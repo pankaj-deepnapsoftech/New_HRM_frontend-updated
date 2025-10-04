@@ -99,8 +99,8 @@ const EmployeesReports = () => {
               <th className="font-[600] py-4 px-4">Designation</th>
               <th className="font-[600] py-4 px-4">Salary</th>
               <th className="font-[600] py-4 px-4">Assets</th>
-              <th className="font-[600] py-4 px-2">Present Days</th>
-              <th className="font-[600] py-4 px-4">Gate Pass</th>
+              {/* <th className="font-[600] py-4 px-2">Present Days</th>
+              <th className="font-[600] py-4 px-4">Gate Pass</th> */}
               <th className="font-[600] py-4 px-4">Status</th>
             </tr>
           </thead>
@@ -150,12 +150,12 @@ const EmployeesReports = () => {
                       )}
                     </div>
                   </td>
-                  <td className="py-3 px-4">
+                  {/* <td className="py-3 px-4">
                     {emp.attendance ? emp.attendance.length : "NA"}
                   </td>
                   <td className="py-3 px-4">
                     {emp.gatePassRequests ? emp.gatePassRequests.length : "NA"}
-                  </td>
+                  </td> */}
                   <td
                     className={`my-5 py-4 px-4 font-semibold text-sm rounded-full h-8 flex items-center justify-center w-fit ${emp.Empstatus === "active"
                       ? "bg-green-100 text-green-700"
