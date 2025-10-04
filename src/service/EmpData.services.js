@@ -92,6 +92,20 @@ export const empApi = Api.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getMonthlyAttendance: builder.query({
+      query: ({ month, year, department }) => ({
+        url: `/empdata/attendance/monthly?month=${month}&year=${year}${department ? `&department=${department}` : ''}`,
+        method: "GET",
+      }),
+    }),
+
+    getYearlyAttendance: builder.query({
+      query: ({ year, department }) => ({
+        url: `/empdata/attendance/yearly?year=${year}${department ? `&department=${department}` : ''}`,
+        method: "GET",
+      }),
+    }),
     terminateEmployee: builder.mutation({
       query: ({ id }) => ({
         url: `/empdata/${id}/terminate`,
@@ -126,6 +140,8 @@ export const {
   useMarkLoginAttendanceMutation,
   useMarkLogoutAttendanceMutation,
   useGetDailyAttendanceQuery,
+  useGetMonthlyAttendanceQuery,
+  useGetYearlyAttendanceQuery,
   useTerminateEmployeeMutation,
   useGetAllTerminatedEmployeesQuery,
   useDeleteTerminatedEmployeeMutation,
