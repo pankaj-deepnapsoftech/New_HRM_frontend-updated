@@ -77,7 +77,7 @@ const EmployeesReports = () => {
     XLSX.writeFile(workbook, "Employee_Report.xlsx");
   };
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="p-2 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">

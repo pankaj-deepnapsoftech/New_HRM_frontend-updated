@@ -24,13 +24,13 @@ export const AuthSlice = createSlice({
       state.isLogin = true;
     },
     removeData: (state) => {
-      console.log("this is only for testing");
+      // console.log("this is only for testing");
       state.email = "";
       state.fullName = "";
       state.phone = "";
       state.username = "";
       state.role = "";
-      state._id = ""; // Clear user ID
+      state._id = "";
       state.isLogin = false;
     },
     setLoginState: (state) => {

@@ -31,7 +31,7 @@ const Departments = () => {
       try {
         if (editTable) {
           const res = await updatedDepartment(values).unwrap();
-          console.log(values);
+          // console.log(values);
           if (res?.success === true) {
             toast.success(res?.message);
             setShowModal(false);

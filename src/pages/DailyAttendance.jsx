@@ -3,7 +3,7 @@ import React from "react";
 
 const DailyAttendance = () => {
   const { data: userData } = useGetAllEmpDataQuery();
-  console.log(userData?.data);
+  // console.log(userData?.data);
 
   return (
     <section className="p-5 bg-gray-50 rounded  max-w-4xl mx-auto mt-10">

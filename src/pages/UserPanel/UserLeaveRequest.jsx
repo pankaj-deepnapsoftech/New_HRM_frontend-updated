@@ -315,16 +315,16 @@ const UserLeaveRequest = () => {
                       mode: values.request || "full",
                       description: values.reason,
                     };
-                    console.log("Submitting leave request:", leaveRequestData);
+                    // console.log("Submitting leave request:", leaveRequestData);
 
                     const result = await submitLeaveRequest(
                       leaveRequestData
                     ).unwrap();
 
-                    console.log(
-                      "Leave request submitted successfully:",
-                      result
-                    );
+                    // console.log(
+                    //   "Leave request submitted successfully:",
+                    //   result
+                    // );
 
                     toast.success(
                       result.message || "Leave request submitted successfully!"

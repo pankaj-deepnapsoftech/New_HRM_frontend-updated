@@ -32,7 +32,7 @@ const LeaveRequestDemo = () => {
   const handleUpdateRequest = async (id, updateData) => {
     try {
       const result = await updateLeaveRequest({ id, ...updateData }).unwrap();
-      console.log("Updated successfully:", result);
+      // console.log("Updated successfully:", result);
     } catch (error) {
       console.error("Update failed:", error);
     }
@@ -41,7 +41,7 @@ const LeaveRequestDemo = () => {
   const handleDeleteRequest = async (id) => {
     try {
       const result = await deleteLeaveRequest(id).unwrap();
-      console.log("Deleted successfully:", result);
+      // console.log("Deleted successfully:", result);
     } catch (error) {
       console.error("Delete failed:", error);
     }
