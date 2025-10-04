@@ -34,6 +34,10 @@ const EmpDashboard = () => {
     fullName: "",
     phone: "",
   });
+
+
+
+  console.log(credForm)
   const [showPwd, setShowPwd] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "");
@@ -107,7 +111,8 @@ const EmpDashboard = () => {
   const filteredSubDepartments = formik.values.department
     ? Array.from(departmentMap[formik.values.department] || [])
     : [];
-  console.log(filteredSubDepartments)
+
+    
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
@@ -245,7 +250,7 @@ const EmpDashboard = () => {
                         setCredModal(emp);
                         setCredForm({
                           email: emp.email || "",
-                          password: "",
+                          password:emp.password ? "******" : "",
                           fullName: emp.fname || "",
                           phone: "",
                         });
