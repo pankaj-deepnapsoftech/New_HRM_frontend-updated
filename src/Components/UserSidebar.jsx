@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { FaHome, FaFingerprint, FaFileContract } from "react-icons/fa";
+import { FaHome, FaFingerprint, FaFileContract, FaDoorOpen } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { RiMoneyRupeeCircleFill, RiSecurePaymentLine } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
@@ -21,6 +21,7 @@ import UserDocument from "@/pages/UserPanel/UserDocument";
 import AdvanceMoneyRequest from "@/pages/UserPanel/AdvanceMoneyRequest";
 import UserPaySlip from "@/pages/UserPanel/UserPaySlip";
 import UserAssets from "@/pages/UserPanel/UserAssets";
+import UserGatepass from "@/pages/UserPanel/UserGatepass";
 import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";
 import { browserName, isMobile } from "react-device-detect";
 
@@ -106,6 +107,12 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       icon: <GiLaptop className="text-2xl" />,
       path: "/user/assets",
       element: <UserAssets />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Gate Pass</span>,
+      icon: <FaDoorOpen className="text-2xl" />,
+      path: "/user/gate-pass",
+      element: <UserGatepass />,
     },
     {
       text: <span className="text-[1rem] font-semibold">Terms & Conditions</span>,
