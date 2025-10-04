@@ -5,8 +5,6 @@ import { toast } from 'react-toastify';
 
 
 const DailyAttendance = () => {
-  const { data: userData } = useGetAllEmpDataQuery();
-  // console.log(userData?.data);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   
   const { data: attendanceData, isLoading, error } = useGetDailyAttendanceQuery(selectedDate);
