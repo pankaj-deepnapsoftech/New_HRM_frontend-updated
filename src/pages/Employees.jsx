@@ -245,8 +245,16 @@ const EmployeeTable = () => {
                   <td className="pl-4 py-6 flex gap-2 text-lg">
                     <FaEye
                       onClick={() => {
-                        setShowDetailModal(true);
-                        setSelectedEmployee(emp);
+                        try {
+                          setSelectedEmployee(emp);
+                          setShowDetailModal(true);
+                        } catch (error) {
+                          console.error(
+                            "Error showing employee details:",
+                            error
+                          );
+                          toast.error("Failed to show employee details");
+                        }
                       }}
                       className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
                       title="View"
