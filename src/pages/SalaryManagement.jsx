@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetAllEmpDataQuery } from "@/service/EmpData.services";
+import { useGetAllEmpDataQuery, useGetMonthlyAttendanceQuery } from "@/service/EmpData.services";
 import { FaDownload } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import Pagination from "./Pagination/Pagination";
@@ -7,43 +7,49 @@ import Pagination from "./Pagination/Pagination";
 export default function SalaryManagement() {
   const [employees, setEmployees] = useState([]);
   const [page,setPage] = useState(1)
-   const limit = 10 ;
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  });
+  const limit = 10 ;
   const { data, isLoading } = useGetAllEmpDataQuery({ page, limit }); // Fetch all employees by setting a high limit (adjust if needed)
+  
+  // Get attendance data for the selected month
+  const { data: attendanceData, isLoading: attendanceLoading } = useGetMonthlyAttendanceQuery({
+    month: selectedMonth.split('-')[1], // Extract month from "2025-01" format
+    year: selectedMonth.split('-')[0], // Extract year from "2025-01" format
+    department: 'all' // Get all departments
+  });
 
   useEffect(() => {
-    if (data?.data) {
+    if (data?.data && attendanceData?.data) {
+      // Create a map of attendance data for quick lookup
+      const attendanceMap = {};
+      attendanceData.data.forEach(att => {
+        attendanceMap[att._id] = {
+          presentDays: att.presentDays || 0,
+          absentDays: att.absentDays || 0
+        };
+      });
+
       setEmployees(
         data.data.map((emp) => {
-          // Calculate default present days from attendance for current month (September 2025)
-          const currentMonth = "2025-09"; // Based on the provided current date
-          const attendanceArr = Array.isArray(emp.attendance) ? emp.attendance : [];
-          const presentDays = attendanceArr.filter(
-            (a) => a?.date?.startsWith?.(currentMonth) && (a?.status || "").toLowerCase() === "present"
-          ).length;
-
-          // Calculate default leaves (full days + half days equivalent) with fallbacks
-          const fullDay = Number(emp.fullDayLeavesThisMonth) || 0;
-          const halfDay = Number(emp.halfDayLeavesThisMonth) || 0;
-          const leaves = fullDay + halfDay * 0.5;
-
+          // Get attendance data from the attendance API
+          const empAttendance = attendanceMap[emp._id] || { presentDays: 0, absentDays: 0 };
+          
           return {
             id: emp._id,
             name: `${emp.fname || ""} ${emp.lastName || ""}`.trim(),
             code: emp.empCode || "",
             salary: Number(emp.salary) || 0,
-            days: presentDays || 0, // Default to calculated present days
-            leaves: leaves, // Default to calculated leaves
+            days: empAttendance.presentDays, // Present days from attendance API
+            absentDays: empAttendance.absentDays, // Absent days from attendance API
           };
         })
       );
     }
-  }, [data]);
+  }, [data, attendanceData]);
 
-  const handleInputChange = (index, field, value) => {
-    const newEmps = [...employees];
-    newEmps[index][field] = parseFloat(value) || 0;
-    setEmployees(newEmps);
-  };
 
   const calculateSalary = (emp) => {
     const daysInMonth = 30; // Assuming 30 days in the month for calculation
@@ -54,9 +60,9 @@ export default function SalaryManagement() {
     const reportData = employees.map((emp) => ({
       "Full Name": emp.name,
       "Emp-Code": emp.code,
-      "New Monthly Salary": emp.salary,
+      "Monthly Salary": emp.salary,
       "Present Days": emp.days,
-      "Leaves": emp.leaves,
+      "Absent Days": emp.absentDays,
       "Calculated Salary": calculateSalary(emp),
     }));
 
@@ -66,12 +72,25 @@ export default function SalaryManagement() {
     XLSX.writeFile(wb, "salary_report.xlsx");
   };
 
-  if (isLoading) return <div className="text-center py-10">Loading employee data...</div>;
+  if (isLoading || attendanceLoading) return <div className="text-center py-10">Loading employee data...</div>;
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
       <div className="bg-gray-300 text text-center  py-4 my-6 mx-2 md:mx-10  rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Salary Management</h2>
+      </div>
+      
+      {/* Month Selector */}
+      <div className="mb-6 mx-2 md:mx-10">
+        <div className="flex items-center gap-4">
+          <label className="text-sm font-medium text-gray-700">Select Month:</label>
+          <input
+            type="month"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
       <div className="overflow-x-scroll scrollbar-visible  rounded-t-sm md:rounded-t-xl shadow-md mx-1 md:mx-10 m-8">
         <table className="w-5xl md:min-w-full table-auto bg-white ">
@@ -79,9 +98,9 @@ export default function SalaryManagement() {
             <tr>
               <th className=" py-4 font-[600] pr-6">Full Name</th>
               <th className=" py-4 font-[600] pr-6">Emp-Code</th>
-              <th className=" py-4 font-[600] pr-6">New Monthly Salary</th>
+              <th className=" py-4 font-[600] pr-6">Monthly Salary</th>
               <th className=" py-4 font-[600] pr-6">Present Days</th>
-              <th className=" py-4 font-[600] pr-6">Leaves</th>
+              <th className=" py-4 font-[600] pr-6">Absent Days</th>
               <th className=" py-4 font-[600] pr-6">Calculated Salary</th>
             </tr>
           </thead>
@@ -96,28 +115,19 @@ export default function SalaryManagement() {
                 <td className="py-4 px-5">{emp.name}</td>
                 <td className="py-4 px-5">{emp.code}</td>
                 <td className="py-4 px-5">
-                  <input
-                    type="number"
-                    value={emp.salary}
-                    onChange={(e) => handleInputChange(i, "salary", e.target.value)}
-                    className="w-40 px-5 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  />
+                  <span className="text-gray-800 font-semibold">
+                    ₹{emp.salary.toLocaleString()}
+                  </span>
                 </td>
-                <td className="py-4 px-5 ">
-                  <input
-                    type="number"
-                    value={emp.days}
-                    onChange={(e) => handleInputChange(i, "days", e.target.value)}
-                    className="w-30 px-3 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  />
+                <td className="py-4 px-5">
+                  <span className="text-green-600 font-semibold">
+                    {emp.days}
+                  </span>
                 </td>
-                <td className="py-4 px-3">
-                  <input
-                    type="number"
-                    value={emp.leaves}
-                    onChange={(e) => handleInputChange(i, "leaves", e.target.value)}
-                    className="w-30 px-3 py-2 border border-gray-400 bg-slate-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  />
+                <td className="py-4 px-5">
+                  <span className="text-red-600 font-semibold">
+                    {emp.absentDays}
+                  </span>
                 </td>
                 <td className="py-4 px-3">{calculateSalary(emp)}</td>
               </tr>
