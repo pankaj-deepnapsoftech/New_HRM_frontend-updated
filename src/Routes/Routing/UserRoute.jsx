@@ -34,10 +34,10 @@ export const UserRoute = [
     path:"/user/advance-money",
     element:<AdvanceMoneyRequest/>
 },
-{
-    path:"/user/payslip",
-    element:<UserPaySlip/>
-},
+// {
+//     path:"/user/payslip",
+//     element:<UserPaySlip/>
+// },
 {
     path:"/user/assets",
     element:<UserAssets/>

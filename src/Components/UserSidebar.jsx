@@ -96,12 +96,12 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       path: "/user/advance-money",
       element: <AdvanceMoneyRequest />,
     },
-    {
-      text: <span className="text-[1rem] font-semibold">Payslip</span>,
-      icon: <RiSecurePaymentLine className="text-2xl " />,
-      path: "/user/payslip",
-      element: <UserPaySlip />,
-    },
+    // {
+    //   text: <span className="text-[1rem] font-semibold">Payslip</span>,
+    //   icon: <RiSecurePaymentLine className="text-2xl " />,
+    //   path: "/user/payslip",
+    //   element: <UserPaySlip />,
+    // },
     {
       text: <span className="text-[1rem] font-semibold">Assets</span>,
       icon: <GiLaptop className="text-2xl" />,
