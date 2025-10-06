@@ -90,12 +90,12 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       path: "/user/document",
       element: <UserDocument />,
     },
-    {
-      text: <span className="text-[1rem] font-semibold">Advanced Money</span>,
-      icon: <TbReportMoney className="text-2xl " />,
-      path: "/user/advance-money",
-      element: <AdvanceMoneyRequest />,
-    },
+    // {
+    //   text: <span className="text-[1rem] font-semibold">Advanced Money</span>,
+    //   icon: <TbReportMoney className="text-2xl " />,
+    //   path: "/user/advance-money",
+    //   element: <AdvanceMoneyRequest />,
+    // },
     // {
     //   text: <span className="text-[1rem] font-semibold">Payslip</span>,
     //   icon: <RiSecurePaymentLine className="text-2xl " />,
