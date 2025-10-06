@@ -249,7 +249,7 @@ const EmpDashboard = () => {
                         setCredModal(emp);
                         setCredForm({
                           email: emp.email || "",
-                          password: "",
+                          password: emp.password ? "********" : " ",
                           fullName: emp.fname || "",
                           phone: emp.phone || "",
                         });

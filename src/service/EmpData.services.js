@@ -128,6 +128,15 @@ export const empApi = Api.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getEmpAttendenceById: builder.query({
+      query: ({ employeeId, month, year }) => ({
+        url: `/empdata/attendance/employee/${employeeId}/monthly?month=${month}&year=${year}`,
+        method: "GET",
+      }),
+    }),
+
+
     deleteTerminatedEmployee: builder.mutation({
       query: ({ id }) => ({
         url: `/empdata/terminated/${id}`,
@@ -155,5 +164,6 @@ export const {
   useTerminateEmployeeMutation,
   useGetAllTerminatedEmployeesQuery,
   useDeleteTerminatedEmployeeMutation,
-  useGetEmpLeaveSummeryQuery
+  useGetEmpLeaveSummeryQuery,
+  useGetEmpAttendenceByIdQuery
 } = empApi;
