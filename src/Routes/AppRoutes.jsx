@@ -15,6 +15,7 @@ import EmpLogin from "@/pages/UserAuth/Login";
 
 import UserLayout from "./Layouts/UserLayout";
 import { UserRoute } from "./Routing/UserRoute";
+import Loader from "@/Components/Loader/Loader";
 // import Header from '@/Components/UserHeader';
 
 const AppRoutes = () => {
@@ -35,7 +36,7 @@ const AppRoutes = () => {
   }, [Auth.isLogin, refetch]);
 
   if (isLoading) {
-    return <p>loading...</p>;
+    return <Loader/>;
   }
 
   return (

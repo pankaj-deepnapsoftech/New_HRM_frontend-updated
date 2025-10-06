@@ -56,8 +56,6 @@ const EmployeeTable = () => {
         .toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
       emp.Address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      emp.Department?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      emp.Designation?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       emp.Back_Name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       emp.Bank_Account?.toString()
         .toLowerCase()
@@ -105,13 +103,13 @@ const EmployeeTable = () => {
         <div className="flex gap-4 flex-wrap flex-1">
           <input
             type="text"
-            placeholder="Search Emp ID, Address, Department, Bank Details, Salary..."
+            placeholder="Search Emp ID, Address, Bank Details, Salary..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border border-gray-300 p-2 rounded-lg flex-1 min-w-[250px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
           />
 
-          <select
+          {/* <select
             value={selectedDepartment}
             onChange={(e) => setSelectedDepartment(e.target.value)}
             className="border border-gray-300 p-2 rounded-lg min-w-[150px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
@@ -122,7 +120,7 @@ const EmployeeTable = () => {
                 {dept}
               </option>
             ))}
-          </select>
+          </select> */}
 
           <button
             onClick={() => {
