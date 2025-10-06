@@ -131,7 +131,7 @@ const EmployeeTable = () => {
             }}
             className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-5 py-3 rounded-lg shadow-lg hover:scale-105 transition transform font-semibold"
           >
-            Add Employee Details
+            Add Employee Documents
           </button>
         </div>
       </div>
