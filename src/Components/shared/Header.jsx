@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaRegBell } from "react-icons/fa";
 import UserMenuBar from "@/Drawer/AdminDetails/UserMenuBar";
 import NotificationModal from "@/Drawer/AdminDetails/NotificationModal";
 import { useSelector } from "react-redux";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [showUserMenuBar, setShowUserMenuBar] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef();
@@ -35,7 +37,18 @@ const Header = () => {
     <div className="w-full h-16 border-b border-gray-200 shadow-sm bg-gradient-to-r from-blue-50 to-white px-4 sm:px-6 md:px-10 flex items-center justify-between z-10">
       {/* Right Section */}
       <div className="flex items-center gap-4 ml-auto">
-        {/* Notification */}
+
+
+
+        {/* Subscription button (replaces previous greeting) */}
+        <button
+          onClick={() => navigate('/subscription')}
+          className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+          aria-label="Go to Subscription"
+        >
+          Subscription
+        </button>
+
         <div className="relative w-10 h-10 flex items-center justify-center">
           <button
             onClick={() => setShowNotification(!showNotification)}
@@ -44,7 +57,7 @@ const Header = () => {
             <FaRegBell className="text-gray-600 text-xl sm:text-2xl hover:text-blue-600 transition-colors" />
             {/* Badge */}
             <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5 shadow">
-              3
+
             </span>
           </button>
           {showNotification && (
@@ -69,6 +82,8 @@ const Header = () => {
             {userInitials}
           </div>
         </div>
+
+
       </div>
 
       {/* User Menu */}

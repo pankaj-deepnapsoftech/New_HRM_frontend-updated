@@ -32,10 +32,9 @@ const Login = () => {
     },
     validationSchema: SignInSchema,
     onSubmit: async (values) => {
-      // Get user's current location
-      let location = "Unknown";
       
-      // Try GPS location first
+      let location = "Unknown";
+
       try {
         if (navigator.geolocation) {
           console.log("Requesting GPS location permission...");
@@ -70,7 +69,7 @@ const Login = () => {
         
         // Fallback to IP-based location
         try {
-          console.log("Trying IP-based location...");
+         
           const ipResponse = await fetch('https://ipapi.co/json/');
           const ipData = await ipResponse.json();
           

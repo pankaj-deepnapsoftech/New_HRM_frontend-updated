@@ -12,6 +12,7 @@ import { addData } from "@/store/slice/AuthSlice";
 import Login from "@/pages/UserAuth/Login";
 import Register from "@/pages/UserAuth/Register";
 import EmpLogin from "@/pages/UserAuth/Login";
+import Subscription from "@/pages/Subscription";
 
 import UserLayout from "./Layouts/UserLayout";
 import { UserRoute } from "./Routing/UserRoute";
@@ -36,7 +37,7 @@ const AppRoutes = () => {
   }, [Auth.isLogin, refetch]);
 
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (
@@ -65,8 +66,9 @@ const AppRoutes = () => {
         </Route>
       )}
 
-      {/* <Route path="/login" element={<EmpLogin />} /> */}
+     
       <Route path="/register" element={<Register />} />
+      <Route path="/subscription" element={<Subscription />} />
     </Routes>
   );
 };
