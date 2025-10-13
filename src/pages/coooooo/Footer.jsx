@@ -53,7 +53,7 @@ const Footer = () => {
     <footer
       id="footer"
       style={{
-        background: "linear-gradient(to right, #0f0c29, #302b63, #24243e)",
+        background: "linear-gradient(to right, #2563eb, #1c4dba, #163f9c)",
       }}
       className="text-white border-t-2 px-6 pt-10 pb-6"
     >

@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <div className="subscription-font hero flex flex-col-reverse md:flex-row items-center md:items-start gap-10 relative pt-36 justify-center bg-white px-3 md:px-10">
+    <div className="subscription-font hero flex flex-col-reverse md:flex-row items-center md:items-start gap-10 relative pt-60 justify-center bg-white px-3 md:px-10">
       <div className="w-full md:w-[40rem]">
-        <h1 className="subscription-font font-bold text-3xl md:text-4xl text-[#2a2659]">
+        <h1 className="subscription-font font-bold text-3xl md:text-4xl text-[#2563eb]">
           Looking for the Best Customer Relationship Management System?
         </h1>
         <p className="subscription-font mt-3 md:mt-6 text-lg">
@@ -18,7 +18,7 @@ const HeroSection = () => {
             <button
               style={{
                 background:
-                  "linear-gradient(to right, #0f0c29, #302b63, #24243e)",
+                  "linear-gradient(to right, #2563eb, #1c4dba, #163f9c)",
               }}
               className="subscription-font border px-8 py-2 text-lg rounded-md text-white ease-in-out duration-500 hover:scale-105"
             >
@@ -26,15 +26,15 @@ const HeroSection = () => {
             </button>
           </Link>
           <Link to="/contact">
-            <button className="subscription-font text-[#0f0c29] border-[#0f0c29] border px-8 py-2 text-lg rounded-md ease-in-out duration-500 hover:scale-105">
+            <button className="subscription-font text-[#2563eb] border-[#2563eb] border px-8 py-2 text-lg rounded-md ease-in-out duration-500 hover:scale-105">
               Contact Us
             </button>
           </Link>
         </div>
       </div>
-        <div className="">
-          <img className="h-[20rem]" src="/hero.png"></img>
-        </div>
+      <div className="">
+        <img className="h-[20rem]" src="/hero.png"></img>
+      </div>
     </div>
   );
 };
