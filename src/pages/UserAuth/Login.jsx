@@ -114,7 +114,7 @@ const EmpLogin = () => {
           // Navigate based on role after state update
           setTimeout(() => {
             if (res.data.role === "Admin") {
-              navigate("/");
+              navigate("/dashboard");
             } else {
               navigate("/user");
             }
@@ -232,7 +232,7 @@ const EmpLogin = () => {
             </NavLink>
           </p> */}
           <NavLink
-            to="/"
+            to="/sign-in"
             className="block w-full text-center mt-6 border  border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
           >
             Login as an Admin

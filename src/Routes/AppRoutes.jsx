@@ -87,7 +87,7 @@ const AppRoutes = () => {
       {/* Fallback to ensure we always have a home route */}
       {!data?.data && <Route path="/" element={<Navigate to="/" replace />} />}
       {data?.data && data?.data?.role === 'Admin' && (
-        <Route path="/" element={<Navigate to="/" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
       )}
       {data?.data && data?.data?.role !== 'Admin' && data?.data?.role !== 'SuperAdmin' && (
         <Route path="/" element={<Navigate to="/user" replace />} />

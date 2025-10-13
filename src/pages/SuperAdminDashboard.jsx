@@ -487,45 +487,50 @@ const SuperAdminDashboard = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Super Admin Dashboard</h1>
-                    <p className="mt-2 text-gray-600">
-                        Manage all admins and employees across the organization
-                    </p>
-                </div>
-
-                {/* Tabs */}
-                <div className="mb-6">
-                    <div className="border-b border-gray-200">
-                        <nav className="-mb-px flex space-x-8">
+                <div className="flex gap-6">
+                    {/* Sidebar */}
+                    <aside className="hidden md:block w-64 shrink-0 bg-white rounded-lg border border-gray-200 h-[75vh] sticky top-6">
+                        <div className="p-4 border-b border-gray-100">
+                            <h2 className="text-lg font-semibold">Modules</h2>
+                            <p className="text-sm text-gray-500">Quick navigation</p>
+                        </div>
+                        <nav className="p-2">
                             {[
                                 { id: 'overview', name: 'Overview', icon: '📊' },
                                 { id: 'admins', name: 'Admins', icon: '👥' },
-                                { id: 'employees', name: 'Employees', icon: '👤' }
-                            ].map((tab) => (
+                                { id: 'employees', name: 'Employees', icon: '👤' },
+                            ].map((item) => (
                                 <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 ${
-                                        activeTab === tab.id
-                                            ? 'border-blue-500 text-blue-600'
-                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    key={item.id}
+                                    onClick={() => setActiveTab(item.id)}
+                                    className={`w-full text-left flex items-center gap-3 px-3 py-2 rounded-md mb-1 ${
+                                        activeTab === item.id
+                                            ? 'bg-blue-50 text-blue-700'
+                                            : 'text-gray-700 hover:bg-gray-50'
                                     }`}
                                 >
-                                    <span>{tab.icon}</span>
-                                    <span>{tab.name}</span>
+                                    <span className="text-lg">{item.icon}</span>
+                                    <span className="text-sm font-medium">{item.name}</span>
                                 </button>
                             ))}
                         </nav>
-                    </div>
-                </div>
+                    </aside>
 
-                {/* Tab Content */}
-                <div>
-                    {activeTab === 'overview' && <OverviewTab />}
-                    {activeTab === 'admins' && <AdminsTab />}
-                    {activeTab === 'employees' && <EmployeesTab />}
+                    {/* Main Content */}
+                    <div className="flex-1">
+                        {/* Header */}
+                        <div className="mb-6">
+                            <h1 className="text-3xl font-bold text-gray-900">Super Admin Dashboard</h1>
+                            <p className="mt-2 text-gray-600">Manage all admins and employees across the organization</p>
+                        </div>
+
+                        {/* Content by active module */}
+                        <div>
+                            {activeTab === 'overview' && <OverviewTab />}
+                            {activeTab === 'admins' && <AdminsTab />}
+                            {activeTab === 'employees' && <EmployeesTab />}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

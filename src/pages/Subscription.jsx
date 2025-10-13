@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaCheck, FaStar } from "react-icons/fa";
+import axios from "axios";
 
 const plans = [
   {
@@ -28,7 +29,73 @@ const plans = [
   },
 ];
 
+const loadRazorpayScript = (src) => {
+  return new Promise((resolve) => {
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) return resolve(true);
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
 const Subscription = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8075/api/v1";
+
+  useEffect(() => {
+    loadRazorpayScript("https://checkout.razorpay.com/v1/checkout.js");
+  }, []);
+
+  const handlePremiumSubscribe = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      // 1) Create order on backend
+      const orderRes = await axios.post(`${API_BASE_URL}/payments/create-order`, {
+        plan: "premium",
+      }, { withCredentials: true });
+
+      const { orderId, amount, currency, customer } = orderRes.data?.data || {};
+      if (!orderId) throw new Error("Order creation failed");
+
+      // 2) Open Razorpay Checkout
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: amount?.toString(),
+        currency: currency || "INR",
+        name: "HRM Premium Subscription",
+        description: "Premium annual subscription",
+        order_id: orderId,
+        prefill: {
+          name: customer?.name || "",
+          email: customer?.email || "",
+          contact: customer?.phone || "",
+        },
+        theme: { color: "#0ea5e9" },
+        handler: async function (response) {
+          // 3) Verify payment on backend
+          await axios.post(`${API_BASE_URL}/payments/verify`, {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          }, { withCredentials: true });
+          alert("Payment successful! Subscription activated.");
+        },
+        modal: { ondismiss: function () {} },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (err) {
+      console.error(err);
+      alert(err?.response?.data?.message || err.message || "Payment failed");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [API_BASE_URL]);
+
   return (
     <div className="min-h-[100vh] flex justify-center items-center px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto text-center">
@@ -77,14 +144,24 @@ const Subscription = () => {
               </div>
 
               <div className="mt-6">
-                <button
-                  className={`w-full py-2 rounded-md font-semibold ${plan.recommended
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-                    } transition-colors`}
-                >
-                  {plan.cta}
-                </button>
+                {plan.name === "Premium" ? (
+                  <button
+                    onClick={handlePremiumSubscribe}
+                    disabled={isLoading}
+                    className={`w-full py-2 rounded-md font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-60`}
+                  >
+                    {isLoading ? "Processing..." : plan.cta}
+                  </button>
+                ) : (
+                  <button
+                    className={`w-full py-2 rounded-md font-semibold ${plan.recommended
+                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                      } transition-colors`}
+                  >
+                    {plan.cta}
+                  </button>
+                )}
               </div>
             </div>
           ))}

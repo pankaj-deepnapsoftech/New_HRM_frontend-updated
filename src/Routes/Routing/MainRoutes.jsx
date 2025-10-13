@@ -26,7 +26,7 @@ import HRDashboard from "@/pages/HRDashboard";
 
 export const MainRoutes = [
   {
-    path: "/",
+    path: "/dashboard",
     element: <AdminRouteGuard><MainDashboardPage /></AdminRouteGuard>,
   },
   {

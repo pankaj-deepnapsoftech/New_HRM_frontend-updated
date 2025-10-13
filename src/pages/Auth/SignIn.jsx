@@ -113,7 +113,7 @@ const Login = () => {
         // Navigate based on role after state update
         setTimeout(() => {
           if (res.data.role === "Admin") {
-            navigate("/");
+            navigate("/dashboard");
           } else {
             navigate("/user");
           }
