@@ -27,7 +27,7 @@ import {
 import { FiAlertTriangle, FiLogOut } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogoutUserMutation } from "@/service/Auth.services";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { removeData } from "@/store/slice/AuthSlice";
 
@@ -44,7 +44,7 @@ import AssignAssets from "@/pages/Assets";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
-import { FaChalkboardUser, FaPeopleRoof } from "react-icons/fa6";
+import { FaChalkboardUser, FaPeopleRoof, FaCrown } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import PayrollSummary from "@/pages/PayrollSummary";
 import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
@@ -66,6 +66,7 @@ const Sidebar = () => {
   const currPath = location.pathname;
   const [isOpen, setIsopen] = useState(false);
   const [payroolOpenArrow, setPayrollarrow] = useState(false);
+  const { Auth } = useSelector((state) => state);
 
   const [LogoutUser] = useLogoutUserMutation();
 
@@ -106,6 +107,11 @@ const Sidebar = () => {
       icon: <FaHome className="text-2xl" />,
       path: "/",
     },
+    ...(Auth.role === 'SuperAdmin' ? [{
+      text: <span className="text-[1rem] font-semibold">Super Admin</span>,
+      icon: <FaCrown className="text-2xl" />,
+      path: "/superadmin-dashboard",
+    }] : []),
     {
       text: <span className="text-[1rem] font-semibold">Leave Approval</span>,
       icon: <MdDashboard className="text-2xl" />,
@@ -229,61 +235,61 @@ const Sidebar = () => {
       path: "/view/employee/show-cause/notice",
       element: <ShowCauseNotices />,
     },
-    // {
-    //   text: (
-    //     <button
-    //       className="flex items-center gap-3 cursor-pointer"
-    //       onClick={() => setPayrollarrow(!payroolOpenArrow)}
-    //     >
-    //       <span className="text-[1rem] font-semibold">Payroll</span>
-    //       {payroolOpenArrow ? (
-    //         <IoIosArrowUp size={17} />
-    //       ) : (
-    //         <IoIosArrowDown size={17} />
-    //       )}
-    //     </button>
-    //   ),
-    //   icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
-    //   onClick: () => setPayrollOpen(!payrollOpen),
-    //   subMenu: payrollOpen && [
-    //     {
-    //       text: (
-    //         <span className="text-[1rem] font-semibold">Payroll Summary</span>
-    //       ),
-    //       icon: <MdOutlineStickyNote2 className="text-2xl mr-2" />,
-    //       path: "/employee/payrollSummary",
-    //       element: <PayrollSummary />,
-    //     },
-    //     {
-    //       text: (
-    //         <span className="text-[1rem] font-semibold">Advanced Money</span>
-    //       ),
-    //       icon: <TbReportMoney className="text-2xl mr-2" />,
-    //       path: "/employee/advance/money/request",
-    //       element: <EmpMoneyRequest />,
-    //     },
-    //     {
-    //       text: <span className="text-[1rem] font-semibold">Incentives</span>,
-    //       icon: <GiMoneyStack className="text-2xl mr-2" />,
-    //       path: "/employee/incentives",
-    //       element: <Incentives />,
-    //     },
-    //     {
-    //       text: (
-    //         <span className="text-[1rem] font-semibold">Reimbursements</span>
-    //       ),
-    //       icon: <GiTakeMyMoney className="text-2xl mr-2" />,
-    //       path: "/employee/reimbursements",
-    //       element: <Reimbursements />,
-    //     },
-    //     {
-    //       text: <span className="text-[1rem] font-semibold">Emp Payslip</span>,
-    //       icon: <RiSecurePaymentLine className="text-2xl mr-2" />,
-    //       path: "/generate/employee/payslip",
-    //       element: <EmpPayslip />,
-    //     },
-    //   ],
-    // },
+    {
+      text: (
+        <button
+          className="flex items-center gap-3 cursor-pointer"
+          onClick={() => setPayrollarrow(!payroolOpenArrow)}
+        >
+          <span className="text-[1rem] font-semibold">Payroll</span>
+          {payroolOpenArrow ? (
+            <IoIosArrowUp size={17} />
+          ) : (
+            <IoIosArrowDown size={17} />
+          )}
+        </button>
+      ),
+      icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
+      onClick: () => setPayrollOpen(!payrollOpen),
+      subMenu: payrollOpen && [
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Payroll Summary</span>
+          ),
+          icon: <MdOutlineStickyNote2 className="text-2xl mr-2" />,
+          path: "/employee/payrollSummary",
+          element: <PayrollSummary />,
+        },
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Advanced Money</span>
+          ),
+          icon: <TbReportMoney className="text-2xl mr-2" />,
+          path: "/employee/advance/money/request",
+          element: <EmpMoneyRequest />,
+        },
+        {
+          text: <span className="text-[1rem] font-semibold">Incentives</span>,
+          icon: <GiMoneyStack className="text-2xl mr-2" />,
+          path: "/employee/incentives",
+          element: <Incentives />,
+        },
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Reimbursements</span>
+          ),
+          icon: <GiTakeMyMoney className="text-2xl mr-2" />,
+          path: "/employee/reimbursements",
+          element: <Reimbursements />,
+        },
+        {
+          text: <span className="text-[1rem] font-semibold">Emp Payslip</span>,
+          icon: <RiSecurePaymentLine className="text-2xl mr-2" />,
+          path: "/generate/employee/payslip",
+          element: <EmpPayslip />,
+        },
+      ],
+    },
   ];
 
   return (
@@ -411,3 +417,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

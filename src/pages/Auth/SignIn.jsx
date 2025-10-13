@@ -209,11 +209,20 @@ const Login = () => {
           {/* Google Sign-in (commented) */}
         </form>
         <p className="text-sm text-gray-600 text-center mt-6">
-          If you are an Admin and Don’t have an account?{" "}
+          If you are an Admin and Don't have an account?{" "}
           <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
             Sign Up
           </NavLink>
         </p>
+        
+        <div className="mt-4 text-center">
+          <NavLink
+            to="/superadmin-login"
+            className="inline-flex items-center text-sm text-purple-600 hover:text-purple-800 hover:underline transition-colors"
+          >
+            👑 SuperAdmin Login
+          </NavLink>
+        </div>
         {/* <NavLink
           to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
