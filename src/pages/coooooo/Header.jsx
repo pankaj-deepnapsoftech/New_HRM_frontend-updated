@@ -3,7 +3,6 @@ import { ImMenu3, ImMenu4 } from "react-icons/im";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { LuUserCircle } from "react-icons/lu";
 
 const Header = ({ showAuthenticationMenu, setShowAuthenticationMenu }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -46,18 +45,19 @@ const Header = ({ showAuthenticationMenu, setShowAuthenticationMenu }) => {
           {(auth?.account?.account_type === "subscription" ||
             (auth?.account?.account_type === "trial" &&
               auth?.account?.trial_started)) && (
-            <Link to={"/crm"}>
+            <Link to={"/sign-in"}>
               <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
                 Dashboard
               </button>
             </Link>
           )}
           {!auth?.id && (
-            <Link to={"/crm"}>
+            <Link to={"/sign-in"}>
               <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
                 Employee Login
               </button>
             </Link>
+            
           )}
         </div>
 
@@ -68,14 +68,12 @@ const Header = ({ showAuthenticationMenu, setShowAuthenticationMenu }) => {
         </div>
 
         {!auth?.id && (
-          <div
-            className="ml-4 cursor-pointer"
-            onClick={() => setShowAuthenticationMenu((prev) => !prev)}
-          >
-            {/* <LuUserCircle color="white" size="40px" /> */}
-            <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
-              Admin Login
-            </button>
+          <div className="ml-4 cursor-pointer">
+            <Link to={"/sign-in"}>
+              <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
+                Admin Login
+              </button>
+            </Link>
           </div>
         )}
         {auth?.id && (
