@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 
 const HEADER_LINKS = [
-  { name: "Solutions", to: "/" },
-  { name: "Features", to: "/#features" },
-  { name: "Pricing", to: "/subscription" },
-  { name: "Contact", to: "/contact" },
+  // { name: "Solutions", to: "/" },
+  // { name: "Features", to: "/#features" },
+  // { name: "Pricing", to: "/subscription" },
+  // { name: "Contact", to: "/contact" },
 ];
 
 const Header = () => {
@@ -14,11 +14,11 @@ const Header = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 bg-white/80 backdrop-blur border-b border-blue-100 shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-8 py-3">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-8">
         {/* Logo Only (no brand text) */}
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center">
-            <img src="/logo.png" alt="Deepnap HRM" className="h-16 w-auto" />
+            <img src="/logo.png" alt="Deepnap HRM" className="h-24 w-auto" />
           </Link>
         </div>
         {/* Center Navigation */}

@@ -13,17 +13,7 @@ const Technologies = () => {
         <img className="h-[10rem] lg:h-auto lg:w-[7rem] object-contain aspect-square mb-10 lg:mb-0" src="/reactjs.png" />
         <img className="h-[10rem] lg:h-auto lg:w-[7rem] object-contain aspect-square" src="/nodejs.png" />
         <img className="h-[12rem] lg:h-auto lg:w-[15rem] object-contain aspect-square -mt-8 lg:mt-0" src="/tailwindcss.png" />
-        {/* Add pseudo-icons or text for HR tech: Payroll, Attendance/etc if images unavailable */}
-        <div className="mx-4 p-6 border rounded-2xl bg-white text-center shadow flex flex-col items-center">
-          <div className="text-4xl mb-2">🧾</div>
-          <span className="font-semibold text-gray-800">Payroll Engine</span>
-          <span className="text-gray-500 text-xs">Automated & compliant</span>
-        </div>
-        <div className="mx-4 p-6 border rounded-2xl bg-white text-center shadow flex flex-col items-center">
-          <div className="text-4xl mb-2">🕒</div>
-          <span className="font-semibold text-gray-800">Attendance API</span>
-          <span className="text-gray-500 text-xs">Biometric & App Ready</span>
-        </div>
+        
       </div>
     </div>
   );
