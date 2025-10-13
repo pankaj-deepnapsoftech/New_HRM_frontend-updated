@@ -6,12 +6,12 @@ import {
 import { BsFacebook } from "react-icons/bs";
 
 const Footer = () => {
-  const socialLinks = [
-    { icon: <BsFacebook />, to: "https://www.facebook.com/deepnapsoftech" },
-    { icon: <AiFillInstagram />, to: "https://www.instagram.com/deepnapsoftech/" },
-    { icon: <AiFillTwitterCircle />, to: "https://twitter.com/deepnapsoftech" },
-    { icon: <AiFillYoutube />, to: "https://www.youtube.com/@deepnap_softech" },
-  ];
+  // const socialLinks = [
+  //   { icon: <BsFacebook />, to: "https://www.facebook.com/deepnapsoftech" },
+  //   { icon: <AiFillInstagram />, to: "https://www.instagram.com/deepnapsoftech/" },
+  //   { icon: <AiFillTwitterCircle />, to: "https://twitter.com/deepnapsoftech" },
+  //   { icon: <AiFillYoutube />, to: "https://www.youtube.com/@deepnap_softech" },
+  // ];
 
   const hrmLinks = [
     { label: "Employee Management", to: "/hrm-employee-management" },
@@ -45,7 +45,7 @@ const Footer = () => {
         {/* Logo & Social */}
         <div>
           <img src="/logo.png" alt="logo" className="w-36 h-auto mb-4 filter invert" />
-          <div className="flex space-x-4 text-2xl mb-4">
+          {/* <div className="flex space-x-4 text-2xl mb-4">
             {socialLinks.map((link, i) => (
               <a
                 key={i}
@@ -57,8 +57,9 @@ const Footer = () => {
                 {link.icon}
               </a>
             ))}
-          </div>
-          <p className="text-xs mb-1">Deepnap HRM &ndash; Simplifying HR, Payroll & Compliance for Modern Teams.</p>
+          </div> */}
+          <p className="text-xs mb-1">Deepnap HRM </p>
+             {/* &ndash; Simplifying HR, Payroll & Compliance for Modern Teams.</p> */}
           <p className="text-xs">HRM platform by Deepnap Softech</p>
         </div>
 
