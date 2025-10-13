@@ -1,207 +1,80 @@
-import { FaPeopleGroup } from "react-icons/fa6";
-import { IoDocumentSharp } from "react-icons/io5";
-import { FaBuilding } from "react-icons/fa";
-import { CgPerformance } from "react-icons/cg";
-import { LiaChalkboardTeacherSolid } from "react-icons/lia";
-import { MdOutlineSupportAgent } from "react-icons/md";
+import { FaUsers, FaRegIdBadge, FaMoneyCheckAlt, FaUserCheck, FaFileSignature, FaChartBar, FaUserCog } from 'react-icons/fa';
 
 const Features = () => {
   return (
-    <div>
-      <div className="relative">
-        <div className="mt-36 features">
-          <img
-            src="/featuresbg.jpg"
-            className="w-full h-[50rem] absolute bottom-0 left-0 object-cover"
-          ></img>
+    <div className="bg-gray-50 pb-20">
+      <div className="max-w-6xl mx-auto py-16">
+        <h1 className="subscription-font text-[#2563eb] text-4xl text-center font-bold mb-6">Modern HRM Features For Every Team</h1>
+        <p className="text-center text-gray-700 max-w-2xl mx-auto mb-12">
+          Deepnap HRM covers all your core HR needs. From onboarding and employee management to payroll processing, leave, attendance, analytics—even document generation and employee self service. Easy for HR. Empowering for employees.
+        </p>
 
-          <div className="absolute top-[5rem] left-[50%] translate-x-[-50%] z-10 text-center w-[90%] sm:w-[30rem] lg:w-[50rem]">
-            <h1 className="subscription-font text-white text-5xl font-medium">
-              CRM For All
-            </h1>
-            <p className="subscription-font text-white text-lg font-light mt-3">
-              Welcome to Deepnap CRM, where innovation meets efficiency! Our
-              platform is designed to streamline your customer relationship
-              management, making it easier than ever to connect with your
-              clients and grow your business.
-            </p>
-            <p className="subscription-font text-white text-lg font-light mt-3">
-              {" "}
-              With intuitive features, robust analytics, and seamless
-              integrations, Deepnap CRM empowers you to nurture relationships,
-              enhance communication, and drive sales. Discover how our solutions
-              can transform your approach to customer management and take your
-              business to new heights. Explore Deepnap CRM today and unlock your
-              full potential!
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {/* Employee Management */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+            <FaUsers size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Employee Management</h2>
+            <p className="text-gray-600 text-center">
+              Central repository for employee profiles, lifecycle, organization chart, HR docs, onboarding & exit checklists.
             </p>
           </div>
 
-          <div className="h-[50rem]"></div>
+          {/* Attendance & Leave */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+            <FaRegIdBadge size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Attendance & Leave</h2>
+            <p className="text-gray-600 text-center">
+              Automated attendance capture (web/app/biometric), leave management, approvals, holidays & timesheets—zero paperwork!
+            </p>
+          </div>
+
+          {/* Payroll Automation */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+            <FaMoneyCheckAlt size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Payroll Automation</h2>
+            <p className="text-gray-600 text-center">
+              One-click salary processing with automated compliance (PF, ESI, TDS, etc.), bonuses, reimbursements and payslips.
+            </p>
+          </div>
+
+          {/* Performance Reviews */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+            <FaUserCheck size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Performance Reviews</h2>
+            <p className="text-gray-600 text-center">
+              Run appraisals, track goals, get feedback, and recognize top performers—all integrated with HR records.
+            </p>
+          </div>
+
+          {/* Document Generation */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+            <FaFileSignature size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Document Generation</h2>
+            <p className="text-gray-600 text-center">
+              Instantly generate offer/relieving letters, contracts, HR policies and forms—personalized & legally compliant.
+            </p>
+          </div>
+
+          {/* HR Analytics & Reporting */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+            <FaChartBar size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">HR Analytics & Reporting</h2>
+            <p className="text-gray-600 text-center">
+              Dashboards to track workforce costs, trends, attendance, attrition, and every HR metric—make smarter decisions.
+            </p>
+          </div>
+
+          {/* Employee Self Service */}
+          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center col-span-1 md:col-span-2 lg:col-span-3">
+            <FaUserCog size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Employee Self Service (ESS)</h2>
+            <p className="text-gray-600 text-center">
+              Give employees and managers a unified portal for leave/applications, payslips, profile updates and HR help—any device.
+            </p>
+          </div>
+
         </div>
-
-        <div className="z-20 absolute -bottom-12 sm:bottom-0 md:bottom-[-120px] left-1/2 -translate-x-1/2 border-[15px] h-[260px] w-full md:w-[500px] rounded-2xl overflow-hidden">
-          {/* <iframe src='https://www.youtube.com/watch?v=h7XFBXzGusk' /> */}
-          <iframe
-            className="h-[245px] w-full md:w-[485px]"
-            src="https://www.youtube.com/embed/h7XFBXzGusk"
-          ></iframe>
-        </div>
-      </div>
-
-      <div className="px-1 mt-16 md:mt-40 features-1 py-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 px-1 md:px-10">
-          <div className="h:[20rem] md:h-[25rem] lg:h-[20rem] w-full md:w-[90%] lg:w-[50%] overflow-hidden rounded-xl">
-            <img
-              src="/feature1.jpg"
-              className="lg:mr-0 lg:ml-auto h-[inherit] w-full lg:w-[80%]"
-            />
-          </div>
-
-          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
-            <h1 className="subscription-font text-3xl font-medium mb-2">
-              Integrate all your Lead Sources
-            </h1>
-            <p className="subscription-font font-light">
-              Collect the leads directly in the Lead Management Software from
-              all your lead sources without any manual intervention. All your
-              leads will be aggregated in one place with zero effort.
-            </p>
-            <p className="subscription-font font-light mt-2">
-              You’ll be able to unlock things like reporting, Org Chart,
-              employee data, and so much more. Click below on one of the areas
-              to get into the weeds of what is available.
-            </p>
-          </div>
-        </div>
-        {/* <div className="flex items-start gap-5 ml-20 mt-9 pb-4">
-          <div className="flex flex-col items-center justify-center font-medium">
-            <div className="-mt-3">
-              <FaPeopleGroup color="#2f2a5f" size={90} />
-            </div>
-            <p className="text-lg -mt-1">Employee Management</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <IoDocumentSharp color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Record Management</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <FaBuilding color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Administration</p>
-          </div>
-        </div> */}
-      </div>
-
-      <div className="px-1 mt-16 features-2 py-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 px-1 md:px-10">
-          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
-            <h1 className="subscription-font text-3xl font-medium mb-2">
-              Lead Assignation
-            </h1>
-            <p className="subscription-font font-light">
-              The leads can be assigned to the sales team member by you from
-              employees panel. The employee can also see the assigned lead.
-            </p>
-          </div>
-
-          <div className="h:[20rem] md:h-[25rem] lg:h-[20rem] w-full md:w-[90%] lg:w-[50%] overflow-hidden rounded-xl">
-            <img
-              src="/feature2.jpg"
-              className="lg:mr-0 lg:ml-auto h-[inherit] w-full lg:w-[80%]"
-            />
-          </div>
-        </div>
-        {/* <div className="flex justify-end gap-10 mr-32 mt-9 pb-4">
-          <div className="flex flex-col items-center justify-center font-medium">
-            <div className="mt-2">
-              <CgPerformance color="#2f2a5f" size={60} />
-            </div>
-            <p className="text-lg mt-1">Performance</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <LiaChalkboardTeacherSolid color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Training</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <MdOutlineSupportAgent color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Support</p>
-          </div>
-        </div> */}
-      </div>
-
-      <div className="px-1 mt-16 features-3 py-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 px-1 md:px-10">
-          <div className="h:[20rem] md:h-[25rem] lg:h-[20rem] w-full md:w-[90%] lg:w-[50%] overflow-hidden rounded-xl">
-            <img
-              src="/feature3.png"
-              className="lg:mr-0 lg:ml-auto h-[inherit] w-full lg:w-[80%]"
-            />
-          </div>
-
-          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
-            <h1 className="subscription-font text-3xl font-medium mb-2">
-              Automatic Document Generation
-            </h1>
-            <p className="subscription-font font-light">
-              Increase the efficiency with the help of automatic document
-              generation like Proforma Invoice, Invoice, Offer and Payment in
-              PDF format.
-            </p>
-          </div>
-        </div>
-        {/* <div className="flex justify-end gap-10 mr-32 mt-9 pb-4">
-          <div className="flex flex-col items-center justify-center font-medium">
-            <div className="mt-2">
-              <CgPerformance color="#2f2a5f" size={60} />
-            </div>
-            <p className="text-lg mt-1">Performance</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <LiaChalkboardTeacherSolid color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Training</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <MdOutlineSupportAgent color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Support</p>
-          </div>
-        </div> */}
-      </div>
-
-      <div className="px-1 mt-16 features-4 py-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 px-1 md:px-10">
-          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
-            <h1 className="subscription-font text-3xl font-medium mb-2">
-              And A Lot More…
-            </h1>
-            <p className="subscription-font font-light">
-              Increase the productivity of your sales team using various awesome
-              sales automations tools. Create Dashboards, Reports, Sales
-              Pipeline & Many More…
-            </p>
-          </div>
-
-          <div className="h:[20rem] md:h-[25rem] lg:h-[20rem] w-full md:w-[90%] lg:w-[50%] overflow-hidden rounded-xl">
-            <img
-              src="/feature4.jpg"
-              className="lg:mr-0 lg:ml-auto h-[inherit] w-full lg:w-[80%]"
-            />
-          </div>
-        </div>
-        {/* <div className="flex justify-end gap-10 mr-32 mt-9 pb-4">
-          <div className="flex flex-col items-center justify-center font-medium">
-            <div className="mt-2">
-              <CgPerformance color="#2f2a5f" size={60} />
-            </div>
-            <p className="text-lg mt-1">Performance</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <LiaChalkboardTeacherSolid color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Training</p>
-          </div>
-          <div className="flex flex-col items-center justify-center font-medium">
-            <MdOutlineSupportAgent color="#2f2a5f" size={70} />
-            <p className="text-lg mt-1">Support</p>
-          </div>
-        </div> */}
       </div>
     </div>
   );

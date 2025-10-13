@@ -1,135 +1,90 @@
 import { useState } from "react";
-import { ImMenu3, ImMenu4 } from "react-icons/im";
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 
-const Header = ({ showAuthenticationMenu, setShowAuthenticationMenu }) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [showUserDetailsMenu, setShowUserDetailsMenu] = useState(false);
-  const auth = useSelector((state) => state.subscription_auth);
+const HEADER_LINKS = [
+  { name: "Solutions", to: "/" },
+  { name: "Features", to: "/#features" },
+  { name: "Pricing", to: "/subscription" },
+  { name: "Contact", to: "/contact" },
+];
+
+const Header = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="fixed w-full top-0 lg:top-[1rem] left-0 z-30">
-      <div
-        style={{
-          background: "linear-gradient(to right, #2563eb, #1c4dba, #163f9c)",
-        }}
-        className="flex justify-between items-center border border-[#2563eb] w-full lg:w-[80%] mx-auto lg:rounded-full px-4 lg:px-16"
-      >
-        <Link to="/">
-          <img
-            className="w-[8rem] h-[5rem] object-cover invert"
-            src="/logo.png"
-            alt="logo"
-          ></img>
-        </Link>
-        <ul className="hidden lg:flex flex-1 gap-8 ml-10">
-          <Link to="/">
-            <li className="subscription-font text-lg font-light hover:underline cursor-pointer text-white">
-              Home
-            </li>
+    <header className="fixed inset-x-0 top-0 z-40 bg-white/80 backdrop-blur border-b border-blue-100 shadow-sm">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-8 py-3">
+        {/* Logo Only (no brand text) */}
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center">
+            <img src="/logo.png" alt="Deepnap HRM" className="h-16 w-auto" />
           </Link>
-          <Link to="/pricing">
-            <li className="subscription-font text-lg font-light hover:underline cursor-pointer text-white">
-              Pricing & Features
-            </li>
-          </Link>
-          <Link to="/contact">
-            <li className="subscription-font text-lg font-light hover:underline cursor-pointer text-white">
-              Support
-            </li>
-          </Link>
-        </ul>
-        <div className="hidden lg:block space-x-2">
-          {(auth?.account?.account_type === "subscription" ||
-            (auth?.account?.account_type === "trial" &&
-              auth?.account?.trial_started)) && (
-            <Link to={"/sign-in"}>
-              <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
-                Dashboard
-              </button>
-            </Link>
-          )}
-          {!auth?.id && (
-            <Link to={"/sign-in"}>
-              <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
-                Employee Login
-              </button>
-            </Link>
-          )}
         </div>
-
-        <div className="visible flex-1 flex justify-end lg:hidden text-white text-4xl cursor-pointer">
-          <div onClick={() => setShowMenu((prev) => !prev)}>
-            {showMenu ? <ImMenu4 /> : <ImMenu3 />}
-          </div>
-        </div>
-
-        {!auth?.id && (
-          <div className="ml-4 cursor-pointer">
-            <Link to={"/sign-in"}>
-              <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
-                Admin Login
-              </button>
+        {/* Center Navigation */}
+        <nav className="hidden md:flex gap-6 ml-12">
+          {HEADER_LINKS.map((link) => (
+            <Link
+              key={link.name}
+              to={link.to}
+              className="font-medium text-blue-900 hover:text-blue-600 transition"
+            >
+              {link.name}
             </Link>
-          </div>
-        )}
-        {auth?.id && (
-          <div
-            className="ml-4 cursor-pointer"
-            onClick={() => setShowUserDetailsMenu((prev) => !prev)}
-          >
-            <FaUserCircle color="white" size="40px" />
-          </div>
-        )}
+          ))}
+        </nav>
+        {/* Right Buttons */}
+        <div className="flex items-center gap-2">
+          <Link to="/sign-in">
+            <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md font-semibold shadow hover:bg-blue-700 transition">
+              Admin Login
+            </button>
+          </Link>
+          <Link to="/sign-in">
+            <button className="border border-blue-600 text-blue-600 text-sm px-4 py-2 rounded-md font-semibold bg-white hover:bg-blue-50 transition">
+              Employee Login
+            </button>
+          </Link>
+        </div>
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden ml-4 text-blue-700 text-3xl"
+          onClick={() => setMobileOpen((m) => !m)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
+        </button>
       </div>
-
-      {showMenu && (
-        <div className="visible lg:hidden">
-          <ul className="bg-white w-full flex flex-col gap-2 px-5 py-5">
-            <Link to="/">
-              <li className="subscription-font text-lg cursor-pointer hover:underline">
-                Home
-              </li>
-            </Link>
-            <Link to="/pricing">
-              <li className="subscription-font text-lg cursor-pointer hover:underline">
-                Pricing & Features
-              </li>
-            </Link>
-            <Link to="/contact">
-              <li className="subscription-font text-lg cursor-pointer hover:underline">
-                Support
-              </li>
-            </Link>
-            {(auth?.account?.account_type === "subscription" ||
-              (auth?.account?.account_type === "trial" &&
-                auth?.account?.trial_started)) && (
-              <Link to={process.env.REACT_APP_CRM_URL}>
-                <li className="subscription-font text-lg cursor-pointer hover:underline">
-                  Dashboard
-                </li>
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="md:hidden bg-white/95 backdrop-blur border-b border-blue-50 py-4 px-4 shadow absolute top-full inset-x-0 z-50">
+          <nav className="flex flex-col gap-3">
+            {HEADER_LINKS.map((link) => (
+              <Link
+                key={link.name}
+                to={link.to}
+                onClick={() => setMobileOpen(false)}
+                className="font-medium text-blue-900 hover:text-blue-600 transition"
+              >
+                {link.name}
               </Link>
-            )}
-            {!auth?.id && (
-              <Link to={"/crm"}>
-                <button className="subscription-font px-4 py-2 border border-white rounded-full bg-white text-black ease-in-out duration-500 hover:bg-transparent hover:text-white">
+            ))}
+            <div className="flex gap-3 mt-4">
+              <Link to="/sign-in">
+                <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md font-semibold shadow hover:bg-blue-700 transition">
+                  Admin Login
+                </button>
+              </Link>
+              <Link to="/sign-in">
+                <button className="border border-blue-600 text-blue-600 text-sm px-4 py-2 rounded-md font-semibold bg-white hover:bg-blue-50 transition">
                   Employee Login
                 </button>
               </Link>
-            )}
-          </ul>
+            </div>
+          </nav>
         </div>
       )}
-
-      {showAuthenticationMenu && (
-        <Authentication hideModal={() => setShowAuthenticationMenu(false)} />
-      )}
-      {showUserDetailsMenu && (
-        <UserDetails hideModal={() => setShowUserDetailsMenu(false)} />
-      )}
-    </div>
+    </header>
   );
 };
 
