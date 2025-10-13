@@ -203,7 +203,7 @@ const Login = () => {
               </NavLink>
             </div>
 
-            <button
+            {/* <button
               type="submit"
               disabled={isLoading}
               className="cursor-pointer w-full py-2 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-lg hover:opacity-90 transition"
@@ -215,16 +215,16 @@ const Login = () => {
               <div className="h-px bg-gray-300 w-full"></div>
               <span className="px-3 text-sm text-gray-500">Or</span>
               <div className="h-px bg-gray-300 w-full"></div>
-            </div>
+            </div> */}
 
             {/* Google Sign-in (commented) */}
-          </form>
+          {/* </form>
           <p className="text-sm text-gray-600 text-center mt-6">
             If you are an Admin and Don’t have an account?{" "}
             <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
               Sign Up
             </NavLink>
-          </div>
+          </div> */}
 
           <button
             type="submit"
