@@ -34,7 +34,7 @@ const Signup = () => {
       phone: "",
       username: "",
       employeeId: "",
-      role: "User",
+      role: "Admin",
     },
     validationSchema: SignUpSchema,
 

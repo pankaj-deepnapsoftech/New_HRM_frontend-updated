@@ -4,6 +4,8 @@ import Signup from "@/pages/Auth/Signup";
 import EmpLogin from "@/pages/UserAuth/Login";
 import Register from "@/pages/UserAuth/Register";
 import LandingPage from "@/pages/LandingPage";
+import SuperAdminLogin from "@/pages/SuperAdminAuth/SuperAdminLogin";
+import SuperAdminSignup from "@/pages/SuperAdminAuth/SuperAdminSignup";
 
 export const AuthRoute = [
   {
@@ -22,5 +24,13 @@ export const AuthRoute = [
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/superadmin-login",
+    element: <SuperAdminLogin />,
+  },
+  {
+    path: "/superadmin-signup",
+    element: <SuperAdminSignup />,
   },
 ];

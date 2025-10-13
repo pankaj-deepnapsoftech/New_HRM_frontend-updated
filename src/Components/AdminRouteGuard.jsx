@@ -17,7 +17,7 @@ const AdminRouteGuard = ({ children }) => {
     return <Navigate to="/" replace />;
   }
 
-  if (data?.data?.role !== 'Admin') {
+  if (data?.data?.role !== 'Admin' && data?.data?.role !== 'SuperAdmin') {
     toast.error(`Access denied. Admin privileges required. Current role: ${data?.data?.role}`);
     return <Navigate to="/user" replace />;
   }
