@@ -57,7 +57,7 @@ const Features = () => {
             />
           </div>
 
-          <div className="w-[80%] lg:w-[50%] text-[#262544]">
+          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
             <h1 className="subscription-font text-3xl font-medium mb-2">
               Integrate all your Lead Sources
             </h1>
@@ -93,7 +93,7 @@ const Features = () => {
 
       <div className="px-1 mt-16 features-2 py-10">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 px-1 md:px-10">
-          <div className="w-[80%] lg:w-[50%] text-[#262544]">
+          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
             <h1 className="subscription-font text-3xl font-medium mb-2">
               Lead Assignation
             </h1>
@@ -137,7 +137,7 @@ const Features = () => {
             />
           </div>
 
-          <div className="w-[80%] lg:w-[50%] text-[#262544]">
+          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
             <h1 className="subscription-font text-3xl font-medium mb-2">
               Automatic Document Generation
             </h1>
@@ -168,7 +168,7 @@ const Features = () => {
 
       <div className="px-1 mt-16 features-4 py-10">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 px-1 md:px-10">
-          <div className="w-[80%] lg:w-[50%] text-[#262544]">
+          <div className="w-[80%] lg:w-[50%] text-[#2563eb]">
             <h1 className="subscription-font text-3xl font-medium mb-2">
               And A Lot More…
             </h1>

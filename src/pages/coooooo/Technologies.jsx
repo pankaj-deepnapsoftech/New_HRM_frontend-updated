@@ -1,7 +1,7 @@
 const Technologies = () => {
   return (
     <div className="my-24 px-10">
-      <h1 className="subscription-font text-3xl font-medium text-[#262544] text-center">
+      <h1 className="subscription-font text-3xl font-medium text-[#2563eb] text-center">
         Technologies Used
       </h1>
 

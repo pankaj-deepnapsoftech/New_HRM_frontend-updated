@@ -13,9 +13,9 @@ const Header = ({ showAuthenticationMenu, setShowAuthenticationMenu }) => {
     <div className="fixed w-full top-0 lg:top-[1rem] left-0 z-30">
       <div
         style={{
-          background: "linear-gradient(to right, #0f0c29, #302b63, #24243e)",
+          background: "linear-gradient(to right, #2563eb, #1c4dba, #163f9c)",
         }}
-        className="flex justify-between items-center border border-[#24243e] w-full lg:w-[80%] mx-auto lg:rounded-full px-4 lg:px-16"
+        className="flex justify-between items-center border border-[#2563eb] w-full lg:w-[80%] mx-auto lg:rounded-full px-4 lg:px-16"
       >
         <Link to="/">
           <img
@@ -57,7 +57,6 @@ const Header = ({ showAuthenticationMenu, setShowAuthenticationMenu }) => {
                 Employee Login
               </button>
             </Link>
-            
           )}
         </div>
 
