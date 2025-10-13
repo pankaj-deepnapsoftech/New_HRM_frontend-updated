@@ -20,7 +20,7 @@ const plans = [
   },
   {
     name: "Custom",
-    price: "2000",
+    price: "custom",
     period: "/year",
     features: ["Unlimited access", "Priority support", "Advanced integrations"],
     cta: "Subscribe",
@@ -89,8 +89,6 @@ const Subscription = () => {
             </div>
           ))}
         </div>
-
-        <div className="mt-8 text-sm text-gray-500">Need a custom plan? <a href="#" className="text-blue-600 underline">Contact sales</a>.</div>
       </div>
     </div>
   );

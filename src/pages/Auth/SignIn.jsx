@@ -126,100 +126,112 @@ const Login = () => {
   });
 
   return (
-    <div className="w-1/2 bg-white flex items-center justify-center p-10">
-      <div className="w-full max-w-md ">
-        <h2 className="text-3xl font-bold text-gray-800 mb-1 text-center">
-          Welcome Back
-        </h2>
-        <p className="text-center mb-8">Please Login to access your account</p>
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <label className="text-gray-700 block mb-1" htmlFor="username">
-              Username & Email
-            </label>
-            <input
-              id="username"
-              type="text"
-              value={values.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name="username"
-              placeholder="Enter your username & email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300"
-            />
-            {touched.username && errors.username && (
-              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="text-gray-700 block mb-1" htmlFor="password">
-              Password
-            </label>
-            <div className="relative">
+    <div className="min-h-screen w-full flex bg-gray-100">
+      <div className="w-1/2 bg-gradient-to-br from-sky-200 to-sky-400 flex items-center justify-center relative">
+        <div className="absolute -top-20 -left-20 w-80 h-80 bg-white/30 rounded-full blur-3xl opacity-30 z-0"></div>
+        <img
+          src="/Mobile login-rafiki.png"
+          alt="login illustration"
+          className="relative z-10 w-full max-w-md"
+        />
+      </div>
+      <div className="w-1/2 bg-white flex items-center justify-center p-10">
+        <div className="w-full max-w-md ">
+          <h2 className="text-3xl font-bold text-gray-800 mb-1 text-center">
+            Welcome Back
+          </h2>
+          <p className="text-center mb-8">
+            Please Login to access your account
+          </p>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div>
+              <label className="text-gray-700 block mb-1" htmlFor="username">
+                Username & Email
+              </label>
               <input
-                id="password"
-                value={values.password}
-                onBlur={handleBlur}
+                id="username"
+                type="text"
+                value={values.username}
                 onChange={handleChange}
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                onBlur={handleBlur}
+                name="username"
+                placeholder="Enter your username & email"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300"
               />
-              {touched.password && errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              {touched.username && errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
               )}
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-md text-sky-600 hover:underline cursor-pointer"
-              >
-                {showPassword ? <IoEyeOutline /> : <FaRegEyeSlash />}
-              </button>
             </div>
-          </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center text-gray-700">
-              <input type="checkbox" className="mr-2" /> Remember me
-            </label>
-            <NavLink
-              to="/forgot-password"
-              className="text-sky-600 hover:underline"
+            <div>
+              <label className="text-gray-700 block mb-1" htmlFor="password">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  value={values.password}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300"
+                />
+                {touched.password && errors.password && (
+                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-md text-sky-600 hover:underline cursor-pointer"
+                >
+                  {showPassword ? <IoEyeOutline /> : <FaRegEyeSlash />}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-sm">
+              <label className="flex items-center text-gray-700">
+                <input type="checkbox" className="mr-2" /> Remember me
+              </label>
+              <NavLink
+                to="/forgot-password"
+                className="text-sky-600 hover:underline"
+              >
+                Forgot Password?
+              </NavLink>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="cursor-pointer w-full py-2 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-lg hover:opacity-90 transition"
             >
-              Forgot Password?
+              Sign in
+            </button>
+
+            <div className="flex items-center justify-center my-6">
+              <div className="h-px bg-gray-300 w-full"></div>
+              <span className="px-3 text-sm text-gray-500">Or</span>
+              <div className="h-px bg-gray-300 w-full"></div>
+            </div>
+
+            {/* Google Sign-in (commented) */}
+          </form>
+          <p className="text-sm text-gray-600 text-center mt-6">
+            If you are an Admin and Don’t have an account?{" "}
+            <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
+              Sign Up
             </NavLink>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="cursor-pointer w-full py-2 bg-gradient-to-r from-sky-400 to-sky-500 text-white rounded-lg hover:opacity-90 transition"
-          >
-            Sign in
-          </button>
-
-          <div className="flex items-center justify-center my-6">
-            <div className="h-px bg-gray-300 w-full"></div>
-            <span className="px-3 text-sm text-gray-500">Or</span>
-            <div className="h-px bg-gray-300 w-full"></div>
-          </div>
-
-          {/* Google Sign-in (commented) */}
-        </form>
-        <p className="text-sm text-gray-600 text-center mt-6">
-          If you are an Admin and Don’t have an account?{" "}
-          <NavLink to="/sign-up" className="text-sky-600 hover:underline ">
-            Sign Up
-          </NavLink>
-        </p>
-        {/* <NavLink
+          </p>
+          {/* <NavLink
           to="/login"
           className="block w-full text-center mt-6 border border-gray-500 text-gray-600 py-2 rounded-lg hover:bg-sky-50 transition"
         >
           Login As an employee
         </NavLink> */}
+        </div>
       </div>
     </div>
   );
