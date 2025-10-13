@@ -42,10 +42,10 @@ const Signup = () => {
       const totalData = { ...values, isMobile, browser: browserName };
       try {
         const res = await SignUp(totalData).unwrap();
-        toast.success(res.message);
+        toast.success("Account created successfully. Please sign in.");
         resetForm();
-        dispatch(setLoginState());
-        navigate("/");
+        // Do not auto-login on signup; redirect to login page
+        navigate("/sign-in");
       } catch (error) {
         console.error("Signup error:", error);
         toast.error(error.data.message || "Try again ");
