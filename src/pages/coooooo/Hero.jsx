@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
@@ -34,9 +32,9 @@ const HeroSection = () => {
           </Link>
         </div>
       </div>
-        {/* <div className="">
-          <img className="h-[20rem]" src={hero}></img>
-        </div> */}
+        <div className="">
+          <img className="h-[20rem]" src="/hero.png"></img>
+        </div>
     </div>
   );
 };
