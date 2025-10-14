@@ -122,7 +122,7 @@ const Subscription = () => {
     <div className="min-h-[100vh] flex justify-center items-center px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl font-extrabold text-gray-900">
-          Choose a plan that fits your team
+          Choose a plan that   fits your team
         </h2>
         <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
           Simple, transparent pricing. No hidden fees. Upgrade or cancel
