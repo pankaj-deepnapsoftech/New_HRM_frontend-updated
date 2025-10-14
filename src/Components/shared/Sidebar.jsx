@@ -236,20 +236,20 @@ const Sidebar = () => {
       element: <ShowCauseNotices />,
     },
     {
-      text: (
-        <button
-          className="flex items-center gap-3 cursor-pointer"
-          onClick={() => setPayrollarrow(!payroolOpenArrow)}
-        >
-          <span className="text-[1rem] font-semibold">Payroll</span>
-          {payroolOpenArrow ? (
-            <IoIosArrowUp size={17} />
-          ) : (
-            <IoIosArrowDown size={17} />
-          )}
-        </button>
-      ),
-      icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
+      // text: (
+      //   <button
+      //     className="flex items-center gap-3 cursor-pointer"
+      //     onClick={() => setPayrollarrow(!payroolOpenArrow)}
+      //   >
+      //     <span className="text-[1rem] font-semibold">Payroll</span>
+      //     {payroolOpenArrow ? (
+      //       <IoIosArrowUp size={17} />
+      //     ) : (
+      //       <IoIosArrowDown size={17} />
+      //     )}
+      //   </button>
+      // ),
+      // icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
       onClick: () => setPayrollOpen(!payrollOpen),
       subMenu: payrollOpen && [
         {
