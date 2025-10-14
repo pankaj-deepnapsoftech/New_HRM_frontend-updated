@@ -4,12 +4,12 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const plans = [
   {
-    name: "Free Trial",
+    name: "Start Trial",
     price: "0",
     period: "3 days free",
     features: ["Full access for 3 days", "Try all premium features", "Cancel anytime"],
-    cta: "Free Trial Started",
-    recommended: false,
+    cta: "Start Trial",
+    recommended: true,
   },
   {
     name: "Premium",
@@ -21,7 +21,7 @@ const plans = [
   },
   {
     name: "Custom",
-    price: "2000",
+    price: "2000",  
     period: "/year",
     features: ["Unlimited access", "Priority support", "Advanced integrations"],
     cta: "Subscribe",
@@ -81,10 +81,10 @@ const Subscription = () => {
               </div>
 
               <div className="mt-6">
-                {plan.name === "Premium" || plan.name === "Free Trial" ? (
+                {plan.name === "Premium" || plan.name === "Start Trial" ? (
                   <Link to="/sign-in">
                     <button
-                      className={`w-full py-2 rounded-md font-semibold ${
+                      className={`w-full py-2 rounded-md cursor-pointer font-semibold ${
                         plan.recommended
                           ? "bg-blue-600 text-white hover:bg-blue-700"
                           : "bg-gray-100 text-gray-900 hover:bg-gray-200"
@@ -95,7 +95,7 @@ const Subscription = () => {
                   </Link>
                 ) : (
                   <button
-                    className={`w-full py-2 rounded-md font-semibold ${
+                    className={`w-full py-2 rounded-md cursor-pointer font-semibold ${
                       plan.recommended
                         ? "bg-blue-600 text-white hover:bg-blue-700"
                         : "bg-gray-100 text-gray-900 hover:bg-gray-200"

@@ -16,7 +16,7 @@ const plans = [
       "Try all premium features",
       "Cancel anytime",
     ],
-    cta: "Free Trial Started",
+    cta: "Start Trial",
     recommended: false,
   },
   {
