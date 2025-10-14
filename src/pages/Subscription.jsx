@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FaCheck, FaStar } from "react-icons/fa";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addData } from "@/store/slice/AuthSlice";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const plans = [
   {
@@ -47,6 +51,9 @@ const loadRazorpayScript = (src) => {
 
 const Subscription = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { Auth } = useSelector((state) => state);
   const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8075/api/v1";
 
   useEffect(() => {
@@ -85,7 +92,18 @@ const Subscription = () => {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature,
           }, { withCredentials: true });
-          alert("Payment successful! Subscription activated.");
+          // Refresh logged-in user to pull latest isSubscribed/trialEndsAt
+          const me = await axios.get(`${API_BASE_URL}/user/loged-in-user`, { withCredentials: true });
+          if (me?.data?.data) {
+            dispatch(addData(me.data.data));
+          }
+          // Redirect to dashboard after success
+          const role = me?.data?.data?.role;
+          if (role === 'Admin' || role === 'SuperAdmin') {
+            navigate('/dashboard');
+          } else {
+            navigate('/user');
+          }
         },
         modal: { ondismiss: function () {} },
       };
@@ -165,10 +183,10 @@ const Subscription = () => {
                 {plan.name === "Premium" ? (
                   <button
                     onClick={handlePremiumSubscribe}
-                    disabled={isLoading}
-                    className={`w-full py-2 rounded-md font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-60`}
+                    disabled={isLoading || Auth?.isSubscribed}
+                    className={`w-full py-2 rounded-md font-semibold ${Auth?.isSubscribed ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'} transition-colors disabled:opacity-60`}
                   >
-                    {isLoading ? "Processing..." : plan.cta}
+                    {Auth?.isSubscribed ? 'Subscribed' : (isLoading ? 'Processing...' : plan.cta)}
                   </button>
                 ) : (
                   <button

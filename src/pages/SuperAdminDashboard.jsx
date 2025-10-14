@@ -183,12 +183,38 @@ const SuperAdminDashboard = () => {
     const AdminsTab = () => {
         if (!adminsData) return <div>Loading...</div>;
 
-        const { admins, totalAdmins, totalEmployees, activeEmployees, inactiveEmployees } = adminsData;
+        const { admins, totalAdmins, subscribedAdmins, trialAdmins, inactiveAdmins, totalEmployees, activeEmployees, inactiveEmployees } = adminsData;
+
+        // Local filters for Admins
+        const [adminSearch, setAdminSearch] = useState("");
+        const [adminStatus, setAdminStatus] = useState(""); // '', 'subscribed', 'trial', 'inactive'
+        const [adminPage, setAdminPage] = useState(1);
+        const adminPageSize = 10;
+
+        const normalized = (v) => (v || "").toString().toLowerCase();
+        const filteredAdmins = admins.filter((a) => {
+            const hay = `${normalized(a.fullName)} ${normalized(a.username)} ${normalized(a.email)}`;
+            const matchesSearch = normalized(adminSearch) ? hay.includes(normalized(adminSearch)) : true;
+            const status = a.subscription?.isSubscribed
+                ? 'subscribed'
+                : (a.subscription?.onTrial ? 'trial' : 'inactive');
+            const matchesStatus = adminStatus ? status === adminStatus : true;
+            return matchesSearch && matchesStatus;
+        });
+
+        // Reset to first page when filters change
+        useEffect(() => {
+            setAdminPage(1);
+        }, [adminSearch, adminStatus]);
+
+        const totalAdminPages = Math.max(1, Math.ceil(filteredAdmins.length / adminPageSize));
+        const pageStartIdx = (adminPage - 1) * adminPageSize;
+        const pagedAdmins = filteredAdmins.slice(pageStartIdx, pageStartIdx + adminPageSize);
 
         return (
             <div className="space-y-6">
                 {/* Admin Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <StatCard
                         title="Total Admins"
                         value={totalAdmins}
@@ -196,17 +222,52 @@ const SuperAdminDashboard = () => {
                         color="blue"
                     />
                     <StatCard
-                        title="Total Employees"
-                        value={totalEmployees}
-                        icon="👤"
-                        color="green"
-                    />
-                    <StatCard
-                        title="Active Employees"
-                        value={activeEmployees}
+                        title="Subscribed Admins"
+                        value={subscribedAdmins}
                         icon="✅"
                         color="green"
                     />
+                    <StatCard
+                        title="On Free Trial"
+                        value={trialAdmins}
+                        icon="🆓"
+                        color="purple"
+                    />
+                    <StatCard
+                        title="Inactive Admins"
+                        value={inactiveAdmins}
+                        icon="⛔"
+                        color="red"
+                    />
+                </div>
+
+                {/* Filters */}
+                <div className="bg-white rounded-lg shadow-md p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Search Admins</label>
+                            <input
+                                type="text"
+                                placeholder="Search by name, username or email"
+                                value={adminSearch}
+                                onChange={(e) => setAdminSearch(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Subscription Status</label>
+                            <select
+                                value={adminStatus}
+                                onChange={(e) => setAdminStatus(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">All</option>
+                                <option value="subscribed">Subscribed</option>
+                                <option value="trial">On Trial</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Admins List */}
@@ -230,10 +291,11 @@ const SuperAdminDashboard = () => {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Created
                                     </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {admins.map((admin, index) => (
+                                {pagedAdmins.map((admin, index) => (
                                     <tr key={index} className="hover:bg-gray-50">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div>
@@ -274,10 +336,45 @@ const SuperAdminDashboard = () => {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {new Date(admin.createdAt).toLocaleDateString()}
                                         </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {admin.subscription?.isSubscribed ? (
+                                                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Subscribed</span>
+                                            ) : admin.subscription?.onTrial ? (
+                                                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">Trial</span>
+                                            ) : (
+                                                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                                            )}
+                                            {admin.subscription?.trialEndsAt && (
+                                                <div className="text-xs text-gray-500 mt-1">Trial ends: {new Date(admin.subscription.trialEndsAt).toLocaleDateString()}</div>
+                                            )}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+
+                    {/* Pagination */}
+                    <div className="px-6 py-3 border-t border-gray-200 flex items-center justify-between">
+                        <div className="text-sm text-gray-700">
+                            Page {adminPage} of {totalAdminPages} — Showing {pagedAdmins.length} of {filteredAdmins.length}
+                        </div>
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={() => setAdminPage((p) => Math.max(1, p - 1))}
+                                disabled={adminPage <= 1}
+                                className="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300"
+                            >
+                                Previous
+                            </button>
+                            <button
+                                onClick={() => setAdminPage((p) => Math.min(totalAdminPages, p + 1))}
+                                disabled={adminPage >= totalAdminPages}
+                                className="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300"
+                            >
+                                Next
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

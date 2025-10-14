@@ -8,13 +8,16 @@ const initialState = {
     username:"",
     role:"",
     _id:"", // Add user ID
-    isLogin:false
+    isLogin:false,
+    isSubscribed:false,
+    trialEndsAt:null
 }
 
 export const AuthSlice = createSlice({
   name: "Auth",
   initialState,
   reducers: {
+    setSelectedAdminId: (state, action) => {},
     addData: (state, action) => {
       state.email = action.payload.email;
       state.fullName = action.payload.fullName;
@@ -22,6 +25,8 @@ export const AuthSlice = createSlice({
       state.username = action.payload.username;
       state.role = action.payload.role;
       state._id = action.payload._id; // Add user ID
+      state.isSubscribed = action.payload.isSubscribed || false;
+      state.trialEndsAt = action.payload.trialEndsAt || null;
       state.isLogin = true;
     },
     removeData: (state) => {
@@ -32,6 +37,8 @@ export const AuthSlice = createSlice({
       state.username = "";
       state.role = "";
       state._id = "";
+      state.isSubscribed = false;
+      state.trialEndsAt = null;
       state.isLogin = false;
     },
     setLoginState: (state) => {

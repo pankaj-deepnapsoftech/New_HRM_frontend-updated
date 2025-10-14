@@ -97,7 +97,7 @@ const Subscription = () => {
                       plan.recommended
                         ? "bg-blue-600 text-white hover:bg-blue-700"
                         : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-                    } transition-colors`}
+                    } transitio n-colors`}
                   >
                     {plan.cta}
                   </button>
