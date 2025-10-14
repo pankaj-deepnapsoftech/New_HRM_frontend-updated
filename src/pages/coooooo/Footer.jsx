@@ -17,10 +17,7 @@ const Footer = () => {
     { label: "Employee Management", to: "/hrm-employee-management" },
     { label: "Payroll Processing", to: "/hrm-payroll" },
     { label: "Attendance & Leave", to: "/hrm-attendance" },
-    { label: "Performance Reviews", to: "/hrm-performance" },
-    { label: "Document Generation", to: "/hrm-documents" },
     { label: "HR Analytics", to: "/hrm-analytics" },
-    { label: "ESS Portal", to: "/hrm-ess" },
   ];
 
   const resourceLinks = [

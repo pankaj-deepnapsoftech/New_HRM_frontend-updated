@@ -51,10 +51,10 @@ const Features = () => {
 
           {/* Performance Reviews */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-            <FaUserCheck size={40} className="text-sky-600 mb-4" />
-            <h2 className="font-semibold text-xl mb-2">Performance Review's</h2>
+            <FaUserCog size={40} className="text-sky-600 mb-4" />
+            <h2 className="font-semibold text-xl mb-2">Employee Portal</h2>
             <p className="text-gray-600 text-center">
-              Review how well employee's are doing there job's.
+              Employee's can log in and see there informations.
             </p>
           </div>
 
@@ -73,15 +73,6 @@ const Features = () => {
             <h2 className="font-semibold text-xl mb-2">Report's</h2>
             <p className="text-gray-600 text-center">
               See chart's and data about you're employee's.
-            </p>
-          </div>
-
-          {/* Employee Self Service */}
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center col-span-1 md:col-span-2 lg:col-span-3">
-            <FaUserCog size={40} className="text-sky-600 mb-4" />
-            <h2 className="font-semibold text-xl mb-2">Employee Portal</h2>
-            <p className="text-gray-600 text-center">
-              Employee's can log in and see there informations.
             </p>
           </div>
         </div>
