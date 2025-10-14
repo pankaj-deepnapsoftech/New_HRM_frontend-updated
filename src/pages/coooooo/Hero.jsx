@@ -26,7 +26,7 @@ const HeroSection = () => {
           </div>
         </div>
         <div className="space-x-2 mt-6">
-          <Link to="/contact">
+          <Link to="/sign-in">
             <button
               style={{
                 background:
