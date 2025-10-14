@@ -30,7 +30,7 @@ const plans = [
 ];
 
 const Subscription = () => {
-  return (
+  return ( 
     <div className="min-h-[100vh] flex justify-center items-center px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl font-extrabold text-gray-900">Choose a plan that fits your team</h2>
@@ -58,7 +58,9 @@ const Subscription = () => {
                 <h3 className="text-lg leading-6 font-semibold text-gray-900">{plan.name}</h3>
                 <div className="mt-4 flex items-baseline text-4xl font-extrabold">
                   {plan.price === "0" ? (
-                    <span className="text-4xl">Free</span>
+                  
+                      <span className="text-4xl">Free</span>
+                   
                   ) : (
                     <>
                       <span className="text-4xl">₹{plan.price}</span>
@@ -79,7 +81,7 @@ const Subscription = () => {
               </div>
 
               <div className="mt-6">
-                {plan.name === "Premium" ? (
+                {plan.name === "Premium" || plan.name === "Free Trial" ? (
                   <Link to="/sign-in">
                     <button
                       className={`w-full py-2 rounded-md font-semibold ${
