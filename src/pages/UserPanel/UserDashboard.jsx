@@ -8,6 +8,7 @@ import {
   // FaStickyNote,
   // FaExclamationTriangle,
   FaDoorOpen,
+  FaClock,
 } from "react-icons/fa";
 import { FcLeave } from "react-icons/fc";
 import Calendar from "react-calendar";
@@ -16,7 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const actions = [
+  { label: "Attendance Check", icon: <FaCalendarAlt />, path: "/user/attendance-check", color: "bg-blue-100 text-blue-600" },
   { label: "Daily Attendance", icon: <FaCalendarAlt />, path: "/user/attendance", color: "bg-blue-100 text-blue-600" },
+  { label: "Attendance Regularization", icon: <FaClock />, path: "/user/attendance-regularization", color: "bg-purple-100 text-purple-600" },
   { label: "Request Leaves", icon: <FcLeave />, path: "/user/request-leave", color: "bg-green-100 text-green-600" },
   { label: "Leave Status", icon: <FaCalendarAlt />, path: "/user/request-leave", color: "bg-yellow-100 text-yellow-600" },
   { label: "Documents", icon: <FaFileAlt />, path: "/user/document", color: "bg-orange-100 text-orange-600" },

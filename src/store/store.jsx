@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { Api } from './api/api'
 import { AuthSlice } from './slice/AuthSlice'
+// AttendanceRegularization endpoints are injected into Api; no separate slice import needed
 
 export const store = configureStore({
     reducer:{
@@ -16,5 +17,6 @@ export const store = configureStore({
         }
         
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(Api.middleware)
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware().concat(Api.middleware)
 })

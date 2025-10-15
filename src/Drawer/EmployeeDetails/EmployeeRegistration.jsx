@@ -20,7 +20,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
         initialValues: { 
             photo: editTable?.photo || "", pancard: editTable?.pancard || '', aadhaar: editTable?.aadhaar || '', Driving_Licance: editTable?.Driving_Licance || '', Voter_Id: editTable?.Voter_Id || '',
             UAN_number: editTable?.UAN_number ||  '', Back_Name:editTable?.Back_Name ||  '', Bank_Account:editTable?.Bank_Account || '', IFSC_Code:editTable?.IFSC_Code || '', Bank_Proof:editTable?.Bank_Proof || "",
-            Emp_id: editTable?.Emp_id?._id || '', 
+            education_proof: editTable?.education_proof || '', experience_letter: editTable?.experience_letter || '', previous_salary_slips: editTable?.previous_salary_slips || '', resignation_acceptance: editTable?.resignation_acceptance || '', Emp_id: editTable?.Emp_id?._id || '', 
         },
         validationSchema: EmpDetailsSchema,
         enableReinitialize: true,
@@ -29,7 +29,7 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                 // Build FormData, but only append file fields if a new File is selected
                 const formData = new FormData();
                 Object.entries(values).forEach(([key, value]) => {
-                    const isFileField = ['aadhaar','pancard','Driving_Licance','Voter_Id','Bank_Proof','photo'].includes(key);
+                    const isFileField = ['aadhaar','pancard','Driving_Licance','Voter_Id','Bank_Proof','photo','education_proof','experience_letter','previous_salary_slips','resignation_acceptance'].includes(key);
                     if (isFileField) {
                         if (value && typeof value !== 'string') {
                             formData.append(key, value);
@@ -125,8 +125,9 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                             { label: 'Bank Proof (Cheque/Passbook)', name: 'Bank_Proof' },
                             { label: 'Aadhaar Number', name: 'aadhaar' },
                             { label: 'PAN Card', name: 'pancard' },
-                            { label: 'Driving Licence', name: 'Driving_Licance' },
-                            { label: 'Voter ID', name: 'Voter_Id' },
+                            { label: 'Driving Licence (Optional)', name: 'Driving_Licance' },
+                            { label: 'Voter ID (Optional)', name: 'Voter_Id' },
+                            { label: 'Education Proof (Optional)', name: 'education_proof' },
                             { label: 'Photo', name: 'photo' }
                         ].map(({ label, name }) => (
                             <div key={name}>
@@ -159,6 +160,48 @@ const EmployeeForm = ({ showForm, setShowFrom, editTable }) => {
                                 )}
                             </div>
                         ))}
+                    </div>
+
+                    {/* Others Section */}
+                    <div className="border-t pt-6">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Others (Optional)</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {[
+                                { label: 'Experience Letter (Optional)', name: 'experience_letter' },
+                                { label: 'Previous Salary Slips (Optional)', name: 'previous_salary_slips' },
+                                { label: 'Resignation Acceptance (Optional)', name: 'resignation_acceptance' }
+                            ].map(({ label, name }) => (
+                                <div key={name}>
+                                    <label className="block mb-1 font-medium text-gray-700">{label}</label>
+                                    <input
+                                        type="file"
+                                        name={name}
+                                        ref={(el) => (fileRefs.current[name] = el)}
+                                        onChange={(event) => {
+                                            setFieldValue(name, event.currentTarget.files[0]);
+                                        }}
+                                        onBlur={handleBlur}
+                                        className="w-full border border-gray-300 p-2 rounded-md file:bg-indigo-100 file:text-indigo-700 file:px-4 file:py-1 file:rounded-md"
+                                    />
+                                    {editTable && typeof values[name] === 'string' && values[name] && (
+                                        <div className="mt-2 text-sm text-gray-600 flex items-center gap-2">
+                                            <span>Current file:</span>
+                                            <a
+                                                href={values[name]}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-indigo-600 underline"
+                                            >
+                                                View
+                                            </a>
+                                        </div>
+                                    )}
+                                    {touched[name] && errors[name] && (
+                                        <p className="text-sm text-red-500 mt-1">{errors[name]}</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     <div>

@@ -1,8 +1,17 @@
 //api.jsx
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+const envOriginRaw = (import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL || '')
+  .trim();
+// Normalize: remove trailing slashes and any trailing /api or /api/v1 to avoid double prefix
+const normalizedOrigin = envOriginRaw
+  .replace(/\/+$/, '')
+  .replace(/\/api(?:\/v1)?$/i, '');
+
+const baseUrl = normalizedOrigin ? `${normalizedOrigin}/api/v1` : '/api/v1'
+
 const rawBaseQuery = fetchBaseQuery({ 
-    baseUrl: import.meta.env.VITE_BACKEND_URL,
+    baseUrl,
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         const token = document.cookie

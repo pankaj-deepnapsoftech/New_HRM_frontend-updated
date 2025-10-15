@@ -1,5 +1,7 @@
 import AdvanceMoneyRequest from "@/pages/UserPanel/AdvanceMoneyRequest";
 import UserAttendance from "@/pages/UserPanel/UserAttendence";
+import UserAttendanceCheck from "@/pages/UserPanel/UserAttendanceCheck";
+import AttendanceRegularization from "@/pages/UserPanel/AttendanceRegularization";
 import UserDashboard from "@/pages/UserPanel/UserDashboard";
 import UserDocument from "@/pages/UserPanel/UserDocument";
 import UserLeaveRequest from "@/pages/UserPanel/UserLeaveRequest";
@@ -17,6 +19,14 @@ export const UserRoute = [
   {
     path:"/user/attendance",
     element:<UserAttendance/>
+  },
+  {
+    path:"/user/attendance-check",
+    element:<UserAttendanceCheck/>
+  },
+  {
+    path:"/user/attendance-regularization",
+    element:<AttendanceRegularization/>
   },
 {
      path: "/user/request-leave",

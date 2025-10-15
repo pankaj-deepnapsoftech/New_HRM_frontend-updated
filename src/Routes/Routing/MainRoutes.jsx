@@ -23,6 +23,7 @@ import Departments from "@/pages/Departments";
 import MainDashboardPage from "@/pages/MainDashboardPage";
 import EmployeesReports from "@/pages/EmployeesReports";
 import HRDashboard from "@/pages/HRDashboard";
+import AdminAttendanceRegularization from "@/pages/AdminAttendanceRegularization";
 
 export const MainRoutes = [
   {
@@ -113,6 +114,10 @@ export const MainRoutes = [
   {
     path: "/hrdashboard",
     element: <AdminRouteGuard><HRDashboard /></AdminRouteGuard>,
+  },
+  {
+    path: "/admin/attendance-regularization",
+    element: <AdminRouteGuard><AdminAttendanceRegularization /></AdminRouteGuard>,
   },
   
 ];

@@ -74,6 +74,21 @@ export const empApi = Api.injectEndpoints({
       }),
     }),
 
+    sendEmailOtp: builder.mutation({
+      query: (email) => ({
+        url: `/otp/send`,
+        method: "POST",
+        body: { email },
+      }),
+    }),
+    verifyEmailOtp: builder.mutation({
+      query: ({ email, code }) => ({
+        url: `/otp/verify`,
+        method: "POST",
+        body: { email, code },
+      }),
+    }),
+
     deleteEmpData: builder.mutation({
       query: (id) => ({
         url: `/empdata/${id}`,
@@ -82,16 +97,16 @@ export const empApi = Api.injectEndpoints({
     }),
 
     // Attendance related endpoints
-    markLoginAttendance: builder.mutation({
+    checkInAttendance: builder.mutation({
       query: (employeeId) => ({
-        url: `/empdata/${employeeId}/attendance/login`,
+        url: `/empdata/${employeeId}/attendance/checkin`,
         method: "POST",
       }),
     }),
 
-    markLogoutAttendance: builder.mutation({
+    checkOutAttendance: builder.mutation({
       query: (employeeId) => ({
-        url: `/empdata/${employeeId}/attendance/logout`,
+        url: `/empdata/${employeeId}/attendance/checkout`,
         method: "POST",
       }),
     }),
@@ -155,9 +170,11 @@ export const {
   useAddAssetMutation,
   useRemoveAssetMutation,
   useCreateCredentialsMutation,
+  useSendEmailOtpMutation,
+  useVerifyEmailOtpMutation,
   useGetAllEmpDataWithoutPaginatioQuery,
-  useMarkLoginAttendanceMutation,
-  useMarkLogoutAttendanceMutation,
+  useCheckInAttendanceMutation,
+  useCheckOutAttendanceMutation,
   useGetDailyAttendanceQuery,
   useGetMonthlyAttendanceQuery,
   useGetYearlyAttendanceQuery,

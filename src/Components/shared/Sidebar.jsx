@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaHome, FaFingerprint, FaBars } from "react-icons/fa";
+import { FaHome, FaFingerprint, FaBars, FaCalendarAlt } from "react-icons/fa";
 import { BsPersonCircle } from "react-icons/bs";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { browserName, isMobile } from "react-device-detect";
@@ -53,6 +53,8 @@ import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
 import Departments from "@/pages/Departments";
+import HRDashboard from "@/pages/HRDashboard";
+import AdminAttendanceRegularization from "@/pages/AdminAttendanceRegularization";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -112,11 +114,6 @@ const Sidebar = () => {
       icon: <FaCrown className="text-2xl" />,
       path: "/superadmin-dashboard",
     }] : []),
-    {
-      text: <span className="text-[1rem] font-semibold">Leave Approval</span>,
-      icon: <MdDashboard className="text-2xl" />,
-      path: "/hrdashboard",
-    },
     {
       text: <span className="text-[1rem] font-semibold">Emp Dashboard</span>,
       icon: <FaChalkboardUser className="text-2xl" />,
@@ -193,12 +190,22 @@ const Sidebar = () => {
           path: "/all-attendence",
           element: <AllAttendance />,
         },
-        // {
-        //   text: <span className="text-[1rem] font-semibold">All Leave</span>,
-        //   icon: <TbListDetails className="text-2xl mr-2" />,
-        //   path: "/all-leaves",
-        //   element: <AllLeaves />,
-        // },
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Leave Approval</span>
+          ),
+          icon: <MdDashboard className="text-xl mr-2" />,
+          path: "/hrdashboard",
+          element: <HRDashboard />,
+        },
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Attendance Regularization</span>
+          ),
+          icon: <FaCalendarAlt className="text-xl mr-2" />,
+          path: "/admin/attendance-regularization",
+          element: <AdminAttendanceRegularization />,
+        },
       ],
     },
     {
@@ -214,7 +221,7 @@ const Sidebar = () => {
       element: <AssignAssets />,
     },
     {
-      text: <span className="text-[1rem] font-semibold">Terminated Emp</span>,
+      text: <span className="text-[1rem] font-semibold">E- Separation</span>,
       icon: <MdOutlineBlock className="text-2xl" />,
       path: "/employee/terminated",
       element: <TerminatedEmp />,
@@ -397,7 +404,7 @@ const Sidebar = () => {
             <span className="text-base">Logout</span>
           </button>
 
-          <style jsx>{`
+          <style>{`
             @keyframes gradientAnimation {
               0% {
                 background-position: 0% 50%;

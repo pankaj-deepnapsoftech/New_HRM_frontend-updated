@@ -33,17 +33,31 @@ const EmpDetailsSchema = Yup.object().shape({
     .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
 
   Driving_Licance: Yup.mixed()
-    .required('Driving license is required')
     .test('fileSize', 'File too large', value => isPassingFileSize(value))
     .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
 
   Voter_Id: Yup.mixed()
-    .required('Voter ID is required')
     .test('fileSize', 'File too large', value => isPassingFileSize(value))
     .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
 
   Bank_Proof: Yup.mixed()
     .required('Bank proof is required')
+    .test('fileSize', 'File too large', value => isPassingFileSize(value))
+    .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
+
+  education_proof: Yup.mixed()
+    .test('fileSize', 'File too large', value => isPassingFileSize(value))
+    .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
+
+  experience_letter: Yup.mixed()
+    .test('fileSize', 'File too large', value => isPassingFileSize(value))
+    .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
+
+  previous_salary_slips: Yup.mixed()
+    .test('fileSize', 'File too large', value => isPassingFileSize(value))
+    .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
+
+  resignation_acceptance: Yup.mixed()
     .test('fileSize', 'File too large', value => isPassingFileSize(value))
     .test('fileType', 'Unsupported file format', value => isPassingFileType(value)),
 
