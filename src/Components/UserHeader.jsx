@@ -79,7 +79,7 @@ const UserHeader = () => {
       />
 
       {/* Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes gradientAnimation {
           0% {
             background-position: 0% 50%;

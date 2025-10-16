@@ -1,5 +1,7 @@
 import AdvanceMoneyRequest from "@/pages/UserPanel/AdvanceMoneyRequest";
 import UserAttendance from "@/pages/UserPanel/UserAttendence";
+import UserAttendanceCheck from "@/pages/UserPanel/UserAttendanceCheck";
+import AttendanceRegularization from "@/pages/UserPanel/AttendanceRegularization";
 import UserDashboard from "@/pages/UserPanel/UserDashboard";
 import UserDocument from "@/pages/UserPanel/UserDocument";
 import UserLeaveRequest from "@/pages/UserPanel/UserLeaveRequest";
@@ -8,6 +10,7 @@ import UserPaySlip from "@/pages/UserPanel/UserPaySlip";
 import UserAssets from "@/pages/UserPanel/UserAssets";
 import UserGatepass from "@/pages/UserPanel/UserGatepass";
 import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";
+import UserAnnouncements from "@/pages/UserPanel/UserAnnouncements";
 
 export const UserRoute = [
   {
@@ -17,6 +20,14 @@ export const UserRoute = [
   {
     path:"/user/attendance",
     element:<UserAttendance/>
+  },
+  {
+    path:"/user/attendance-check",
+    element:<UserAttendanceCheck/>
+  },
+  {
+    path:"/user/attendance-regularization",
+    element:<AttendanceRegularization/>
   },
 {
      path: "/user/request-leave",
@@ -49,5 +60,9 @@ export const UserRoute = [
 {
     path:"/user/terms-conditions",
     element:<TermsAndConditions/>
+},
+{
+    path:"/user/announcements",
+    element:<UserAnnouncements/>
 }
 ];

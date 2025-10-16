@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const UserLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { Auth } = useSelector((state) => state);
+  const Auth = useSelector((state) => state.Auth);
   const location = useLocation();
   const onDashboard = location.pathname.startsWith('/user');
   const trialExpired = Auth?.trialEndsAt ? (new Date() > new Date(Auth.trialEndsAt)) : false;

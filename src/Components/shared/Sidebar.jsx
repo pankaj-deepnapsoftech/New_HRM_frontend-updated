@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaHome, FaFingerprint, FaBars } from "react-icons/fa";
+import { FaHome, FaFingerprint, FaBars, FaCalendarAlt } from "react-icons/fa";
 import { BsPersonCircle } from "react-icons/bs";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { browserName, isMobile } from "react-device-detect";
@@ -44,15 +44,17 @@ import AssignAssets from "@/pages/Assets";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import GatepassApprovals from "@/pages/GatepassAproval";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
+import HRAnnouncements from "@/pages/HRAnnouncements";
 import { FaChalkboardUser, FaPeopleRoof, FaCrown } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import PayrollSummary from "@/pages/PayrollSummary";
-import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
+import DesignationManagement from "@/pages/DesignationManagement";
 import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
 import Departments from "@/pages/Departments";
+import HRDashboard from "@/pages/HRDashboard";
+import AdminAttendanceRegularization from "@/pages/AdminAttendanceRegularization";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -113,11 +115,6 @@ const Sidebar = () => {
       path: "/superadmin-dashboard",
     }] : []),
     {
-      text: <span className="text-[1rem] font-semibold">Leave Approval</span>,
-      icon: <MdDashboard className="text-2xl" />,
-      path: "/hrdashboard",
-    },
-    {
       text: <span className="text-[1rem] font-semibold">Emp Dashboard</span>,
       icon: <FaChalkboardUser className="text-2xl" />,
       path: "/empdashboard",
@@ -135,6 +132,12 @@ const Sidebar = () => {
       icon: <FaPeopleRoof className="text-2xl" />,
       path: "/departments",
       element: <Departments />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Designation</span>,
+      icon: <MdOutlineStickyNote2 className="text-2xl" />,
+      path: "/designations",
+      element: <DesignationManagement />,
     },
     // {
     //   text: <span className="text-[1rem] font-semibold">Projects</span>,
@@ -193,12 +196,22 @@ const Sidebar = () => {
           path: "/all-attendence",
           element: <AllAttendance />,
         },
-        // {
-        //   text: <span className="text-[1rem] font-semibold">All Leave</span>,
-        //   icon: <TbListDetails className="text-2xl mr-2" />,
-        //   path: "/all-leaves",
-        //   element: <AllLeaves />,
-        // },
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Leave Approval</span>
+          ),
+          icon: <MdDashboard className="text-xl mr-2" />,
+          path: "/hrdashboard",
+          element: <HRDashboard />,
+        },
+        {
+          text: (
+            <span className="text-[1rem] font-semibold">Attendance Regularization</span>
+          ),
+          icon: <FaCalendarAlt className="text-xl mr-2" />,
+          path: "/admin/attendance-regularization",
+          element: <AdminAttendanceRegularization />,
+        },
       ],
     },
     {
@@ -214,7 +227,7 @@ const Sidebar = () => {
       element: <AssignAssets />,
     },
     {
-      text: <span className="text-[1rem] font-semibold">Terminated Emp</span>,
+      text: <span className="text-[1rem] font-semibold">E- Separation</span>,
       icon: <MdOutlineBlock className="text-2xl" />,
       path: "/employee/terminated",
       element: <TerminatedEmp />,
@@ -234,6 +247,14 @@ const Sidebar = () => {
       icon: <FiAlertTriangle className="text-2xl" />,
       path: "/view/employee/show-cause/notice",
       element: <ShowCauseNotices />,
+    },
+    {
+      text: (
+        <span className="text-[1rem] font-semibold">HR Announcements</span>
+      ),
+      icon: <MdOutlineStickyNote2 className="text-2xl" />,
+      path: "/hr/announcements",
+      element: <HRAnnouncements />,
     },
     {
       // text: (
@@ -397,7 +418,7 @@ const Sidebar = () => {
             <span className="text-base">Logout</span>
           </button>
 
-          <style jsx>{`
+          <style>{`
             @keyframes gradientAnimation {
               0% {
                 background-position: 0% 50%;

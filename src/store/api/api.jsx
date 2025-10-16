@@ -1,8 +1,17 @@
 //api.jsx
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+const envOriginRaw = (import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL || '')
+  .trim();
+// Normalize: remove trailing slashes and any trailing /api or /api/v1 to avoid double prefix
+const normalizedOrigin = envOriginRaw
+  .replace(/\/+$/, '')
+  .replace(/\/api(?:\/v1)?$/i, '');
+
+const baseUrl = normalizedOrigin ? `${normalizedOrigin}/api/v1` : '/api/v1'
+
 const rawBaseQuery = fetchBaseQuery({ 
-    baseUrl: import.meta.env.VITE_BACKEND_URL,
+    baseUrl,
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         const token = document.cookie
@@ -22,19 +31,7 @@ const baseQueryWithAdminScope = async (args, api, extraOptions) => {
     const role = state?.Auth?.role;
     const selectedAdminId = state?.SuperAdminScope?.selectedAdminId;
 
-    if (role === 'SuperAdmin' && selectedAdminId && typeof args === 'object') {
-        // Only append to targeted endpoints
-        const shouldScope = typeof args.url === 'string' && (
-            args.url.startsWith('/empdata') ||
-            args.url.startsWith('/gatepass') ||
-            args.url.startsWith('/departments')
-        );
-        if (shouldScope) {
-            const hasQuery = args.url.includes('?');
-            const sep = hasQuery ? '&' : '?';
-            args = { ...args, url: `${args.url}${sep}adminId=${selectedAdminId}` };
-        }
-    }
+    // Announcements are strictly per Admin; do not scope by SuperAdmin here
     return rawBaseQuery(args, api, extraOptions);
 };
 
@@ -43,7 +40,7 @@ export const Api = createApi({
     baseQuery: baseQueryWithAdminScope,
     endpoints: (builder) => ({
     }),
-    tagTypes: ["Auth","Employee", "Project" , "User","Department", "LeaveRequest", "Gatepass"],
+    tagTypes: ["Auth","Employee", "Project" , "User","Department","Departments", "LeaveRequest", "Gatepass", "Designation", "Announcements"],
 })
 
 // Export the generated hooks

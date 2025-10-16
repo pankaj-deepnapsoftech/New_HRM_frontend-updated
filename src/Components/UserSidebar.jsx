@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { FaHome, FaFingerprint, FaFileContract, FaDoorOpen } from "react-icons/fa";
+import { FaHome, FaFingerprint, FaFileContract, FaDoorOpen, FaClock, FaExclamationTriangle } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { RiMoneyRupeeCircleFill, RiSecurePaymentLine } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
@@ -16,6 +16,8 @@ import UserDashboard from "@/pages/UserPanel/UserDashboard";
 import { GiLaptop } from "react-icons/gi";
 import { TbReportMoney } from "react-icons/tb";
 import UserAttendance from "@/pages/UserPanel/UserAttendence";
+import UserAttendanceCheck from "@/pages/UserPanel/UserAttendanceCheck";
+import AttendanceRegularization from "@/pages/UserPanel/AttendanceRegularization";
 import UserLeaveRequest from "@/pages/UserPanel/UserLeaveRequest";
 import UserDocument from "@/pages/UserPanel/UserDocument";
 import AdvanceMoneyRequest from "@/pages/UserPanel/AdvanceMoneyRequest";
@@ -23,6 +25,7 @@ import UserPaySlip from "@/pages/UserPanel/UserPaySlip";
 import UserAssets from "@/pages/UserPanel/UserAssets";
 import UserGatepass from "@/pages/UserPanel/UserGatepass";
 import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";
+import UserAnnouncements from "@/pages/UserPanel/UserAnnouncements";
 import { browserName, isMobile } from "react-device-detect";
 
 const UserSidebar = ({ showSidebar, setShowSidebar }) => {
@@ -72,6 +75,18 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       element: <UserDashboard />,
     },
     {
+      text: <span className="text-[1rem] font-semibold">Check In/Out</span>,
+      icon: <FaClock className="text-2xl" />,
+      path: "/user/attendance-check",
+      element: <UserAttendanceCheck />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Attendance Regularization</span>,
+      icon: <FaExclamationTriangle className="text-2xl" />,
+      path: "/user/attendance-regularization",
+      element: <AttendanceRegularization />,
+    },
+    {
       text: <span className="text-[1rem] font-semibold">View Attendance</span>,
       icon: <FaFingerprint className="text-2xl" />,
       path: "/user/attendance",
@@ -119,6 +134,12 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       icon: <FaFileContract className="text-2xl" />,
       path: "/user/terms-conditions",
       element: <TermsAndConditions />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Announcements</span>,
+      icon: <FaHome className="text-2xl" />,
+      path: "/user/announcements",
+      element: <UserAnnouncements />,
     },
   ];
 

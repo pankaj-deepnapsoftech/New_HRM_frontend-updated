@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaFileContract, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useGetActiveAnnouncementsQuery } from "@/service/Announcements.services";
 import { useSubmitTermsAndConditionsMutation, useGetEmployeeTermsStatusQuery } from "@/service/TermsAndConditions.services";
 import { useSelector } from "react-redux";
 
@@ -12,6 +13,7 @@ const TermsAndConditions = () => {
   const { data: myTerms, isLoading: termsLoading } = useGetEmployeeTermsStatusQuery(employeeCode, {
     skip: !employeeCode,
   });
+  const { data: activeAnnouncements } = useGetActiveAnnouncementsQuery();
 
   const handleSubmit = async () => {
     if (!isAgreed) {
@@ -124,6 +126,20 @@ const TermsAndConditions = () => {
             </div>
           </div>
         </div>
+
+        {/* HR Announcements - shown below Terms & Conditions */}
+        {activeAnnouncements?.data?.length > 0 && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6">
+            <h3 className="text-lg font-semibold text-yellow-900 mb-3">HR Announcements</h3>
+            <div className="space-y-2">
+              {activeAnnouncements.data.map((a) => (
+                <div key={a._id} className="text-yellow-900">
+                  • {a.message}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Agreement Section */}
         <div className="bg-white rounded-xl shadow-lg p-8">

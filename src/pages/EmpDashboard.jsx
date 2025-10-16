@@ -5,7 +5,11 @@ import {
   useUpdateEmpDataMutation,
   useDeleteEmpDataMutation,
   useCreateCredentialsMutation,
+  useSendEmailOtpMutation,
+  useVerifyEmailOtpMutation,
 } from "@/service/EmpData.services";
+import { useGetActiveDesignationsQuery } from "@/service/Designation.services";
+import { useGetActiveAnnouncementsQuery } from "@/service/Announcements.services";
 import { FaEye, FaEyeSlash, FaEdit, FaTrash } from "react-icons/fa";
 import { IoIosClose, IoMdLogIn } from "react-icons/io";
 import { toast } from "react-toastify";
@@ -22,6 +26,10 @@ const EmpDashboard = () => {
   const [updateEmpData] = useUpdateEmpDataMutation();
   const [deleteEmpData] = useDeleteEmpDataMutation();
   const [createCredentials] = useCreateCredentialsMutation();
+  const [sendEmailOtp] = useSendEmailOtpMutation();
+  const [verifyEmailOtp] = useVerifyEmailOtpMutation();
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
@@ -41,8 +49,10 @@ const EmpDashboard = () => {
   const [showPwd, setShowPwd] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const isValidEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "");
-  const { data: departmentData } = useGetAllDepartmentQuery()
+  const { data: departmentData } = useGetAllDepartmentQuery();
+  const { data: designationData } = useGetActiveDesignationsQuery();
   const employees = data?.data || [];
+  const { data: announcementsData } = useGetActiveAnnouncementsQuery();
   const [selectedDepartment, setSelectedDepartment] = useState('');
    
   const departmentMap = departmentData?.data?.reduce((acc, curr) => {
@@ -127,6 +137,15 @@ const EmpDashboard = () => {
 
   return (
     <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+      {announcementsData?.data?.length > 0 && (
+        <div className="mb-4 space-y-2">
+          {announcementsData.data.map((a) => (
+            <div key={a._id} className="bg-yellow-50 border border-yellow-200 text-yellow-900 px-4 py-2 rounded">
+              {a.message}
+            </div>
+          ))}
+        </div>
+      )}
       <div className="bg-gray-300 text-center py-4 my-8 rounded-md shadow-md shadow-gray-400">
         <h2 className="text-xl font-[500]">Employee Dashboard</h2>
       </div>
@@ -159,6 +178,9 @@ const EmpDashboard = () => {
             setShowModal(true);
             setEditMode(false);
             setSelectedEmployee(null);
+            // Reset OTP state on open
+            setEmailVerified(false);
+            setOtpCode("");
           }}
           className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-5 py-3 rounded-lg shadow-lg hover:scale-105 transition transform font-semibold"
         >
@@ -276,6 +298,9 @@ const EmpDashboard = () => {
               onClick={() => {
                 setShowModal(false);
                 setEditMode(false);
+                // Reset OTP state on close
+                setEmailVerified(false);
+                setOtpCode("");
                 formik.resetForm();
               }}
               className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
@@ -286,7 +311,17 @@ const EmpDashboard = () => {
             <h3 className="text-lg font-[600] mb-4">
               {editMode ? "Edit Employee" : "Add New Employee"}
             </h3>
-            <form onSubmit={formik.handleSubmit} className="space-y-3">
+            <form onSubmit={async (e) => {
+              e.preventDefault();
+              if (!emailVerified) {
+                toast.error("Please verify email via OTP before submitting");
+                return;
+              }
+              await formik.handleSubmit(e);
+              // Reset OTP state after submit
+              setEmailVerified(false);
+              setOtpCode("");
+            }} className="space-y-3">
               <div>
                 <input
                   type="text"
@@ -304,19 +339,68 @@ const EmpDashboard = () => {
               </div>
 
               <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formik.values.email}
+                    onChange={(e) => { setEmailVerified(false); formik.handleChange(e); }}
+                    className="w-full p-3 rounded-lg border border-gray-300"
+                  />
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        if (!isValidEmail(formik.values.email)) {
+                          toast.error("Enter valid email first");
+                          return;
+                        }
+                        await sendEmailOtp(formik.values.email).unwrap();
+                        toast.success("OTP sent to email");
+                      } catch (err) {
+                        toast.error(err?.data?.message || "Failed to send OTP");
+                      }
+                    }}
+                    className="px-4 py-2 rounded bg-indigo-600 text-white whitespace-nowrap"
+                  >
+                    Send OTP
+                  </button>
+                </div>
                 {formik.touched.email && formik.errors.email && (
                   <div className="text-red-500 text-sm">
                     {formik.errors.email}
                   </div>
                 )}
+                <div className="flex gap-2 mt-2">
+                  <input
+                    type="text"
+                    placeholder="Enter OTP"
+                    value={otpCode}
+                    onChange={(e) => setOtpCode(e.target.value)}
+                    className="w-full p-3 rounded-lg border border-gray-300"
+                  />
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        if (!isValidEmail(formik.values.email) || !otpCode.trim()) {
+                          toast.error("Enter email and OTP");
+                          return;
+                        }
+                        await verifyEmailOtp({ email: formik.values.email, code: otpCode.trim() }).unwrap();
+                        setEmailVerified(true);
+                        toast.success("Email verified");
+                      } catch (err) {
+                        setEmailVerified(false);
+                        toast.error(err?.data?.message || "Invalid/expired OTP");
+                      }
+                    }}
+                    className={`px-4 py-2 rounded ${emailVerified ? 'bg-green-600' : 'bg-indigo-600'} text-white whitespace-nowrap`}
+                  >
+                    {emailVerified ? 'Verified' : 'Verify'}
+                  </button>
+                </div>
               </div>
 
               <div>
@@ -401,16 +485,30 @@ const EmpDashboard = () => {
               </div>
 
               <div>
-                <input
-                  type="text"
+                <label
+                  htmlFor="designation"
+                  className="block mb-1 font-medium text-gray-700"
+                >
+                  Designation
+                </label>
+                <select
                   name="designation"
-                  placeholder="Designation"
+                  id="designation"
                   value={formik.values.designation}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="w-full p-3 rounded-lg border border-gray-300"
-                />
+                >
+                  <option value="">Select Designation</option>
+                  {designationData?.data?.map((designation) => (
+                    <option key={designation._id} value={designation.designationName}>
+                      {designation.designationName}
+                    </option>
+                  ))}
+                </select>
+
                 {formik.touched.designation && formik.errors.designation && (
-                  <div className="text-red-500 text-sm">
+                  <div className="text-red-500 text-sm mt-1">
                     {formik.errors.designation}
                   </div>
                 )}

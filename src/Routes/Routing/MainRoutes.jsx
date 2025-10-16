@@ -10,6 +10,7 @@ import GatepassApprovals from "@/pages/GatepassAproval";
 import Projects from "@/pages/Projects";
 import SalaryManagement from "@/pages/SalaryManagement";
 import ShowCauseNotices from "@/pages/ShowCauseNotices";
+import HRAnnouncements from "@/pages/HRAnnouncements";
 import TerminatedEmp from "@/pages/TerminatedEmp";
 import PayrollSummary from "@/pages/PayrollSummary";
 import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
@@ -23,6 +24,8 @@ import Departments from "@/pages/Departments";
 import MainDashboardPage from "@/pages/MainDashboardPage";
 import EmployeesReports from "@/pages/EmployeesReports";
 import HRDashboard from "@/pages/HRDashboard";
+import AdminAttendanceRegularization from "@/pages/AdminAttendanceRegularization";
+import DesignationManagement from "@/pages/DesignationManagement";
 
 export const MainRoutes = [
   {
@@ -59,6 +62,10 @@ export const MainRoutes = [
     element: <Departments />,
   },
   {
+    path: "/designations",
+    element: <AdminRouteGuard><DesignationManagement /></AdminRouteGuard>,
+  },
+  {
     path: "/projects",
     element: <AdminRouteGuard><Projects /></AdminRouteGuard>,
   },
@@ -91,6 +98,10 @@ export const MainRoutes = [
     element: <AdminRouteGuard><ShowCauseNotices /></AdminRouteGuard>,
   },
   {
+    path: "/hr/announcements",
+    element: <AdminRouteGuard><HRAnnouncements /></AdminRouteGuard>,
+  },
+  {
     path: "/employee/payrollSummary",
     element: <AdminRouteGuard><PayrollSummary /></AdminRouteGuard>,
   },
@@ -113,6 +124,14 @@ export const MainRoutes = [
   {
     path: "/hrdashboard",
     element: <AdminRouteGuard><HRDashboard /></AdminRouteGuard>,
+  },
+  {
+    path: "/admin/attendance-regularization",
+    element: <AdminRouteGuard><AdminAttendanceRegularization /></AdminRouteGuard>,
+  },
+  {
+    path: "/designations",
+    element: <AdminRouteGuard><DesignationManagement /></AdminRouteGuard>,
   },
   
 ];
