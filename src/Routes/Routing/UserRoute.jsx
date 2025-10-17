@@ -11,6 +11,7 @@ import UserAssets from "@/pages/UserPanel/UserAssets";
 import UserGatepass from "@/pages/UserPanel/UserGatepass";
 import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";
 import UserAnnouncements from "@/pages/UserPanel/UserAnnouncements";
+import UserResignationRequest from "@/pages/UserPanel/UserResignationRequest";
 
 export const UserRoute = [
   {
@@ -64,5 +65,9 @@ export const UserRoute = [
 {
     path:"/user/announcements",
     element:<UserAnnouncements/>
+},
+{
+    path:"/user/resignation-request",
+    element:<UserResignationRequest/>
 }
 ];

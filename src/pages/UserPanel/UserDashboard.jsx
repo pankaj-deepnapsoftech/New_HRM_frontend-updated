@@ -9,6 +9,7 @@ import {
   // FaExclamationTriangle,
   FaDoorOpen,
   FaClock,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { FcLeave } from "react-icons/fc";
 import Calendar from "react-calendar";
@@ -28,6 +29,7 @@ const actions = [
   { label: "View Assets", icon: <FaHome />, path: "/user/assets", color: "bg-red-100 text-red-600" },
   // { label: "Notes", icon: <FaStickyNote />, path: "/user/notes", color: "bg-pink-100 text-pink-600" },
   { label: "Request Gate Pass", icon: <FaDoorOpen />, path: "/user/gate-pass", color: "bg-sky-100 text-sky-600" },
+  { label: "Resignation Request", icon: <FaSignOutAlt />, path: "/user/resignation-request", color: "bg-red-100 text-red-600" },
   // { label: "Show Cause Notice", icon: <FaExclamationTriangle />, path: "/user/show-cause", color: "bg-rose-100 text-rose-600" },
 ];
 

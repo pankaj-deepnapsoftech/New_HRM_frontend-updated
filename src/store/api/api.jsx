@@ -40,7 +40,7 @@ export const Api = createApi({
     baseQuery: baseQueryWithAdminScope,
     endpoints: (builder) => ({
     }),
-    tagTypes: ["Auth","Employee", "Project" , "User","Department","Departments", "LeaveRequest", "Gatepass", "Designation", "Announcements"],
+    tagTypes: ["Auth","Employee", "Project" , "User","Department","Departments", "LeaveRequest", "Gatepass", "Designation", "Announcements", "ResignationRequest"],
 })
 
 // Export the generated hooks

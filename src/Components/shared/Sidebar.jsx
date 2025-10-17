@@ -55,6 +55,7 @@ import AllLeaves from "@/pages/AllLeaves";
 import Departments from "@/pages/Departments";
 import HRDashboard from "@/pages/HRDashboard";
 import AdminAttendanceRegularization from "@/pages/AdminAttendanceRegularization";
+import AdminESeparation from "@/pages/AdminESeparation";
 
 const Sidebar = () => {
   const [attendanceOpen, setAttendanceOpen] = useState(false);
@@ -229,8 +230,8 @@ const Sidebar = () => {
     {
       text: <span className="text-[1rem] font-semibold">E- Separation</span>,
       icon: <MdOutlineBlock className="text-2xl" />,
-      path: "/employee/terminated",
-      element: <TerminatedEmp />,
+      path: "/admin/e-separation",
+      element: <AdminESeparation />,
     },
     {
       text: (

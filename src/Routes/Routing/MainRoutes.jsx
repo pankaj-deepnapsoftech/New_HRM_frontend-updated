@@ -26,6 +26,7 @@ import EmployeesReports from "@/pages/EmployeesReports";
 import HRDashboard from "@/pages/HRDashboard";
 import AdminAttendanceRegularization from "@/pages/AdminAttendanceRegularization";
 import DesignationManagement from "@/pages/DesignationManagement";
+import AdminESeparation from "@/pages/AdminESeparation";
 
 export const MainRoutes = [
   {
@@ -132,6 +133,10 @@ export const MainRoutes = [
   {
     path: "/designations",
     element: <AdminRouteGuard><DesignationManagement /></AdminRouteGuard>,
+  },
+  {
+    path: "/admin/e-separation",
+    element: <AdminRouteGuard><AdminESeparation /></AdminRouteGuard>,
   },
   
 ];
