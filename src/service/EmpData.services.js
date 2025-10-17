@@ -131,6 +131,14 @@ export const empApi = Api.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getTodayBirthdays: builder.query({
+      query: () => ({
+        url: '/empdata/birthdays/today',
+        method: 'GET',
+      }),
+      providesTags: ['Employee'],
+    }),
     terminateEmployee: builder.mutation({
       query: ({ id }) => ({
         url: `/empdata/${id}/terminate`,
@@ -182,5 +190,6 @@ export const {
   useGetAllTerminatedEmployeesQuery,
   useDeleteTerminatedEmployeeMutation,
   useGetEmpLeaveSummeryQuery,
-  useGetEmpAttendenceByIdQuery
+  useGetEmpAttendenceByIdQuery,
+  useGetTodayBirthdaysQuery
 } = empApi;

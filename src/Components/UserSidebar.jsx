@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { FaHome, FaFingerprint, FaFileContract, FaDoorOpen, FaClock, FaExclamationTriangle } from "react-icons/fa";
+import { FaHome, FaFingerprint, FaFileContract, FaDoorOpen, FaClock, FaExclamationTriangle, FaSignOutAlt } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { RiMoneyRupeeCircleFill, RiSecurePaymentLine } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
@@ -134,6 +134,11 @@ const UserSidebar = ({ showSidebar, setShowSidebar }) => {
       icon: <FaFileContract className="text-2xl" />,
       path: "/user/terms-conditions",
       element: <TermsAndConditions />,
+    },
+    {
+      text: <span className="text-[1rem] font-semibold">Resignation Request</span>,
+      icon: <FaSignOutAlt className="text-2xl" />,
+      path: "/user/resignation-request",
     },
     {
       text: <span className="text-[1rem] font-semibold">Announcements</span>,

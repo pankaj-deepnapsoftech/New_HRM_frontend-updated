@@ -92,6 +92,7 @@ const EmpDashboard = () => {
       empCode: selectedEmployee?.empCode || "",
       salary: selectedEmployee?.salary || "",
       date: selectedEmployee?.date?.split("T")[0] || "",
+      dob: selectedEmployee?.dob?.split("T")[0] || "",
       location: selectedEmployee?.location || "",
       email: selectedEmployee?.email || "",
       sub_department: selectedEmployee?.sub_department || ""
@@ -136,7 +137,7 @@ const EmpDashboard = () => {
   if (isLoading) return <p className="text-center py-10">Loading employees…</p>;
 
   return (
-    <div className="p-6 bg-gray-50 rounded shadow-md max-w-5xl mx-auto mt-10">
+    <div className="p-4 md:p-6 bg-gray-50 rounded shadow-md max-w-7xl mx-auto mt-4 md:mt-10">
       {announcementsData?.data?.length > 0 && (
         <div className="mb-4 space-y-2">
           {announcementsData.data.map((a) => (
@@ -146,17 +147,17 @@ const EmpDashboard = () => {
           ))}
         </div>
       )}
-      <div className="bg-gray-300 text-center py-4 my-8 rounded-md shadow-md shadow-gray-400">
-        <h2 className="text-xl font-[500]">Employee Dashboard</h2>
+      <div className="bg-gray-300 text-center py-4 my-4 md:my-8 rounded-md shadow-md shadow-gray-400">
+        <h2 className="text-lg md:text-xl font-[500]">Employee Dashboard</h2>
       </div>
-      <div className="flex justify-between mb-4 gap-4 flex-wrap">
-        <div className="flex gap-4 flex-wrap flex-1">
+      <div className="flex flex-col lg:flex-row justify-between mb-4 gap-4">
+        <div className="flex flex-col sm:flex-row gap-4 flex-1">
           <input
             type="text"
             placeholder="Search Name, Emp Code, Dept, Email..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border border-gray-300 p-2 rounded-lg flex-1 min-w-[250px] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="border border-gray-300 p-2 rounded-lg flex-1 min-w-0 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
           />
 
           <select
@@ -182,34 +183,35 @@ const EmpDashboard = () => {
             setEmailVerified(false);
             setOtpCode("");
           }}
-          className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-5 py-3 rounded-lg shadow-lg hover:scale-105 transition transform font-semibold"
+          className="bg-gradient-to-br from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-4 py-3 rounded-lg shadow-lg hover:scale-105 transition transform font-semibold text-sm sm:text-base w-full sm:w-auto"
         >
-          ADD EMPLOYEE DETAILS
+          <span className="hidden sm:inline">ADD EMPLOYEE DETAILS</span>
+          <span className="sm:hidden">ADD EMPLOYEE</span>
         </button>
       </div>
       <div className="overflow-x-auto shadow-lg rounded">
         <table className="w-full min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-200 whitespace-nowrap text-gray-700 uppercase font-semibold">
             <tr>
-              <th className="p-3 text-left">Name</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Department</th>
-              <th className="p-4 text-left whitespace-nowrap">
+              <th className="p-2 md:p-3 text-left">Name</th>
+              <th className="p-2 md:p-3 text-left hidden md:table-cell">Email</th>
+              <th className="p-2 md:p-3 text-left">Department</th>
+              <th className="p-2 md:p-3 text-left hidden lg:table-cell whitespace-nowrap">
                 Sub Department
               </th>
-              <th className="p-3 text-left">Designation</th>
-              <th className="p-3 text-left">Emp Code</th>
-              <th className="p-3 text-left">Salary</th>
-              <th className="p-3 text-left">Location</th>
-              <th className="p-3 text-left">Date</th>
-              <th className="p-3 text-left">Actions</th>
-              <th className="p-3 text-left">Login</th>
+              <th className="p-2 md:p-3 text-left hidden sm:table-cell">Designation</th>
+              <th className="p-2 md:p-3 text-left">Emp Code</th>
+              <th className="p-2 md:p-3 text-left hidden lg:table-cell">Salary</th>
+              <th className="p-2 md:p-3 text-left hidden md:table-cell">Location</th>
+              <th className="p-2 md:p-3 text-left hidden lg:table-cell">Date</th>
+              <th className="p-2 md:p-3 text-left">Actions</th>
+              <th className="p-2 md:p-3 text-left hidden sm:table-cell">Login</th>
             </tr>
           </thead>
           <tbody>
             {filteredEmployees.length === 0 ? (
               <tr>
-                <td colSpan="10" className="text-center py-8 text-gray-500">
+                <td colSpan="11" className="text-center py-8 text-gray-500">
                   {selectedDepartment
                     ? "No employees found matching your filters"
                     : "No employees found"}
@@ -219,56 +221,70 @@ const EmpDashboard = () => {
               filteredEmployees.map((emp, idx) => (
                 <tr
                   key={emp._id}
-                  className={`border-b whitespace-nowrap  border-gray-200 ${
+                  className={`border-b border-gray-200 ${
                     idx % 2 === 0 ? "bg-white" : "bg-gray-100"
                   }`}
                 >
-                  <td className="pl-4 py-2 px-2 text-[16px]">{emp.fname}</td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
+                  <td className="p-2 md:p-3 text-sm md:text-base font-medium">
+                    <div className="flex flex-col">
+                      <span>{emp.fname}</span>
+                      <span className="text-xs text-gray-500 md:hidden">{emp.empCode}</span>
+                    </div>
+                  </td>
+                  <td className="p-2 md:p-3 text-sm hidden md:table-cell">
                     {emp.email || "N/A"}
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
-                    {emp.department}
+                  <td className="p-2 md:p-3 text-sm">
+                    <div className="flex flex-col">
+                      <span>{emp.department}</span>
+                      <span className="text-xs text-gray-500 sm:hidden">{emp.designation}</span>
+                    </div>
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
+                  <td className="p-2 md:p-3 text-sm hidden lg:table-cell">
                     {emp.sub_department}
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
+                  <td className="p-2 md:p-3 text-sm hidden sm:table-cell">
                     {emp.designation}
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">{emp.empCode}</td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">{emp.salary}</td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
+                  <td className="p-2 md:p-3 text-sm hidden sm:table-cell">
+                    {emp.empCode}
+                  </td>
+                  <td className="p-2 md:p-3 text-sm hidden lg:table-cell">
+                    {emp.salary}
+                  </td>
+                  <td className="p-2 md:p-3 text-sm hidden md:table-cell">
                     {emp.location || "NA"}
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
+                  <td className="p-2 md:p-3 text-sm hidden lg:table-cell">
                     {new Date(emp.date).toLocaleDateString()}
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px] flex gap-3 ">
-                    <FaEye
-                      onClick={() => {
-                        setSelectedEmployee(emp);
-                        setShowViewModal(true);
-                      }}
-                      className="text-blue-500 cursor-pointer hover:scale-110 transition-transform"
-                      title="View"
-                    />
-                    <FaEdit
-                      onClick={() => {
-                        setSelectedEmployee(emp);
-                        setEditMode(true);
-                        setShowModal(true);
-                      }}
-                      className="text-green-500 cursor-pointer hover:scale-110 transition-transform"
-                      title="Edit"
-                    />
-                    <FaTrash
-                      onClick={() => handleDelete(emp._id)}
-                      className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
-                      title="Delete"
-                    />
+                  <td className="p-2 md:p-3 text-sm">
+                    <div className="flex gap-2 md:gap-3">
+                      <FaEye
+                        onClick={() => {
+                          setSelectedEmployee(emp);
+                          setShowViewModal(true);
+                        }}
+                        className="text-blue-500 cursor-pointer hover:scale-110 transition-transform text-sm md:text-base"
+                        title="View"
+                      />
+                      <FaEdit
+                        onClick={() => {
+                          setSelectedEmployee(emp);
+                          setEditMode(true);
+                          setShowModal(true);
+                        }}
+                        className="text-green-500 cursor-pointer hover:scale-110 transition-transform text-sm md:text-base"
+                        title="Edit"
+                      />
+                      <FaTrash
+                        onClick={() => handleDelete(emp._id)}
+                        className="text-red-500 cursor-pointer hover:scale-110 transition-transform text-sm md:text-base"
+                        title="Delete"
+                      />
+                    </div>
                   </td>
-                  <td className="pl-4 py-2 px-2 text-[16px]">
+                  <td className="p-2 md:p-3 text-sm hidden sm:table-cell">
                     <button
                       onClick={() => {
                         setCredModal(emp);
@@ -279,10 +295,11 @@ const EmpDashboard = () => {
                           phone: emp.phone || "",
                         });
                       }}
-                      className="inline-flex items-center gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-3 py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition"
+                      className="inline-flex items-center gap-1 md:gap-2 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white px-2 md:px-3 py-1 md:py-1.5 rounded-md shadow hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition text-xs md:text-sm"
                       title="Create login credentials"
                     >
-                      <IoMdLogIn />
+                      <IoMdLogIn className="text-xs md:text-sm" />
+                      <span className="hidden md:inline">Login</span>
                     </button>
                   </td>
                 </tr>
@@ -292,8 +309,8 @@ const EmpDashboard = () => {
         </table>
       </div>{" "}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white p-6 rounded-md w-[80%] max-w-xl shadow-md relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white p-4 md:p-6 rounded-md w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-md relative">
             <button
               onClick={() => {
                 setShowModal(false);
@@ -308,7 +325,7 @@ const EmpDashboard = () => {
               <IoIosClose size={32} />
             </button>
 
-            <h3 className="text-lg font-[600] mb-4">
+            <h3 className="text-lg md:text-xl font-[600] mb-4">
               {editMode ? "Edit Employee" : "Add New Employee"}
             </h3>
             <form onSubmit={async (e) => {
@@ -329,7 +346,7 @@ const EmpDashboard = () => {
                   placeholder="Full Name"
                   value={formik.values.fname}
                   onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 />
                 {formik.touched.fname && formik.errors.fname && (
                   <div className="text-red-500 text-sm">
@@ -346,7 +363,7 @@ const EmpDashboard = () => {
                     placeholder="Email"
                     value={formik.values.email}
                     onChange={(e) => { setEmailVerified(false); formik.handleChange(e); }}
-                    className="w-full p-3 rounded-lg border border-gray-300"
+                    className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                   />
                   <button
                     type="button"
@@ -378,7 +395,7 @@ const EmpDashboard = () => {
                     placeholder="Enter OTP"
                     value={otpCode}
                     onChange={(e) => setOtpCode(e.target.value)}
-                    className="w-full p-3 rounded-lg border border-gray-300"
+                    className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                   />
                   <button
                     type="button"
@@ -410,7 +427,7 @@ const EmpDashboard = () => {
                   placeholder="Enter your number"
                   value={formik.values.phoneNumber}
                   onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 />
                 {formik.touched.phoneNumber && formik.errors.phoneNumber && (
                   <div className="text-red-500 text-sm">
@@ -435,7 +452,7 @@ const EmpDashboard = () => {
                     formik.setFieldValue("sub_department", "");
                   }}
                   onBlur={formik.handleBlur}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 >
                   <option value="">Select Department</option>
                   {uniqueDepartments.map((dept, index) => (
@@ -466,7 +483,7 @@ const EmpDashboard = () => {
                   value={formik.values.sub_department}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                   disabled={!formik.values.department}
                 >
                   <option value="">Select Sub Department</option>
@@ -497,7 +514,7 @@ const EmpDashboard = () => {
                   value={formik.values.designation}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 >
                   <option value="">Select Designation</option>
                   {designationData?.data?.map((designation) => (
@@ -521,7 +538,7 @@ const EmpDashboard = () => {
                   placeholder="Employee Code"
                   value={formik.values.empCode}
                   onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 />
                 {formik.touched.empCode && formik.errors.empCode && (
                   <div className="text-red-500 text-sm">
@@ -537,7 +554,7 @@ const EmpDashboard = () => {
                   placeholder="Salary"
                   value={formik.values.salary}
                   onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 />
                 {formik.touched.salary && formik.errors.salary && (
                   <div className="text-red-500 text-sm">
@@ -553,7 +570,7 @@ const EmpDashboard = () => {
                   placeholder="Location"
                   value={formik.values.location}
                   onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 />
                 {formik.touched.location && formik.errors.location && (
                   <div className="text-red-500 text-sm">
@@ -568,7 +585,7 @@ const EmpDashboard = () => {
                   name="date"
                   value={formik.values.date}
                   onChange={formik.handleChange}
-                  className="w-full p-3 rounded-lg border border-gray-300"
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
                 />
                 {formik.touched.date && formik.errors.date && (
                   <div className="text-red-500 text-sm">
@@ -577,12 +594,45 @@ const EmpDashboard = () => {
                 )}
               </div>
 
-              <div className="flex justify-center">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Date of Birth *
+                </label>
+                <input
+                  type="date"
+                  name="dob"
+                  value={formik.values.dob}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
+                  required
+                />
+                {formik.touched.dob && formik.errors.dob && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.dob}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col sm:flex-row justify-center gap-3">
                 <button
                   type="submit"
-                  className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-4 py-2 rounded-lg shadow-md"
+                  className="bg-gradient-to-br from-slate-400 to bg-slate-600 hover:scale-105 text-white px-6 py-3 rounded-lg shadow-md font-medium text-sm md:text-base"
                 >
-                  {editMode ? "Update" : "Submit"}
+                  {editMode ? "Update Employee" : "Add Employee"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowModal(false);
+                    setEditMode(false);
+                    setEmailVerified(false);
+                    setOtpCode("");
+                    formik.resetForm();
+                  }}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg shadow-md font-medium text-sm md:text-base"
+                >
+                  Cancel
                 </button>
               </div>
             </form>
@@ -590,8 +640,8 @@ const EmpDashboard = () => {
         </div>
       )}
       {showViewModal && selectedEmployee && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white p-6 rounded-md w-[90%] max-w-xl shadow-md relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white p-4 md:p-6 rounded-md w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-md relative">
             <button
               onClick={() => setShowViewModal(false)}
               className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
@@ -599,8 +649,8 @@ const EmpDashboard = () => {
               <IoIosClose size={32} />
             </button>
 
-            <h3 className="text-lg font-bold mb-4">Employee Details</h3>
-            <div className="space-y-2 text-sm">
+            <h3 className="text-lg md:text-xl font-bold mb-4">Employee Details</h3>
+            <div className="space-y-2 text-sm md:text-base">
               {[
                 { label: "Name", value: selectedEmployee.fname },
                 { label: "Department", value: selectedEmployee.department },
@@ -609,7 +659,11 @@ const EmpDashboard = () => {
                 { label: "Salary", value: selectedEmployee.salary },
                 { label: "Location", value: selectedEmployee.location || "NA" },
                 {
-                  label: "Date",
+                  label: "Date of Birth",
+                  value: selectedEmployee.dob ? new Date(selectedEmployee.dob).toLocaleDateString() : "Not provided",
+                },
+                {
+                  label: "Joining Date",
                   value: new Date(selectedEmployee.date).toLocaleDateString(),
                 },
               ].map(({ label, value }) => (
@@ -623,15 +677,15 @@ const EmpDashboard = () => {
         </div>
       )}
       {credModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white p-6 rounded-md w-[90%] max-w-md shadow-md relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white p-4 md:p-6 rounded-md w-full max-w-md shadow-md relative">
             <button
               onClick={() => setCredModal(null)}
               className="absolute top-4 right-4 text-gray-500 cursor-pointer hover:text-red-500 transition"
             >
               <IoIosClose size={32} />
             </button>
-            <h3 className="text-lg font-bold mb-4">Create Login</h3>
+            <h3 className="text-lg md:text-xl font-bold mb-4">Create Login</h3>
             <div className="space-y-3">
               <input
                 type="email"
@@ -640,7 +694,7 @@ const EmpDashboard = () => {
                   setCredForm((p) => ({ ...p, email: e.target.value }))
                 }
                 placeholder="Email"
-                className="w-full p-3 rounded-lg border border-gray-300"
+                className="w-full p-2 md:p-3 rounded-lg border border-gray-300 text-sm md:text-base"
               />
               <div className="relative">
                 <input
@@ -663,10 +717,10 @@ const EmpDashboard = () => {
                 </button>
               </div>
             </div>
-            <div className="flex justify-end gap-3 mt-5">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 mt-5">
               <button
                 onClick={() => setCredModal(null)}
-                className="px-4 py-2 rounded border border-gray-300"
+                className="px-4 py-2 rounded border border-gray-300 text-sm md:text-base"
               >
                 Cancel
               </button>
@@ -704,7 +758,7 @@ const EmpDashboard = () => {
                     toast.error(msg);
                   }
                 }}
-                className="px-4 py-2 rounded bg-indigo-600 text-white"
+                className="px-4 py-2 rounded bg-indigo-600 text-white text-sm md:text-base"
               >
                 Create
               </button>

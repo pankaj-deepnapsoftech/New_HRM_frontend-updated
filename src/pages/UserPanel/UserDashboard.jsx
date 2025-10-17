@@ -16,6 +16,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import BirthdayNotification from "../../Components/BirthdayNotification";
 
 const actions = [
   { label: "Attendance Check", icon: <FaCalendarAlt />, path: "/user/attendance-check", color: "bg-blue-100 text-blue-600" },
@@ -54,6 +55,9 @@ const UserDashboard = () => {
           View Attendance Calendar
         </button>
       </div>
+
+      {/* Birthday Notification */}
+      <BirthdayNotification />
 
       {/* Calendar Modal */}
       {showCalendar && (
