@@ -95,6 +95,8 @@ export default function SalaryManagement() {
         params.set("absentDays", String(metrics.absentDays));
       if (typeof metrics?.calculatedSalary === "number")
         params.set("calculatedSalary", String(metrics.calculatedSalary));
+      // Add month for month-specific benefits
+      if (selectedMonth) params.set("month", selectedMonth);
       const urlReq =
         `${API_BASE}/payslips/${empDataId}/download` +
         (params.toString() ? `?${params.toString()}` : "");

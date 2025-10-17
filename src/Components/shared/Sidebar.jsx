@@ -50,6 +50,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import DesignationManagement from "@/pages/DesignationManagement";
 import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
+import BenefitsManagement from "@/pages/BenefitsManagement";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
 import Departments from "@/pages/Departments";
@@ -110,11 +111,17 @@ const Sidebar = () => {
       icon: <FaHome className="text-2xl" />,
       path: "/",
     },
-    ...(Auth.role === 'SuperAdmin' ? [{
-      text: <span className="text-[1rem] font-semibold">Super Admin</span>,
-      icon: <FaCrown className="text-2xl" />,
-      path: "/superadmin-dashboard",
-    }] : []),
+    ...(Auth.role === "SuperAdmin"
+      ? [
+          {
+            text: (
+              <span className="text-[1rem] font-semibold">Super Admin</span>
+            ),
+            icon: <FaCrown className="text-2xl" />,
+            path: "/superadmin-dashboard",
+          },
+        ]
+      : []),
     {
       text: <span className="text-[1rem] font-semibold">Emp Dashboard</span>,
       icon: <FaChalkboardUser className="text-2xl" />,
@@ -170,6 +177,14 @@ const Sidebar = () => {
     },
     {
       text: (
+        <span className="text-[1rem] font-semibold">Benefits (PF & Perks)</span>
+      ),
+      icon: <RiMoneyRupeeCircleLine className="text-2xl" />,
+      path: "/benefits",
+      element: <BenefitsManagement />,
+    },
+    {
+      text: (
         <button
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => setIsopen(!isOpen)}
@@ -207,7 +222,9 @@ const Sidebar = () => {
         },
         {
           text: (
-            <span className="text-[1rem] font-semibold">Attendance Regularization</span>
+            <span className="text-[1rem] font-semibold">
+              Attendance Regularization
+            </span>
           ),
           icon: <FaCalendarAlt className="text-xl mr-2" />,
           path: "/admin/attendance-regularization",
@@ -250,9 +267,7 @@ const Sidebar = () => {
       element: <ShowCauseNotices />,
     },
     {
-      text: (
-        <span className="text-[1rem] font-semibold">HR Announcements</span>
-      ),
+      text: <span className="text-[1rem] font-semibold">HR Announcements</span>,
       icon: <MdOutlineStickyNote2 className="text-2xl" />,
       path: "/hr/announcements",
       element: <HRAnnouncements />,
@@ -363,10 +378,11 @@ const Sidebar = () => {
                     if (window.innerWidth < 768) setShowSidebar(false);
                   }}
                   className={`flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer transition duration-300 
-              ${isActive
-                      ? "bg-indigo-500 text-white font-bold shadow-md"
-                      : "hover:bg-indigo-50 hover:text-indigo-600"
-                    }`}
+              ${
+                isActive
+                  ? "bg-indigo-500 text-white font-bold shadow-md"
+                  : "hover:bg-indigo-50 hover:text-indigo-600"
+              }`}
                 >
                   {item.icon}
                   <span>{item.text}</span>
@@ -439,5 +455,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-
