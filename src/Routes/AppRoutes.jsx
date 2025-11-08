@@ -64,6 +64,7 @@ const AppRoutes = () => {
         </Route>
       )}
 
+      {/* SuperAdmin routes - only accessible to SuperAdmin users */}
       {data?.data && data?.data?.role === "SuperAdmin" && (
         <Route element={<SuperAdminLayout />}>
           <Route
@@ -71,6 +72,11 @@ const AppRoutes = () => {
             element={<SuperAdminRouteGuard><SuperAdminDashboard /></SuperAdminRouteGuard>}
           />
         </Route>
+      )}
+
+      {/* Block Admin and other users from accessing SuperAdmin routes */}
+      {data?.data && data?.data?.role !== "SuperAdmin" && (
+        <Route path="/superadmin-dashboard" element={<Navigate to={data?.data?.role === "Admin" ? "/dashboard" : "/"} replace />} />
       )}
 
       {data?.data && data?.data?.role !== "Admin" && data?.data?.role !== "SuperAdmin" && (

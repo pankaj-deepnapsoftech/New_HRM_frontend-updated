@@ -17,7 +17,6 @@ import EmpMoneyRequest from "@/pages/EmpMoneyRequest";
 import Incentives from "@/pages/Incentives";
 import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
-import BenefitsManagement from "@/pages/BenefitsManagement";
 import AllLeaves from "@/pages/AllLeaves";
 import AdminRouteGuard from "@/Components/AdminRouteGuard";
 import SuperAdminRouteGuard from "@/Components/SuperAdminRouteGuard";
@@ -31,69 +30,34 @@ import AdminESeparation from "@/pages/AdminESeparation";
 
 export const MainRoutes = [
   {
-    path: "/benefits",
-    element: (
-      <AdminRouteGuard>
-        <BenefitsManagement />
-      </AdminRouteGuard>
-    ),
-  },
-  {
+    // Main Dashboard - redirects to MainDashboardPage
     path: "/dashboard",
-    element: (
-      <AdminRouteGuard>
-        <MainDashboardPage />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><MainDashboardPage /></AdminRouteGuard>,
   },
   {
     path: "/employees",
-    element: (
-      <AdminRouteGuard>
-        <EmployeeTable />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmployeeTable /></AdminRouteGuard>,
   },
   {
     path: "/employees-reports",
-    element: (
-      <AdminRouteGuard>
-        <EmployeesReports />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmployeesReports /></AdminRouteGuard>,
   },
 
   {
     path: "/empyloyees-attendence",
-    element: (
-      <AdminRouteGuard>
-        <DailyAttendance />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><DailyAttendance /></AdminRouteGuard>,
   },
   {
     path: "/all-attendence",
-    element: (
-      <AdminRouteGuard>
-        <AllAttendence />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><AllAttendence/></AdminRouteGuard>,
   },
   {
     path: "/all-leaves",
-    element: (
-      <AdminRouteGuard>
-        <AllLeaves />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><AllLeaves/></AdminRouteGuard>,
   },
   {
     path: "/empdashboard",
-    element: (
-      <AdminRouteGuard>
-        <EmpDashboard />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmpDashboard /></AdminRouteGuard>,
   },
   {
     path: "/departments",
@@ -101,154 +65,79 @@ export const MainRoutes = [
   },
   {
     path: "/designations",
-    element: (
-      <AdminRouteGuard>
-        <DesignationManagement />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><DesignationManagement /></AdminRouteGuard>,
   },
   {
     path: "/projects",
-    element: (
-      <AdminRouteGuard>
-        <Projects />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><Projects /></AdminRouteGuard>,
   },
   {
     path: "/empleaves",
-    element: (
-      <AdminRouteGuard>
-        <EmpLeaveBalance />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmpLeaveBalance /></AdminRouteGuard>,
   },
   {
     path: "/salarymanagement",
-    element: (
-      <AdminRouteGuard>
-        <SalaryManagement />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><SalaryManagement /></AdminRouteGuard>,
   },
   {
     path: "/employee/location",
-    element: (
-      <AdminRouteGuard>
-        <EmpLocation />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmpLocation/></AdminRouteGuard>,
   },
   {
     path: "/company/assets",
-    element: (
-      <AdminRouteGuard>
-        <AssignAssets />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><AssignAssets /></AdminRouteGuard>,
   },
   {
     path: "/employee/terminated",
-    element: (
-      <AdminRouteGuard>
-        <TerminatedEmp />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><TerminatedEmp /></AdminRouteGuard>,
   },
   {
     path: "/gatepass/approval",
-    element: (
-      <AdminRouteGuard>
-        <GatepassApprovals />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><GatepassApprovals /></AdminRouteGuard>,
   },
   {
     path: "/view/employee/show-cause/notice",
-    element: (
-      <AdminRouteGuard>
-        <ShowCauseNotices />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><ShowCauseNotices /></AdminRouteGuard>,
   },
   {
     path: "/hr/announcements",
-    element: (
-      <AdminRouteGuard>
-        <HRAnnouncements />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><HRAnnouncements /></AdminRouteGuard>,
   },
   {
     path: "/employee/payrollSummary",
-    element: (
-      <AdminRouteGuard>
-        <PayrollSummary />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><PayrollSummary /></AdminRouteGuard>,
   },
   {
     path: "/employee/advance/money/request",
-    element: (
-      <AdminRouteGuard>
-        <EmpMoneyRequest />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmpMoneyRequest /></AdminRouteGuard>,
   },
   {
     path: "/employee/incentives",
-    element: (
-      <AdminRouteGuard>
-        <Incentives />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><Incentives /></AdminRouteGuard>,
   },
   {
     path: "/employee/reimbursements",
-    element: (
-      <AdminRouteGuard>
-        <Reimbursements />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><Reimbursements /></AdminRouteGuard>,
   },
   {
     path: "/generate/employee/payslip",
-    element: (
-      <AdminRouteGuard>
-        <EmpPayslip />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><EmpPayslip/></AdminRouteGuard>,
   },
   {
     path: "/hrdashboard",
-    element: (
-      <AdminRouteGuard>
-        <HRDashboard />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><HRDashboard /></AdminRouteGuard>,
   },
   {
     path: "/admin/attendance-regularization",
-    element: (
-      <AdminRouteGuard>
-        <AdminAttendanceRegularization />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><AdminAttendanceRegularization /></AdminRouteGuard>,
   },
   {
     path: "/designations",
-    element: (
-      <AdminRouteGuard>
-        <DesignationManagement />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><DesignationManagement /></AdminRouteGuard>,
   },
   {
     path: "/admin/e-separation",
-    element: (
-      <AdminRouteGuard>
-        <AdminESeparation />
-      </AdminRouteGuard>
-    ),
+    element: <AdminRouteGuard><AdminESeparation /></AdminRouteGuard>,
   },
+  
 ];

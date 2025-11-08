@@ -125,7 +125,7 @@ const HRDashboard = () => {
       </div>
       <div className="max-w-5xl mx-auto p-6">
         
-        {/* <form className="mb-6">
+        <form className="mb-6">
           <div className="mb-4">
             <label
               htmlFor="user-select"
@@ -147,10 +147,10 @@ const HRDashboard = () => {
               ))}
             </select>
           </div>
-        </form> */}
+        </form>
 
     
-        {/* <div className="overflow-x-auto rounded-xl">
+        <div className="overflow-x-auto rounded-xl">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
             <thead className="bg-gray-100">
               <tr>
@@ -192,7 +192,7 @@ const HRDashboard = () => {
               )}
             </tbody>
           </table>
-        </div> */}
+        </div>
       </div>
 
 
