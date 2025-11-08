@@ -27,7 +27,7 @@ import {
 import { FiAlertTriangle, FiLogOut } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogoutUserMutation } from "@/service/Auth.services";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { removeData } from "@/store/slice/AuthSlice";
 
@@ -68,8 +68,6 @@ const Sidebar = () => {
   const location = useLocation();
   const currPath = location.pathname;
   const [isOpen, setIsopen] = useState(false);
-  const [payroolOpenArrow, setPayrollarrow] = useState(false);
-  const { Auth } = useSelector((state) => state);
 
   const [LogoutUser] = useLogoutUserMutation();
 

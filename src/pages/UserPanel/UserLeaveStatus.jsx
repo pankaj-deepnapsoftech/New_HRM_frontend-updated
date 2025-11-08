@@ -1,5 +1,4 @@
 import React from "react";
-import { FaCalendarAlt } from "react-icons/fa";
 
 const UserLeaveStatus = () => {
   const data = [

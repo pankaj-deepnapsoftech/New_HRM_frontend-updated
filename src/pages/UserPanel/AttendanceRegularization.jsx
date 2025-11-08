@@ -5,7 +5,7 @@ import {
   useGetEmployeeRegularizationRequestsQuery,
 } from "@/service/AttendanceRegularization.services";
 import { toast } from "react-toastify";
-import { FaClock, FaCalendarAlt, FaFileUpload, FaTimes } from "react-icons/fa";
+import { FaClock, FaCalendarAlt, FaTimes } from "react-icons/fa";
 
 const AttendanceRegularization = () => {
   const { data: userData } = useLogedInuserQuery();

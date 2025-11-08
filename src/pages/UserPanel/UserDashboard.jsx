@@ -3,10 +3,7 @@ import {
   FaCalendarAlt,
   FaFileAlt,
   FaRupeeSign,
-  FaDownload,
   FaHome,
-  // FaStickyNote,
-  // FaExclamationTriangle,
   FaDoorOpen,
   FaClock,
   FaSignOutAlt,
@@ -15,7 +12,6 @@ import { FcLeave } from "react-icons/fc";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import BirthdayNotification from "../../Components/BirthdayNotification";
 
 const actions = [

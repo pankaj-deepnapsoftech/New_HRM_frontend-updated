@@ -6,7 +6,6 @@ import UserDashboard from "@/pages/UserPanel/UserDashboard";
 import UserDocument from "@/pages/UserPanel/UserDocument";
 import UserLeaveRequest from "@/pages/UserPanel/UserLeaveRequest";
 import UserLeaveStatus from "@/pages/UserPanel/UserLeaveStatus";
-import UserPaySlip from "@/pages/UserPanel/UserPaySlip";
 import UserAssets from "@/pages/UserPanel/UserAssets";
 import UserGatepass from "@/pages/UserPanel/UserGatepass";
 import TermsAndConditions from "@/pages/UserPanel/TermsAndConditions";

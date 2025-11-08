@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaRegFileAlt, FaMoneyBillWave, FaPlus, FaCheck, FaTimes, FaEye } from "react-icons/fa";
+import { FaRegFileAlt, FaMoneyBillWave, FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 import { MdLogout, MdDateRange } from "react-icons/md";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { GiPathDistance } from "react-icons/gi";

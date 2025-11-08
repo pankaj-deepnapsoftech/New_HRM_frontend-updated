@@ -17,7 +17,7 @@ export const AuthSlice = createSlice({
   name: "Auth",
   initialState,
   reducers: {
-    setSelectedAdminId: (state, action) => {},
+    setSelectedAdminId: () => {},
     addData: (state, action) => {
       state.email = action.payload.email;
       state.fullName = action.payload.fullName;
@@ -47,4 +47,5 @@ export const AuthSlice = createSlice({
   },
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const {removeData,addData,setLoginState} = AuthSlice.actions;

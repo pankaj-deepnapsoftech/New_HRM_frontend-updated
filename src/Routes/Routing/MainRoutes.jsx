@@ -19,7 +19,6 @@ import Reimbursements from "@/pages/Reimbursements";
 import EmpPayslip from "@/pages/EmpPayslip";
 import AllLeaves from "@/pages/AllLeaves";
 import AdminRouteGuard from "@/Components/AdminRouteGuard";
-import SuperAdminRouteGuard from "@/Components/SuperAdminRouteGuard";
 import Departments from "@/pages/Departments";
 import MainDashboardPage from "@/pages/MainDashboardPage";
 import EmployeesReports from "@/pages/EmployeesReports";

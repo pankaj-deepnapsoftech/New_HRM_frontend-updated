@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { changeType } from "@/store/slice/commonStore";
 
 const HEADER_LINKS = [
   // { name: "Solutions", to: "/" },
@@ -11,6 +13,7 @@ const HEADER_LINKS = [
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 bg-white/80 backdrop-blur border-b border-blue-100 shadow-sm">
@@ -36,12 +39,12 @@ const Header = () => {
         {/* Right Buttons */}
         <div className="flex items-center gap-2">
           <Link to="/sign-in">
-            <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md font-semibold shadow hover:bg-blue-700 transition">
+            <button onClick={()=>dispatch(changeType("admin"))} className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md font-semibold shadow hover:bg-blue-700 transition">
               Admin Login
             </button>
           </Link>
           <Link to="/sign-in">
-            <button className="border border-blue-600 text-blue-600 text-sm px-4 py-2 rounded-md font-semibold bg-white hover:bg-blue-50 transition">
+            <button onClick={()=>dispatch(changeType("employee"))} className="border border-blue-600 text-blue-600 text-sm px-4 py-2 rounded-md font-semibold bg-white hover:bg-blue-50 transition">
               Employee Login
             </button>
           </Link>

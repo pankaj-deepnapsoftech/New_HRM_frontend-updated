@@ -116,7 +116,7 @@ const Subscription = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [API_BASE_URL]);
+  }, [API_BASE_URL, dispatch, navigate]);
 
   return (
     <div className="min-h-[100vh] flex justify-center items-center px-4 sm:px-6 lg:px-8 bg-gray-50">

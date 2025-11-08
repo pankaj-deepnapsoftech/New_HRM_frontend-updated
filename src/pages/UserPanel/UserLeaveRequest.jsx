@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -20,7 +20,6 @@ const UserLeaveRequest = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [lastFetchTime, setLastFetchTime] = useState(null);
 
   const { Auth } = useSelector((state) => state);
 
@@ -40,11 +39,7 @@ const UserLeaveRequest = () => {
     }
   );
 
-  useEffect(() => {
-    if (employeeLeaveRequests) {
-      setLastFetchTime(new Date());
-    }
-  }, [employeeLeaveRequests]);
+
 
   const validateFile = (file) => {
     const allowedTypes = [

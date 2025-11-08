@@ -2,7 +2,6 @@ import {
   FaUsers,
   FaRegIdBadge,
   FaMoneyCheckAlt,
-  FaUserCheck,
   FaFileSignature,
   FaChartBar,
   FaUserCog,

@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import { useSignUpMutation } from "@/service/Auth.services";
 import { SignUpSchema } from "@/Validation/AuthValidation/SignUpValidation";
 import { useFormik } from "formik";

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import AuthLayout from "@/Routes/Layouts/AuthLayout";

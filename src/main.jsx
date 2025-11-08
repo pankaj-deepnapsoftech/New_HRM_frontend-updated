@@ -7,8 +7,8 @@ import { store } from './store/store'
 import { ToastContainer } from 'react-toastify'
 
 createRoot(document.getElementById('root')).render(
-  <Provider store={store} > 
-  <ToastContainer/>
+  <Provider store={store} >
+    <ToastContainer />
     <App />
   </Provider>
-)
+);

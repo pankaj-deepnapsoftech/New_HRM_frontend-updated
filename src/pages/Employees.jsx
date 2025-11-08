@@ -1,13 +1,11 @@
-import LocationModal from "@/Drawer/Employees/LocationModal";
 import EmployeeForm from "@/Drawer/EmployeeDetails/EmployeeRegistration";
 import React, { useEffect, useState } from "react";
-import { FaEye, FaEdit, FaTrash, FaImage } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import ViewModal from "@/Drawer/Employees/ViewModal";
 import {
   useEpmDeleteDataMutation,
   useEpmGetDataQuery,
 } from "@/service/Employee.services";
-import { FaEnvelope } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Pagination from "./Pagination/Pagination";
 import { useGetAllDepartmentQuery } from "@/service/Department";

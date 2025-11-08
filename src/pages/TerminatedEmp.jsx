@@ -309,7 +309,7 @@ const TerminatedEmp = () => {
                       onClick={() => {
                         setConfirmId(null);
                         setCheckedAssets((prev) => {
-                          const { [confirmId]: removed, ...rest } = prev;
+                          const { [confirmId]: _, ...rest } = prev;
                           return rest;
                         });
                       }}

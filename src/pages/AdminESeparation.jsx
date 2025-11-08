@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { 
     useGetResignationRequestsQuery,
-    useGetResignationRequestByIdQuery,
     useUpdateResignationRequestStatusMutation
 } from '../service/ResignationRequest.services.js';
 import {
@@ -11,7 +10,6 @@ import {
     useGetAllTerminatedEmployeesQuery,
     useDeleteTerminatedEmployeeMutation,
 } from '../service/EmpData.services.js';
-import { motion } from 'framer-motion';
 import { FaEye, FaCheck, FaTimes, FaFilter, FaSearch, FaUserTimes, FaTrash } from 'react-icons/fa';
 import Pagination from './Pagination/Pagination';
 

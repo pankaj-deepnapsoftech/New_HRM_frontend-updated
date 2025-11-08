@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { browserName, isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import { useSignInMutation } from "@/service/Auth.services";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoginState } from "@/store/slice/AuthSlice";
 
 import { IoEyeOutline } from "react-icons/io5";
@@ -16,6 +16,7 @@ const Login = () => {
   const [SignIn, { isLoading }] = useSignInMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {type} = useSelector(state => state.commonSlice);
 
   const {
     handleBlur,
@@ -99,7 +100,7 @@ const Login = () => {
         ...values,
         isMobile,
         browser: browserName,
-        loginType: "admin",
+        loginType: type,
         location: location,
       };
 

@@ -7,15 +7,12 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isMobile, browserName } from "react-device-detect";
 import { toast } from "react-toastify";
-import { setLoginState } from "@/store/slice/AuthSlice";
-import { useDispatch } from "react-redux";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [SignUp, { isLoading }] = useSignUpMutation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {

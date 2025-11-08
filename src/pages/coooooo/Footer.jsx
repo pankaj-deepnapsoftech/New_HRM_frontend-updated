@@ -1,9 +1,4 @@
-import {
-  AiFillYoutube,
-  AiFillInstagram,
-  AiFillTwitterCircle,
-} from "react-icons/ai";
-import { BsFacebook } from "react-icons/bs";
+
 
 const Footer = () => {
   // const socialLinks = [
